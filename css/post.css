@@ -1,0 +1,12 @@
+body div.mdl-layout.mdl-js-layout {
+    /*background: url('../assets/cover.jpg') center / cover;*/
+}
+
+.post-card {
+    margin: 16px auto;
+}
+
+.cover-layout {
+    height: 360px;
+    background: url('../assets/cover.jpg') center / cover;
+}
