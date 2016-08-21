@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.perqin.com/"/>
-  <updated>2016-08-08T17:33:47.131Z</updated>
+  <updated>2016-08-21T16:07:50.160Z</updated>
   <id>http://blog.perqin.com/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tutorials For Girlfriend 0: What is HTTP</title>
+    <link href="http://blog.perqin.com/2016/08/22/tutorials-for-girlfriend-0-what-is-http/"/>
+    <id>http://blog.perqin.com/2016/08/22/tutorials-for-girlfriend-0-what-is-http/</id>
+    <published>2016-08-21T16:07:50.000Z</published>
+    <updated>2016-08-21T16:07:50.160Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Solve repairing problem on dual-boot Windows and Ubuntu PC</title>
+    <link href="http://blog.perqin.com/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/"/>
+    <id>http://blog.perqin.com/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/</id>
+    <published>2016-08-21T15:43:05.000Z</published>
+    <updated>2016-08-21T15:43:05.744Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>加快墙内网速提升Ubuntu使用效率的TIPS</title>
