@@ -4,9 +4,9 @@
   <subtitle>Maintaining...</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://blog.perqin.com/"/>
+  <link href="https://perqin.github.io/"/>
   <updated>2016-08-21T15:43:05.744Z</updated>
-  <id>https://blog.perqin.com/</id>
+  <id>https://perqin.github.io/</id>
   
   <author>
     <name>Perqin</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Solve repairing problem on dual-boot Windows and Ubuntu PC</title>
-    <link href="https://blog.perqin.com/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/"/>
-    <id>https://blog.perqin.com/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/</id>
+    <link href="https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/"/>
+    <id>https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/</id>
     <published>2016-08-21T15:43:05.000Z</published>
     <updated>2016-08-21T15:43:05.744Z</updated>
     
@@ -31,8 +31,8 @@
   
   <entry>
     <title>写给女朋友的教程系列0 什么是HTTP</title>
-    <link href="https://blog.perqin.com/2016/08/21/tutorials-for-girlfriend-0-what-is-http/"/>
-    <id>https://blog.perqin.com/2016/08/21/tutorials-for-girlfriend-0-what-is-http/</id>
+    <link href="https://perqin.github.io/2016/08/21/tutorials-for-girlfriend-0-what-is-http/"/>
+    <id>https://perqin.github.io/2016/08/21/tutorials-for-girlfriend-0-what-is-http/</id>
     <published>2016-08-21T08:07:50.000Z</published>
     <updated>2016-09-18T16:38:42.158Z</updated>
     
@@ -83,8 +83,8 @@
   
   <entry>
     <title>加快墙内网速提升Ubuntu使用效率的TIPS</title>
-    <link href="https://blog.perqin.com/2016/08/09/tips-to-save-your-time-on-ubuntu/"/>
-    <id>https://blog.perqin.com/2016/08/09/tips-to-save-your-time-on-ubuntu/</id>
+    <link href="https://perqin.github.io/2016/08/09/tips-to-save-your-time-on-ubuntu/"/>
+    <id>https://perqin.github.io/2016/08/09/tips-to-save-your-time-on-ubuntu/</id>
     <published>2016-08-08T17:03:50.000Z</published>
     <updated>2016-08-08T17:33:47.131Z</updated>
     
@@ -117,20 +117,20 @@
     </summary>
     
     
-      <category term="Shadowsocks" scheme="https://blog.perqin.com/tags/shadowsocks/"/>
+      <category term="Shadowsocks" scheme="https://perqin.github.io/tags/shadowsocks/"/>
     
-      <category term="Ubuntu" scheme="https://blog.perqin.com/tags/ubuntu/"/>
+      <category term="Ubuntu" scheme="https://perqin.github.io/tags/ubuntu/"/>
     
-      <category term="npm" scheme="https://blog.perqin.com/tags/npm/"/>
+      <category term="npm" scheme="https://perqin.github.io/tags/npm/"/>
     
-      <category term="HA-Proxy" scheme="https://blog.perqin.com/tags/ha-proxy/"/>
+      <category term="HA-Proxy" scheme="https://perqin.github.io/tags/ha-proxy/"/>
     
   </entry>
   
   <entry>
     <title>重装Ubuntu系列：Shadowsocks配置</title>
-    <link href="https://blog.perqin.com/2016/04/18/ubuntu-reinstallation-series-shadowsocks-configurations/"/>
-    <id>https://blog.perqin.com/2016/04/18/ubuntu-reinstallation-series-shadowsocks-configurations/</id>
+    <link href="https://perqin.github.io/2016/04/18/ubuntu-reinstallation-series-shadowsocks-configurations/"/>
+    <id>https://perqin.github.io/2016/04/18/ubuntu-reinstallation-series-shadowsocks-configurations/</id>
     <published>2016-04-17T17:52:00.000Z</published>
     <updated>2016-08-08T16:31:43.292Z</updated>
     
@@ -170,24 +170,24 @@
     </summary>
     
     
-      <category term="Shadowsocks" scheme="https://blog.perqin.com/tags/shadowsocks/"/>
+      <category term="Shadowsocks" scheme="https://perqin.github.io/tags/shadowsocks/"/>
     
-      <category term="Ubuntu" scheme="https://blog.perqin.com/tags/ubuntu/"/>
+      <category term="Ubuntu" scheme="https://perqin.github.io/tags/ubuntu/"/>
     
-      <category term="Privoxy" scheme="https://blog.perqin.com/tags/privoxy/"/>
+      <category term="Privoxy" scheme="https://perqin.github.io/tags/privoxy/"/>
     
-      <category term="GFW" scheme="https://blog.perqin.com/tags/gfw/"/>
+      <category term="GFW" scheme="https://perqin.github.io/tags/gfw/"/>
     
-      <category term="gfwlist" scheme="https://blog.perqin.com/tags/gfwlist/"/>
+      <category term="gfwlist" scheme="https://perqin.github.io/tags/gfwlist/"/>
     
-      <category term="翻墙" scheme="https://blog.perqin.com/tags/%E7%BF%BB%E5%A2%99/"/>
+      <category term="翻墙" scheme="https://perqin.github.io/tags/%E7%BF%BB%E5%A2%99/"/>
     
   </entry>
   
   <entry>
     <title>魅族魅蓝2解锁bootloader并刷入AOSP ROM</title>
-    <link href="https://blog.perqin.com/2016/04/14/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/"/>
-    <id>https://blog.perqin.com/2016/04/14/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</id>
+    <link href="https://perqin.github.io/2016/04/14/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/"/>
+    <id>https://perqin.github.io/2016/04/14/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</id>
     <published>2016-04-13T17:16:53.000Z</published>
     <updated>2016-08-08T16:31:43.296Z</updated>
     
@@ -237,17 +237,17 @@
     </summary>
     
     
-      <category term="bootloader" scheme="https://blog.perqin.com/tags/bootloader/"/>
+      <category term="bootloader" scheme="https://perqin.github.io/tags/bootloader/"/>
     
-      <category term="AOSP" scheme="https://blog.perqin.com/tags/aosp/"/>
+      <category term="AOSP" scheme="https://perqin.github.io/tags/aosp/"/>
     
-      <category term="Android" scheme="https://blog.perqin.com/tags/android/"/>
+      <category term="Android" scheme="https://perqin.github.io/tags/android/"/>
     
-      <category term="ROM" scheme="https://blog.perqin.com/tags/rom/"/>
+      <category term="ROM" scheme="https://perqin.github.io/tags/rom/"/>
     
-      <category term="魅族" scheme="https://blog.perqin.com/tags/%E9%AD%85%E6%97%8F/"/>
+      <category term="魅族" scheme="https://perqin.github.io/tags/%E9%AD%85%E6%97%8F/"/>
     
-      <category term="魅蓝2" scheme="https://blog.perqin.com/tags/%E9%AD%85%E8%93%9D2/"/>
+      <category term="魅蓝2" scheme="https://perqin.github.io/tags/%E9%AD%85%E8%93%9D2/"/>
     
   </entry>
   
