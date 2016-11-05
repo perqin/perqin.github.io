@@ -1,0 +1,3 @@
+[submodule "themes/made"]
+	path = themes/made
+	url = git@github.com:perqin/hexo-theme-made.git
