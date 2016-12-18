@@ -4,10 +4,10 @@
 
 # Site
 title: Perqin's Blog
-subtitle: Maintaining...
-description:
+subtitle: Blogging is as painful as writing docs...
+description: Perqin's GitHub pages powered by Hexo.io and hexo-theme-material.
 author: Perqin
-language: zh
+language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: made
+theme: material
 
 # Made theme config
 theme_made:
