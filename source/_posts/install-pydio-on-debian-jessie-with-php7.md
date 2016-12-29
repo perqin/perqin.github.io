@@ -1,7 +1,8 @@
 ---
-title: install-pydio-on-debian-jessie-with-php7
+title: Debian Jessie基于PHP7安装Pydio
 date: 2016-12-24 01:18:09
-tags:
+tags: [Pydio, PHP, Debian]
+thumbnail: /images/covers/install-pydio-on-debian-jessie-with-php7.png
 ---
 
 之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。
