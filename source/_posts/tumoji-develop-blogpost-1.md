@@ -5,6 +5,10 @@ tags: [tumoji, android, mvp]
 thumbnail: /images/covers/tumoji-develop-blogpost-1.png
 ---
 
+>  修改记录
+>
+>  *  17/01/08：更正了RxJava的维护者。
+
 这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。
 
 由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么……
@@ -265,13 +269,13 @@ Call<UserModel> getUserById(@Path("id") String id, @Query("access_token") String
 
 大大简化了代码！
 
-### RxAndroid
+### RxJava
 
-RxAndroid是Facebook的ReactX框架在Android平台的实现，前面提到的Listener模式麻烦之处在于每个请求都需要定义Listener，而且有的时候还会出现回调地狱（Callback Hell），非常容易出bug，甚至想想，如果需要根据一个数组，每个元素发一个异步请求，那代码就更加难看了。
+RxJava是ReactiveX框架在Java语言上的实现，前面提到的Listener模式麻烦之处在于每个请求都需要定义Listener，而且有的时候还会出现回调地狱（Callback Hell），非常容易出bug，甚至想想，如果需要根据一个数组，每个元素发一个异步请求，那代码就更加难看了。
 
 后来接触到了RxJava。在RxJava中，有一个被观察者和订阅者。被观察者一旦有人订阅，就会开始某些任务，这些任务可能会获取到一个或多个结果，这些结果作为数据由被观察者发出，再由订阅者接收。举个例子，手机充电，手机就是订阅者，插座就是被观察者，插上电源的过程就是订阅，此时插座源源不断地发出数据（电），手机的显示屏上就会得到这些数据，显示在电池电量数据上。
 
-在Tumoji中，大量使用了RxAndroid简化代码，举个例子：
+在Tumoji中，大量使用了RxJava简化代码，举个例子：
 
 ````java
 public class MemeRepository implements IMemeRepository {
