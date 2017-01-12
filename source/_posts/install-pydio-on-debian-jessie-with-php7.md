@@ -5,6 +5,14 @@ tags: [Pydio, PHP, Debian]
 thumbnail: /images/covers/install-pydio-on-debian-jessie-with-php7.png
 ---
 
+> **Edit history**
+>
+> *2017/01/12*
+>
+> * 更正一些错误
+> * 完善教程
+> * 增加MySQL的配置
+
 之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。
 
 ## 安装Nginx
@@ -19,8 +27,8 @@ $ sudo apt-key add nginx_signing.key
 然后把以下内容放进`/etc/apt/sources.list.d/nginx.list`：
 
 ````
-deb http://nginx.org/packages/ubuntu/ jessie nginx
-deb-src http://nginx.org/packages/ubuntu/ jessie nginx
+deb http://nginx.org/packages/mainline/debian/ jessie ngin
+deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
 ````
 
 保存之后运行：
@@ -83,7 +91,7 @@ Additional .ini files parsed:      /etc/php/7.0/cli/conf.d/10-opcache.ini,
 /etc/php/7.0/cli/conf.d/20-tokenizer.ini
 ````
 
-于是我们修改`/etc/php/7.0/cli/php.ini`，找到`cgi.fix_pathinfo=0`，把`1`改为`0`。
+~~于是我们修改`/etc/php/7.0/cli/php.ini`，找到`cgi.fix_pathinfo=0`，把`1`改为`0`。~~**由于我们的Pydio是通过fpm运行的，而fpm本身有`php.ini`，所以这里先不配置。**
 
 接着，我们修改fpm的配置，它在`/etc/php/7.0/fpm/pool.d/www.conf`。确定如下两行内容：
 
@@ -108,9 +116,10 @@ $ wget https://download.pydio.com/pub/core/archives/pydio-core-7.0.3.tar.gz
 $ tar -xzf pydio-core-7.0.3.tar.gz
 $ sudo mv pydio-core-7.0.3 /var/www/pydio
 $ sudo chown -R www-data:www-data /var/www/pydio/data
+$ sudo chown www-data:www-data /var/www/pydio/.htaccess
 ````
 
-注意我们的fpm和Nginx的worker都是以www-data用户运行的（Nginx的worker默认不是www-data运行，但我后面会更改），因此需要保证Pydio的data目录是www-data可读写的。
+注意我们的fpm和Nginx的worker都是以www-data用户运行的（Nginx的worker默认不是www-data运行，但我后面会更改），因此需要保证Pydio的data目录是www-data可读写的。*`.htaccess`文件后面也需要可写，所以这里一并修改了。*
 
 ## 为Pydio配置Nginx和php-fpm
 
@@ -144,13 +153,21 @@ server {
                 fastcgi_param SCRIPT_FILENAME $request_filename;
                 include       fastcgi_params;
         }
+        
+        location ~ ^/data/public/.*$ {
+                allow all;
+        }
+
+        location ~ ^/(conf|data) {
+                deny all;
+        }
 }
 types {
         application/font-woff2                 woff2;
 }
 ````
 
-可以看到主要的改动是php部分，首先他原来include的`snippets`在这个版本的Nginx里是木有的……所以我参照Nginx的默认设置做了改动。同时，通过`/etc/php/7.0/fpm/pool.d/www.conf`可以发现sock的路径也需要修改。
+可以看到主要的改动是php部分，首先他原来include的`snippets`在这个版本的Nginx里是木有的……所以我参照Nginx的默认设置做了改动。同时，通过`/etc/php/7.0/fpm/pool.d/www.conf`可以发现sock的路径也需要修改。*另外，我还对data目录做了访问控制，后面会提到。*
 
 修改完成，重启Nginx的服务之后，我在pydio的目录下新建了一个`php-test.php`：
 
@@ -197,7 +214,7 @@ $ sudo systemctl restart php7.0-fpm.service
 *  SSL Encryption，由于没有启用HTTPS所以是WARNING
 *  PHP Output Buffer disabled，需要将这个设置为禁用以提高性能
 
-这里我遇到了悲剧……之前修改的`/etc/php/7.0/cli/php.ini`是全局的，但是fpm本身还需要一份php.ini的配置，位于`/etc/php/7.0/fpm/php.ini`，我们先参照之前的内容修改fix_pathinfo，然后找到并修改如下内容：
+这里我遇到了悲剧……之前修改的`/etc/php/7.0/cli/php.ini`是全局的，但是fpm本身还需要一份php.ini的配置，位于`/etc/php/7.0/fpm/php.ini`，**我们先参照之前的内容修改fix_pathinfo**，然后找到并修改如下内容：
 
 ````
 ; Note: Output buffering can also be controlled via Output Buffering Control
@@ -218,7 +235,7 @@ output_buffering = Off
 
 重启fpm服务之后，刷新网页，解决！
 
-data权限问题源于没有在nginx中屏蔽data目录的访问，所以我们修改`/etc/nginx/conf.d/pydio.conf`，在`server`中增加如下内容（参考自[http://martin-denizet.com/nginx-configuration-for-pydio-with-ssl/](http://martin-denizet.com/nginx-configuration-for-pydio-with-ssl/)）：
+data权限问题源于没有在nginx中屏蔽data目录的访问，*这个问题如果按照我提供的配置，那么将不会遇到。我之前不知道，才遇到这个问题。以下的修改我已经加到前面了。*，所以我们修改`/etc/nginx/conf.d/pydio.conf`，在`server`中增加如下内容（参考自[http://martin-denizet.com/nginx-configuration-for-pydio-with-ssl/](http://martin-denizet.com/nginx-configuration-for-pydio-with-ssl/)）：
 
 ````
 server {
@@ -238,6 +255,8 @@ server {
 
 ## 配置SQLite
 
+**SQLite容易引发配置文件被锁定问题，因此建议使用MySQL（见下面）。**
+
 开始安装向导之后，我才发现Pydio的配置数据（不包含用户文件）需要存储到数据库里，在Pydio支持的数据库中，由于MySQL和PostgreSQL都太大了，于是我决定使用SQLite 3。
 
 安装php扩展：
@@ -249,9 +268,48 @@ $ sudo systemctl restart php7.0-fpm.service
 
 后面需要的缓存等我都暂时没启用。
 
+## 配置MySQL
+
+如果你想使用MySQL，参照官网，可以使用如下命令安装：
+
+````
+$ wget https://dev.mysql.com/get/mysql-apt-config_0.8.1-1_all.deb
+$ sudo dpkg -i mysql-apt-config_0.8.1-1_all.deb
+````
+
+你可以选择需要安装的版本以及是否需要其他工具（Workbench等）。
+
+然后就可以安装MySQL服务器和php的相关扩展了：
+
+````
+$ sudo apt-get install mysql-server php7.0-mysql
+$ sudo systemctl restart php7.0-fpm
+````
+
+中间需要设置root帐号的密码。安装完成之后，我们需要为Pydio创建数据库：
+
+````
+$ mysql -p
+...
+mysql> CREATE DATABASE pydio;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE pydio;
+Database changed
+mysql> CREATE USER 'pydio'@'localhost' IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON pydio.* TO 'pydio'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+````
+
+上面的命令会创建名为pydio的数据库，然后添加一个可以管理这个数据库的用户，用户名pydio密码password。接下来，只要在Pydio中选择MySQL并输入数据库名字、用户名、密码即可。
+
 ## 修改htaccess文件
 
-安装过程中，他提示我无法写入该文件，直接改用户！
+*这里的配置也在前面已经解决了。*安装过程中，他提示我无法写入该文件，直接改用户！
 
 ````
 $ sudo chown www-data:www-data .htaccess
