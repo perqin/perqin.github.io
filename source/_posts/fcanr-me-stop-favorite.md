@@ -6,6 +6,8 @@ tags: [fcanr-me, android]
 
 这篇博客讲讲我刚刚建立的博客站点FCANR.ME和我建立它的前因后果。
 
+**注意，本文所说的FCANR.ME不是指你现在看到的这个站点，这是本人的个人博客 - -**
+
 ## FCANR.ME是什么
 
 简单来说，FCANR.ME是一个**意图取代公众号的转载博客的网站**，它有点像博客园、简书，但和它们不一样的是，这个网站只会发布Android相关的文章，这也是为什么网站的名字要叫做“FCANR.ME”，想表达的是“今天你FC、ANR了么？”，相信各位Android开发者对FC（Force Closed）和ANR（Application Not Responding）一定不陌生了吧XD
