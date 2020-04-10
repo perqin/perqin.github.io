@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.6 -->
+    <script>
+        window.materialVersion = "1.5.6"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0',
+            '1.5.2',
+            '1.5.5'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+
+
+
+
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            从源码探索事件分发 1 | 
+        
+        Perqin&#39;s Blog
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/avatar.png">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+    <meta name="keywords" content="Perqin,explore-event-dispatching-from-source,android">
+    <meta name="theme-color" content="#673AB7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: ;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #673AB7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #673AB7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #673AB7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Perqin&#39;s Blog">
+    <meta name="msapplication-starturl" content="https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/">
+    <meta name="msapplication-navbutton-color" content="#673AB7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="从源码探索事件分发 1 | Perqin&#39;s Blog">
+    <meta property="og:image" content="/img/avatar.png">
+    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+    <meta property="og:article:tag" content="explore-event-dispatching-from-source"> <meta property="og:article:tag" content="android"> 
+
+    
+        <meta property="article:published_time" content="Wed Mar 22 2017 00:37:51 GMT+0800">
+        <meta property="article:modified_time" content="Fri Apr 10 2020 17:47:16 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/index.html",
+    "headline": "从源码探索事件分发 1",
+    "datePublished": "Wed Mar 22 2017 00:37:51 GMT+0800",
+    "dateModified": "Fri Apr 10 2020 17:47:16 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Perqin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Blogging is as painful as writing docs..."
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Perqin&#39;s Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/avatar.png"
+        }
+    },
+    "keywords": ",explore-event-dispatching-from-source,androidPerqin",
+    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试代码"><span class="post-toc-number">1.</span> <span class="post-toc-text">测试代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#再开上帝视角"><span class="post-toc-number">2.</span> <span class="post-toc-text">再开上帝视角</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ViewGroup的dispatchTouchEvent"><span class="post-toc-number">3.</span> <span class="post-toc-text">ViewGroup的dispatchTouchEvent</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                从源码探索事件分发 1
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Perqin</strong>
+        <span>3月 22, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/android/">android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/explore-event-dispatching-from-source/">explore-event-dispatching-from-source</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    <!-- Leancloud Views -->
+        <a class="post_share-link" href="#">
+            <li class="mdl-menu__item">
+                <span id="/2017/03/22/explore-event-dispatching-from-source-1/" class="leancloud-views_num" data-flag-title="从源码探索事件分发 1">
+     &nbsp;浏览量
+</span>
+
+            </li>
+        </a>
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=从源码探索事件分发 1&url=https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=从源码探索事件分发 1&url=https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/index.html&via=Perqin" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <blockquote>
+<p> Edit History</p>
+<p> <strong>2017/04/05</strong></p>
+<ul>
+<li>更正了<code>mFirstTouchTarget</code>为<code>null</code>的条件</li>
+</ul>
+</blockquote>
+<p>以前一直认为身为Android开发者，一定要去读Android的源码，然而由于各种各样的原因迟迟没有开始，最近终于下定决心提高一下，买了《Android开发艺术探索》，并开始尝试从源码看懂触摸事件的分发。这个系列文章会记录我通过阅读源代码的方式一步步搞懂Android里的事件分发的过程。</p>
+<p>作为系列的第一篇，我们先开开上帝视角，搬出一些结论来。从Android的布局xml结构我们就能很容易发现，Android中的View们是以一棵树的形式组成的，这样的设计是几乎所有有GUI相关概念的平台里都会使用的设计，在树状的视图结构中，我们可以把里面的一个子树当作是一个View，也就是单一的一个节点来处理，这样就可以通过递归的思想进行事件分发、测量布局和渲染等行为。</p>
+<p>当我们的手指落在屏幕上的时候，驱动捕获到我们的行为，发送到Android系统上层框架，最终，一个包含这次屏幕操作的MotionEvent对象被传递给了对应的Activity对象。这个Activity会把这个对象分发给这个Activity中的根View，并通过递归的形式一直传递下去，直到这个触摸行为被某个View识别并消费掉。形象地说，就像一份通知从学校教务处发到了辅导员，辅导员把它分发给他管理的班级的班长，班长分发给班级的每个宿舍长，最终被发到每个学生手上。</p>
+<p>前面说道，我们可以把一个子树看作一个View，因此我们只需要弄懂最简单的情形：一个ViewGroup包含一个View，事件从ViewGroup分发给View的情况，就可以很快理解事件在一棵巨大的View树里如何分发。</p>
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p>为了测试，我自定义了一个ViewGroup和一个View，他们的唯一目的就是在和事件分发相关的方法里输出日志。其中<code>EdFrameLayout</code>的代码如下：</p>
+<pre><code class="java">public class EdFrameLayout extends FrameLayout {
+    private static final String TAG = &quot;EdFrameLayout&quot;;
+
+    public EdFrameLayout(Context context) {
+        super(context);
+    }
+
+    public EdFrameLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Log.i(TAG, &quot;dispatchTouchEvent: &quot; + EventNameUtils.eventNameOf(ev.getAction()));
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        Log.i(TAG, &quot;onInterceptTouchEvent&quot;);
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, &quot;onTouchEvent&quot;);
+        return super.onTouchEvent(event);
+    }
+}</code></pre>
+<p><code>EdView</code>的代码如下：</p>
+<pre><code class="java">public class EdView extends View {
+    private static final String TAG = &quot;EdView&quot;;
+
+    public EdView(Context context) {
+        super(context);
+    }
+
+    public EdView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.i(TAG, &quot;dispatchTouchEvent: &quot; + EventNameUtils.eventNameOf(event.getAction()));
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, &quot;onTouchEvent&quot;);
+        return super.onTouchEvent(event);
+    }
+}</code></pre>
+<p>其中<code>EventNameUtils</code>类仅仅是为了输出事件的名称：</p>
+<pre><code class="java">public class EventNameUtils {
+    public static String eventNameOf(int action) {
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: return &quot;ACTION_DOWN&quot;;
+            case MotionEvent.ACTION_MOVE: return &quot;ACTION_MOVE&quot;;
+            case MotionEvent.ACTION_UP: return &quot;ACTION_UP&quot;;
+            case MotionEvent.ACTION_CANCEL: return &quot;ACTION_CANCEL&quot;;
+            default: return &quot;UNKNOWN ACTION&quot;;
+        }
+    }
+}</code></pre>
+<p>布局文件如下：</p>
+<pre><code class="xml">&lt;com.perqin.playground.eventdispatching.EdFrameLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    tools:context=&quot;com.perqin.playground.activities.MainActivity&quot;&gt;
+
+    &lt;com.perqin.playground.eventdispatching.EdView
+        android:id=&quot;@+id/ed_view&quot;
+        android:layout_width=&quot;240dp&quot;
+        android:layout_height=&quot;240dp&quot;
+        android:background=&quot;@color/colorAccent&quot;
+        android:layout_gravity=&quot;center&quot; /&gt;
+
+&lt;/com.perqin.playground.eventdispatching.EdFrameLayout&gt;</code></pre>
+<p>运行起来之后是这样的：</p>
+<p><img src="playground.png" alt="Playground"></p>
+<p>我们轻触中间的强调色的方块，看到日志里有这样的输出：</p>
+<pre><code>com.perqin.playground I/EdFrameLayout: dispatchTouchEvent: ACTION_DOWN
+com.perqin.playground I/EdFrameLayout: onInterceptTouchEvent
+com.perqin.playground I/EdView: dispatchTouchEvent: ACTION_DOWN
+com.perqin.playground I/EdView: onTouchEvent
+com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开上帝视角"><a href="#再开上帝视角" class="headerlink" title="再开上帝视角"></a>再开上帝视角</h2><p>直接从源码就把事件分发无中生有地摸清对我来说还是挺困难的，因此我之前也早已看过书、搜索过相关文章。从上面的日志也得以映证时间分发的流程：</p>
+<ul>
+<li>某个View（不论是否是ViewGroup）的<code>dispatchTouchEvent</code>被其父节点调用，从中该View可以得到这次触摸事件的MotionEvent对象。</li>
+<li>如果这个View是ViewGroup，它会先调用<code>onInterceptTouchEvent</code>方法，根据返回值判断它自己要不要将它拦截。如果不拦截，它会找到需要接受这个事件的子View，通过调用子View的<code>dispatchTouchEvent</code>方法将事件分发下去（正如它的父View将事件这样分发给它一样）。</li>
+<li>如果这个View不是ViewGroup，它会直接调用自己的<code>onTouchEvent</code>，根据返回值判断是否自己想消费这个事件，并在<code>dispatchTouchEvent</code>中返回自己是否消费了这个事件。</li>
+<li>将事件分发给子View的ViewGroup会从其<code>dispatchTouchEvent</code>的返回值判断子View是否消费了事件。如果没有View愿意消费，那么它自己消费或者也不消费并告知自己的父View（正如拒绝消费的子View们一样）。</li>
+</ul>
+<p>以上描述不一定准确，但基本把事件分发的逻辑讲述了一遍。接下来，我们可以开始看源码了～</p>
+<h2 id="ViewGroup的dispatchTouchEvent"><a href="#ViewGroup的dispatchTouchEvent" class="headerlink" title="ViewGroup的dispatchTouchEvent"></a>ViewGroup的dispatchTouchEvent</h2><p>不得不说源码实在太复杂了，光是ViewGroup的<code>dispatchTouchEvent</code>就有200多行。我把里面的一些语句（包括多点触摸相关代码、只用于Debug的语句、安全校验等）删掉，得到下面的代码：</p>
+<pre><code class="java">public class ViewGroup {
+    // ...
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        boolean handled = false;
+
+        final int action = ev.getAction();
+        final int actionMasked = action &amp; MotionEvent.ACTION_MASK;
+
+        // Handle an initial down.
+        if (actionMasked == MotionEvent.ACTION_DOWN) {
+            // Throw away all previous state when starting a new touch gesture.
+            // The framework may have dropped the up or cancel event for the previous gesture
+            // due to an app switch, ANR, or some other state change.
+            cancelAndClearTouchTargets(ev);
+            resetTouchState();
+        }
+
+        // Check for interception.
+        final boolean intercepted;
+        if (actionMasked == MotionEvent.ACTION_DOWN
+                || mFirstTouchTarget != null) {
+            final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
+            if (!disallowIntercept) {
+                intercepted = onInterceptTouchEvent(ev);
+                ev.setAction(action); // restore action in case it was changed
+            } else {
+                intercepted = false;
+            }
+        } else {
+            // There are no touch targets and this action is not an initial down
+            // so this view group continues to intercept touches.
+            intercepted = true;
+        }
+
+        // Check for cancelation.
+        final boolean canceled = resetCancelNextUpFlag(this)
+                || actionMasked == MotionEvent.ACTION_CANCEL;
+
+        // Update list of touch targets for pointer down, if needed.
+        final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
+        TouchTarget newTouchTarget = null;
+        boolean alreadyDispatchedToNewTouchTarget = false;
+        if (!canceled &amp;&amp; !intercepted) {
+            if (actionMasked == MotionEvent.ACTION_DOWN) {
+                final int actionIndex = ev.getActionIndex(); // always 0 for down
+                final int idBitsToAssign = TouchTarget.ALL_POINTER_IDS;
+
+                // Clean up earlier touch targets for this pointer id in case they
+                // have become out of sync.
+                removePointersFromTouchTargets(idBitsToAssign);
+
+                final int childrenCount = mChildrenCount;
+                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+                    final float x = ev.getX(actionIndex);
+                    final float y = ev.getY(actionIndex);
+                    // Find a child that can receive the event.
+                    // Scan children from front to back.
+                    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
+                    final boolean customOrder = preorderedList == null
+                            &amp;&amp; isChildrenDrawingOrderEnabled();
+                    final View[] children = mChildren;
+                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+                        final int childIndex = getAndVerifyPreorderedIndex(
+                                childrenCount, i, customOrder);
+                        final View child = getAndVerifyPreorderedView(
+                                preorderedList, children, childIndex);
+
+                        if (!canViewReceivePointerEvents(child)
+                                || !isTransformedTouchPointInView(x, y, child, null)) {
+                            continue;
+                        }
+
+                        newTouchTarget = getTouchTarget(child);
+                        if (newTouchTarget != null) {
+                            // Child is already receiving touch within its bounds.
+                            // Give it the new pointer in addition to the ones it is handling.
+                            newTouchTarget.pointerIdBits |= idBitsToAssign;
+                            break;
+                        }
+
+                        resetCancelNextUpFlag(child);
+                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
+                            // Child wants to receive touch within its bounds.
+                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
+                            alreadyDispatchedToNewTouchTarget = true;
+                            break;
+                        }
+                    }
+                    if (preorderedList != null) preorderedList.clear();
+                }
+
+                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
+                    // Did not find a child to receive the event.
+                    // Assign the pointer to the least recently added target.
+                    newTouchTarget = mFirstTouchTarget;
+                    while (newTouchTarget.next != null) {
+                        newTouchTarget = newTouchTarget.next;
+                    }
+                    newTouchTarget.pointerIdBits |= idBitsToAssign;
+                }
+            }
+        }
+
+        // Dispatch to touch targets.
+        if (mFirstTouchTarget == null) {
+            // No touch targets so treat this as an ordinary view.
+            handled = dispatchTransformedTouchEvent(ev, canceled, null,
+                    TouchTarget.ALL_POINTER_IDS);
+        } else {
+            // Dispatch to touch targets, excluding the new touch target if we already
+            // dispatched to it.  Cancel touch targets if necessary.
+            TouchTarget predecessor = null;
+            TouchTarget target = mFirstTouchTarget;
+            while (target != null) {
+                final TouchTarget next = target.next;
+                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+                    handled = true;
+                } else {
+                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
+                            || intercepted;
+                    if (dispatchTransformedTouchEvent(ev, cancelChild,
+                            target.child, target.pointerIdBits)) {
+                        handled = true;
+                    }
+                    if (cancelChild) {
+                        if (predecessor == null) {
+                            mFirstTouchTarget = next;
+                        } else {
+                            predecessor.next = next;
+                        }
+                        target.recycle();
+                        target = next;
+                        continue;
+                    }
+                }
+                predecessor = target;
+                target = next;
+            }
+        }
+
+        // Update list of touch targets for pointer up or cancel, if needed.
+        if (canceled
+                || actionMasked == MotionEvent.ACTION_UP) {
+            resetTouchState();
+        }
+
+        return handled;
+    }
+}</code></pre>
+<p>仍然有147行，我能怎么办，我也很绝望啊！实话说这个方法我断断续续看了几天才勉强捋清楚……好的， 废话不多说，我们来看看ViewGroup是如何分发事件的。</p>
+<p>这个方法里的<code>handled</code>局部变量就是这个ViewGroup（或其子View）最终是否消费了这个事件。<code>actionMasked</code>只是将高3个字节复位（因为action是整型），直接看作是这个事件的action就好。</p>
+<p>首先，如果这是一个<code>ACTION_DOWN</code>动作，也就是按下屏幕的一瞬间，我们需要把之前的状态重置，为这个新的手势做准备（手势就是按下、一系列的移动和抬起动作序列）：</p>
+<pre><code class="java">        // Handle an initial down.
+        if (actionMasked == MotionEvent.ACTION_DOWN) {
+            // Throw away all previous state when starting a new touch gesture.
+            // The framework may have dropped the up or cancel event for the previous gesture
+            // due to an app switch, ANR, or some other state change.
+            cancelAndClearTouchTargets(ev);
+            resetTouchState();
+        }</code></pre>
+<p>从方法名就可以看出他们的作用是取消、清除原来的触摸目标，并重置触摸状态。这里先剧透一下，TouchTarget就是对能够接受触摸事件的子View的简单封装。</p>
+<p>然后，由于我们是一个ViewGroup，所以我们需要判断要不要拦截这次事件：</p>
+<pre><code class="java">        // Check for interception.
+        final boolean intercepted;
+        if (actionMasked == MotionEvent.ACTION_DOWN
+                || mFirstTouchTarget != null) {
+            final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
+            if (!disallowIntercept) {
+                intercepted = onInterceptTouchEvent(ev);
+                ev.setAction(action); // restore action in case it was changed
+            } else {
+                intercepted = false;
+            }
+        } else {
+            // There are no touch targets and this action is not an initial down
+            // so this view group continues to intercept touches.
+            intercepted = true;
+        }</code></pre>
+<p>这时我们看到了一个<code>mFirstTouchTarget</code>的属性，这个属性挺重要，但网上对这个属性的解释足够详细的实在太少。如果看完了整个<code>dispatchTouchEvent</code>方法，就会发现，ViewGroup会管理一群能够消费触摸事件的子View，ViewGroup把他们放在一个单向链表里，而这个<code>mFirstTouchTarget</code>就是这个链表的头。而为什么一个手势会被多个View同时消费我还没有深挖，从直觉来说，应该和多点触摸等有关。</p>
+<p>从上面的代码片段可以看出，如果这是手势的开始，我们就会通过调用<code>onInterceptTouchEvent</code>，决定是否拦截。如果这个链表不为空，表示有子View想消费，所以也需要判断要不要拦截。只有在手势进行到中间又没有子View愿意背锅（消费事件）的情况下，才会拦截。</p>
+<p>直接这么解释似乎很牵强，其实只要和拦截行为的表现联系起来就理解了。对于ViewGroup而言，事实上他会在一个手势的发生过程中不停地判断是否拦截，这就是为什么在子View会消费的情况下仍然要调用<code>onInterceptTouchEvent</code>。而另一方面，一旦这个ViewGroup已经决定啦，就由它自己来拦截这个事件，那么<strong>这之后<code>onInterceptTouchEvent</code>都不会再调用（废话，都决定拦截了就别反悔嘛），且之后会一直拦截下去</strong>，因为决定拦截之后，后面会给所有原来消费事件的子View发送取消事件（<code>ACTION_CANCEL</code>），并将他们从<code>mFirstTouchTarget</code>中去除，所以如果<code>mFirstTouchTarget</code>是空的，又不是初始的按下事件，那么就表示之前已经被拦截了，所以要继续拦截。</p>
+<p>注意这里的<code>disallowIntercept</code>可以先不考虑。其实子View可以通过设置父View的这个属性来强制取消父View的拦截。</p>
+<p>接下来是判断是否是取消事件：</p>
+<pre><code class="java">        // Check for cancelation.
+        final boolean canceled = resetCancelNextUpFlag(this)
+                || actionMasked == MotionEvent.ACTION_CANCEL;</code></pre>
+<p>这里<code>resetCancelNextUpFlag</code>方法的目的我也不甚清楚，如果你知道，希望你能把答案留在评论区！</p>
+<p><code>split</code>我认为和多点触摸有关，在多点触摸的时候会把事件分割，因此我们先忽略……</p>
+<p>接下来，<code>newTouchTarget</code>是新的触摸对象，<code>alreadyDispatchedToNewTouchTarget</code>显然就是说明是否被分发给新的触摸对象了：</p>
+<pre><code class="java">        // Update list of touch targets for pointer down, if needed.
+        final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
+        TouchTarget newTouchTarget = null;
+        boolean alreadyDispatchedToNewTouchTarget = false;</code></pre>
+<p>如果没有被取消，也没有被拦截，那么就要尝试分发给子View了：</p>
+<pre><code class="java">        if (!canceled &amp;&amp; !intercepted) {
+            if (actionMasked == MotionEvent.ACTION_DOWN) {
+                final int actionIndex = ev.getActionIndex(); // always 0 for down
+                final int idBitsToAssign = TouchTarget.ALL_POINTER_IDS;
+
+                // Clean up earlier touch targets for this pointer id in case they
+                // have become out of sync.
+                removePointersFromTouchTargets(idBitsToAssign);
+
+                final int childrenCount = mChildrenCount;
+                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+                    // Part A
+                }
+
+                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
+                    // Part B
+                }
+            }
+        }</code></pre>
+<p>从上面的结构可以看出，事件分发主要是在手势开始，也就是按下事件发生的时候开始决定谁来消费的。此时<code>newTouchTarget</code>显然还是空的，因此如果此时子View的数量不为0，就要从中找出能够消费事件的子View了（Part A）。注意，我认为这里的Part B是用于多点触摸的：如果Part A之后<code>newTouchTarget</code>仍然为空，那么就是说当前没有子View愿意消费，但是<code>mFirstTouchTarget</code>可能包含原来已经有的手指的触摸手势对应的触摸对象，因此是有可能不为空的。但这些暂时不是这次的主要分析目标，所以我们不考虑Part B。</p>
+<p>接下来看看Part A的代码：</p>
+<pre><code class="java">                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+                    final float x = ev.getX(actionIndex);
+                    final float y = ev.getY(actionIndex);
+                    // Find a child that can receive the event.
+                    // Scan children from front to back.
+                    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
+                    final boolean customOrder = preorderedList == null
+                            &amp;&amp; isChildrenDrawingOrderEnabled();
+                    final View[] children = mChildren;
+                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+                        // ...
+                    }
+                    if (preorderedList != null) preorderedList.clear();
+                }</code></pre>
+<p>很简单，得到触摸的坐标，并开始遍历所有的子View。对于每个被遍历到的子View：</p>
+<pre><code class="java">                        final int childIndex = getAndVerifyPreorderedIndex(
+                                childrenCount, i, customOrder);
+                        final View child = getAndVerifyPreorderedView(
+                                preorderedList, children, childIndex);
+
+                        if (!canViewReceivePointerEvents(child)
+                                || !isTransformedTouchPointInView(x, y, child, null)) {
+                            continue;
+                        }
+
+                        newTouchTarget = getTouchTarget(child);
+                        if (newTouchTarget != null) {
+                            // Child is already receiving touch within its bounds.
+                            // Give it the new pointer in addition to the ones it is handling.
+                            newTouchTarget.pointerIdBits |= idBitsToAssign;
+                            break;
+                        }
+
+                        resetCancelNextUpFlag(child);
+                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
+                            // Child wants to receive touch within its bounds.
+                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
+                            alreadyDispatchedToNewTouchTarget = true;
+                            break;
+                        }</code></pre>
+<p>从上面可见，我们先得到当前遍历到的子View的对象和index序号。然后通过<code>canViewReceivePointerEvents</code>和 <code>isTransformedTouchPointInView</code>两个方法，判断这个子View能否接受这个事件。如果任何一个条件不满足，就会跳过这个子View。<code>getTouchTarget</code>方法是从<code>mFirstTouchTarget</code>触摸对象链表中找到这个View对应的触摸对象，显然是找不到的，因此会向后继续执行，调用<code>dispatchTransformedTouchEvent</code>。这个方法里面就进行了对子View调用<code>dispatchTouchEvent</code>这个操作，并从返回值判断是否被消费了（回顾前文，<code>dispatchTouchEvent</code>的返回值表示该View是否会消费这个事件）。如果消费了，那么我们通过<code>addTouchTarget</code>方法把这个View封装到一个TouchTarget里，添加到链表里，同时赋值给<code>newTouchTarget</code>，<code>alreadyDispatchedToNewTouchTarget</code>也被置为真。</p>
+<p>分发给子View的代码结束了，看下面的代码，我们判断了<code>mFirstTouchTarget</code>是否为空。那么什么时候这个链表是空的呢？</p>
+<ol>
+<li>没有子 View 接锅的时候</li>
+<li>手势中间，但之前已经被拦截下来的时候</li>
+</ol>
+<p>在这两种情况下，我们ViewGroup自己要去考虑消费这个事件了：</p>
+<pre><code class="java">        // Dispatch to touch targets.
+        if (mFirstTouchTarget == null) {
+            // No touch targets so treat this as an ordinary view.
+            handled = dispatchTransformedTouchEvent(ev, canceled, null,
+                    TouchTarget.ALL_POINTER_IDS);
+        } else {
+            // ...
+        }</code></pre>
+<p>如上，注意虽然我们又一次调用了<code>dispatchTransformedTouchEvent</code>，但我们给View参数传递了<code>null</code>，我们后面会发现，这个方法不仅可以把事件分发给子View，还能分发给自己。</p>
+<p>如果我们已经有子View消费了事件，理论上会执行上面片段里的<code>else</code>块：</p>
+<pre><code class="java">        if (mFirstTouchTarget == null) {
+            // ...
+        } else {
+            // Dispatch to touch targets, excluding the new touch target if we already
+            // dispatched to it.  Cancel touch targets if necessary.
+            TouchTarget predecessor = null;
+            TouchTarget target = mFirstTouchTarget;
+            while (target != null) {
+                final TouchTarget next = target.next;
+                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+                    handled = true;
+                } else {
+                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
+                            || intercepted;
+                    if (dispatchTransformedTouchEvent(ev, cancelChild,
+                            target.child, target.pointerIdBits)) {
+                        handled = true;
+                    }
+                    if (cancelChild) {
+                        if (predecessor == null) {
+                            mFirstTouchTarget = next;
+                        } else {
+                            predecessor.next = next;
+                        }
+                        target.recycle();
+                        target = next;
+                        continue;
+                    }
+                }
+                predecessor = target;
+                target = next;
+            }
+        }</code></pre>
+<p>初看之下，<code>else</code>块中开始遍历链表，此时链表里就只有一个新的子View，<code>alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget</code>也为真，一切都很和谐。</p>
+<p>等等，我们是不是忽略了一个情况？我们前面说过，如果我们在手势中途拦截了手势，<code>mFirstTouchTarget</code>在哪里被清空呢？正是在这个<code>else</code>块里！由于在这个情况下，<code>newTouchTarget</code>必然为空，那么原来链表里的子View都会被删除：</p>
+<pre><code class="java">                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
+                            || intercepted;
+                    if (dispatchTransformedTouchEvent(ev, cancelChild,
+                            target.child, target.pointerIdBits)) {
+                        handled = true;
+                    }
+                    if (cancelChild) {
+                        if (predecessor == null) {
+                            mFirstTouchTarget = next;
+                        } else {
+                            predecessor.next = next;
+                        }
+                        target.recycle();
+                        target = next;
+                        continue;
+                    }</code></pre>
+<p>从上可见，如果<code>intercepted</code>为真，则<code>cancelChild</code>也为真，会通过<code>dispatchTransformedTouchEvent</code>把取消事件分发给子View，并把他们都从链表中删除。注意，从上面我们也可以看出，在首次拦截的时候，如果这个事件之前是被其他子View消费的，那么我们只分发取消事件给子View，子View的<code>onTouchEvent</code>仍然会被调用（事件类型为<code>ACTION_CANCEL</code>），而这个ViewGroup的<code>onTouchEvent</code>还不会被调用，需要等待下一次的<code>ACTION_MOVE</code>。</p>
+<p>事实上，上面的<code>else</code>块还承载了分发后续事件给子View的任务：在后续的MOVE和UP事件中，由于<code>mFirstTouchTarget</code>不为空，会直接运行到<code>else</code>这个块，并由于没有<code>newTarget</code>，因此会通过上面片段的第3-4行分发这个后续事件给子View。</p>
+<p>最后，如果是取消事件或抬起手指事件，我们重置状态：</p>
+<pre><code class="java">        // Update list of touch targets for pointer up or cancel, if needed.
+        if (canceled
+                || actionMasked == MotionEvent.ACTION_UP) {
+            resetTouchState();
+        }</code></pre>
+<p>那么，到此为止，ViewGroup的<code>dispatchTouchEvent</code>就看完了，真累啊……</p>
+<p>对于<code>onInterceptTouchEvent</code>，源码如下，可以看作就是不拦截：</p>
+<pre><code class="java">    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (ev.isFromSource(InputDevice.SOURCE_MOUSE)
+                &amp;&amp; ev.getAction() == MotionEvent.ACTION_DOWN
+                &amp;&amp; ev.isButtonPressed(MotionEvent.BUTTON_PRIMARY)
+                &amp;&amp; isOnScrollbarThumb(ev.getX(), ev.getY())) {
+            return true;
+        }
+        return false;
+    }</code></pre>
+<p>ViewGroup并没有重写<code>onTouchEvent</code>，我们如果看View的<code>onTouchEvent</code>，会发现：</p>
+<pre><code class="java">    public boolean onTouchEvent(MotionEvent event) {
+        final float x = event.getX();
+        final float y = event.getY();
+        final int viewFlags = mViewFlags;
+        final int action = event.getAction();
+
+        if ((viewFlags &amp; ENABLED_MASK) == DISABLED) {
+            if (action == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PFLAG_PRESSED) != 0) {
+                setPressed(false);
+            }
+            // A disabled view that is clickable still consumes the touch
+            // events, it just doesn&#39;t respond to them.
+            return (((viewFlags &amp; CLICKABLE) == CLICKABLE
+                    || (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)
+                    || (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE);
+        }
+        if (mTouchDelegate != null) {
+            if (mTouchDelegate.onTouchEvent(event)) {
+                return true;
+            }
+        }
+
+        if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||
+                (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE) ||
+                (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) {
+            // A lot of code...
+            return true;
+        }
+
+        return false;
+    }
+</code></pre>
+<p>从上面的节选可以看出，如果这个View不可点击和长按（默认即是如此），那么<code>onTouchEvent</code>是返回<code>false</code>的。从源码中还可以发现，即使这个View被禁用（disabled）了，只要它是可点击的，它仍然会消费触摸事件，这个和我们的直觉是有点违背的，所以算是看源码的额外收获。很多坑也许都能从源码中找出答案！</p>
+<p>到这里，我们就弄懂了ViewGroup的事件分发逻辑：</p>
+<ul>
+<li>手指按下的时候<ul>
+<li>重置各种状态</li>
+<li>不拦截：遍历子View，分发事件给能够接受这个事件的子View，并将消费这个事件的子View加入到链表，如果没有找到消费的子View，则分发事件给自己</li>
+<li>拦截：分发事件给自己</li>
+</ul>
+</li>
+<li>手指滑动或抬起的时候<ul>
+<li>不拦截：<ul>
+<li>有子View在消费该事件：继续分发给该子View</li>
+<li>无子View消费：分发事件给自己</li>
+</ul>
+</li>
+<li>刚好拦截：清除正在消费事件的子View（如果有）并分发取消事件</li>
+<li>已经拦截：分发事件给自己</li>
+</ul>
+</li>
+</ul>
+<p>上面的“刚好拦截”指的是当前手势过程中第一次拦截，“已经拦截”表示后续的拦截。</p>
+<p>到此为止，我们就基本了解了View树中为什么事件会这样传递，知其然亦知其所以然。但是，这个关键的<code>dispatchTouchEvent</code>中调用了很多其他方法，我会在下一篇中一一探索，包括它如何判断一个View有资格接受这个事件？子View的<code>dispatchTouchEvent</code>到底在哪里被调用？</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//perqin-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/02/27/migrate-java-web-application-to-gradle-build-system/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Perqin's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        perqinxie@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/showcases" title="Showcase">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                Showcase
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/perqinxie" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/perqin" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+
+    <!-- V2EX -->
+    
+
+    <!-- Segmentfault -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+    <!-- Leancloud -->
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>
+        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
+    </script>
+    <script type="text/ls-javascript" id="leancloud-views-script">
+    function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        $('.leancloud-views_num').each(function() {
+            var url = $(this).attr('id').trim();
+            query.equalTo('url', url);
+            query.find({
+                success: function(results) {
+                    if (results.length === 0) {
+                        var content = '0 ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                        return;
+                    }
+                    for (var i = 0; i < results.length; i++) {
+                        var object = results[i];
+                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    }
+                },
+                error: function(object, error) {
+                    console.log('Error: ' + error.code + ' ' + error.message);
+                }
+            });
+        });
+    }
+
+    function addCount(Counter) {
+      var Counter = AV.Object.extend('Counter');
+      url = $('.leancloud-views_num').attr('id').trim();
+      title = $('.leancloud-views_num').attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+      query.equalTo('url', url);
+      query.find({
+          success: function(results) {
+            if (results.length > 0) {
+                var counter = results[0];
+                counter.fetchWhenSave(true);
+                counter.increment('time');
+                counter.save(null, {
+                    success: function(counter) {
+                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    },
+                    error: function(counter, error) {
+                        console.log('Failed to save Visitor num, with error message: ' + error.message);
+                    }
+                });
+            } else {
+              var newcounter = new Counter();
+              newcounter.set('title', title);
+              newcounter.set('url', url);
+              newcounter.set('time', 1);
+              newcounter.save(null, {
+                  success: function(newcounter) {
+                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
+                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+                      $(document.getElementById(url)).text(content);
+                  },
+                  error: function(newcounter, error) {
+                      console.log('Failed to create');
+                  }
+              });
+            }
+        },
+        error: function(error) {
+            console.log('Error:' + error.code + ' ' + error.message);
+        }
+      });
+    }
+    $(function() {
+        var Counter = AV.Object.extend('Counter');
+        if ($('.leancloud-views_num').length === 1) {
+            addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+            showTime(Counter);
+        }
+    });
+</script>
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    var copyrightNow = new Date().getFullYear();
+    var textContent = document.querySelector('span[year]')
+
+    copyrightSince = 2016;
+    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
+        textContent.textContent = copyrightNow
+    } else {
+        textContent.textContent = copyrightSince + ' - ' + copyrightNow
+    }
+
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
