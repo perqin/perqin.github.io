@@ -1,6 +1,6 @@
 ---
 title: 肝帝
-permalink: 'showcases/:title/'
+permalink: 'showcases/gan-dear/'
 date: 2017-06-16 10:35:35
 layout: showcase
 ---

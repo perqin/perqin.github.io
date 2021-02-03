@@ -20,7 +20,6 @@ tags: [bootloader, AOSP, Android, ROM, 魅族, 魅蓝2]
 
 # 1. 解锁bootloader
 1. 安装手机的驱动（在Windows10下直接插入手机就会自动安装），下载adb工具，将adb.exe加入到环境变量。
-![]()
 2. 下载脚本unlock_bootloader.sh并拷贝到手机里（如内置存储的根目录）。
 3. 下载[Terminal 1.0.70]()和[BusyBox + Free.ver.33.build.183]()并安装。
 4. 运行BusyBox并授权root权限，点击“Install System”。
