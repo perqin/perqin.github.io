@@ -2,149 +2,149 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://perqin.github.io/2016/04/14/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
+    <loc>https://perqin.github.io/2016/08/08/tips-to-save-your-time-on-ubuntu/</loc>
     
-    <lastmod>2020-04-10T09:47:16.649Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2016/04/18/ubuntu-reinstallation-series-shadowsocks-configurations/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.647Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/01/08/tumoji-develop-blogpost-1/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.646Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.164Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/</loc>
     
-    <lastmod>2020-04-10T09:47:16.646Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.164Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://perqin.github.io/2016/08/09/tips-to-save-your-time-on-ubuntu/</loc>
+    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/</loc>
     
-    <lastmod>2020-04-10T09:47:16.645Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/04/11/the-activity-is-moved-and-refuses-to-finish/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.644Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.164Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/</loc>
+    <loc>https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/</loc>
     
-    <lastmod>2020-04-10T09:47:16.644Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.643Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.164Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/</loc>
+    <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
     
-    <lastmod>2020-04-10T09:47:16.642Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.642Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/06/16/showcases/:title/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.642Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.641Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2016/12/24/install-pydio-on-debian-jessie-with-php7/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.641Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.164Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/</loc>
     
-    <lastmod>2020-04-10T09:47:16.641Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/04/10/the-activity-is-moved-and-refuses-to-finish/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/06/16/showcases/gan-dear/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.128Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.128Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/</loc>
+    
+    <lastmod>2021-02-03T11:48:22.128Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://perqin.github.io/2017/05/13/fcanr-me-stop-favorite/</loc>
     
-    <lastmod>2020-04-10T09:47:16.613Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.128Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://perqin.github.io/2017/02/16/https-quick-deployment-guide/</loc>
+    <loc>https://perqin.github.io/2017/02/15/https-quick-deployment-guide/</loc>
     
-    <lastmod>2020-04-10T09:47:16.613Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/05/01/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.613Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.128Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://perqin.github.io/2017/04/04/explore-event-dispatching-from-source-2/</loc>
+    <loc>https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/</loc>
     
-    <lastmod>2020-04-10T09:47:16.612Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2017/03/22/explore-event-dispatching-from-source-1/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.611Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.128Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://perqin.github.io/2016/11/06/confusion-in-single-instance-launch-mode/</loc>
+    <loc>https://perqin.github.io/2016/12/22/configure-tomcat-jsp-project-with-idea/</loc>
     
-    <lastmod>2020-04-10T09:47:16.610Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/2016/12/23/configure-tomcat-jsp-project-with-idea/</loc>
-    
-    <lastmod>2020-04-10T09:47:16.605Z</lastmod>
+    <lastmod>2021-02-03T11:48:22.124Z</lastmod>
     
   </url>
   
