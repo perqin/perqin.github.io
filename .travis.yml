@@ -1,9 +1,0 @@
-if: branch = source
-
-language: node_js
-node_js:
-  - lts/*
-
-script: npx hexo generate
-
-deploy: npx hexo deploy
