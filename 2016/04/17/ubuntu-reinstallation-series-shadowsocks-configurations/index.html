@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,Ubuntu,Shadowsocks,Privoxy,GFW,gfwlist,翻墙">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Mon Apr 18 2016 01:52:00 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html",
     "headline": "重装Ubuntu系列：Shadowsocks配置",
     "datePublished": "Mon Apr 18 2016 01:52:00 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">1.</span> <span class="post-toc-text">参考链接</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装Shadowsocks-python客户端"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装Shadowsocks-python客户端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#配置客户端"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置客户端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行Shadowsocks"><span class="post-toc-number">4.</span> <span class="post-toc-text">运行Shadowsocks</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装与配置Privoxy"><span class="post-toc-number">5.</span> <span class="post-toc-text">安装与配置Privoxy</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#给浏览器配置代理"><span class="post-toc-number">6.</span> <span class="post-toc-text">给浏览器配置代理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#让Shadowsocks开机自启动"><span class="post-toc-number">7.</span> <span class="post-toc-text">让Shadowsocks开机自启动</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#还不够完美"><span class="post-toc-number">8.</span> <span class="post-toc-text">还不够完美</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="post-toc-number">1.</span> <span class="post-toc-text">参考链接</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85Shadowsocks-python%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装Shadowsocks-python客户端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置客户端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%BF%90%E8%A1%8CShadowsocks"><span class="post-toc-number">4.</span> <span class="post-toc-text">运行Shadowsocks</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AEPrivoxy"><span class="post-toc-number">5.</span> <span class="post-toc-text">安装与配置Privoxy</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E7%BB%99%E6%B5%8F%E8%A7%88%E5%99%A8%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="post-toc-number">6.</span> <span class="post-toc-text">给浏览器配置代理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%AE%A9Shadowsocks%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="post-toc-number">7.</span> <span class="post-toc-text">让Shadowsocks开机自启动</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%BF%98%E4%B8%8D%E5%A4%9F%E5%AE%8C%E7%BE%8E"><span class="post-toc-number">8.</span> <span class="post-toc-text">还不够完美</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/gfw/">GFW</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/privoxy/">Privoxy</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/shadowsocks/">Shadowsocks</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ubuntu/">Ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/gfwlist/">gfwlist</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/翻墙/">翻墙</a>
+        <a class="post_tag-none-link" href="/tags/gfw/" rel="tag">GFW</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/privoxy/" rel="tag">Privoxy</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/shadowsocks/" rel="tag">Shadowsocks</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/ubuntu/" rel="tag">Ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/gfwlist/" rel="tag">gfwlist</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/%E7%BF%BB%E5%A2%99/" rel="tag">翻墙</a>
     </ul>
     
 
@@ -510,40 +514,60 @@
     
         <p>说实话Ubuntu（版本<code>14.04 LTS</code>）的重装成本比Windows高太多了，一方面是自己不熟悉，另一方面也不如Windows只要exe和msi就能搞定，然而搞崩Ubuntu或者改动分区之后又不得不重装（妈蛋重装系统和重搭博客是我干得最多的事！！），往往有些配置有没有记下来，于是有了写这个系列的想法。<br>作为本系列的第一蛋，自然要先把科学上网的问题解决，因为已经有了VPS，所以只需要搞定客户端的问题。</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><a href="http://www.ihunter.me/Ubuntu%2014.04%20VPS%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEShadowsocks%E7%9A%84%E6%96%B9%E6%B3%95.html" target="_blank" rel="noopener">Ubuntu 14.04 VPS安装配置Shadowsocks的方法</a></li>
-<li><a href="https://github.com/snachx/gfwlist2privoxy" target="_blank" rel="noopener">snachx/gfwlist2privoxy</a></li>
-<li><a href="https://github.com/gfwlist/gfwlist" target="_blank" rel="noopener">gfwlist/gfwlist</a></li>
-<li><a href="http://askubuntu.com/questions/18802/how-to-correctly-add-a-custom-daemon-to-init-d" target="_blank" rel="noopener">10.04 - How to correctly add a custom daemon to init.d? - Ask Ubuntu</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ihunter.me/Ubuntu%2014.04%20VPS%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEShadowsocks%E7%9A%84%E6%96%B9%E6%B3%95.html">Ubuntu 14.04 VPS安装配置Shadowsocks的方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/snachx/gfwlist2privoxy">snachx/gfwlist2privoxy</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gfwlist/gfwlist">gfwlist/gfwlist</a></li>
+<li><a target="_blank" rel="noopener" href="http://askubuntu.com/questions/18802/how-to-correctly-add-a-custom-daemon-to-init-d">10.04 - How to correctly add a custom daemon to init.d? - Ask Ubuntu</a></li>
 </ul>
 <h1 id="安装Shadowsocks-python客户端"><a href="#安装Shadowsocks-python客户端" class="headerlink" title="安装Shadowsocks-python客户端"></a>安装Shadowsocks-python客户端</h1><p>事实上编译<code>libev</code>版本的也是可行的，但是实在麻烦，这里图方便就用了python版本的实现。<br>在终端输入以下命令：</p>
 <pre><code>sudo apt-get update
 sudo apt-get install python-gevent python-pip python-m2crypto
-sudo pip install shadowsocks</code></pre><p>至此Shadowsocks就安装好了。</p>
+sudo pip install shadowsocks
+</code></pre>
+<p>至此Shadowsocks就安装好了。</p>
 <h1 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h1><p>Shadowsocks的python版本同时安装了客户端和服务器端，分别是<code>sslocal</code>和<code>ssserver</code>。<br>在<code>/etc/shadowsocks/</code>新建一个文件<code>sslocal.json</code>（其实放哪里无所谓，但是配置文件一般放在<code>/etc</code>里面），输入以下内容：</p>
-<pre><code>{
+<pre><code>&#123;
   &quot;server&quot;:&quot;1.2.3.4&quot;,
   &quot;server_port&quot;:5678,
   &quot;local_port&quot;:1080,
   &quot;password&quot;:&quot;passfoobar&quot;,
   &quot;timeout&quot;:600,
   &quot;method&quot;: &quot;aes-256-cfb&quot;
-}</code></pre><p>其中<code>server</code>是服务器地址，<code>server_port</code>是服务器端口，<code>local_port</code>是本地端口，一般默认就是<code>1080</code>，<code>password</code>是密码，<code>timeout</code>是超时时间（并不知道有什么用- -），<code>method</code>是加密方式，默认就是<code>aes-256-cfb</code>。</p>
+&#125;
+</code></pre>
+<p>其中<code>server</code>是服务器地址，<code>server_port</code>是服务器端口，<code>local_port</code>是本地端口，一般默认就是<code>1080</code>，<code>password</code>是密码，<code>timeout</code>是超时时间（并不知道有什么用- -），<code>method</code>是加密方式，默认就是<code>aes-256-cfb</code>。</p>
 <h1 id="运行Shadowsocks"><a href="#运行Shadowsocks" class="headerlink" title="运行Shadowsocks"></a>运行Shadowsocks</h1><p>在命令行输入</p>
-<pre><code>sudo sslocal -c /etc/shadowsocks/sslocal.json -d start</code></pre><p>之后Shadowsocks就作为守护进程在后台运行了，参数c指定了配置文件，d参数要求运行守护（后台）进程。这里需要注意的是必须用sudo运行，否则会无法读取配置文件。</p>
+<pre><code>sudo sslocal -c /etc/shadowsocks/sslocal.json -d start
+</code></pre>
+<p>之后Shadowsocks就作为守护进程在后台运行了，参数c指定了配置文件，d参数要求运行守护（后台）进程。这里需要注意的是必须用sudo运行，否则会无法读取配置文件。</p>
 <h1 id="安装与配置Privoxy"><a href="#安装与配置Privoxy" class="headerlink" title="安装与配置Privoxy"></a>安装与配置Privoxy</h1><p>运行了Shadowsocks之后你会发现即使给浏览器设置了代理端口，依然无法翻墙，这是因为Ubuntu 14.04本身不支持<code>socks5</code>协议，而python实现的Shadowsocks本身只有这个协议，因此在看了Windows上C#版本的Shadowsocks实现的源码之后想到了解决方法：使用Privoxy在<code>localhost:8123</code>运行一个HTTP代理，然后转发到1080端口上去，然后将浏览器的代理设置到8123端口就行啦！<br>事实上使用Privoxy还有一个好处，那就是可以依托Privoxy强大的action文件进行局部代理，Windows上是通过pac文件实现的，但是Privoxy不支持pac文件，怎么办呢？<br>庆幸的是，GitHub上有一个项目<code>gfwlist2privoxy</code>可以把GFWList文件转换成Privoxy的action文件，而GFWList是一个开源项目，收集更新被墙的域名列表。于是解决方法也出来了：从gfwlist下载最新的gfwlist文件，然后用gfwlist2privoxy转换成action文件即可！<br>废话说完，开始配置，首先下载Privoxy：</p>
-<pre><code>sudo apt-get install privoxy</code></pre><p>完成之后在这里下载<a href="https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt" target="_blank" rel="noopener">最新的gfwlist.txt</a>，放到个人目录里，然后安装<code>gfwlist2privoxy</code>并生成action文件：</p>
+<pre><code>sudo apt-get install privoxy
+</code></pre>
+<p>完成之后在这里下载<a target="_blank" rel="noopener" href="https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt">最新的gfwlist.txt</a>，放到个人目录里，然后安装<code>gfwlist2privoxy</code>并生成action文件：</p>
 <pre><code>sudo pip install gfwlist2privoxy
-sudo gfwlist2privoxy -i ~/gfwlist.txt -f /etc/privoxy/gfwlist.action -p &quot;127.0.0.1:1080&quot; -t socks5</code></pre><p>接下来修改Privoxy的配置文件：</p>
-<pre><code>sudo vi /etc/privoxy/config</code></pre><p>首先指定监听地址：<br><img src="set-privoxy-listen-address.png" alt="Set Privoxy listen address"><br>然后增加action文件：<br><img src="add-privoxy-action-file.png" alt="Add Privoxy action file"><br>最后重启Privoxy服务，只要没有报错就大功告成！</p>
-<pre><code>sudo service privoxy restart</code></pre><h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br><img src="set-proxy-for-firefox.png" alt="Set proxy for Firefox"><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><img src="set-system-proxy.png" alt="Set system proxy"><br>另一种方法是在.bashrc文件末尾加上</p>
+sudo gfwlist2privoxy -i ~/gfwlist.txt -f /etc/privoxy/gfwlist.action -p &quot;127.0.0.1:1080&quot; -t socks5
+</code></pre>
+<p>接下来修改Privoxy的配置文件：</p>
+<pre><code>sudo vi /etc/privoxy/config
+</code></pre>
+<p>首先指定监听地址：<br><img src="set-privoxy-listen-address.png" alt="Set Privoxy listen address"><br>然后增加action文件：<br><img src="add-privoxy-action-file.png" alt="Add Privoxy action file"><br>最后重启Privoxy服务，只要没有报错就大功告成！</p>
+<pre><code>sudo service privoxy restart
+</code></pre>
+<h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br><img src="set-proxy-for-firefox.png" alt="Set proxy for Firefox"><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><img src="set-system-proxy.png" alt="Set system proxy"><br>另一种方法是在.bashrc文件末尾加上</p>
 <pre><code>export http_proxy=http://localhost:8123
-export https_proxy=http://localhost:8123</code></pre><p>之后输入</p>
-<pre><code>. ~/.bashrc</code></pre><p>更新环境即可。</p>
-<h1 id="让Shadowsocks开机自启动"><a href="#让Shadowsocks开机自启动" class="headerlink" title="让Shadowsocks开机自启动"></a>让Shadowsocks开机自启动</h1><p>这里一切都接近完美，但是仍然有个问题：每次开机需要手动启动Shadowsocks，能不能把Shadowsocks也变成service呢？当然可以，只需要在<code>/etc/init.d/</code>里面增加一个脚本即可。这个目录里有个<code>skeleton</code>文件，是模板文件，我已经进行了修改，虽然没有输出，但是能够正常启动，从<a href="https://gist.github.com/perqin/2867f8fac6dbbf2514b7471095233668/raw/84207cb3a4fbf702df828504b643c5b65a77c7ab/sslocal" target="_blank" rel="noopener">这里</a>下载这个文件到个人目录，然后更新服务列表启动服务：</p>
+export https_proxy=http://localhost:8123
+</code></pre>
+<p>之后输入</p>
+<pre><code>. ~/.bashrc
+</code></pre>
+<p>更新环境即可。</p>
+<h1 id="让Shadowsocks开机自启动"><a href="#让Shadowsocks开机自启动" class="headerlink" title="让Shadowsocks开机自启动"></a>让Shadowsocks开机自启动</h1><p>这里一切都接近完美，但是仍然有个问题：每次开机需要手动启动Shadowsocks，能不能把Shadowsocks也变成service呢？当然可以，只需要在<code>/etc/init.d/</code>里面增加一个脚本即可。这个目录里有个<code>skeleton</code>文件，是模板文件，我已经进行了修改，虽然没有输出，但是能够正常启动，从<a target="_blank" rel="noopener" href="https://gist.github.com/perqin/2867f8fac6dbbf2514b7471095233668/raw/84207cb3a4fbf702df828504b643c5b65a77c7ab/sslocal">这里</a>下载这个文件到个人目录，然后更新服务列表启动服务：</p>
 <pre><code>sudo cp ~/sslocal /etc/init.d/sslocal
 sudo chmod a+x /etc/init.d/sslocal
 sudo update-rc.d sslocal defaults 97 03
-sudo service sslocal start</code></pre><h1 id="还不够完美"><a href="#还不够完美" class="headerlink" title="还不够完美"></a>还不够完美</h1><p>到这里我们已经能够无痛翻墙，但是还有两个问题：</p>
+sudo service sslocal start
+</code></pre>
+<h1 id="还不够完美"><a href="#还不够完美" class="headerlink" title="还不够完美"></a>还不够完美</h1><p>到这里我们已经能够无痛翻墙，但是还有两个问题：</p>
 <ul>
 <li>服务自启动脚本没有输出，不能确定运行状态；</li>
 <li>无法自动更新gfwlist和更新用户规则</li>
@@ -728,7 +752,7 @@ sudo service sslocal start</code></pre><h1 id="还不够完美"><a href="#还不
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -738,7 +762,7 @@ sudo service sslocal start</code></pre><h1 id="还不够完美"><a href="#还不
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -748,11 +772,21 @@ sudo service sslocal start</code></pre><h1 id="还不够完美"><a href="#还不
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1045,7 +1079,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

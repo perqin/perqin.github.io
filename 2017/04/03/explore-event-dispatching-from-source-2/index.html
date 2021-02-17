@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,explore-event-dispatching-from-source,android">
+    <meta name="keywords" content="Perqin,android,explore-event-dispatching-from-source">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -243,11 +247,11 @@
     <meta property="og:title" content="从源码探索事件分发 2 | Perqin&#39;s Blog">
     <meta property="og:image" content="/img/avatar.png">
     <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="explore-event-dispatching-from-source"> <meta property="og:article:tag" content="android"> 
+    <meta property="og:article:tag" content="android"> <meta property="og:article:tag" content="explore-event-dispatching-from-source"> 
 
     
         <meta property="article:published_time" content="Tue Apr 04 2017 00:38:41 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/index.html",
     "headline": "从源码探索事件分发 2",
     "datePublished": "Tue Apr 04 2017 00:38:41 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -288,7 +292,7 @@
             "url": "/img/avatar.png"
         }
     },
-    "keywords": ",explore-event-dispatching-from-source,androidPerqin",
+    "keywords": ",android,explore-event-dispatching-from-sourcePerqin",
     "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.",
 }
 </script>
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#dispatchTransformedTouchEvent"><span class="post-toc-number">1.</span> <span class="post-toc-text">dispatchTransformedTouchEvent</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#cancelAndClearTouchTargets"><span class="post-toc-number">2.</span> <span class="post-toc-text">cancelAndClearTouchTargets</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#resetTouchState"><span class="post-toc-number">3.</span> <span class="post-toc-text">resetTouchState</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#getAndVerifyPreorderedIndex"><span class="post-toc-number">4.</span> <span class="post-toc-text">getAndVerifyPreorderedIndex</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#getAndVerifyPreorderedView"><span class="post-toc-number">5.</span> <span class="post-toc-text">getAndVerifyPreorderedView</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#buildTouchDispatchChildList"><span class="post-toc-number">6.</span> <span class="post-toc-text">buildTouchDispatchChildList</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#canViewReceivePointerEvents"><span class="post-toc-number">7.</span> <span class="post-toc-text">canViewReceivePointerEvents</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#isTransformedTouchPointInView"><span class="post-toc-number">8.</span> <span class="post-toc-text">isTransformedTouchPointInView</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#resetCancelNextUpFlag"><span class="post-toc-number">9.</span> <span class="post-toc-text">resetCancelNextUpFlag</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#View-的事件分发"><span class="post-toc-number">10.</span> <span class="post-toc-text">View 的事件分发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">11.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#dispatchTransformedTouchEvent"><span class="post-toc-number">1.</span> <span class="post-toc-text">dispatchTransformedTouchEvent</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#cancelAndClearTouchTargets"><span class="post-toc-number">2.</span> <span class="post-toc-text">cancelAndClearTouchTargets</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#resetTouchState"><span class="post-toc-number">3.</span> <span class="post-toc-text">resetTouchState</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#getAndVerifyPreorderedIndex"><span class="post-toc-number">4.</span> <span class="post-toc-text">getAndVerifyPreorderedIndex</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#getAndVerifyPreorderedView"><span class="post-toc-number">5.</span> <span class="post-toc-text">getAndVerifyPreorderedView</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#buildTouchDispatchChildList"><span class="post-toc-number">6.</span> <span class="post-toc-text">buildTouchDispatchChildList</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#canViewReceivePointerEvents"><span class="post-toc-number">7.</span> <span class="post-toc-text">canViewReceivePointerEvents</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#isTransformedTouchPointInView"><span class="post-toc-number">8.</span> <span class="post-toc-text">isTransformedTouchPointInView</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#resetCancelNextUpFlag"><span class="post-toc-number">9.</span> <span class="post-toc-text">resetCancelNextUpFlag</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#View-%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91"><span class="post-toc-number">10.</span> <span class="post-toc-text">View 的事件分发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%80%BB%E7%BB%93"><span class="post-toc-number">11.</span> <span class="post-toc-text">总结</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/explore-event-dispatching-from-source/">explore-event-dispatching-from-source</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/explore-event-dispatching-from-source/" rel="tag">explore-event-dispatching-from-source</a>
     </ul>
     
 
@@ -511,52 +515,54 @@
         <p>在<a href="/2017/03/22/explore-event-dispatching-from-source-1/">上一篇</a>里，我们简单地分析了 ViewGroup 的<code>dispatchTouchEvent</code>方法，但这个方法里涉及到的几个其他关键方法还没有搞清楚它们做了什么。另外，View 的事件分发也没有分析，这一篇将会涵盖以上内容。</p>
 <h2 id="dispatchTransformedTouchEvent"><a href="#dispatchTransformedTouchEvent" class="headerlink" title="dispatchTransformedTouchEvent"></a>dispatchTransformedTouchEvent</h2><p>在 ViewGroup 的<code>dispatchTouchEvent</code>方法里，一共有三个地方调用到了<code>dispatchTransformedTouchEvent</code>方法，而对子 View 以及 ViewGroup 本身的<code>onTouchEvent</code>的调用也是在这个方法里调用的。</p>
 <p>第一个调用的地方在这里：</p>
-<pre><code class="java">    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+<pre><code class="java">    for (int i = childrenCount - 1; i &gt;= 0; i--) &#123;
         // ...
-        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
+        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) &#123;
             // Child wants to receive touch within its bounds.
             // ...
-        }
+        &#125;
         // ...
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>可见，是在找到了有可能消费这次触摸事件的子 View，因此此时<code>dispatchTransformedTouchEvent</code>的作用是在接受到按下事件的时候将触摸事件分发给该子 View，也就是上面的<code>child</code>。</p>
 <p>后面的两次调用在这里：</p>
 <pre><code class="java">    // Dispatch to touch targets.
-    if (mFirstTouchTarget == null) {
+    if (mFirstTouchTarget == null) &#123;
         // No touch targets so treat this as an ordinary view.
         handled = dispatchTransformedTouchEvent(ev, canceled, null,
                 TouchTarget.ALL_POINTER_IDS);
-    } else {
+    &#125; else &#123;
         // Dispatch to touch targets, excluding the new touch target if we already
         // dispatched to it.  Cancel touch targets if necessary.
         TouchTarget predecessor = null;
         TouchTarget target = mFirstTouchTarget;
-        while (target != null) {
+        while (target != null) &#123;
             final TouchTarget next = target.next;
-            if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+            if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) &#123;
                 handled = true;
-            } else {
+            &#125; else &#123;
                 final boolean cancelChild = resetCancelNextUpFlag(target.child)
                         || intercepted;
                 if (dispatchTransformedTouchEvent(ev, cancelChild,
-                        target.child, target.pointerIdBits)) {
+                        target.child, target.pointerIdBits)) &#123;
                     handled = true;
-                }
-                if (cancelChild) {
-                    if (predecessor == null) {
+                &#125;
+                if (cancelChild) &#123;
+                    if (predecessor == null) &#123;
                         mFirstTouchTarget = next;
-                    } else {
+                    &#125; else &#123;
                         predecessor.next = next;
-                    }
+                    &#125;
                     target.recycle();
                     target = next;
                     continue;
-                }
-            }
+                &#125;
+            &#125;
             predecessor = target;
             target = next;
-        }
-    }</code></pre>
+        &#125;
+    &#125;
+</code></pre>
 <p>其中上面的 L4 意味着并没有找到可以消费的子 View，因此我们调用<code>dispatchTransformedTouchEvent</code>将事件分发给了自己，注意这里第三个参数传递的是<code>null</code>，后面我们会看到，这样会把事件发给 ViewGroup 本身。而 L18 意味着在非按下事件的时候，分发后续事件给子 View；如果遇到取消事件或被拦截，也会把取消事件分发给子 View，注意此时<code>cancelChild</code>会为真，后面会看到如果第二个参数为真的话，<code>dispatchTransformedTouchEvent</code>会不考虑该事件的内容就强制分发取消事件。</p>
 <p>现在，我们来看看<code>dispatchTransformedTouchEvent</code>的庐山真面目，<strong>注意，为了简单起见，下面的代码仍然删掉了和多点触控等相关的语句</strong>：</p>
 <pre><code class="java">/**
@@ -565,22 +571,22 @@
  * If child is null, assumes the MotionEvent will be sent to this ViewGroup instead.
  */
 private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
-        View child, int desiredPointerIdBits) {
+        View child, int desiredPointerIdBits) &#123;
     final boolean handled;
 
     // Canceling motions is a special case.  We don&#39;t need to perform any transformations
     // or filtering.  The important part is the action, not the contents.
     final int oldAction = event.getAction();
-    if (cancel || oldAction == MotionEvent.ACTION_CANCEL) {
+    if (cancel || oldAction == MotionEvent.ACTION_CANCEL) &#123;
         event.setAction(MotionEvent.ACTION_CANCEL);
-        if (child == null) {
+        if (child == null) &#123;
             handled = super.dispatchTouchEvent(event);
-        } else {
+        &#125; else &#123;
             handled = child.dispatchTouchEvent(event);
-        }
+        &#125;
         event.setAction(oldAction);
         return handled;
-    }
+    &#125;
 
     // Calculate the number of pointers to deliver.
     final int oldPointerIdBits = event.getPointerIdBits();
@@ -588,19 +594,19 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
 
     // If for some reason we ended up in an inconsistent state where it looks like we
     // might produce a motion event with no pointers in it, then drop the event.
-    if (newPointerIdBits == 0) {
+    if (newPointerIdBits == 0) &#123;
         return false;
-    }
+    &#125;
 
     // If the number of pointers is the same and we don&#39;t need to perform any fancy
     // irreversible transformations, then we can reuse the motion event for this
     // dispatch as long as we are careful to revert any changes we make.
     // Otherwise we need to make a copy.
     final MotionEvent transformedEvent;
-    if (child == null || child.hasIdentityMatrix()) {
-        if (child == null) {
+    if (child == null || child.hasIdentityMatrix()) &#123;
+        if (child == null) &#123;
             handled = super.dispatchTouchEvent(event);
-        } else {
+        &#125; else &#123;
             final float offsetX = mScrollX - child.mLeft;
             final float offsetY = mScrollY - child.mTop;
             event.offsetLocation(offsetX, offsetY);
@@ -608,44 +614,46 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
             handled = child.dispatchTouchEvent(event);
 
             event.offsetLocation(-offsetX, -offsetY);
-        }
+        &#125;
         return handled;
-    }
+    &#125;
     transformedEvent = MotionEvent.obtain(event);
 
     // Perform any necessary transformations and dispatch.
-    if (child == null) {
+    if (child == null) &#123;
         handled = super.dispatchTouchEvent(transformedEvent);
-    } else {
+    &#125; else &#123;
         final float offsetX = mScrollX - child.mLeft;
         final float offsetY = mScrollY - child.mTop;
         transformedEvent.offsetLocation(offsetX, offsetY);
-        if (! child.hasIdentityMatrix()) {
+        if (! child.hasIdentityMatrix()) &#123;
             transformedEvent.transform(child.getInverseMatrix());
-        }
+        &#125;
 
         handled = child.dispatchTouchEvent(transformedEvent);
-    }
+    &#125;
 
     // Done.
     transformedEvent.recycle();
     return handled;
-}</code></pre>
+&#125;
+</code></pre>
 <p>从方法前面的注释可以看出，这个方法的目的是把相对 ViewGroup 的触摸事件坐标转为子 View 坐标系里的坐标，并分发所需要的事件给子 View。注释说得非常清楚：如果<code>child</code>参数为<code>null</code>，那么事件就分发给 ViewGroup 本身。</p>
 <p>首先，如果是取消事件，那么我们当然不用管坐标转换的事情了，因此我们直接分发给子 View 或本身：</p>
 <pre><code class="java">    // Canceling motions is a special case.  We don&#39;t need to perform any transformations
     // or filtering.  The important part is the action, not the contents.
     final int oldAction = event.getAction();
-    if (cancel || oldAction == MotionEvent.ACTION_CANCEL) {
+    if (cancel || oldAction == MotionEvent.ACTION_CANCEL) &#123;
         event.setAction(MotionEvent.ACTION_CANCEL);
-        if (child == null) {
+        if (child == null) &#123;
             handled = super.dispatchTouchEvent(event);
-        } else {
+        &#125; else &#123;
             handled = child.dispatchTouchEvent(event);
-        }
+        &#125;
         event.setAction(oldAction);
         return handled;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>注意，当<code>child</code>为<code>null</code>的时候，我们调用的是<code>super.dispatchTouchEvent</code>，因为我们此时需要把这个 ViewGroup 当作一个 View 来看，如果这里直接调用<code>dispatchTouchEvent</code>的话，会直接调用到前面的<code>dispatchTouchEvent</code>，会进入无限的循环调用。</p>
 <p>由于我们只考虑单点触摸，因此<code>oldPointerIdBits == newPointerIdBits</code>，从注释看，我们接下来需要考虑是否需要构造一个新的 MotionEvent 对象用于分发：</p>
 <pre><code class="java">    // If the number of pointers is the same and we don&#39;t need to perform any fancy
@@ -653,10 +661,10 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
     // dispatch as long as we are careful to revert any changes we make.
     // Otherwise we need to make a copy.
     final MotionEvent transformedEvent;
-    if (child == null || child.hasIdentityMatrix()) {
-        if (child == null) {
+    if (child == null || child.hasIdentityMatrix()) &#123;
+        if (child == null) &#123;
             handled = super.dispatchTouchEvent(event);
-        } else {
+        &#125; else &#123;
             final float offsetX = mScrollX - child.mLeft;
             final float offsetY = mScrollY - child.mTop;
             event.offsetLocation(offsetX, offsetY);
@@ -664,13 +672,14 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
             handled = child.dispatchTouchEvent(event);
 
             event.offsetLocation(-offsetX, -offsetY);
-        }
+        &#125;
         return handled;
-    }
-    transformedEvent = MotionEvent.obtain(event);</code></pre>
+    &#125;
+    transformedEvent = MotionEvent.obtain(event);
+</code></pre>
 <p>可以猜到，<code>child.hasIdentityMatrix</code>这个方法就可以决定子 View 是否会发生“fancy irreversible transformations”（我把它翻译为“骚气的不可逆转换”），如果会的话我们就需要构造一个新的 MotionEvent 对象给子 View 以避免我们原来的对象被改变。但是这里我们会发现<code>hasIdentityMatrix</code>这个方法最终调用了一个 native 函数，而且和图形渲染有关，因此这里暂时没有办法解释为什么这样的判断是可以的，如果有读者明白，欢迎在评论区交流。</p>
 <p>在可以直接分发当前 MotionEvent 对象的前提下：在<code>child</code>为<code>null</code>的时候，我们仍然分发给本身。否则，我们计算被转换的坐标，改动<code>event</code>里的坐标之后分发给子 View，分发完成后还会将坐标偏移回来。具体的偏移计算方法在上面的代码中，我就不详细解析了，给出一张图给读者理解：</p>
-<p><img src="offset-calculation.png" alt></p>
+<p><img src="offset-calculation.png"></p>
 <p>上图中<code>parentEvent</code>就是当前 ViewGroup 得到的事件对象，<code>childEvent</code>就是需要分发给子 View 的事件对象。</p>
 <p>在需要构造新的 MotionEvent 的时候，后面的语句和前面的几乎一致，只是事件对象变成了新构造的<code>transformedEvent</code>，并且最后对它进行了回收释放。</p>
 <p>至此，我们就搞清楚了<code>dispatchTransformedTouchEvent</code>如何把事件分发给自己或子 View 的了。</p>
@@ -679,48 +688,52 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
 <pre><code class="java">    /**
      * Resets all touch state in preparation for a new cycle.
      */
-    private void resetTouchState() {
+    private void resetTouchState() &#123;
         clearTouchTargets();
         resetCancelNextUpFlag(this);
         mGroupFlags &amp;= ~FLAG_DISALLOW_INTERCEPT;
         mNestedScrollAxes = SCROLL_AXIS_NONE;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p><code>clearTouchTargets</code>里只是清空了<code>mFirstTouchTarget</code>链表而已，这里我们又看到了<code>resetCancelNextUpFlag</code>，看来我们后面必须搞清楚它。这里同时把禁止拦截的 flag 给关闭了，重置了嵌套滑动的状态。</p>
 <h2 id="getAndVerifyPreorderedIndex"><a href="#getAndVerifyPreorderedIndex" class="headerlink" title="getAndVerifyPreorderedIndex"></a>getAndVerifyPreorderedIndex</h2><p>这个方法的目的在于获取子 View 接受触摸事件的顺序，因为 ViewGroup 可能会有重叠的 View，而在这种情况下开发者可以继承 ViewGroup 并重写<code>getChildDrawingOrder</code>来人为改变子 View 的绘制顺序，因此我们可以看到，这个方法里会获得第<code>i</code>个子 View 的绘制顺序：</p>
-<pre><code class="java">    private int getAndVerifyPreorderedIndex(int childrenCount, int i, boolean customOrder) {
+<pre><code class="java">    private int getAndVerifyPreorderedIndex(int childrenCount, int i, boolean customOrder) &#123;
         final int childIndex;
-        if (customOrder) {
+        if (customOrder) &#123;
             final int childIndex1 = getChildDrawingOrder(childrenCount, i);
-            if (childIndex1 &gt;= childrenCount) {
+            if (childIndex1 &gt;= childrenCount) &#123;
                 throw new IndexOutOfBoundsException(&quot;getChildDrawingOrder() &quot;
                         + &quot;returned invalid index &quot; + childIndex1
                         + &quot; (child count is &quot; + childrenCount + &quot;)&quot;);
-            }
+            &#125;
             childIndex = childIndex1;
-        } else {
+        &#125; else &#123;
             childIndex = i;
-        }
+        &#125;
         return childIndex;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>可见，在<code>customOrder</code>为真的时候，该方法会得到自定义的绘制顺序，并做一下越界检查（这也是为什么方法名字含有“verify”），否则直接返回<code>i</code>。</p>
 <h2 id="getAndVerifyPreorderedView"><a href="#getAndVerifyPreorderedView" class="headerlink" title="getAndVerifyPreorderedView"></a>getAndVerifyPreorderedView</h2><p>和上一个方法类似，这个方法也会根据情况获得相对应的子 View：</p>
-<pre><code class="java">    private static View getAndVerifyPreorderedView(ArrayList&lt;View&gt; preorderedList, View[] children, int childIndex) {
+<pre><code class="java">    private static View getAndVerifyPreorderedView(ArrayList&lt;View&gt; preorderedList, View[] children, int childIndex) &#123;
         final View child;
-        if (preorderedList != null) {
+        if (preorderedList != null) &#123;
             child = preorderedList.get(childIndex);
-            if (child == null) {
+            if (child == null) &#123;
                 throw new RuntimeException(&quot;Invalid preorderedList contained null child at index &quot; + childIndex);
-            }
-        } else {
+            &#125;
+        &#125; else &#123;
             child = children[childIndex];
-        }
+        &#125;
         return child;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>和前面不一样的是，这里不再判断<code>customOrder</code>，而是直接判断第一个参数是否为<code>null</code>，换句话说，如果没有启用自定义的绘制顺序，这个方法被调用的时候第一个参数就会是<code>null</code>。</p>
 <h2 id="buildTouchDispatchChildList"><a href="#buildTouchDispatchChildList" class="headerlink" title="buildTouchDispatchChildList"></a>buildTouchDispatchChildList</h2><p>这个方法名字非常奇怪，但是我们看看被调用的地方：</p>
 <pre><code class="java">// Find a child that can receive the event.
 // Scan children from front to back.
-final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</code></pre>
+final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
+</code></pre>
 <p>显然，这个方法会获取根据需要（绘制顺序、Z 轴属性等）排列的子 View。接下来我们看看这个方法：</p>
 <pre><code class="java">    /**
      * Provide custom ordering of views in which the touch will be dispatched.
@@ -730,10 +743,11 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
      * after the dispatch is finished.
      * @hide
      */
-    public ArrayList&lt;View&gt; buildTouchDispatchChildList() {
+    public ArrayList&lt;View&gt; buildTouchDispatchChildList() &#123;
         return buildOrderedChildList();
-    }</code></pre>
-<p>上面的注释值得注意，什么是“tight loop”？根据<a href="http://stackoverflow.com/questions/2212973/what-is-a-tight-loop" target="_blank" rel="noopener">terminology - What is a “tight loop”? - Stack Overflow</a>这个帖子的解释，这种循环会被调用很频繁，这就意味着我们不能在这个方法里构造对象，否则会非常影响性能；而且需要在用完之后清空列表，原因我们在<code>buildOrderedChildList</code>的注释里可以得到回答：</p>
+    &#125;
+</code></pre>
+<p>上面的注释值得注意，什么是“tight loop”？根据<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/2212973/what-is-a-tight-loop">terminology - What is a “tight loop”? - Stack Overflow</a>这个帖子的解释，这种循环会被调用很频繁，这就意味着我们不能在这个方法里构造对象，否则会非常影响性能；而且需要在用完之后清空列表，原因我们在<code>buildOrderedChildList</code>的注释里可以得到回答：</p>
 <pre><code class="java">    /**
      * Populates (and returns) mPreSortedChildren with a pre-ordered list of the View&#39;s children,
      * sorted first by Z, then by child drawing order (if applicable). This list must be cleared
@@ -742,35 +756,37 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
      * Uses a stable, insertion sort which is commonly O(n) for ViewGroups with very few elevated
      * children.
      */
-    ArrayList&lt;View&gt; buildOrderedChildList() {
+    ArrayList&lt;View&gt; buildOrderedChildList() &#123;
         final int childrenCount = mChildrenCount;
         if (childrenCount &lt;= 1 || !hasChildWithZ()) return null;
         // ...
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>从注释看，返回的列表如果不及时清除，就会泄漏子 View 对象，可能会引起 GC 导致的性能下降。注意，查看源码就能发现 ArrayList 的<code>clear</code>方法是不会改变其占用的内存的，只是将每个元素都置为<code>null</code>，因此也不会引起多次重新分配对象（allocate objects）。</p>
 <p>上面的方法的作用就显而易见了，如果子 View 的数量不多于1或者没有一个子 View 有自定义的 Z 轴的话，就直接返回<code>null</code>，这里就有些奇怪了：即使启用了自定义绘制顺序，如果子 View 全部都用默认的 Z 值（0）的话，事件就仍然不会按照自定义的绘制顺序分发了吗？非也非也，事实上，这个<code>buildOrderedChildList</code>得到的排序是综合自定义绘制顺序和 Z 值的，从注释就看的出来，优先按照 Z 值排序，然后按照绘制顺序，那么如果所有 Z 值都为 0，我们来看看这个返回的<code>null</code>会在<code>dispatchTouchEvent</code>里造成什么影响：</p>
 <pre><code class="java">    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
     final boolean customOrder = preorderedList == null
             &amp;&amp; isChildrenDrawingOrderEnabled();
     final View[] children = mChildren;
-    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+    for (int i = childrenCount - 1; i &gt;= 0; i--) &#123;
         final int childIndex = getAndVerifyPreorderedIndex(
                 childrenCount, i, customOrder);
         final View child = getAndVerifyPreorderedView(
                 preorderedList, children, childIndex);
-        // ...</code></pre>
+        // ...
+</code></pre>
 <p>我来给读者捋一下逻辑：如果子 View 不止 1 个，而且启用了自定义绘制顺序，而且有子 View 的 Z 值非 0，那么我们会得到综合了 Z 值和绘制顺序的<code>preorderedList</code>，此时上面的<code>customOrder</code>反而是否，为什么呢？因为此时我们已经拿到排好序的列表了，所以上面代码 L6 的<code>childIndex</code>就会等价于<code>i</code>，所以 L8 的<code>child</code>也会等价于<code>preorderedList[i]</code>，换句话说，这就变成了依次遍历已经排好序的子 View 了，正是我们想要的结果，实在巧妙！而如果所有子 View 的 Z 值都是 0，那么<code>customOrder</code>也等价于是否启用了自定义绘制顺序，后面的遍历也会顺利地按照自定义绘制顺序获取子 View。</p>
 <p>现在我们回到<code>buildOrderedChildList</code>方法，正如注释所说，这个方法准备好 ArrayList 之后，使用插入排序将 Z 值大但绘制顺序相对小的子 View 往前提：</p>
-<pre><code class="java">        if (mPreSortedChildren == null) {
+<pre><code class="java">        if (mPreSortedChildren == null) &#123;
             mPreSortedChildren = new ArrayList&lt;&gt;(childrenCount);
-        } else {
+        &#125; else &#123;
             // callers should clear, so clear shouldn&#39;t be necessary, but for safety...
             mPreSortedChildren.clear();
             mPreSortedChildren.ensureCapacity(childrenCount);
-        }
+        &#125;
 
         final boolean customOrder = isChildrenDrawingOrderEnabled();
-        for (int i = 0; i &lt; childrenCount; i++) {
+        for (int i = 0; i &lt; childrenCount; i++) &#123;
             // add next child (in child order) to end of list
             final int childIndex = getAndVerifyPreorderedIndex(childrenCount, i, customOrder);
             final View nextChild = mChildren[childIndex];
@@ -778,21 +794,23 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
 
             // insert ahead of any Views with greater Z
             int insertIndex = i;
-            while (insertIndex &gt; 0 &amp;&amp; mPreSortedChildren.get(insertIndex - 1).getZ() &gt; currentZ) {
+            while (insertIndex &gt; 0 &amp;&amp; mPreSortedChildren.get(insertIndex - 1).getZ() &gt; currentZ) &#123;
                 insertIndex--;
-            }
+            &#125;
             mPreSortedChildren.add(insertIndex, nextChild);
-        }
-        return mPreSortedChildren;</code></pre>
+        &#125;
+        return mPreSortedChildren;
+</code></pre>
 <h2 id="canViewReceivePointerEvents"><a href="#canViewReceivePointerEvents" class="headerlink" title="canViewReceivePointerEvents"></a>canViewReceivePointerEvents</h2><p>这个方法和下一个方法都是用于判断子 View 有没有机会消费触摸事件的，看看这个方法的源码：</p>
 <pre><code class="java">    /**
      * Returns true if a child view can receive pointer events.
      * @hide
      */
-    private static boolean canViewReceivePointerEvents(@NonNull View child) {
+    private static boolean canViewReceivePointerEvents(@NonNull View child) &#123;
         return (child.mViewFlags &amp; VISIBILITY_MASK) == VISIBLE
                 || child.getAnimation() != null;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>容易看出，子 View 只要可见或者有动画，就能够接受触摸事件，这是因为这个 View 虽然暂时不可见（这里指的是<code>getVisibility != View.VISIBLE</code>），但是可能正在播放动画，比如淡入动画。</p>
 <h2 id="isTransformedTouchPointInView"><a href="#isTransformedTouchPointInView" class="headerlink" title="isTransformedTouchPointInView"></a>isTransformedTouchPointInView</h2><p>这个方法则是保证触摸坐标落在了这个子 View 里面：</p>
 <pre><code class="java">    /**
@@ -802,17 +820,18 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
      * @hide
      */
     protected boolean isTransformedTouchPointInView(float x, float y, View child,
-            PointF outLocalPoint) {
+            PointF outLocalPoint) &#123;
         final float[] point = getTempPoint();
         point[0] = x;
         point[1] = y;
         transformPointToViewLocal(point, child);
         final boolean isInView = child.pointInView(point[0], point[1]);
-        if (isInView &amp;&amp; outLocalPoint != null) {
+        if (isInView &amp;&amp; outLocalPoint != null) &#123;
             outLocalPoint.set(point[0], point[1]);
-        }
+        &#125;
         return isInView;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>上面的<code>transformPointToViewLocal</code>我就不贴代码了，其实和前面分发事件的时候转换坐标是一样的道理，读者可以自己查看。</p>
 <h2 id="resetCancelNextUpFlag"><a href="#resetCancelNextUpFlag" class="headerlink" title="resetCancelNextUpFlag"></a>resetCancelNextUpFlag</h2><p>终于到这货了！我们查阅代码，发现它在把一个 flag 复位，这个 flag 叫：<code>PFLAG_CANCEL_NEXT_UP_EVENT</code>，而这个 flag 是 View 里面定义的，直接看名字的话，这个 flag 表示是否要取消掉接下来的<code>EVENT_UP</code>事件，我们看看这个 flag 的注释：</p>
 <pre><code class="java">    /**
@@ -820,7 +839,8 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
      *
      * @hide
      */
-    static final int PFLAG_CANCEL_NEXT_UP_EVENT        = 0x04000000;</code></pre>
+    static final int PFLAG_CANCEL_NEXT_UP_EVENT        = 0x04000000;
+</code></pre>
 <p>它说的是这个 View 是否被临时从 View 树中摘掉了，我们接着看，搜索这个 flag 被用到的地方，一共三处，第一处：</p>
 <pre><code class="java">    /**
      * Performs button-related actions during a touch down event.
@@ -830,27 +850,29 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
      *
      * @hide
      */
-    protected boolean performButtonActionOnTouchDown(MotionEvent event) {
+    protected boolean performButtonActionOnTouchDown(MotionEvent event) &#123;
         if (event.isFromSource(InputDevice.SOURCE_MOUSE) &amp;&amp;
-            (event.getButtonState() &amp; MotionEvent.BUTTON_SECONDARY) != 0) {
+            (event.getButtonState() &amp; MotionEvent.BUTTON_SECONDARY) != 0) &#123;
             showContextMenu(event.getX(), event.getY());
             mPrivateFlags |= PFLAG_CANCEL_NEXT_UP_EVENT;
             return true;
-        }
+        &#125;
         return false;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>这就很尴尬了……说好的从 View 树摘掉呢？？？我猜测这个方法是后来才加上的，而前面对 flag 的注释是之前就写上的……从上面的方法看，当我们正在触摸这个 View 的时候，如果用鼠标（对，鼠标）对这个 View 按了右键，那我们得弹出上下文菜单，显然，这个时候松开手指也不能触发按钮的 click 事件啊！于是，我们看到上面把这个 flag 立了起来。</p>
 <p>第二个地方：</p>
 <pre><code class="java">    /**
      * This is called when a container is going to temporarily detach a child, with
-     * {@link ViewGroup#detachViewFromParent(View) ViewGroup.detachViewFromParent}.
-     * It will either be followed by {@link #onFinishTemporaryDetach()} or
-     * {@link #onDetachedFromWindow()} when the container is done.
+     * &#123;@link ViewGroup#detachViewFromParent(View) ViewGroup.detachViewFromParent&#125;.
+     * It will either be followed by &#123;@link #onFinishTemporaryDetach()&#125; or
+     * &#123;@link #onDetachedFromWindow()&#125; when the container is done.
      */
-    public void onStartTemporaryDetach() {
+    public void onStartTemporaryDetach() &#123;
         removeUnsetPressCallback();
         mPrivateFlags |= PFLAG_CANCEL_NEXT_UP_EVENT;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>可见，如果我们手动从 View 树摘掉这个 View，那么这个 View 就该取消掉手指抬起事件了。</p>
 <p>第三个地方比较复杂，是在 View 被从 Window 移除之后调用的，并且复位了这个 flag：</p>
 <pre><code class="java">    /**
@@ -864,23 +886,26 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
      * @hide
      */
     @CallSuper
-    protected void onDetachedFromWindowInternal() {
+    protected void onDetachedFromWindowInternal() &#123;
         mPrivateFlags &amp;= ~PFLAG_CANCEL_NEXT_UP_EVENT;
         // ...
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>这里我的理解是，移除之后重置一下状态，如果有读者知道其目的，可以在评论区交流。</p>
 <p>到这里我们就知道了，这个 flag 在某些情况下会被立起来，目的是取消后续的抬起事件，那么我们在<code>resetTouchState</code>里为什么要复位也可以理解了：开始新一波触摸事件之后，之前如果没有复位的话当然就要复位了，否则这次事件也会被这个 flag 影响的！既然如此，我们顺便看看这个 flag 怎么影响我们的事件分发，回到 ViewGroup，两处用到了<code>resetCancelNextUpFlag</code>的返回值，首先是<code>dispatchTouchEvent</code>的这里：</p>
 <pre><code class="java">            // Check for cancelation.
             final boolean canceled = resetCancelNextUpFlag(this)
-                    || actionMasked == MotionEvent.ACTION_CANCEL;</code></pre>
+                    || actionMasked == MotionEvent.ACTION_CANCEL;
+</code></pre>
 <p>没错，如果我们把这个 flag 立起来了，那么我们会得到<code>canceled == true</code>，也就是说，如果发生了前面所说的，按下按钮的时候又点击鼠标右键，那么我们在这里就会判定这个 ViewGroup 需要取消事件，最终我们会分发一个<code>EVENT_CANCEL</code>给这个 ViewGroup。其实，与此同时我们的这个 flag 也会被复位，因此代码里多处调用，只是为了保证意外吧。第二个地方也在<code>dispatchTouchEvent</code>里，不过这次轮到了子 View：</p>
-<pre><code class="java">                    if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+<pre><code class="java">                    if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) &#123;
                         handled = true;
-                    } else {
+                    &#125; else &#123;
                         final boolean cancelChild = resetCancelNextUpFlag(target.child)
                                 || intercepted;
                         // ...
-                    }</code></pre>
+                    &#125;
+</code></pre>
 <p>这里就不再解释了。</p>
 <h2 id="View-的事件分发"><a href="#View-的事件分发" class="headerlink" title="View 的事件分发"></a>View 的事件分发</h2><p>比起 ViewGroup，View 的事件分发就简单多了，除杂后的代码如下：</p>
 <pre><code class="java">/**
@@ -890,72 +915,78 @@ final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();</cod
  * @param event The motion event to be dispatched.
  * @return True if the event was handled by the view, false otherwise.
  */
-public boolean dispatchTouchEvent(MotionEvent event) {
+public boolean dispatchTouchEvent(MotionEvent event) &#123;
     boolean result = false;
 
     final int actionMasked = event.getActionMasked();
-    if (actionMasked == MotionEvent.ACTION_DOWN) {
+    if (actionMasked == MotionEvent.ACTION_DOWN) &#123;
         // Defensive cleanup for new gesture
         stopNestedScroll();
-    }
+    &#125;
 
-    if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) {
+    if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) &#123;
         result = true;
-    }
+    &#125;
     //noinspection SimplifiableIfStatement
     ListenerInfo li = mListenerInfo;
     if (li != null &amp;&amp; li.mOnTouchListener != null
             &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
-            &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {
+            &amp;&amp; li.mOnTouchListener.onTouch(this, event)) &#123;
         result = true;
-    }
+    &#125;
 
-    if (!result &amp;&amp; onTouchEvent(event)) {
+    if (!result &amp;&amp; onTouchEvent(event)) &#123;
         result = true;
-    }
+    &#125;
 
     // Clean up after nested scrolls if this is the end of a gesture;
     // also cancel it if we tried an ACTION_DOWN but we didn&#39;t want the rest
     // of the gesture.
     if (actionMasked == MotionEvent.ACTION_UP ||
             actionMasked == MotionEvent.ACTION_CANCEL ||
-            (actionMasked == MotionEvent.ACTION_DOWN &amp;&amp; !result)) {
+            (actionMasked == MotionEvent.ACTION_DOWN &amp;&amp; !result)) &#123;
         stopNestedScroll();
-    }
+    &#125;
 
     return result;
-}</code></pre>
+&#125;
+</code></pre>
 <p>我们首先看到，如果是新的触摸按下事件，我们会停下嵌套滑动：</p>
 <pre><code class="java">    final int actionMasked = event.getActionMasked();
-    if (actionMasked == MotionEvent.ACTION_DOWN) {
+    if (actionMasked == MotionEvent.ACTION_DOWN) &#123;
         // Defensive cleanup for new gesture
         stopNestedScroll();
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>如果我们是拖动滚动条（这些应该是另外一套处理机制了），我们也认为我们已经消费了事件：</p>
-<pre><code class="java">    if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) {
+<pre><code class="java">    if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) &#123;
         result = true;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>接下来，在 View 启用（enabled）的时候，如果有触摸监听器，我们会触发对应的回调：</p>
 <pre><code class="java">    ListenerInfo li = mListenerInfo;
     if (li != null &amp;&amp; li.mOnTouchListener != null
             &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
-            &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {
+            &amp;&amp; li.mOnTouchListener.onTouch(this, event)) &#123;
         result = true;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>如果回调为真，我们也认为消费了事件。</p>
 <p>如果我们的<code>onTouch</code>返回真，那么我们的<code>onTouchEvent</code>就不会被调用，这从后面的代码容易看出：</p>
-<pre><code class="java">    if (!result &amp;&amp; onTouchEvent(event)) {
+<pre><code class="java">    if (!result &amp;&amp; onTouchEvent(event)) &#123;
         result = true;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>最后，如果我们取消了事件，或者抬起了手，或者我们没有（不想）消费这个事件，那么我们也要把嵌套滑动停下来：</p>
 <pre><code class="java">    // Clean up after nested scrolls if this is the end of a gesture;
     // also cancel it if we tried an ACTION_DOWN but we didn&#39;t want the rest
     // of the gesture.
     if (actionMasked == MotionEvent.ACTION_UP ||
             actionMasked == MotionEvent.ACTION_CANCEL ||
-            (actionMasked == MotionEvent.ACTION_DOWN &amp;&amp; !result)) {
+            (actionMasked == MotionEvent.ACTION_DOWN &amp;&amp; !result)) &#123;
         stopNestedScroll();
-    }</code></pre>
+    &#125;
+</code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到这里，我们已经窥探了 ViewGroup 和 View 的事件分发源码，从源码上知道了事件如何在视图树中分发，也意外发现了很多坑，比如上面提到的，设置了 OnTouchListener 之后，<code>onTouchEvent</code>就会失效了。如果这个系列还有后文，那大概是对我们精简掉的部分：多点触控、无障碍处理进行源码级分析了。</p>
 <p><strong>如果你看到这里，还没有晕，看懂了，那说明<del>我的写作水平还是可以的</del>这怎么可能呢: )</strong></p>
 
@@ -1137,7 +1168,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1147,7 +1178,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1157,11 +1188,21 @@ public boolean dispatchTouchEvent(MotionEvent event) {
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1454,7 +1495,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

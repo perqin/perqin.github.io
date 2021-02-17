@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,Windows,Ubuntu,Bluetooth">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Sun Aug 21 2016 23:43:05 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/index.html",
     "headline": "解决Windows与Ubuntu双系统需要反复重新配对蓝牙鼠标的问题",
     "datePublished": "Sun Aug 21 2016 23:43:05 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#废话几句"><span class="post-toc-number">1.</span> <span class="post-toc-text">废话几句</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取Windows中保存的蓝牙密钥"><span class="post-toc-number">2.</span> <span class="post-toc-text">获取Windows中保存的蓝牙密钥</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改Ubuntu中的密钥"><span class="post-toc-number">3.</span> <span class="post-toc-text">修改Ubuntu中的密钥</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Bonus-Ubuntu让蓝牙鼠标配对的时候关闭触摸板"><span class="post-toc-number">4.</span> <span class="post-toc-text">Bonus - Ubuntu让蓝牙鼠标配对的时候关闭触摸板</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%BA%9F%E8%AF%9D%E5%87%A0%E5%8F%A5"><span class="post-toc-number">1.</span> <span class="post-toc-text">废话几句</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%8E%B7%E5%8F%96Windows%E4%B8%AD%E4%BF%9D%E5%AD%98%E7%9A%84%E8%93%9D%E7%89%99%E5%AF%86%E9%92%A5"><span class="post-toc-number">2.</span> <span class="post-toc-text">获取Windows中保存的蓝牙密钥</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BF%AE%E6%94%B9Ubuntu%E4%B8%AD%E7%9A%84%E5%AF%86%E9%92%A5"><span class="post-toc-number">3.</span> <span class="post-toc-text">修改Ubuntu中的密钥</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Bonus-Ubuntu%E8%AE%A9%E8%93%9D%E7%89%99%E9%BC%A0%E6%A0%87%E9%85%8D%E5%AF%B9%E7%9A%84%E6%97%B6%E5%80%99%E5%85%B3%E9%97%AD%E8%A7%A6%E6%91%B8%E6%9D%BF"><span class="post-toc-number">4.</span> <span class="post-toc-text">Bonus - Ubuntu让蓝牙鼠标配对的时候关闭触摸板</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/bluetooth/">Bluetooth</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ubuntu/">Ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/windows/">Windows</a>
+        <a class="post_tag-none-link" href="/tags/bluetooth/" rel="tag">Bluetooth</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/ubuntu/" rel="tag">Ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/windows/" rel="tag">Windows</a>
     </ul>
     
 
@@ -514,9 +518,10 @@
 <p>基于上面的想法，由于MAC在两个系统里面都是一样的，所以只要依次在两个系统里配对，然后将后配对的系统保存的key覆盖到先配对的系统保存的key，就可以实现两个系统均能配对。</p>
 <p>考虑到Linux相对来说比较自由，有了root什么都能干，于是基本的想法就是先在Ubuntu中配对，再在Windows中配对，然后从Windows中读取key。</p>
 <h2 id="获取Windows中保存的蓝牙密钥"><a href="#获取Windows中保存的蓝牙密钥" class="headerlink" title="获取Windows中保存的蓝牙密钥"></a>获取Windows中保存的蓝牙密钥</h2><p>Windows将密钥保存在了注册表中，而即时使用系统管理员打开，也无法查看，因此需要使用特殊的工具PsExec，放心，这是微软官方提供的工具。</p>
-<p>到这里下载：<a href="http://technet.microsoft.com/en-us/sysinternals/bb897553.aspx" target="_blank" rel="noopener"></a>，然后解压，里面有一个PsExec.exe程序。</p>
+<p>到这里下载：<a target="_blank" rel="noopener" href="http://technet.microsoft.com/en-us/sysinternals/bb897553.aspx"></a>，然后解压，里面有一个PsExec.exe程序。</p>
 <p>接下来，在开始按钮点击右键，选择“命令控制台（管理员）”，然后进入到PsExec.exe所在目录，输入：</p>
-<pre><code class="shell">PsExec.exe -s -i regedit</code></pre>
+<pre><code class="shell">PsExec.exe -s -i regedit
+</code></pre>
 <p>此时会打开一个注册表窗口，导航到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys</code>，然后你就会看到你的PC的蓝牙适配器MAC：</p>
 <p><img src="regedit.png" alt="regedit"></p>
 <p>如上图，<code>00********bc</code>就是我的蓝牙适配器MAC，而我的蓝牙鼠标的MAC则是<code>c03*******60</code>，后面的就是密钥！复制出来备用。</p>
@@ -529,14 +534,20 @@ cd 00:**:**:**:**:BC
 # 进入对应的蓝牙鼠标MAC目录
 cd C0:3*:**:**:**:60
 # 修改info文件
-vi info</code></pre>
+vi info
+</code></pre>
 <p>在info文件中，可以看到<code>[LinkKey]</code>字段，其中的<code>Key</code>键保存的正是密钥，我们把它修改为Windows下的密钥，如果不放心可以先把这个文件备份。</p>
-<pre><code>Key=77F9************************3450</code></pre><p>保存文件，重启，大功告成！</p>
+<pre><code>Key=77F9************************3450
+</code></pre>
+<p>保存文件，重启，大功告成！</p>
 <h2 id="Bonus-Ubuntu让蓝牙鼠标配对的时候关闭触摸板"><a href="#Bonus-Ubuntu让蓝牙鼠标配对的时候关闭触摸板" class="headerlink" title="Bonus - Ubuntu让蓝牙鼠标配对的时候关闭触摸板"></a>Bonus - Ubuntu让蓝牙鼠标配对的时候关闭触摸板</h2><p>这个功能Windows 10已经自带，而我非常不习惯触摸板，用久了手指疼- -于是再谷歌了一番。大概方法是添加一条udev规则，让鼠标是否插入的变动会触发一个脚本。</p>
 <p>我们首先需要获取触摸板的设备ID，由于不同的系统对触摸板的命名不同，所以没有办法写通用脚本。打开终端输入：</p>
-<pre><code class="shell">xinput</code></pre>
+<pre><code class="shell">xinput
+</code></pre>
 <p>然后我们从中找到带有Touchpad字样的设备，记下它的ID：</p>
-<pre><code>⎜   ↳ SYN1B7E:01 06CB:2970 Touchpad               id=14    [slave  pointer  (2)]</code></pre><p>然后准备一个脚本<code>touchpad_switcher.sh</code>：</p>
+<pre><code>⎜   ↳ SYN1B7E:01 06CB:2970 Touchpad               id=14    [slave  pointer  (2)]
+</code></pre>
+<p>然后准备一个脚本<code>touchpad_switcher.sh</code>：</p>
 <pre><code class="shell">#!/bin/sh
 enabled=$1
 if $enabled
@@ -544,16 +555,20 @@ then
   xinput set-prop &lt;touchpad_id&gt; &quot;Device Enabled&quot; 1 | notify-send &quot;The touchpad is now enabled.&quot; &quot;&quot;
 else
   xinput set-prop &lt;touchpad_id&gt; &quot;Device Enabled&quot; 0 | notify-send &quot;Disabling the touchpad...&quot; &quot;&quot;
-fi</code></pre>
+fi
+</code></pre>
 <p>注意，<code>&lt;touchpad_id&gt;</code>需要替换为你获取到的ID。别忘了提供可执行权限：</p>
-<pre><code class="shell">chmod a+x touchpad_switcher.sh</code></pre>
+<pre><code class="shell">chmod a+x touchpad_switcher.sh
+</code></pre>
 <p>接下来，创建文件<code>/etc/udev/rules.d/10-local.rules</code>，输入：</p>
-<pre><code>ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-9]&quot;, ENV{DISPLAY}=&quot;:0&quot;,ENV{XAUTHORITY}=&quot;/home/$USER/.Xauthority&quot;, ENV{ID_CLASS}=&quot;mouse&quot;, RUN+=&quot;/home/$USER/scripts/touchpad_switcher.sh false&quot;
-ACTION==&quot;remove&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-9]&quot;, ENV{DISPLAY}=&quot;:0&quot;,ENV{XAUTHORITY}=&quot;/home/$USER/.Xauthority&quot;, ENV{ID_CLASS}=&quot;mouse&quot;, RUN+=&quot;/home/$USER/scripts/touchpad_switcher.sh true&quot;</code></pre><p>注意<code>$USER</code>替换成你的用户名，对应的脚本路径要修改。</p>
+<pre><code>ACTION==&quot;add&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-9]&quot;, ENV&#123;DISPLAY&#125;=&quot;:0&quot;,ENV&#123;XAUTHORITY&#125;=&quot;/home/$USER/.Xauthority&quot;, ENV&#123;ID_CLASS&#125;=&quot;mouse&quot;, RUN+=&quot;/home/$USER/scripts/touchpad_switcher.sh false&quot;
+ACTION==&quot;remove&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-9]&quot;, ENV&#123;DISPLAY&#125;=&quot;:0&quot;,ENV&#123;XAUTHORITY&#125;=&quot;/home/$USER/.Xauthority&quot;, ENV&#123;ID_CLASS&#125;=&quot;mouse&quot;, RUN+=&quot;/home/$USER/scripts/touchpad_switcher.sh true&quot;
+</code></pre>
+<p>注意<code>$USER</code>替换成你的用户名，对应的脚本路径要修改。</p>
 <p>重启电脑，大功告成！</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="http://superuser.com/questions/229930/finding-bluetooth-link-key-in-windows-7-to-double-pair-a-device-on-dualboot-com" target="_blank" rel="noopener">Finding Bluetooth link key in Windows 7, to double pair a device on dualboot computer - Super User</a></li>
-<li><a href="http://askubuntu.com/questions/533266/how-to-disable-notebooks-touchpad-on-usb-mouse-connect-and-slower-the-last" target="_blank" rel="noopener">14.04 - How to disable notebook’s touchpad on USB mouse connect (and slower the last)? - Ask Ubuntu</a></li>
+<li> <a target="_blank" rel="noopener" href="http://superuser.com/questions/229930/finding-bluetooth-link-key-in-windows-7-to-double-pair-a-device-on-dualboot-com">Finding Bluetooth link key in Windows 7, to double pair a device on dualboot computer - Super User</a></li>
+<li> <a target="_blank" rel="noopener" href="http://askubuntu.com/questions/533266/how-to-disable-notebooks-touchpad-on-usb-mouse-connect-and-slower-the-last">14.04 - How to disable notebook’s touchpad on USB mouse connect (and slower the last)? - Ask Ubuntu</a></li>
 </ul>
 
         
@@ -734,7 +749,7 @@ ACTION==&quot;remove&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -744,7 +759,7 @@ ACTION==&quot;remove&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -754,11 +769,21 @@ ACTION==&quot;remove&quot;, SUBSYSTEM==&quot;input&quot;, KERNEL==&quot;mouse[0-
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1051,7 +1076,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

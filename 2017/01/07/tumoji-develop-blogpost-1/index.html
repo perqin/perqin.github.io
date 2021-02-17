@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,android,tumoji,mvp">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Sun Jan 08 2017 00:52:12 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html",
     "headline": "Tumoji开发记录 (1)",
     "datePublished": "Sun Jan 08 2017 00:52:12 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#起源"><span class="post-toc-number">1.</span> <span class="post-toc-text">起源</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVP"><span class="post-toc-number">2.</span> <span class="post-toc-text">MVP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#简介"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何搭建MVP框架"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">如何搭建MVP框架</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP框架搭建中的坑、提示和MVP框架的演进"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">MVP框架搭建中的坑、提示和MVP框架的演进</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP的其他缺点和解决方案"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">MVP的其他缺点和解决方案</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第三方库与框架的使用"><span class="post-toc-number">3.</span> <span class="post-toc-text">第三方库与框架的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Retrofit"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Retrofit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RxJava"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">RxJava</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于团队开发"><span class="post-toc-number">4.</span> <span class="post-toc-text">关于团队开发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于产品"><span class="post-toc-number">5.</span> <span class="post-toc-text">关于产品</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结语"><span class="post-toc-number">6.</span> <span class="post-toc-text">结语</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%B5%B7%E6%BA%90"><span class="post-toc-number">1.</span> <span class="post-toc-text">起源</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVP"><span class="post-toc-number">2.</span> <span class="post-toc-text">MVP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BAMVP%E6%A1%86%E6%9E%B6"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">如何搭建MVP框架</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84%E5%9D%91%E3%80%81%E6%8F%90%E7%A4%BA%E5%92%8CMVP%E6%A1%86%E6%9E%B6%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">MVP框架搭建中的坑、提示和MVP框架的演进</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP%E7%9A%84%E5%85%B6%E4%BB%96%E7%BC%BA%E7%82%B9%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">MVP的其他缺点和解决方案</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E4%B8%8E%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="post-toc-number">3.</span> <span class="post-toc-text">第三方库与框架的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Retrofit"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Retrofit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RxJava"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">RxJava</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%B3%E4%BA%8E%E5%9B%A2%E9%98%9F%E5%BC%80%E5%8F%91"><span class="post-toc-number">4.</span> <span class="post-toc-text">关于团队开发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%B3%E4%BA%8E%E4%BA%A7%E5%93%81"><span class="post-toc-number">5.</span> <span class="post-toc-text">关于产品</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="post-toc-number">6.</span> <span class="post-toc-text">结语</span></a></li></ol>
     </ul>
     
 
@@ -420,7 +424,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/mvp/">mvp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/tumoji/">tumoji</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/mvp/" rel="tag">mvp</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/tumoji/" rel="tag">tumoji</a>
     </ul>
     
 
@@ -502,20 +506,20 @@
         <blockquote>
 <p> 修改记录</p>
 <ul>
-<li>17/01/08：更正了RxJava的维护者。</li>
+<li> 17/01/08：更正了RxJava的维护者。</li>
 </ul>
 </blockquote>
 <p>这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。</p>
 <p>由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么……</p>
 <p>本项目的客户端和服务器端源码托管在GitHub：</p>
 <ul>
-<li>客户端：<a href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Android" target="_blank" rel="noopener">zhengqi-big-god-take-me-fly/Tumoji-Android: Android client for Tumoji.</a></li>
-<li>服务器：<a href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Server" target="_blank" rel="noopener">zhengqi-big-god-take-me-fly/Tumoji-Server: Server side for Tumoji.</a></li>
+<li> 客户端：<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Android">zhengqi-big-god-take-me-fly/Tumoji-Android: Android client for Tumoji.</a></li>
+<li> 服务器：<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Server">zhengqi-big-god-take-me-fly/Tumoji-Server: Server side for Tumoji.</a></li>
 </ul>
 <h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>Tumoji是我这学期的Android开发课程的大作业，由我们这个开发组4个人，经过接近两个月的时间，共同完成。最开始的时候，我们本来想设计一个匿名聊天的应用，不过后来我对隐私性有所顾虑所以放弃了。后来突然想起来之前曾经用过一个叫<em>斗图神器</em>的app，因此萌生了这个想法。当然，发现<em>斗图神器</em>的时间已不可考，所以整个开发过程都是围绕我自己所确定的需求，应该不会有抄袭这回事吧，哈哈。</p>
 <p>总之呢，Tumoji的定位是一款表情包共享应用，大家可以从上面下载表情包，也可以上传自己的表情包。</p>
 <h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>说起来我也算是Android的老油条了，最开始接触Android开发应该是在高考毕业的暑假，不过当时对Android的开发毫无了解，所以是下载了几个G的视频，然后没日没夜地看，艰难地敲出了Hello World。我想大部分编程初学者都有过这种感觉，照着教程写出了Hello World，虽然成功运行，但是整个代码里只有<code>Hello World</code>是你知道用来干嘛的，其他部分就不知道目的了。再后来，由于没什么定力，一直没有继续认真学，导致直到现在，Android的开发水平还是渣渣……</p>
-<p>卖完情怀，开始说MVP。很久以前无意之间了解到了MVP，但是由于自己水平有限，一直看不懂网上的MVP教程。直到这学期，无意间看到一篇博客，突然看懂了一些，然后又去看了一下Google的MVP示范（<a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/" target="_blank" rel="noopener">googlesamples/android-architecture at todo-mvp</a>），然后直接在某一周的Android开发每周作业上用上了MVP。很庆幸在每周的作业中有几次MVP的尝试，终于慢慢了解了MVP的基本框架，再经过创新赛的时候的运用，终于熟悉起来了，于是在这次项目的开发中，我作为组长，一开始就确立了MVP的开发模式，到现在看来，这个模式在多人开发中绝对大有裨益。</p>
+<p>卖完情怀，开始说MVP。很久以前无意之间了解到了MVP，但是由于自己水平有限，一直看不懂网上的MVP教程。直到这学期，无意间看到一篇博客，突然看懂了一些，然后又去看了一下Google的MVP示范（<a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/">googlesamples/android-architecture at todo-mvp</a>），然后直接在某一周的Android开发每周作业上用上了MVP。很庆幸在每周的作业中有几次MVP的尝试，终于慢慢了解了MVP的基本框架，再经过创新赛的时候的运用，终于熟悉起来了，于是在这次项目的开发中，我作为组长，一开始就确立了MVP的开发模式，到现在看来，这个模式在多人开发中绝对大有裨益。</p>
 <p>在MVP之前，我们的代码往往全部堆积在Activity类中。即使打算抽离出逻辑，往往也仅仅是创建一些操作数据的类，但是UI的交互几乎全部都写在Activity中，再加上Activity本身的生命周期，这会导致Activity变成万能对象（God Object），想想在几百行代码里面找bug的感觉吧。在涉及多人写作开发的时候，问题就更加严重了。多人开发我所知道的模式大概是两种：分模块开发和分层开发，前者类似与我负责登录注册、你负责下载上传这样，而后者类似于我负责UI交互，你负责数据库存取这样。显然，在全部代码都堆积在Activity中的时候，是难以通过后面这种方式开发的，因为负责UI、数据、交互逻辑等部分的代码都混杂在一个文件里，多人同时修改的话冲突很严重。而我认为后面的开发方式是更加合理的，因为每个人的习惯、风格不同，如果按照模块开发的话，很容易出现好几个人分别各自造轮子的情况，而相对来说，每一层之间的耦合度都是比较低的，所以可以分别按照各自的习惯开发。</p>
 <p>接下来的内容是我对MVP模式的理解了。在MVP模式中，V代表视图，M是模型，P是呈现者，这就把应用进行了分层。M一般指代的是数据层，包括数据库、文件读写、网络访问等等，他们往往是多个界面共享的（比如主界面和个人资料界面都会需要展示用户的信息）。V一般指的是一个视图单位，也就是指一个能够提供模块化的UI交互的界面，比如一个Activity、一个Fragment甚至一个Dialog。P即Presenter，我一开始的时候并不明白为什么要叫“Presenter”，后来终于明白了：一个View往往对应一个Presenter，而Presenter的作用就是控制View的变化。我们可以类比为PPT演讲，View就是PPT，而演讲者就是Presenter，Model当然就是计算机里的PPT数据啦，这样一来，就很容易理解：Presenter从Model获取数据，然后根据获取到的数据决定如何更改View的内容。我简单地画了一幅画：</p>
 <pre><code>                                User
@@ -540,81 +544,84 @@
 a. Dispatch user&#39;s input
 b. Get data from Model layer
 c. Send data to Presenter layer
-d. Update view content</code></pre><p>从上图可以看出，用户的每一个操作都会被View传递给Presenter，Presenter从Model层获取对应的数据，并借此转交数据给View，View再将数据更新到UI上。</p>
+d. Update view content
+</code></pre>
+<p>从上图可以看出，用户的每一个操作都会被View传递给Presenter，Presenter从Model层获取对应的数据，并借此转交数据给View，View再将数据更新到UI上。</p>
 <p>我们可以发现MVP的两个特点：数据层是共享的、Presenter将Model和View完全隔离。数据层的共享是理所当然的，因为从本质上来说，一个app只是一堆数据的部分的呈现而已，而这些数据本身是自洽的，即使没有View和Presenter，Model里的数据和数据间关系都是有意义的。而Presenter将Model和View完全隔离带来的好处就是保证数据的操作都来自于Presenter，View只负责分发动作和接受新内容。</p>
 <p>在使用MVP的过程中，我还发现，Presenter和Model承载了不同种类的逻辑。何为不同种类的逻辑？举个例子来说，当我们创建一个Post的时候，下次获取PostCount时就应该比原来多1，这是数据层的逻辑，他们在Model中实现，这是为了保证不论外部（Presenter）发来怎样的调用，我都能保证我的数据在逻辑上是自洽的，不会出现诸如Post的作者id不存在、PostCount和真实Post数量不一致等问题；另一类逻辑则是UI上的逻辑，比如点击按钮A之后，如果没有登录就打开登录界面，否则打开编辑界面，这部分逻辑在Presenter中实现。</p>
 <h3 id="如何搭建MVP框架"><a href="#如何搭建MVP框架" class="headerlink" title="如何搭建MVP框架"></a>如何搭建MVP框架</h3><p>当然，如果我不会MVP，我看到这里还是不知道MVP怎么写，因为前面说的都是MVP这个模式是怎么把一个app肢解的，但是具体要怎么写呢？按照Google的例子，我这样设计了我们的项目工程的包组织：</p>
 <ul>
 <li><code>com.tumoji.tumoji</code><ul>
 <li><code>account</code>: 帐号模块，包括个人资料界面、登录注册界面<ul>
-<li><code>activity</code>: Activity类</li>
-<li><code>adapter</code>: 各种Adapter</li>
-<li><code>contract</code>: MVP中定义接口的契约类</li>
-<li><code>fragment</code>: 各种Fragment</li>
-<li><code>presenter</code>: 各种Presenter的实现</li>
-<li><code>view</code>: 各种View的实现</li>
+<li> <code>activity</code>: Activity类</li>
+<li> <code>adapter</code>: 各种Adapter</li>
+<li> <code>contract</code>: MVP中定义接口的契约类</li>
+<li> <code>fragment</code>: 各种Fragment</li>
+<li> <code>presenter</code>: 各种Presenter的实现</li>
+<li> <code>view</code>: 各种View的实现</li>
 </ul>
 </li>
-<li><code>common</code>: 通用的类、模块</li>
+<li> <code>common</code>: 通用的类、模块</li>
 <li><code>data</code>: 数据层的表层实现，供Presenter使用，里面的每个子模块结构和<code>user</code>模块都是类似的<ul>
-<li><code>auth</code>: 登录、注册、token存取</li>
-<li><code>meme</code>: 表情</li>
-<li><code>settings</code>: 设置项存取</li>
-<li><code>tag</code>: 标签</li>
+<li> <code>auth</code>: 登录、注册、token存取</li>
+<li> <code>meme</code>: 表情</li>
+<li> <code>settings</code>: 设置项存取</li>
+<li> <code>tag</code>: 标签</li>
 <li><code>user</code>: 用户<ul>
 <li><code>model</code>: 存储各种数据对象的模型<ul>
-<li><code>UserModel</code></li>
+<li> <code>UserModel</code></li>
 </ul>
 </li>
 <li><code>repository</code>: 用于user数据操作的单例类<ul>
-<li><code>IUserRepository</code>: 暴露的接口</li>
-<li><code>MockUserRepository</code>: 用来进行Presenter测试的<code>IUserRepository</code>实现</li>
-<li><code>UserRepository</code>: 实现user数据操作的<code>IUserRepository</code>实现</li>
+<li> <code>IUserRepository</code>: 暴露的接口</li>
+<li> <code>MockUserRepository</code>: 用来进行Presenter测试的<code>IUserRepository</code>实现</li>
+<li> <code>UserRepository</code>: 实现user数据操作的<code>IUserRepository</code>实现</li>
 </ul>
 </li>
-<li><code>store</code></li>
+<li> <code>store</code></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><code>memes</code>: 表情模块，如表情列表、表情详细信息等，内部的结构和前面的<code>account</code>是类似的</li>
-<li><code>network</code>: 网络模块，数据层中网络部分的定义和实现</li>
-<li><code>storage</code>: 本地存储模块，数据层中SQLite数据库、SharedPreferences等的实现</li>
-<li><code>utils</code>: 工具类</li>
-<li><code>TumojiApp.java</code>: Application类</li>
+<li> <code>memes</code>: 表情模块，如表情列表、表情详细信息等，内部的结构和前面的<code>account</code>是类似的</li>
+<li> <code>network</code>: 网络模块，数据层中网络部分的定义和实现</li>
+<li> <code>storage</code>: 本地存储模块，数据层中SQLite数据库、SharedPreferences等的实现</li>
+<li> <code>utils</code>: 工具类</li>
+<li> <code>TumojiApp.java</code>: Application类</li>
 </ul>
 </li>
 </ul>
 <p>接下来我说说上面的目录结构是如何一步一步搭建起来的。</p>
 <p>首先，对于某个模块里的某个界面，比如account模块的个人资料界面，我们需要分析：</p>
 <ul>
-<li>我们会提供给用户哪些操作——Presenter的接口</li>
-<li>每个操作会在UI上产生哪些变化——View的接口</li>
+<li> 我们会提供给用户哪些操作——Presenter的接口</li>
+<li> 每个操作会在UI上产生哪些变化——View的接口</li>
 </ul>
 <p>有趣的是，用户的操作却是Presenter的接口，而操作的结果却是View的接口。事实上，由于Presenter和View成对出现，每个Presenter会持有自己的View的引用，每个View也持有自己的Presenter的引用。于是，用户的操作会被View获知，然后根据操作调用Presenter的对应方法；而Presenter得到数据之后，则需要根据数据来决定View如何更新，即调用View的哪个方法。</p>
 <p>多说无益，我们以个人资料为例：</p>
 <ul>
 <li>用户的操作<ul>
-<li>点击性别切换按钮（意图更改自己的性别……）</li>
+<li> 点击性别切换按钮（意图更改自己的性别……）</li>
 </ul>
 </li>
 <li>UI的变化<ul>
-<li>性别一栏切换至另一性别</li>
-<li>提示切换失败（比如说没有网络连接导致）</li>
+<li> 性别一栏切换至另一性别</li>
+<li> 提示切换失败（比如说没有网络连接导致）</li>
 </ul>
 </li>
 </ul>
 <p>上面的分析是自然而然的，一个操作可能导致两个结果，于是我们可以这样设计一个契约类：</p>
-<pre><code class="java">public interface ProfileContract {
-  interface Presenter {
+<pre><code class="java">public interface ProfileContract &#123;
+  interface Presenter &#123;
     void changeGender(bool isMale);
-  }
-
-  interface View {
+  &#125;
+  
+  interface View &#123;
     void refreshGender(bool isMale);
     void showNetworkError();
-  }
-}</code></pre>
+  &#125;
+&#125;
+</code></pre>
 <p>在<code>changeGender</code>的实现中，我们调用数据层的相关方法，向服务器发送请求更改个人性别资料，如果成功了，就调用<code>refreshGender</code>方法，否则调用<code>showNetworkError</code>。而对于View的实现而言，他只需要在<code>refreshGender</code>中设置某个RadioGroup的被选中项，在<code>showNetworkError</code>的实现中弹出一个Toast即可，而不需要考虑什么时候会被调用。</p>
 <p>定义了契约类之后，我们就可以开始实现了。实现View的一般是Fragment或Activity。一般而言，用Fragment实现是官方推荐的方法，因为我前面说过，MVP中View代表的是一个视图单位，而一个Activity可能有多个视图单位，比如在平板上，可能左栏是一个列表，右栏是详情页。另一个好处是Activity可以成为一个总的管理者，负责Presenter和View的实例化（嗯，这回真的成为God了）。</p>
 <p>而Presenter的实现，直接创建一个类实现对应Presenter接口即可，如前所述，在Activity中可以实例化一个Presenter对象。</p>
@@ -629,59 +636,64 @@ d. Update view content</code></pre><p>从上图可以看出，用户的每一个
 <p>最后，我还想说说MVP框架的演进。这个说法比较中二，其实是因为在实际的开发过程中，契约并非一成不变。毕竟人非圣贤，一开始设计的东西后面很可能要改（你说我区区一个程序员，怎么就开始改需求了呢？）就拿Tumoji的开发来说，我们就先后发生了很多改动，多亏了MVP框架，使得这些改动对其他开发者的影响减到了最小。</p>
 <p>首先，是接口的增删。我们的团队是使用Git进行项目版本控制的，每个人从dev分支开新分支完成某个feature然后合并回dev分支，因此为了不影响其他人，dev分支的代码是必须可以正确运行的。但是我们知道，增加一个接口之后，接口的实现类如果不去实现，是编译都过不了的，而实现类是其他开发者的代码，擅自更改很容易出事，怎么办呢？其实这就是使用接口的目的了。我在Android Studio的设置中，设置了自动生成的Implement Method内容为</p>
 <pre><code class="java">// TODO
-throw new UnsupportedOperationException(&quot;Method not implemented&quot;);</code></pre>
+throw new UnsupportedOperationException(&quot;Method not implemented&quot;);
+</code></pre>
 <p>这样，我对对方的代码修改就仅限于增加一些会抛异常、带TODO注释的方法，把代码冲突减到最小。</p>
 <p>当然，删除接口就更加容易了，直接在interface中把对应的接口加上<code>@deprecated</code>的JavaDoc或者注解，然后告知对应的开发者不必实现即可，完全不需要更改其他开发者的代码。</p>
 <p>使用接口带来的好处就是可以乱改需求- -一开始的时候，由于我不熟悉RxJava，所以所有Repository暴露的接口都是用Listener回调的：</p>
-<pre><code class="java">public interface IUserRepository {
+<pre><code class="java">public interface IUserRepository &#123;
   void getUser(String id, GetUserListener callback);
-}</code></pre>
+&#125;
+</code></pre>
 <p>但是后来，我从数据层的队友那里（我负责Presenter层和框架搭建）学到了RxJava的用法，一下子觉得Listener太不优雅了，于是，我开始把所有的Listener的接口都deprecated了，然后增加了新的接口……</p>
-<pre><code class="java">public interface IUserRepository {
+<pre><code class="java">public interface IUserRepository &#123;
   /**
-   * @deprecated Use {@link #getUser(String)} instead.
+   * @deprecated Use &#123;@link #getUser(String)&#125; instead.
    */
   void getUser(String id, GetUserListener callback);
-
+  
   Observable&lt;UserModel&gt; getUser(String id);
-}</code></pre>
+&#125;
+</code></pre>
 <p>所以，我没被队友砍死，我挺感动的……</p>
 <h3 id="MVP的其他缺点和解决方案"><a href="#MVP的其他缺点和解决方案" class="headerlink" title="MVP的其他缺点和解决方案"></a>MVP的其他缺点和解决方案</h3><p>MVP的优点，从前面就看的很清楚了：非常适合多人协作开发，而且使得项目的逻辑非常清晰，不容易出bug（很容易解决bug）。但是，MVP有一个缺点：测试不方便。</p>
 <p>我们平时写代码的时候，写一点跑一下是很轻松的，但是MVP不行，因为三个层被分开来了，对于每个界面而言，只要有一层没有实现，就没法看到效果，甚至没法运行起来，比如你的Presenter和Model都写完了，可是View还没实现，那你运行起来连调用Presenter都做不到。这带来的问题就是自己写了之后没法测试。当然，单元测试可以解决这个问题，但是很遗憾我们都没有这方面的知识，所以我得出了另一个方案：mock实现。</p>
 <p>拿Presenter来说，由于数据层的大佬比较忙，进度比我慢一些，导致我没有办法调用数据层，就没有办法测试了。此时，我可以实现一个Mock的类：</p>
-<pre><code class="java">public class MockUserRepository implements IUserRepository {
+<pre><code class="java">public class MockUserRepository implements IUserRepository &#123;
   @Override
-  public Observable&lt;UserModel&gt; getUser(String id) {
+  public Observable&lt;UserModel&gt; getUser(String id) &#123;
     return Observable.just(new UserModel().withId(id));
-  }
-}</code></pre>
+  &#125;
+&#125;
+</code></pre>
 <p>然后，在可用的UserRepository可用之前，我先使用这个我自己编写的MockUserRepository进行测试即可。同理，View也可以写MockPresenter进行测试，而Repository由于不面向任何一个View，所以只能使用单元测试了（嗯，所以我们项目没有测试Repository……）。</p>
 <p>一开始我就是这么写的，但是后来发现，还有更好的写法。试想，Repository已经实现了一部分了，如何部分接入呢？可以这样：</p>
-<pre><code class="java">public class UserRepository implements IUserRepository {
+<pre><code class="java">public class UserRepository implements IUserRepository &#123;
   private IUserRepository mDelegate;
-
+  
   // This is a Singleton
-  private UserRepository(Context context) {
+  private UserRepository(Context context) &#123;
     mDelegate = new MockUserRepository(context);
     // Other initialization....
-  }
-
+  &#125;
+  
   @Override
-  public Observable&lt;UserModel&gt; getUser(String id) {
+  public Observable&lt;UserModel&gt; getUser(String id) &#123;
     // Unimplemented method
     return mDelegate.getUer(id);
-  }
-
+  &#125;
+  
   @Override
-  public Observable&lt;List&lt;UserModel&gt;&gt; getUsers() {
+  public Observable&lt;List&lt;UserModel&gt;&gt; getUsers() &#123;
     // Implemented method
     return mRemote.getUsers();
-  }
-}</code></pre>
+  &#125;
+&#125;
+</code></pre>
 <p>如上所示，我们把MockUserRepository作为一个代理，被真正的UserRepository实现类持有。这样，数据层开发者每完成一个方法，就可以去掉代理。而对Presenter而言，他还是使用UserRepository实例。</p>
 <h2 id="第三方库与框架的使用"><a href="#第三方库与框架的使用" class="headerlink" title="第三方库与框架的使用"></a>第三方库与框架的使用</h2><p>终于说完了MVP。Tumoji的开发中使用了很多框架。由于Tumoji是我们的个人作品，所以可以自由使用很多也许还不够成熟的第三方框架，他们为我们的开发节约了大量的时间和精力。</p>
 <h3 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h3><p>Retrofit这个神器我已经用得比较熟练了。当初写UWP应用的时候，我需要给每个API写一个函数，而他们都长得几乎一样：</p>
-<pre><code>public SomeType someApiMethod(params...) {
+<pre><code>public SomeType someApiMethod(params...) &#123;
   // Set URI
   // Set HTTP method (GET, POST, ...)
   // Set Query (access token, ...)
@@ -690,63 +702,70 @@ throw new UnsupportedOperationException(&quot;Method not implemented&quot;);</co
   // Send request
   // Check whether the response is successful
   // Convert response body to String or other data type
-}</code></pre><p>可以想象十几个接口的情况下，这项工作有多么蛋疼。但是，使用Retrofit之后，我们只需要非常简单的定义接口即可：</p>
-<pre><code class="java">@GET(&quot;users/{id}&quot;)
-Call&lt;UserModel&gt; getUserById(@Path(&quot;id&quot;) String id, @Query(&quot;access_token&quot;) String token);</code></pre>
+&#125;
+</code></pre>
+<p>可以想象十几个接口的情况下，这项工作有多么蛋疼。但是，使用Retrofit之后，我们只需要非常简单的定义接口即可：</p>
+<pre><code class="java">@GET(&quot;users/&#123;id&#125;&quot;)
+Call&lt;UserModel&gt; getUserById(@Path(&quot;id&quot;) String id, @Query(&quot;access_token&quot;) String token);
+</code></pre>
 <p>大大简化了代码！</p>
 <h3 id="RxJava"><a href="#RxJava" class="headerlink" title="RxJava"></a>RxJava</h3><p>RxJava是ReactiveX框架在Java语言上的实现，前面提到的Listener模式麻烦之处在于每个请求都需要定义Listener，而且有的时候还会出现回调地狱（Callback Hell），非常容易出bug，甚至想想，如果需要根据一个数组，每个元素发一个异步请求，那代码就更加难看了。</p>
 <p>后来接触到了RxJava。在RxJava中，有一个被观察者和订阅者。被观察者一旦有人订阅，就会开始某些任务，这些任务可能会获取到一个或多个结果，这些结果作为数据由被观察者发出，再由订阅者接收。举个例子，手机充电，手机就是订阅者，插座就是被观察者，插上电源的过程就是订阅，此时插座源源不断地发出数据（电），手机的显示屏上就会得到这些数据，显示在电池电量数据上。</p>
 <p>在Tumoji中，大量使用了RxJava简化代码，举个例子：</p>
-<pre><code class="java">public class MemeRepository implements IMemeRepository {
+<pre><code class="java">public class MemeRepository implements IMemeRepository &#123;
   @Override
-  public Observable&lt;MemeModel&gt; getMeme(File parentDir, String memeId) {
+  public Observable&lt;MemeModel&gt; getMeme(File parentDir, String memeId) &#123;
     return mRemote.getMemeById(memeId)
             .map(memeModel -&gt; mLocal.fulfillDownloaded(parentDir, memeModel));
-  }
-}</code></pre>
+  &#125;
+&#125;
+</code></pre>
 <p>这个方法的目的是从服务器获取指定表情的元数据，然后根据ID查找本地数据库是否有该表情，由于已下载的表情的路径和ID会被保存到数据库中，因此可以通过<code>fulfillDownloaded</code>，在本地已有的情况下，把表情的Uri从下载地址改为文件路径Uri，从而节约一些流量。</p>
 <p>在<code>mRemote.getMemeById</code>中，实现非常简单：</p>
-<pre><code class="java">public Observable&lt;MemeModel&gt; getMemeById(String memeId) {
+<pre><code class="java">public Observable&lt;MemeModel&gt; getMemeById(String memeId) &#123;
   return mMemeApi.getMemeById(memeId).compose(ApplySchedulers.network());
-}</code></pre>
+&#125;
+</code></pre>
 <p>如上，通过Retrofit配合RxJava，发送请求并把结果作为数据发送，返回发送该数据的Observable。后面的<code>ApplySchedulres.network</code>即类似<code>.subcribeOn(Schedulres.io()).observeOn(AndroidSchedulers.mainThread())</code>。</p>
 <p>而<code>mLocal.fulfillDownloaded</code>的实现如下：</p>
-<pre><code class="java">public MemeModel fulfillDownloaded(File parentDir, MemeModel memeModel) {
+<pre><code class="java">public MemeModel fulfillDownloaded(File parentDir, MemeModel memeModel) &#123;
   String filename = mDb.getMemeFileNameById(memeModel.getMemeId());
-  if (filename == null) {
+  if (filename == null) &#123;
     memeModel.setDownloaded(false);
     memeModel.setMemeUri(Uri.parse(memeModel.getImageUrl()));
-  } else {
+  &#125; else &#123;
     memeModel.setDownloaded(true);
     memeModel.setMemeUri(Uri.fromFile(new File(parentDir, filename)));
-  }
+  &#125;
   return memeModel;
-}</code></pre>
+&#125;
+</code></pre>
 <p><code>mDb</code>提供了从数据库中获取对应ID的本地路径的方法。</p>
 <p>可以看到，虽然各自的实现有些复杂，但是在Repository暴露的接口上非常简洁，即使应对一系列请求也是如此，例如当我需要为每个tag发起一个添加标签的请求的时候：</p>
 <pre><code class="java">@Override
-public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&lt;TagModel&gt; tagModels) {
+public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&lt;TagModel&gt; tagModels) &#123;
   ArrayList&lt;Observable&lt;TagModel&gt;&gt; observables = new ArrayList&lt;&gt;();
-  for (TagModel tagModel : tagModels) {
+  for (TagModel tagModel : tagModels) &#123;
     observables.add(tagApi.relTagToMeme(memeId, tagModel.getTagName(), token).compose(ApplySchedulers.network()));
-  }
-  return Observable.merge(observables).toList().map(new Func1&lt;List&lt;TagModel&gt;, Void&gt;() {
+  &#125;
+  return Observable.merge(observables).toList().map(new Func1&lt;List&lt;TagModel&gt;, Void&gt;() &#123;
     @Override
-    public Void call(List&lt;TagModel&gt; tagModels) {
+    public Void call(List&lt;TagModel&gt; tagModels) &#123;
       return null;
-    }
+    &#125;
   );
-}</code></pre>
+&#125;
+</code></pre>
 <p>代码的逻辑很明了。</p>
-<h2 id="关于团队开发"><a href="#关于团队开发" class="headerlink" title="关于团队开发"></a>关于团队开发</h2><p>说起团队开发，我也算是半个老司机了吧，之前就和他们开发了<a href="https://github.com/zhengqi-big-god-take-me-fly/WoChat" target="_blank" rel="noopener">WoChat</a>，一个UWP平台的IM应用和一个模仿泡泡堂的Cocos2d-x游戏<a href="https://github.com/zhengqi-big-god-take-me-fly/FancyBubbling" target="_blank" rel="noopener">天天爱打泡</a>（手动滑稽），现在我们又开发了Tumoji。WoChat的开发我们使用了MVVM框架，不过由于对UWP平台不熟悉，所以基本上是依葫芦画瓢；天天爱打泡的开发则参考了MVC，但是由于Cocos2d平台本身是多语言的，所以不容易找到针对C++的MVC框架；而Android上的MVP算是很热门也比较成熟了，所以开发起来压力比前面都要小一些。</p>
+<h2 id="关于团队开发"><a href="#关于团队开发" class="headerlink" title="关于团队开发"></a>关于团队开发</h2><p>说起团队开发，我也算是半个老司机了吧，之前就和他们开发了<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/WoChat">WoChat</a>，一个UWP平台的IM应用和一个模仿泡泡堂的Cocos2d-x游戏<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/FancyBubbling">天天爱打泡</a>（手动滑稽），现在我们又开发了Tumoji。WoChat的开发我们使用了MVVM框架，不过由于对UWP平台不熟悉，所以基本上是依葫芦画瓢；天天爱打泡的开发则参考了MVC，但是由于Cocos2d平台本身是多语言的，所以不容易找到针对C++的MVC框架；而Android上的MVP算是很热门也比较成熟了，所以开发起来压力比前面都要小一些。</p>
 <p>在团队开发的工程中，最大的感慨莫过于意识到扎实的基本功对架构设计的重要性。虽然学Android的时间很长，但是一直都只是皮毛，其实我个人认为我现在接触MVP还是有点早，有点霸王硬上弓了，在设计过程中就会发现，很多时候由于Android本身的机制所限，并不能单纯地划分MVP逻辑，而对Android开发的基本功不够扎实就导致框架设计中遇到了很多问题。</p>
 <p>借助Git的分支管理策略和MVP的框架，我们得以非常轻松地进行团队合作。当然，团队合作也并非易事，最大的问题在于进度，四个人都有自己的事情，而且临近期末，所以大家的开发进度不一，如前所述，进度的不一致给各自的测试也带来了一些问题，但是总体来说，我们的团队在合作上还是很顺利的。身为组长我也就不邀功了，就做了三件事：</p>
 <ul>
-<li>把MVP的框架搭建了起来</li>
-<li>完成了Presenter的任务</li>
-<li>在另外几位大佬忙于复习的时候，帮忙填了一些View和Model的坑</li>
+<li> 把MVP的框架搭建了起来</li>
+<li> 完成了Presenter的任务</li>
+<li> 在另外几位大佬忙于复习的时候，帮忙填了一些View和Model的坑</li>
 </ul>
-<p>当然，Android客户端的顺利开发离不开<a href="https://github.com/Tidyzq" target="_blank" rel="noopener">@Tidyzq</a>提供的健壮又接口丰富的服务器，虽然由于使用了Loopback而拒绝提供文档，对API使用者不太友好……不过程序员嘛……都不爱写文档的，哈哈哈。</p>
+<p>当然，Android客户端的顺利开发离不开<a target="_blank" rel="noopener" href="https://github.com/Tidyzq">@Tidyzq</a>提供的健壮又接口丰富的服务器，虽然由于使用了Loopback而拒绝提供文档，对API使用者不太友好……不过程序员嘛……都不爱写文档的，哈哈哈。</p>
 <p>当然，也因为时间的确有些赶，项目的进度并不算乐观，目前仅仅完成了最基础的功能，而且有大量bug没有处理，还有不少坑需要填啊！</p>
 <h2 id="关于产品"><a href="#关于产品" class="headerlink" title="关于产品"></a>关于产品</h2><p>由于整个项目的起源来自我，所以在整个设计中，会发现很多关系到代码之外的事情，比如缓存数据的事情。一开始的时候，我计划每次都将列表最前的若干项缓存到数据库，以便下次打开应用的时候能立刻加载缓存数据。其实到后面我发现，这样的意义很小，因为这个数据不是递增的而是被频繁替换的，Tumoji是严重依赖网络的，因此离线缓存的重要性其实并不大，因为离线的时候缓存的东西都没有什么用。因此，导致了开发工程中一次很大的变动，对Model层的开发还是有不小的影响。同时，为了节约用户的流量，我们在Retrofit上配置了缓存。</p>
 <p>开发Tumoji的过程让我体会到一些产品设计的困难，诸如缓存的权衡、对网络的请求应该如何限制、以及一些用户上的交互等等。</p>
@@ -931,7 +950,7 @@ public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&l
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -941,7 +960,7 @@ public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&l
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -951,11 +970,21 @@ public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&l
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1248,7 +1277,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

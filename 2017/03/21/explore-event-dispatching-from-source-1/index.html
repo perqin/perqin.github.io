@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,explore-event-dispatching-from-source,android">
+    <meta name="keywords" content="Perqin,android,explore-event-dispatching-from-source">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -243,11 +247,11 @@
     <meta property="og:title" content="从源码探索事件分发 1 | Perqin&#39;s Blog">
     <meta property="og:image" content="/img/avatar.png">
     <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="explore-event-dispatching-from-source"> <meta property="og:article:tag" content="android"> 
+    <meta property="og:article:tag" content="android"> <meta property="og:article:tag" content="explore-event-dispatching-from-source"> 
 
     
         <meta property="article:published_time" content="Wed Mar 22 2017 00:37:51 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/index.html",
     "headline": "从源码探索事件分发 1",
     "datePublished": "Wed Mar 22 2017 00:37:51 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -288,7 +292,7 @@
             "url": "/img/avatar.png"
         }
     },
-    "keywords": ",explore-event-dispatching-from-source,androidPerqin",
+    "keywords": ",android,explore-event-dispatching-from-sourcePerqin",
     "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.",
 }
 </script>
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试代码"><span class="post-toc-number">1.</span> <span class="post-toc-text">测试代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#再开上帝视角"><span class="post-toc-number">2.</span> <span class="post-toc-text">再开上帝视角</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ViewGroup的dispatchTouchEvent"><span class="post-toc-number">3.</span> <span class="post-toc-text">ViewGroup的dispatchTouchEvent</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="post-toc-number">1.</span> <span class="post-toc-text">测试代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%86%8D%E5%BC%80%E4%B8%8A%E5%B8%9D%E8%A7%86%E8%A7%92"><span class="post-toc-number">2.</span> <span class="post-toc-text">再开上帝视角</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ViewGroup%E7%9A%84dispatchTouchEvent"><span class="post-toc-number">3.</span> <span class="post-toc-text">ViewGroup的dispatchTouchEvent</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/explore-event-dispatching-from-source/">explore-event-dispatching-from-source</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/explore-event-dispatching-from-source/" rel="tag">explore-event-dispatching-from-source</a>
     </ul>
     
 
@@ -512,7 +516,7 @@
 <p> Edit History</p>
 <p> <strong>2017/04/05</strong></p>
 <ul>
-<li>更正了<code>mFirstTouchTarget</code>为<code>null</code>的条件</li>
+<li> 更正了<code>mFirstTouchTarget</code>为<code>null</code>的条件</li>
 </ul>
 </blockquote>
 <p>以前一直认为身为Android开发者，一定要去读Android的源码，然而由于各种各样的原因迟迟没有开始，最近终于下定决心提高一下，买了《Android开发艺术探索》，并开始尝试从源码看懂触摸事件的分发。这个系列文章会记录我通过阅读源代码的方式一步步搞懂Android里的事件分发的过程。</p>
@@ -520,71 +524,74 @@
 <p>当我们的手指落在屏幕上的时候，驱动捕获到我们的行为，发送到Android系统上层框架，最终，一个包含这次屏幕操作的MotionEvent对象被传递给了对应的Activity对象。这个Activity会把这个对象分发给这个Activity中的根View，并通过递归的形式一直传递下去，直到这个触摸行为被某个View识别并消费掉。形象地说，就像一份通知从学校教务处发到了辅导员，辅导员把它分发给他管理的班级的班长，班长分发给班级的每个宿舍长，最终被发到每个学生手上。</p>
 <p>前面说道，我们可以把一个子树看作一个View，因此我们只需要弄懂最简单的情形：一个ViewGroup包含一个View，事件从ViewGroup分发给View的情况，就可以很快理解事件在一棵巨大的View树里如何分发。</p>
 <h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p>为了测试，我自定义了一个ViewGroup和一个View，他们的唯一目的就是在和事件分发相关的方法里输出日志。其中<code>EdFrameLayout</code>的代码如下：</p>
-<pre><code class="java">public class EdFrameLayout extends FrameLayout {
+<pre><code class="java">public class EdFrameLayout extends FrameLayout &#123;
     private static final String TAG = &quot;EdFrameLayout&quot;;
 
-    public EdFrameLayout(Context context) {
+    public EdFrameLayout(Context context) &#123;
         super(context);
-    }
+    &#125;
 
-    public EdFrameLayout(Context context, AttributeSet attrs) {
+    public EdFrameLayout(Context context, AttributeSet attrs) &#123;
         super(context, attrs);
-    }
+    &#125;
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(MotionEvent ev) &#123;
         Log.i(TAG, &quot;dispatchTouchEvent: &quot; + EventNameUtils.eventNameOf(ev.getAction()));
         return super.dispatchTouchEvent(ev);
-    }
+    &#125;
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;
         Log.i(TAG, &quot;onInterceptTouchEvent&quot;);
         return super.onInterceptTouchEvent(ev);
-    }
+    &#125;
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) &#123;
         Log.i(TAG, &quot;onTouchEvent&quot;);
         return super.onTouchEvent(event);
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p><code>EdView</code>的代码如下：</p>
-<pre><code class="java">public class EdView extends View {
+<pre><code class="java">public class EdView extends View &#123;
     private static final String TAG = &quot;EdView&quot;;
 
-    public EdView(Context context) {
+    public EdView(Context context) &#123;
         super(context);
-    }
+    &#125;
 
-    public EdView(Context context, @Nullable AttributeSet attrs) {
+    public EdView(Context context, @Nullable AttributeSet attrs) &#123;
         super(context, attrs);
-    }
+    &#125;
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent event) &#123;
         Log.i(TAG, &quot;dispatchTouchEvent: &quot; + EventNameUtils.eventNameOf(event.getAction()));
         return super.dispatchTouchEvent(event);
-    }
+    &#125;
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) &#123;
         Log.i(TAG, &quot;onTouchEvent&quot;);
         return super.onTouchEvent(event);
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p>其中<code>EventNameUtils</code>类仅仅是为了输出事件的名称：</p>
-<pre><code class="java">public class EventNameUtils {
-    public static String eventNameOf(int action) {
-        switch (action) {
+<pre><code class="java">public class EventNameUtils &#123;
+    public static String eventNameOf(int action) &#123;
+        switch (action) &#123;
             case MotionEvent.ACTION_DOWN: return &quot;ACTION_DOWN&quot;;
             case MotionEvent.ACTION_MOVE: return &quot;ACTION_MOVE&quot;;
             case MotionEvent.ACTION_UP: return &quot;ACTION_UP&quot;;
             case MotionEvent.ACTION_CANCEL: return &quot;ACTION_CANCEL&quot;;
             default: return &quot;UNKNOWN ACTION&quot;;
-        }
-    }
-}</code></pre>
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <p>布局文件如下：</p>
 <pre><code class="xml">&lt;com.perqin.playground.eventdispatching.EdFrameLayout
     xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
@@ -600,7 +607,8 @@
         android:background=&quot;@color/colorAccent&quot;
         android:layout_gravity=&quot;center&quot; /&gt;
 
-&lt;/com.perqin.playground.eventdispatching.EdFrameLayout&gt;</code></pre>
+&lt;/com.perqin.playground.eventdispatching.EdFrameLayout&gt;
+</code></pre>
 <p>运行起来之后是这样的：</p>
 <p><img src="playground.png" alt="Playground"></p>
 <p>我们轻触中间的强调色的方块，看到日志里有这样的输出：</p>
@@ -608,48 +616,50 @@
 com.perqin.playground I/EdFrameLayout: onInterceptTouchEvent
 com.perqin.playground I/EdView: dispatchTouchEvent: ACTION_DOWN
 com.perqin.playground I/EdView: onTouchEvent
-com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开上帝视角"><a href="#再开上帝视角" class="headerlink" title="再开上帝视角"></a>再开上帝视角</h2><p>直接从源码就把事件分发无中生有地摸清对我来说还是挺困难的，因此我之前也早已看过书、搜索过相关文章。从上面的日志也得以映证时间分发的流程：</p>
+com.perqin.playground I/EdFrameLayout: onTouchEvent
+</code></pre>
+<h2 id="再开上帝视角"><a href="#再开上帝视角" class="headerlink" title="再开上帝视角"></a>再开上帝视角</h2><p>直接从源码就把事件分发无中生有地摸清对我来说还是挺困难的，因此我之前也早已看过书、搜索过相关文章。从上面的日志也得以映证时间分发的流程：</p>
 <ul>
-<li>某个View（不论是否是ViewGroup）的<code>dispatchTouchEvent</code>被其父节点调用，从中该View可以得到这次触摸事件的MotionEvent对象。</li>
-<li>如果这个View是ViewGroup，它会先调用<code>onInterceptTouchEvent</code>方法，根据返回值判断它自己要不要将它拦截。如果不拦截，它会找到需要接受这个事件的子View，通过调用子View的<code>dispatchTouchEvent</code>方法将事件分发下去（正如它的父View将事件这样分发给它一样）。</li>
-<li>如果这个View不是ViewGroup，它会直接调用自己的<code>onTouchEvent</code>，根据返回值判断是否自己想消费这个事件，并在<code>dispatchTouchEvent</code>中返回自己是否消费了这个事件。</li>
-<li>将事件分发给子View的ViewGroup会从其<code>dispatchTouchEvent</code>的返回值判断子View是否消费了事件。如果没有View愿意消费，那么它自己消费或者也不消费并告知自己的父View（正如拒绝消费的子View们一样）。</li>
+<li> 某个View（不论是否是ViewGroup）的<code>dispatchTouchEvent</code>被其父节点调用，从中该View可以得到这次触摸事件的MotionEvent对象。</li>
+<li> 如果这个View是ViewGroup，它会先调用<code>onInterceptTouchEvent</code>方法，根据返回值判断它自己要不要将它拦截。如果不拦截，它会找到需要接受这个事件的子View，通过调用子View的<code>dispatchTouchEvent</code>方法将事件分发下去（正如它的父View将事件这样分发给它一样）。</li>
+<li> 如果这个View不是ViewGroup，它会直接调用自己的<code>onTouchEvent</code>，根据返回值判断是否自己想消费这个事件，并在<code>dispatchTouchEvent</code>中返回自己是否消费了这个事件。</li>
+<li> 将事件分发给子View的ViewGroup会从其<code>dispatchTouchEvent</code>的返回值判断子View是否消费了事件。如果没有View愿意消费，那么它自己消费或者也不消费并告知自己的父View（正如拒绝消费的子View们一样）。</li>
 </ul>
 <p>以上描述不一定准确，但基本把事件分发的逻辑讲述了一遍。接下来，我们可以开始看源码了～</p>
 <h2 id="ViewGroup的dispatchTouchEvent"><a href="#ViewGroup的dispatchTouchEvent" class="headerlink" title="ViewGroup的dispatchTouchEvent"></a>ViewGroup的dispatchTouchEvent</h2><p>不得不说源码实在太复杂了，光是ViewGroup的<code>dispatchTouchEvent</code>就有200多行。我把里面的一些语句（包括多点触摸相关代码、只用于Debug的语句、安全校验等）删掉，得到下面的代码：</p>
-<pre><code class="java">public class ViewGroup {
+<pre><code class="java">public class ViewGroup &#123;
     // ...
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(MotionEvent ev) &#123;
         boolean handled = false;
 
         final int action = ev.getAction();
         final int actionMasked = action &amp; MotionEvent.ACTION_MASK;
 
         // Handle an initial down.
-        if (actionMasked == MotionEvent.ACTION_DOWN) {
+        if (actionMasked == MotionEvent.ACTION_DOWN) &#123;
             // Throw away all previous state when starting a new touch gesture.
             // The framework may have dropped the up or cancel event for the previous gesture
             // due to an app switch, ANR, or some other state change.
             cancelAndClearTouchTargets(ev);
             resetTouchState();
-        }
+        &#125;
 
         // Check for interception.
         final boolean intercepted;
         if (actionMasked == MotionEvent.ACTION_DOWN
-                || mFirstTouchTarget != null) {
+                || mFirstTouchTarget != null) &#123;
             final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
-            if (!disallowIntercept) {
+            if (!disallowIntercept) &#123;
                 intercepted = onInterceptTouchEvent(ev);
                 ev.setAction(action); // restore action in case it was changed
-            } else {
+            &#125; else &#123;
                 intercepted = false;
-            }
-        } else {
+            &#125;
+        &#125; else &#123;
             // There are no touch targets and this action is not an initial down
             // so this view group continues to intercept touches.
             intercepted = true;
-        }
+        &#125;
 
         // Check for cancelation.
         final boolean canceled = resetCancelNextUpFlag(this)
@@ -659,8 +669,8 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
         final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
         TouchTarget newTouchTarget = null;
         boolean alreadyDispatchedToNewTouchTarget = false;
-        if (!canceled &amp;&amp; !intercepted) {
-            if (actionMasked == MotionEvent.ACTION_DOWN) {
+        if (!canceled &amp;&amp; !intercepted) &#123;
+            if (actionMasked == MotionEvent.ACTION_DOWN) &#123;
                 final int actionIndex = ev.getActionIndex(); // always 0 for down
                 final int idBitsToAssign = TouchTarget.ALL_POINTER_IDS;
 
@@ -669,7 +679,7 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
                 removePointersFromTouchTargets(idBitsToAssign);
 
                 final int childrenCount = mChildrenCount;
-                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+                if (newTouchTarget == null &amp;&amp; childrenCount != 0) &#123;
                     final float x = ev.getX(actionIndex);
                     final float y = ev.getY(actionIndex);
                     // Find a child that can receive the event.
@@ -678,123 +688,126 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
                     final boolean customOrder = preorderedList == null
                             &amp;&amp; isChildrenDrawingOrderEnabled();
                     final View[] children = mChildren;
-                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+                    for (int i = childrenCount - 1; i &gt;= 0; i--) &#123;
                         final int childIndex = getAndVerifyPreorderedIndex(
                                 childrenCount, i, customOrder);
                         final View child = getAndVerifyPreorderedView(
                                 preorderedList, children, childIndex);
 
                         if (!canViewReceivePointerEvents(child)
-                                || !isTransformedTouchPointInView(x, y, child, null)) {
+                                || !isTransformedTouchPointInView(x, y, child, null)) &#123;
                             continue;
-                        }
+                        &#125;
 
                         newTouchTarget = getTouchTarget(child);
-                        if (newTouchTarget != null) {
+                        if (newTouchTarget != null) &#123;
                             // Child is already receiving touch within its bounds.
                             // Give it the new pointer in addition to the ones it is handling.
                             newTouchTarget.pointerIdBits |= idBitsToAssign;
                             break;
-                        }
+                        &#125;
 
                         resetCancelNextUpFlag(child);
-                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
+                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) &#123;
                             // Child wants to receive touch within its bounds.
                             newTouchTarget = addTouchTarget(child, idBitsToAssign);
                             alreadyDispatchedToNewTouchTarget = true;
                             break;
-                        }
-                    }
+                        &#125;
+                    &#125;
                     if (preorderedList != null) preorderedList.clear();
-                }
+                &#125;
 
-                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
+                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) &#123;
                     // Did not find a child to receive the event.
                     // Assign the pointer to the least recently added target.
                     newTouchTarget = mFirstTouchTarget;
-                    while (newTouchTarget.next != null) {
+                    while (newTouchTarget.next != null) &#123;
                         newTouchTarget = newTouchTarget.next;
-                    }
+                    &#125;
                     newTouchTarget.pointerIdBits |= idBitsToAssign;
-                }
-            }
-        }
+                &#125;
+            &#125;
+        &#125;
 
         // Dispatch to touch targets.
-        if (mFirstTouchTarget == null) {
+        if (mFirstTouchTarget == null) &#123;
             // No touch targets so treat this as an ordinary view.
             handled = dispatchTransformedTouchEvent(ev, canceled, null,
                     TouchTarget.ALL_POINTER_IDS);
-        } else {
+        &#125; else &#123;
             // Dispatch to touch targets, excluding the new touch target if we already
             // dispatched to it.  Cancel touch targets if necessary.
             TouchTarget predecessor = null;
             TouchTarget target = mFirstTouchTarget;
-            while (target != null) {
+            while (target != null) &#123;
                 final TouchTarget next = target.next;
-                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) &#123;
                     handled = true;
-                } else {
+                &#125; else &#123;
                     final boolean cancelChild = resetCancelNextUpFlag(target.child)
                             || intercepted;
                     if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
+                            target.child, target.pointerIdBits)) &#123;
                         handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
+                    &#125;
+                    if (cancelChild) &#123;
+                        if (predecessor == null) &#123;
                             mFirstTouchTarget = next;
-                        } else {
+                        &#125; else &#123;
                             predecessor.next = next;
-                        }
+                        &#125;
                         target.recycle();
                         target = next;
                         continue;
-                    }
-                }
+                    &#125;
+                &#125;
                 predecessor = target;
                 target = next;
-            }
-        }
+            &#125;
+        &#125;
 
         // Update list of touch targets for pointer up or cancel, if needed.
         if (canceled
-                || actionMasked == MotionEvent.ACTION_UP) {
+                || actionMasked == MotionEvent.ACTION_UP) &#123;
             resetTouchState();
-        }
+        &#125;
 
         return handled;
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p>仍然有147行，我能怎么办，我也很绝望啊！实话说这个方法我断断续续看了几天才勉强捋清楚……好的， 废话不多说，我们来看看ViewGroup是如何分发事件的。</p>
 <p>这个方法里的<code>handled</code>局部变量就是这个ViewGroup（或其子View）最终是否消费了这个事件。<code>actionMasked</code>只是将高3个字节复位（因为action是整型），直接看作是这个事件的action就好。</p>
 <p>首先，如果这是一个<code>ACTION_DOWN</code>动作，也就是按下屏幕的一瞬间，我们需要把之前的状态重置，为这个新的手势做准备（手势就是按下、一系列的移动和抬起动作序列）：</p>
 <pre><code class="java">        // Handle an initial down.
-        if (actionMasked == MotionEvent.ACTION_DOWN) {
+        if (actionMasked == MotionEvent.ACTION_DOWN) &#123;
             // Throw away all previous state when starting a new touch gesture.
             // The framework may have dropped the up or cancel event for the previous gesture
             // due to an app switch, ANR, or some other state change.
             cancelAndClearTouchTargets(ev);
             resetTouchState();
-        }</code></pre>
+        &#125;
+</code></pre>
 <p>从方法名就可以看出他们的作用是取消、清除原来的触摸目标，并重置触摸状态。这里先剧透一下，TouchTarget就是对能够接受触摸事件的子View的简单封装。</p>
 <p>然后，由于我们是一个ViewGroup，所以我们需要判断要不要拦截这次事件：</p>
 <pre><code class="java">        // Check for interception.
         final boolean intercepted;
         if (actionMasked == MotionEvent.ACTION_DOWN
-                || mFirstTouchTarget != null) {
+                || mFirstTouchTarget != null) &#123;
             final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
-            if (!disallowIntercept) {
+            if (!disallowIntercept) &#123;
                 intercepted = onInterceptTouchEvent(ev);
                 ev.setAction(action); // restore action in case it was changed
-            } else {
+            &#125; else &#123;
                 intercepted = false;
-            }
-        } else {
+            &#125;
+        &#125; else &#123;
             // There are no touch targets and this action is not an initial down
             // so this view group continues to intercept touches.
             intercepted = true;
-        }</code></pre>
+        &#125;
+</code></pre>
 <p>这时我们看到了一个<code>mFirstTouchTarget</code>的属性，这个属性挺重要，但网上对这个属性的解释足够详细的实在太少。如果看完了整个<code>dispatchTouchEvent</code>方法，就会发现，ViewGroup会管理一群能够消费触摸事件的子View，ViewGroup把他们放在一个单向链表里，而这个<code>mFirstTouchTarget</code>就是这个链表的头。而为什么一个手势会被多个View同时消费我还没有深挖，从直觉来说，应该和多点触摸等有关。</p>
 <p>从上面的代码片段可以看出，如果这是手势的开始，我们就会通过调用<code>onInterceptTouchEvent</code>，决定是否拦截。如果这个链表不为空，表示有子View想消费，所以也需要判断要不要拦截。只有在手势进行到中间又没有子View愿意背锅（消费事件）的情况下，才会拦截。</p>
 <p>直接这么解释似乎很牵强，其实只要和拦截行为的表现联系起来就理解了。对于ViewGroup而言，事实上他会在一个手势的发生过程中不停地判断是否拦截，这就是为什么在子View会消费的情况下仍然要调用<code>onInterceptTouchEvent</code>。而另一方面，一旦这个ViewGroup已经决定啦，就由它自己来拦截这个事件，那么<strong>这之后<code>onInterceptTouchEvent</code>都不会再调用（废话，都决定拦截了就别反悔嘛），且之后会一直拦截下去</strong>，因为决定拦截之后，后面会给所有原来消费事件的子View发送取消事件（<code>ACTION_CANCEL</code>），并将他们从<code>mFirstTouchTarget</code>中去除，所以如果<code>mFirstTouchTarget</code>是空的，又不是初始的按下事件，那么就表示之前已经被拦截了，所以要继续拦截。</p>
@@ -802,17 +815,19 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
 <p>接下来是判断是否是取消事件：</p>
 <pre><code class="java">        // Check for cancelation.
         final boolean canceled = resetCancelNextUpFlag(this)
-                || actionMasked == MotionEvent.ACTION_CANCEL;</code></pre>
+                || actionMasked == MotionEvent.ACTION_CANCEL;
+</code></pre>
 <p>这里<code>resetCancelNextUpFlag</code>方法的目的我也不甚清楚，如果你知道，希望你能把答案留在评论区！</p>
 <p><code>split</code>我认为和多点触摸有关，在多点触摸的时候会把事件分割，因此我们先忽略……</p>
 <p>接下来，<code>newTouchTarget</code>是新的触摸对象，<code>alreadyDispatchedToNewTouchTarget</code>显然就是说明是否被分发给新的触摸对象了：</p>
 <pre><code class="java">        // Update list of touch targets for pointer down, if needed.
         final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
         TouchTarget newTouchTarget = null;
-        boolean alreadyDispatchedToNewTouchTarget = false;</code></pre>
+        boolean alreadyDispatchedToNewTouchTarget = false;
+</code></pre>
 <p>如果没有被取消，也没有被拦截，那么就要尝试分发给子View了：</p>
-<pre><code class="java">        if (!canceled &amp;&amp; !intercepted) {
-            if (actionMasked == MotionEvent.ACTION_DOWN) {
+<pre><code class="java">        if (!canceled &amp;&amp; !intercepted) &#123;
+            if (actionMasked == MotionEvent.ACTION_DOWN) &#123;
                 final int actionIndex = ev.getActionIndex(); // always 0 for down
                 final int idBitsToAssign = TouchTarget.ALL_POINTER_IDS;
 
@@ -821,18 +836,19 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
                 removePointersFromTouchTargets(idBitsToAssign);
 
                 final int childrenCount = mChildrenCount;
-                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+                if (newTouchTarget == null &amp;&amp; childrenCount != 0) &#123;
                     // Part A
-                }
+                &#125;
 
-                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
+                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) &#123;
                     // Part B
-                }
-            }
-        }</code></pre>
+                &#125;
+            &#125;
+        &#125;
+</code></pre>
 <p>从上面的结构可以看出，事件分发主要是在手势开始，也就是按下事件发生的时候开始决定谁来消费的。此时<code>newTouchTarget</code>显然还是空的，因此如果此时子View的数量不为0，就要从中找出能够消费事件的子View了（Part A）。注意，我认为这里的Part B是用于多点触摸的：如果Part A之后<code>newTouchTarget</code>仍然为空，那么就是说当前没有子View愿意消费，但是<code>mFirstTouchTarget</code>可能包含原来已经有的手指的触摸手势对应的触摸对象，因此是有可能不为空的。但这些暂时不是这次的主要分析目标，所以我们不考虑Part B。</p>
 <p>接下来看看Part A的代码：</p>
-<pre><code class="java">                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
+<pre><code class="java">                if (newTouchTarget == null &amp;&amp; childrenCount != 0) &#123;
                     final float x = ev.getX(actionIndex);
                     final float y = ev.getY(actionIndex);
                     // Find a child that can receive the event.
@@ -841,11 +857,12 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
                     final boolean customOrder = preorderedList == null
                             &amp;&amp; isChildrenDrawingOrderEnabled();
                     final View[] children = mChildren;
-                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
+                    for (int i = childrenCount - 1; i &gt;= 0; i--) &#123;
                         // ...
-                    }
+                    &#125;
                     if (preorderedList != null) preorderedList.clear();
-                }</code></pre>
+                &#125;
+</code></pre>
 <p>很简单，得到触摸的坐标，并开始遍历所有的子View。对于每个被遍历到的子View：</p>
 <pre><code class="java">                        final int childIndex = getAndVerifyPreorderedIndex(
                                 childrenCount, i, customOrder);
@@ -853,25 +870,26 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
                                 preorderedList, children, childIndex);
 
                         if (!canViewReceivePointerEvents(child)
-                                || !isTransformedTouchPointInView(x, y, child, null)) {
+                                || !isTransformedTouchPointInView(x, y, child, null)) &#123;
                             continue;
-                        }
+                        &#125;
 
                         newTouchTarget = getTouchTarget(child);
-                        if (newTouchTarget != null) {
+                        if (newTouchTarget != null) &#123;
                             // Child is already receiving touch within its bounds.
                             // Give it the new pointer in addition to the ones it is handling.
                             newTouchTarget.pointerIdBits |= idBitsToAssign;
                             break;
-                        }
+                        &#125;
 
                         resetCancelNextUpFlag(child);
-                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
+                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) &#123;
                             // Child wants to receive touch within its bounds.
                             newTouchTarget = addTouchTarget(child, idBitsToAssign);
                             alreadyDispatchedToNewTouchTarget = true;
                             break;
-                        }</code></pre>
+                        &#125;
+</code></pre>
 <p>从上面可见，我们先得到当前遍历到的子View的对象和index序号。然后通过<code>canViewReceivePointerEvents</code>和 <code>isTransformedTouchPointInView</code>两个方法，判断这个子View能否接受这个事件。如果任何一个条件不满足，就会跳过这个子View。<code>getTouchTarget</code>方法是从<code>mFirstTouchTarget</code>触摸对象链表中找到这个View对应的触摸对象，显然是找不到的，因此会向后继续执行，调用<code>dispatchTransformedTouchEvent</code>。这个方法里面就进行了对子View调用<code>dispatchTouchEvent</code>这个操作，并从返回值判断是否被消费了（回顾前文，<code>dispatchTouchEvent</code>的返回值表示该View是否会消费这个事件）。如果消费了，那么我们通过<code>addTouchTarget</code>方法把这个View封装到一个TouchTarget里，添加到链表里，同时赋值给<code>newTouchTarget</code>，<code>alreadyDispatchedToNewTouchTarget</code>也被置为真。</p>
 <p>分发给子View的代码结束了，看下面的代码，我们判断了<code>mFirstTouchTarget</code>是否为空。那么什么时候这个链表是空的呢？</p>
 <ol>
@@ -880,135 +898,140 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
 </ol>
 <p>在这两种情况下，我们ViewGroup自己要去考虑消费这个事件了：</p>
 <pre><code class="java">        // Dispatch to touch targets.
-        if (mFirstTouchTarget == null) {
+        if (mFirstTouchTarget == null) &#123;
             // No touch targets so treat this as an ordinary view.
             handled = dispatchTransformedTouchEvent(ev, canceled, null,
                     TouchTarget.ALL_POINTER_IDS);
-        } else {
+        &#125; else &#123;
             // ...
-        }</code></pre>
+        &#125;
+</code></pre>
 <p>如上，注意虽然我们又一次调用了<code>dispatchTransformedTouchEvent</code>，但我们给View参数传递了<code>null</code>，我们后面会发现，这个方法不仅可以把事件分发给子View，还能分发给自己。</p>
 <p>如果我们已经有子View消费了事件，理论上会执行上面片段里的<code>else</code>块：</p>
-<pre><code class="java">        if (mFirstTouchTarget == null) {
+<pre><code class="java">        if (mFirstTouchTarget == null) &#123;
             // ...
-        } else {
+        &#125; else &#123;
             // Dispatch to touch targets, excluding the new touch target if we already
             // dispatched to it.  Cancel touch targets if necessary.
             TouchTarget predecessor = null;
             TouchTarget target = mFirstTouchTarget;
-            while (target != null) {
+            while (target != null) &#123;
                 final TouchTarget next = target.next;
-                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
+                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) &#123;
                     handled = true;
-                } else {
+                &#125; else &#123;
                     final boolean cancelChild = resetCancelNextUpFlag(target.child)
                             || intercepted;
                     if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
+                            target.child, target.pointerIdBits)) &#123;
                         handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
+                    &#125;
+                    if (cancelChild) &#123;
+                        if (predecessor == null) &#123;
                             mFirstTouchTarget = next;
-                        } else {
+                        &#125; else &#123;
                             predecessor.next = next;
-                        }
+                        &#125;
                         target.recycle();
                         target = next;
                         continue;
-                    }
-                }
+                    &#125;
+                &#125;
                 predecessor = target;
                 target = next;
-            }
-        }</code></pre>
+            &#125;
+        &#125;
+</code></pre>
 <p>初看之下，<code>else</code>块中开始遍历链表，此时链表里就只有一个新的子View，<code>alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget</code>也为真，一切都很和谐。</p>
 <p>等等，我们是不是忽略了一个情况？我们前面说过，如果我们在手势中途拦截了手势，<code>mFirstTouchTarget</code>在哪里被清空呢？正是在这个<code>else</code>块里！由于在这个情况下，<code>newTouchTarget</code>必然为空，那么原来链表里的子View都会被删除：</p>
 <pre><code class="java">                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
                             || intercepted;
                     if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
+                            target.child, target.pointerIdBits)) &#123;
                         handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
+                    &#125;
+                    if (cancelChild) &#123;
+                        if (predecessor == null) &#123;
                             mFirstTouchTarget = next;
-                        } else {
+                        &#125; else &#123;
                             predecessor.next = next;
-                        }
+                        &#125;
                         target.recycle();
                         target = next;
                         continue;
-                    }</code></pre>
+                    &#125;
+</code></pre>
 <p>从上可见，如果<code>intercepted</code>为真，则<code>cancelChild</code>也为真，会通过<code>dispatchTransformedTouchEvent</code>把取消事件分发给子View，并把他们都从链表中删除。注意，从上面我们也可以看出，在首次拦截的时候，如果这个事件之前是被其他子View消费的，那么我们只分发取消事件给子View，子View的<code>onTouchEvent</code>仍然会被调用（事件类型为<code>ACTION_CANCEL</code>），而这个ViewGroup的<code>onTouchEvent</code>还不会被调用，需要等待下一次的<code>ACTION_MOVE</code>。</p>
 <p>事实上，上面的<code>else</code>块还承载了分发后续事件给子View的任务：在后续的MOVE和UP事件中，由于<code>mFirstTouchTarget</code>不为空，会直接运行到<code>else</code>这个块，并由于没有<code>newTarget</code>，因此会通过上面片段的第3-4行分发这个后续事件给子View。</p>
 <p>最后，如果是取消事件或抬起手指事件，我们重置状态：</p>
 <pre><code class="java">        // Update list of touch targets for pointer up or cancel, if needed.
         if (canceled
-                || actionMasked == MotionEvent.ACTION_UP) {
+                || actionMasked == MotionEvent.ACTION_UP) &#123;
             resetTouchState();
-        }</code></pre>
+        &#125;
+</code></pre>
 <p>那么，到此为止，ViewGroup的<code>dispatchTouchEvent</code>就看完了，真累啊……</p>
 <p>对于<code>onInterceptTouchEvent</code>，源码如下，可以看作就是不拦截：</p>
-<pre><code class="java">    public boolean onInterceptTouchEvent(MotionEvent ev) {
+<pre><code class="java">    public boolean onInterceptTouchEvent(MotionEvent ev) &#123;
         if (ev.isFromSource(InputDevice.SOURCE_MOUSE)
                 &amp;&amp; ev.getAction() == MotionEvent.ACTION_DOWN
                 &amp;&amp; ev.isButtonPressed(MotionEvent.BUTTON_PRIMARY)
-                &amp;&amp; isOnScrollbarThumb(ev.getX(), ev.getY())) {
+                &amp;&amp; isOnScrollbarThumb(ev.getX(), ev.getY())) &#123;
             return true;
-        }
+        &#125;
         return false;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>ViewGroup并没有重写<code>onTouchEvent</code>，我们如果看View的<code>onTouchEvent</code>，会发现：</p>
-<pre><code class="java">    public boolean onTouchEvent(MotionEvent event) {
+<pre><code class="java">    public boolean onTouchEvent(MotionEvent event) &#123;
         final float x = event.getX();
         final float y = event.getY();
         final int viewFlags = mViewFlags;
         final int action = event.getAction();
 
-        if ((viewFlags &amp; ENABLED_MASK) == DISABLED) {
-            if (action == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PFLAG_PRESSED) != 0) {
+        if ((viewFlags &amp; ENABLED_MASK) == DISABLED) &#123;
+            if (action == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PFLAG_PRESSED) != 0) &#123;
                 setPressed(false);
-            }
+            &#125;
             // A disabled view that is clickable still consumes the touch
             // events, it just doesn&#39;t respond to them.
             return (((viewFlags &amp; CLICKABLE) == CLICKABLE
                     || (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)
                     || (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE);
-        }
-        if (mTouchDelegate != null) {
-            if (mTouchDelegate.onTouchEvent(event)) {
+        &#125;
+        if (mTouchDelegate != null) &#123;
+            if (mTouchDelegate.onTouchEvent(event)) &#123;
                 return true;
-            }
-        }
+            &#125;
+        &#125;
 
         if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||
                 (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE) ||
-                (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) {
+                (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) &#123;
             // A lot of code...
             return true;
-        }
+        &#125;
 
         return false;
-    }
+    &#125;
 </code></pre>
 <p>从上面的节选可以看出，如果这个View不可点击和长按（默认即是如此），那么<code>onTouchEvent</code>是返回<code>false</code>的。从源码中还可以发现，即使这个View被禁用（disabled）了，只要它是可点击的，它仍然会消费触摸事件，这个和我们的直觉是有点违背的，所以算是看源码的额外收获。很多坑也许都能从源码中找出答案！</p>
 <p>到这里，我们就弄懂了ViewGroup的事件分发逻辑：</p>
 <ul>
 <li>手指按下的时候<ul>
-<li>重置各种状态</li>
-<li>不拦截：遍历子View，分发事件给能够接受这个事件的子View，并将消费这个事件的子View加入到链表，如果没有找到消费的子View，则分发事件给自己</li>
-<li>拦截：分发事件给自己</li>
+<li> 重置各种状态</li>
+<li> 不拦截：遍历子View，分发事件给能够接受这个事件的子View，并将消费这个事件的子View加入到链表，如果没有找到消费的子View，则分发事件给自己</li>
+<li> 拦截：分发事件给自己</li>
 </ul>
 </li>
 <li>手指滑动或抬起的时候<ul>
 <li>不拦截：<ul>
-<li>有子View在消费该事件：继续分发给该子View</li>
-<li>无子View消费：分发事件给自己</li>
+<li> 有子View在消费该事件：继续分发给该子View</li>
+<li> 无子View消费：分发事件给自己</li>
 </ul>
 </li>
-<li>刚好拦截：清除正在消费事件的子View（如果有）并分发取消事件</li>
-<li>已经拦截：分发事件给自己</li>
+<li> 刚好拦截：清除正在消费事件的子View（如果有）并分发取消事件</li>
+<li> 已经拦截：分发事件给自己</li>
 </ul>
 </li>
 </ul>
@@ -1193,7 +1216,7 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1203,7 +1226,7 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1213,11 +1236,21 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent</code></pre><h2 id="再开�
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1510,7 +1543,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

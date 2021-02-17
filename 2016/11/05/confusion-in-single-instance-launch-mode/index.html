@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,Android">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Sun Nov 06 2016 03:17:40 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/index.html",
     "headline": "记singleInstance的一个坑",
     "datePublished": "Sun Nov 06 2016 03:17:40 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -420,7 +424,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">Android</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">Android</a>
     </ul>
     
 
@@ -503,12 +507,12 @@
 <p>先说说行为。这个Demo有3个Activity：Main、A、B。Main的launchMode设置为<code>singleInstance</code>，上有两个按钮可以分别启动A和B。</p>
 <p>除此以外，还有一个Widget，点击之后会进入Main。</p>
 <p>接下来我的操作：打开Main，点击进入A，按Home，点击Widget回到Main，点击进入B，按Home，点击Widget回到Main，点击试图进入A，谁知打开来竟然是B！</p>
-<p>今晚无意中找到这样一个帖子：<a href="http://stackoverflow.com/questions/5804966/how-to-start-an-activity-from-a-singleinstance-activity" target="_blank" rel="noopener">android - How to start an activity from a singleInstance activity? - Stack Overflow</a>，发现了他摘录的官方文档，终于明白：</p>
+<p>今晚无意中找到这样一个帖子：<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/5804966/how-to-start-an-activity-from-a-singleinstance-activity">android - How to start an activity from a singleInstance activity? - Stack Overflow</a>，发现了他摘录的官方文档，终于明白：</p>
 <p>原来，singleInstance的Activity是它所在的唯一一个Activity，因此从这里打开的Activity会在新的Task中打开，<strong>就像使用了FLAG_ACTIVITY_NEW_TASK一样</strong>。如果去翻翻这个flag就会发现，它会查找是否被启动的已经存在，如果存在，它会切换到这个task但是并不会自动pop上层的activity！</p>
 <p>继续翻阅就会发现，想要无条件创建task的话，需要增加<code>FLAG_ACTIVITY_MULTIPLE_TASK</code>标记，经过测试，的确可以了。</p>
 <p>但是后来想想，这样似乎也有问题，按照文档：</p>
 <blockquote>
-<p> Used in conjunction with <code>FLAG_ACTIVITY_NEW_TASK</code> to disable the behavior of bringing an existing task to the foreground. When set, a new task is <em>always</em> started to host the Activity for the Intent, regardless of whether there is already an existing task running the same thing.</p>
+<p> Used in conjunction with <code>FLAG_ACTIVITY_NEW_TASK</code> to disable the behavior of bringing an existing task to the foreground. When set, a new task is <em>always</em> started to host the Activity for the Intent, regardless of whether there is already an existing task running the same thing.</p>
 </blockquote>
 <p>也就是说，使用这个会不停地创建新的task。</p>
 <p>我循环进入Main - 点击进入A - Home - 点击Widget进入Main，这样几次之后，用<code>dumpsys</code>查看了app的所有activity，果然已经有五六个A的task了……</p>
@@ -692,7 +696,7 @@
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -702,7 +706,7 @@
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -712,11 +716,21 @@
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1009,7 +1023,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

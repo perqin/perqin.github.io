@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,android,proguard">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Sun Jun 18 2017 11:52:23 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html",
     "headline": "shrinkResources：这是bug还是feature？",
     "datePublished": "Sun Jun 18 2017 11:52:23 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -420,7 +424,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/proguard/">proguard</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/proguard/" rel="tag">proguard</a>
     </ul>
     
 
@@ -499,39 +503,43 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>前两天在酷安上架了一个很简单的应用（<a href="http://www.coolapk.com/apk/com.perqin.copyshare" target="_blank" rel="noopener">复制分享(com.perqin.copyshare)_0.0.2_Android应用_酷安网</a>），感觉酷安对个人开发者还是非常友好的，活跃用户多、评论区一片祥和。后来有评论说安装包体积太大了，于是就打算处理一下这个问题了。</p>
-<p>根据官方文档<a href="https://developer.android.com/studio/build/shrink-code.html" target="_blank" rel="noopener">Shrink Your Code and Resources | Android Studio</a>，我启用了ProGuard代码混淆：</p>
-<pre><code class="groovy">android {
+        <p>前两天在酷安上架了一个很简单的应用（<a target="_blank" rel="noopener" href="http://www.coolapk.com/apk/com.perqin.copyshare">复制分享(com.perqin.copyshare)_0.0.2_Android应用_酷安网</a>），感觉酷安对个人开发者还是非常友好的，活跃用户多、评论区一片祥和。后来有评论说安装包体积太大了，于是就打算处理一下这个问题了。</p>
+<p>根据官方文档<a target="_blank" rel="noopener" href="https://developer.android.com/studio/build/shrink-code.html">Shrink Your Code and Resources | Android Studio</a>，我启用了ProGuard代码混淆：</p>
+<pre><code class="groovy">android &#123;
     ...
-    buildTypes {
-        release {
+    buildTypes &#123;
+        release &#123;
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;
-        }
-    }
-}</code></pre>
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <p>但是构建之后立刻就挂掉了！而如果将<code>shrinkResources</code>设置为<code>false</code>则可以正常启动。</p>
 <p>于是，我开始找出元凶。</p>
 <p>首先，我得拿到release构建运行时崩溃的log。编辑AndroidManifest.xml，在application标签加入如下属性：</p>
 <pre><code class="xml">  &lt;application
     android:debuggable=&quot;true&quot;
     ... /&gt;
-  ...</code></pre>
+  ...
+</code></pre>
 <p>然后编辑应用的build.gradle文件，在<code>android</code>标签禁用检查，否则会无法通过编译：</p>
-<pre><code class="groovy">  android {
-    lintOptions {
+<pre><code class="groovy">  android &#123;
+    lintOptions &#123;
       checkReleaseBuilds false
-    }
-  }</code></pre>
+    &#125;
+  &#125;
+</code></pre>
 <p>然后再编译运行release版的应用，就能看到崩溃的日志。</p>
 <p>但是由于启用了代码混淆，你会看到一大堆abcd，因此需要反混淆。根据官方文档，ProGuard会生成一个mapping.txt，里面包含了所有混淆的对应表，Android SDK提供了反混淆工具，因此我执行如下命令：</p>
-<pre><code class="shell">~/.local/lib/android_sdk/tools/proguard/bin/retrace.sh ~/workspaces/CopyShare/CopyShare/app/build/outputs/mapping/release/mapping.txt ~/trace.txt &gt; ~/deob_trace.txt</code></pre>
+<pre><code class="shell">~/.local/lib/android_sdk/tools/proguard/bin/retrace.sh ~/workspaces/CopyShare/CopyShare/app/build/outputs/mapping/release/mapping.txt ~/trace.txt &gt; ~/deob_trace.txt
+</code></pre>
 <p>上述命令将保存在<code>~/trace.txt</code>中的崩溃日志反混淆之后输出到<code>~/debo_trace.txt</code>。</p>
 <p>接下来我们打开输出的日志：</p>
 <pre><code>06-18 00:50:12.547 18537-18537/com.perqin.copyshare E/AndroidRuntime: FATAL EXCEPTION: main
       Process: com.perqin.copyshare, PID: 18537
-      java.lang.RuntimeException: Unable to start activity ComponentInfo{com.perqin.copyshare/com.perqin.copyshare.SettingsActivity}: android.view.InflateException: Binary XML file line #25: Binary XML file line #1: Error inflating class x
+      java.lang.RuntimeException: Unable to start activity ComponentInfo&#123;com.perqin.copyshare/com.perqin.copyshare.SettingsActivity&#125;: android.view.InflateException: Binary XML file line #25: Binary XML file line #1: Error inflating class x
           at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2762)
           at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2848)
           at android.app.ActivityThread.-wrap12(ActivityThread.java)
@@ -603,28 +611,29 @@
           at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
 06-18 00:50:12.547 18537-18537/com.perqin.copyshare D/AppTracker: App Event: crash
 06-18 00:50:12.558 18537-18537/com.perqin.copyshare I/Process: Sending signal. PID: 18537 SIG: 9
-</code></pre><p>根据上述日志，我发现，崩溃原因是在<code>android.support.v7.app.AppCompatDelegateImplV9</code>这个类的<code>createSubDecor</code>方法里面调用了<code>LayoutInflater.inflate</code>方法，结果找不到一个叫x的View。我们来看看这个<code>createSubDecor</code>方法（在Android Studio中按Ctrl键可以一路追踪每个类的实现）：</p>
-<pre><code class="java">    private ViewGroup createSubDecor() {
+</code></pre>
+<p>根据上述日志，我发现，崩溃原因是在<code>android.support.v7.app.AppCompatDelegateImplV9</code>这个类的<code>createSubDecor</code>方法里面调用了<code>LayoutInflater.inflate</code>方法，结果找不到一个叫x的View。我们来看看这个<code>createSubDecor</code>方法（在Android Studio中按Ctrl键可以一路追踪每个类的实现）：</p>
+<pre><code class="java">    private ViewGroup createSubDecor() &#123;
         TypedArray a = mContext.obtainStyledAttributes(R.styleable.AppCompatTheme);
 
-        if (!a.hasValue(R.styleable.AppCompatTheme_windowActionBar)) {
+        if (!a.hasValue(R.styleable.AppCompatTheme_windowActionBar)) &#123;
             a.recycle();
             throw new IllegalStateException(
                     &quot;You need to use a Theme.AppCompat theme (or descendant) with this activity.&quot;);
-        }
+        &#125;
 
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowNoTitle, false)) {
+        if (a.getBoolean(R.styleable.AppCompatTheme_windowNoTitle, false)) &#123;
             requestWindowFeature(Window.FEATURE_NO_TITLE);
-        } else if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBar, false)) {
+        &#125; else if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBar, false)) &#123;
             // Don&#39;t allow an action bar if there is no title.
             requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR);
-        }
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBarOverlay, false)) {
+        &#125;
+        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBarOverlay, false)) &#123;
             requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);
-        }
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionModeOverlay, false)) {
+        &#125;
+        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionModeOverlay, false)) &#123;
             requestWindowFeature(FEATURE_ACTION_MODE_OVERLAY);
-        }
+        &#125;
         mIsFloating = a.getBoolean(R.styleable.AppCompatTheme_android_windowIsFloating, false);
         a.recycle();
 
@@ -635,15 +644,15 @@
         ViewGroup subDecor = null;
 
 
-        if (!mWindowNoTitle) {
-            if (mIsFloating) {
+        if (!mWindowNoTitle) &#123;
+            if (mIsFloating) &#123;
                 // If we&#39;re floating, inflate the dialog title decor
                 subDecor = (ViewGroup) inflater.inflate(
                         R.layout.abc_dialog_title_material, null);
 
                 // Floating windows can never have an action bar, reset the flags
                 mHasActionBar = mOverlayActionBar = false;
-            } else if (mHasActionBar) {
+            &#125; else if (mHasActionBar) &#123;
                 /**
                  * This needs some explanation. As we can not use the android:theme attribute
                  * pre-L, we emulate it by manually creating a LayoutInflater using a
@@ -653,11 +662,11 @@
                 mContext.getTheme().resolveAttribute(R.attr.actionBarTheme, outValue, true);
 
                 Context themedContext;
-                if (outValue.resourceId != 0) {
+                if (outValue.resourceId != 0) &#123;
                     themedContext = new ContextThemeWrapper(mContext, outValue.resourceId);
-                } else {
+                &#125; else &#123;
                     themedContext = mContext;
-                }
+                &#125;
 
                 // Now inflate the view using the themed context and set it as the content view
                 subDecor = (ViewGroup) LayoutInflater.from(themedContext)
@@ -670,73 +679,73 @@
                 /**
                  * Propagate features to DecorContentParent
                  */
-                if (mOverlayActionBar) {
+                if (mOverlayActionBar) &#123;
                     mDecorContentParent.initFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);
-                }
-                if (mFeatureProgress) {
+                &#125;
+                if (mFeatureProgress) &#123;
                     mDecorContentParent.initFeature(Window.FEATURE_PROGRESS);
-                }
-                if (mFeatureIndeterminateProgress) {
+                &#125;
+                if (mFeatureIndeterminateProgress) &#123;
                     mDecorContentParent.initFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-                }
-            }
-        } else {
-            if (mOverlayActionMode) {
+                &#125;
+            &#125;
+        &#125; else &#123;
+            if (mOverlayActionMode) &#123;
                 subDecor = (ViewGroup) inflater.inflate(
                         R.layout.abc_screen_simple_overlay_action_mode, null);
-            } else {
+            &#125; else &#123;
                 subDecor = (ViewGroup) inflater.inflate(R.layout.abc_screen_simple, null);
-            }
+            &#125;
 
-            if (Build.VERSION.SDK_INT &gt;= 21) {
+            if (Build.VERSION.SDK_INT &gt;= 21) &#123;
                 // If we&#39;re running on L or above, we can rely on ViewCompat&#39;s
                 // setOnApplyWindowInsetsListener
                 ViewCompat.setOnApplyWindowInsetsListener(subDecor,
-                        new OnApplyWindowInsetsListener() {
+                        new OnApplyWindowInsetsListener() &#123;
                             @Override
                             public WindowInsetsCompat onApplyWindowInsets(View v,
-                                    WindowInsetsCompat insets) {
+                                    WindowInsetsCompat insets) &#123;
                                 final int top = insets.getSystemWindowInsetTop();
                                 final int newTop = updateStatusGuard(top);
 
-                                if (top != newTop) {
+                                if (top != newTop) &#123;
                                     insets = insets.replaceSystemWindowInsets(
                                             insets.getSystemWindowInsetLeft(),
                                             newTop,
                                             insets.getSystemWindowInsetRight(),
                                             insets.getSystemWindowInsetBottom());
-                                }
+                                &#125;
 
                                 // Now apply the insets on our view
                                 return ViewCompat.onApplyWindowInsets(v, insets);
-                            }
-                        });
-            } else {
+                            &#125;
+                        &#125;);
+            &#125; else &#123;
                 // Else, we need to use our own FitWindowsViewGroup handling
                 ((FitWindowsViewGroup) subDecor).setOnFitSystemWindowsListener(
-                        new FitWindowsViewGroup.OnFitSystemWindowsListener() {
+                        new FitWindowsViewGroup.OnFitSystemWindowsListener() &#123;
                             @Override
-                            public void onFitSystemWindows(Rect insets) {
+                            public void onFitSystemWindows(Rect insets) &#123;
                                 insets.top = updateStatusGuard(insets.top);
-                            }
-                        });
-            }
-        }
+                            &#125;
+                        &#125;);
+            &#125;
+        &#125;
 
-        if (subDecor == null) {
+        if (subDecor == null) &#123;
             throw new IllegalArgumentException(
-                    &quot;AppCompat does not support the current theme features: { &quot;
+                    &quot;AppCompat does not support the current theme features: &#123; &quot;
                             + &quot;windowActionBar: &quot; + mHasActionBar
                             + &quot;, windowActionBarOverlay: &quot;+ mOverlayActionBar
                             + &quot;, android:windowIsFloating: &quot; + mIsFloating
                             + &quot;, windowActionModeOverlay: &quot; + mOverlayActionMode
                             + &quot;, windowNoTitle: &quot; + mWindowNoTitle
-                            + &quot; }&quot;);
-        }
+                            + &quot; &#125;&quot;);
+        &#125;
 
-        if (mDecorContentParent == null) {
+        if (mDecorContentParent == null) &#123;
             mTitleView = (TextView) subDecor.findViewById(R.id.title);
-        }
+        &#125;
 
         // Make the decor optionally fit system windows, like the window&#39;s decor
         ViewUtils.makeOptionalFitsSystemWindows(subDecor);
@@ -745,14 +754,14 @@
                 R.id.action_bar_activity_content);
 
         final ViewGroup windowContentView = (ViewGroup) mWindow.findViewById(android.R.id.content);
-        if (windowContentView != null) {
+        if (windowContentView != null) &#123;
             // There might be Views already added to the Window&#39;s content view so we need to
             // migrate them to our content view
-            while (windowContentView.getChildCount() &gt; 0) {
+            while (windowContentView.getChildCount() &gt; 0) &#123;
                 final View child = windowContentView.getChildAt(0);
                 windowContentView.removeViewAt(0);
                 contentView.addView(child);
-            }
+            &#125;
 
             // Change our content FrameLayout to use the android.R.id.content id.
             // Useful for fragments.
@@ -761,52 +770,56 @@
 
             // The decorContent may have a foreground drawable set (windowContentOverlay).
             // Remove this as we handle it ourselves
-            if (windowContentView instanceof FrameLayout) {
+            if (windowContentView instanceof FrameLayout) &#123;
                 ((FrameLayout) windowContentView).setForeground(null);
-            }
-        }
+            &#125;
+        &#125;
 
         // Now set the Window&#39;s content view with the decor
         mWindow.setContentView(subDecor);
 
-        contentView.setAttachListener(new ContentFrameLayout.OnAttachListener() {
+        contentView.setAttachListener(new ContentFrameLayout.OnAttachListener() &#123;
             @Override
-            public void onAttachedFromWindow() {}
+            public void onAttachedFromWindow() &#123;&#125;
 
             @Override
-            public void onDetachedFromWindow() {
+            public void onDetachedFromWindow() &#123;
                 dismissPopups();
-            }
-        });
+            &#125;
+        &#125;);
 
         return subDecor;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>上面的代码一共引用到了以下layout资源：</p>
 <ul>
-<li>R.layout.abc_dialog_title_material</li>
-<li>R.layout.abc_screen_toolbar</li>
-<li>R.layout.abc_screen_simple_overlay_action_mode</li>
-<li>R.layout.abc_screen_simple</li>
+<li> R.layout.abc_dialog_title_material</li>
+<li> R.layout.abc_screen_toolbar</li>
+<li> R.layout.abc_screen_simple_overlay_action_mode</li>
+<li> R.layout.abc_screen_simple</li>
 </ul>
 <p>解包aar文件之后查看这些xml文件，会发现他们有一个共同的特点：</p>
 <pre><code class="xml">        &lt;include
             layout=&quot;@layout/abc_screen_content_include&quot;
             android:layout_width=&quot;match_parent&quot;
             android:layout_height=&quot;wrap_content&quot;
-            android:layout_weight=&quot;1&quot;/&gt;</code></pre>
+            android:layout_weight=&quot;1&quot;/&gt;
+</code></pre>
 <p>好的，这个时候我们将构建的会崩溃的apk拖进Android Studio查看其内容，我们找到<code>res/layout/abc_screen_content_include.xml</code>：</p>
-<p><img src="apk-analyze.png" alt></p>
+<p><img src="apk-analyze.png"></p>
 <p>至此，真相大白！可以看到，<code>shrinkResources</code>这个特性似乎还是有一点bug（总不能是feature吧？？！），没有正确识别<code>include</code>标签的引用，导致这个资源被认为是无用的，内容也被</p>
 <pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;x /&gt;</code></pre>
+&lt;x /&gt;
+</code></pre>
 <p>所代替，所以运行的时候，当渲染这个资源的时候就会报找不到android.view.x类的错误。</p>
 <p>比较不幸的是，即使按照官方说明将这个资源手动加入到keep列表中：</p>
 <pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;resources
     xmlns:tools=&quot;http://schemas.android.com/tools&quot;
     tools:keep=&quot;@layout/abc_screen_content_include&quot;
-    tools:ignore=&quot;PrivateResource&quot; /&gt;</code></pre>
-<p>但构建出来的apk仍然删除了这个资源，所以我只能提了一个issue：<a href="https://issuetracker.google.com/issues/62744324" target="_blank" rel="noopener">AppCompat V7 crash when shrinkResources is enabled [62744324] - Visible to Public - Issue Tracker</a>，不过目前还没有任何回应……</p>
+    tools:ignore=&quot;PrivateResource&quot; /&gt;
+</code></pre>
+<p>但构建出来的apk仍然删除了这个资源，所以我只能提了一个issue：<a target="_blank" rel="noopener" href="https://issuetracker.google.com/issues/62744324">AppCompat V7 crash when shrinkResources is enabled [62744324] - Visible to Public - Issue Tracker</a>，不过目前还没有任何回应……</p>
 <p>第一次尝试代码混淆，没想到就遇到了这么个坑，真是刺激！</p>
 
         
@@ -871,7 +884,7 @@
 
     <!-- Next Nav -->
     
-        <a href="/2017/06/16/showcases/gan-dear/" id="post_nav-older" class="next-content">
+        <a href="/showcases/gan-dear/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
@@ -987,7 +1000,7 @@
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -997,7 +1010,7 @@
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1007,11 +1020,21 @@
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1304,7 +1327,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

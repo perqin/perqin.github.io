@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,java,gradle">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Mon Feb 27 2017 18:07:33 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/index.html",
     "headline": "移植Java Web应用到Gradle构建系统",
     "datePublished": "Mon Feb 27 2017 18:07:33 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Gradle准备"><span class="post-toc-number">1.</span> <span class="post-toc-text">Gradle准备</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#调整目录结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">调整目录结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置构建脚本"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置构建脚本</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Gradle%E5%87%86%E5%A4%87"><span class="post-toc-number">1.</span> <span class="post-toc-text">Gradle准备</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%B0%83%E6%95%B4%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="post-toc-number">2.</span> <span class="post-toc-text">调整目录结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E8%84%9A%E6%9C%AC"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置构建脚本</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/gradle/">gradle</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/java/">java</a>
+        <a class="post_tag-none-link" href="/tags/gradle/" rel="tag">gradle</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/java/" rel="tag">java</a>
     </ul>
     
 
@@ -511,9 +515,11 @@
         <p>最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对Gradle的兴趣，我尝试将项目结构改为了Gradle构建系统的Java Web应用。</p>
 <h2 id="Gradle准备"><a href="#Gradle准备" class="headerlink" title="Gradle准备"></a>Gradle准备</h2><p>Gradle是一种构建工具。在一个Gradle项目中，可以编写构建脚本<code>build.gradle</code>，在其中指定各个开发生命周期中涉及的任务，包括但不仅限于编译、打包成WAR、部署到容器和单元测试。</p>
 <p>Gradle的运行需要Java环境，这里不再赘述，JDK环境的配置读者可以直接通过搜索引擎找到。</p>
-<p>Gradle的运行方式有两种：Gradle和Gradle Wrapper，其中前者就是直接下载Gradle到本地机器并配置好环境变量，方法也很简单，前往Gradle的官方下载地址<a href="http://services.gradle.org/distributions" target="_blank" rel="noopener">http://services.gradle.org/distributions</a>下载即可。目前（2017/02/27）最新的版本是3.4，其中<code>gradle-3.4-bin.zip</code>是可执行包，一般下载这个就可以了，后缀src是源码，后缀all的则是最全的压缩包。</p>
+<p>Gradle的运行方式有两种：Gradle和Gradle Wrapper，其中前者就是直接下载Gradle到本地机器并配置好环境变量，方法也很简单，前往Gradle的官方下载地址<a target="_blank" rel="noopener" href="http://services.gradle.org/distributions">http://services.gradle.org/distributions</a>下载即可。目前（2017/02/27）最新的版本是3.4，其中<code>gradle-3.4-bin.zip</code>是可执行包，一般下载这个就可以了，后缀src是源码，后缀all的则是最全的压缩包。</p>
 <p>下载解压到自己选择的目录之后，将其中的<code>bin</code>目录放入环境变量中即可，比如我的<code>bin</code>路径为：</p>
-<pre><code>/opt/gradle/gradle-3.4/bin</code></pre><p>验证安装成功：</p>
+<pre><code>/opt/gradle/gradle-3.4/bin
+</code></pre>
+<p>验证安装成功：</p>
 <pre><code>perqin@PQNACRUBT:~$ gradle -v
 
 ------------------------------------------------------------
@@ -526,7 +532,9 @@ Revision:     73f32d68824582945f5ac1810600e8d87794c3d4
 Groovy:       2.4.7
 Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015
 JVM:          1.8.0_121 (Oracle Corporation 25.121-b13)
-OS:           Linux 4.4.0-64-generic amd64</code></pre><p>然而，有时候我们的项目所需要的可能是其他指定版本的Gradle，甚至有时候让所有开发者都事先安装好指定的Gradle版本十分困难，因此Gradle提供了另一种叫做Gradle Wrapper的小脚本。把<code>gradle</code>替换成项目根目录里的<code>gradlew</code>（Windows平台下对应的是<code>gradlew.bat</code>），该脚本会判断项目需要的Gradle是否已经安装到了本机，如果没有则会自动从官方网站下载对应版本到本地的缓存目录，并将命令传递给缓存的对应版本的Gradle。</p>
+OS:           Linux 4.4.0-64-generic amd64
+</code></pre>
+<p>然而，有时候我们的项目所需要的可能是其他指定版本的Gradle，甚至有时候让所有开发者都事先安装好指定的Gradle版本十分困难，因此Gradle提供了另一种叫做Gradle Wrapper的小脚本。把<code>gradle</code>替换成项目根目录里的<code>gradlew</code>（Windows平台下对应的是<code>gradlew.bat</code>），该脚本会判断项目需要的Gradle是否已经安装到了本机，如果没有则会自动从官方网站下载对应版本到本地的缓存目录，并将命令传递给缓存的对应版本的Gradle。</p>
 <p>获取Wrapper的方式这里不讲，因为一般在Gradle项目中都会有，也可以通过<code>gradle init -type &lt;type&gt;</code>初始化Gradle项目环境的时候生成。</p>
 <h2 id="调整目录结构"><a href="#调整目录结构" class="headerlink" title="调整目录结构"></a>调整目录结构</h2><p>因为时间紧迫，我也是现学现用，因此以下的内容也许不是业界最佳实践，但是我认为比原来更好的方案。</p>
 <p>在迁移到Gradle之前，项目的目录结构如下：</p>
@@ -550,10 +558,14 @@ OS:           Linux 4.4.0-64-generic amd64</code></pre><p>然而，有时候我�
   + com
   + ...
 + WebContent                            // 网站内容根目录
-  .gitignore</code></pre><p>上面的目录虽然比较规整但并不算十分规范，比如Mybatis里的很多mapper的xml文件就被放到了对应的java文件的同一个目录。</p>
+  .gitignore
+</code></pre>
+<p>上面的目录虽然比较规整但并不算十分规范，比如Mybatis里的很多mapper的xml文件就被放到了对应的java文件的同一个目录。</p>
 <p>首先进入项目根目录，将Gradle环境集成好：</p>
 <pre><code>$ cd project
-$ gradle init -type java-application</code></pre><p>这时，你会发现目录中多了以下内容：</p>
+$ gradle init -type java-application
+</code></pre>
+<p>这时，你会发现目录中多了以下内容：</p>
 <pre><code>+ gradle
   + wrapper
       gradle-wrapper.jar
@@ -561,7 +573,9 @@ $ gradle init -type java-application</code></pre><p>这时，你会发现目录�
   build.gradle
   gradlew
   gradlew.bat
-  settings.gradle</code></pre><p>其中gradle目录里就是Gradle Wrapper了，而build.gradle是构建脚本，settings.gradle包含构建设置。除此以外，构建过程中还会生成<code>.gradle</code>目录和<code>build</code>目录，需要把它们加入到<code>.gitignore</code>中。</p>
+  settings.gradle
+</code></pre>
+<p>其中gradle目录里就是Gradle Wrapper了，而build.gradle是构建脚本，settings.gradle包含构建设置。除此以外，构建过程中还会生成<code>.gradle</code>目录和<code>build</code>目录，需要把它们加入到<code>.gitignore</code>中。</p>
 <p>接下来，我对项目的目录进行了调整，新的结构如下：</p>
 <pre><code>project
 + .gradle                           // 使用Gradle产生的临时目录
@@ -592,19 +606,21 @@ $ gradle init -type java-application</code></pre><p>这时，你会发现目录�
   build.gradle                      // 构建脚本
   gradlew
   gradlew.bat
-  settings.gradle                   // 配置脚本</code></pre><p>需要注意的是，所有和java文件放在一起的非java文件都需要根据原有目录结构放到<code>src/main/resources/</code>中，否则无法被Gradle正确打包。</p>
+  settings.gradle                   // 配置脚本
+</code></pre>
+<p>需要注意的是，所有和java文件放在一起的非java文件都需要根据原有目录结构放到<code>src/main/resources/</code>中，否则无法被Gradle正确打包。</p>
 <p>上面的目录结构将java文件和其他文件分开，并且把主代码和测试代码分了源码集（source set），这对大部分的构建工具和IDE都更加友好。后面读者会看到Gradle构建大大减少了项目对IDE的依赖。</p>
 <h2 id="配置构建脚本"><a href="#配置构建脚本" class="headerlink" title="配置构建脚本"></a>配置构建脚本</h2><p>在<code>build.gradle</code>中，给出了整个项目的构建任务。经过修改的最终版本如下：</p>
-<pre><code>buildscript {
-    repositories {
+<pre><code>buildscript &#123;
+    repositories &#123;
         jcenter()
-    }
+    &#125;
 
-    dependencies {
+    dependencies &#123;
         // Add Gradle Cargo plugin for deployment
         classpath &#39;com.bmuschko:gradle-cargo-plugin:2.2.3&#39;
-    }
-}
+    &#125;
+&#125;
 
 // This is a WAR project!
 apply plugin: &#39;war&#39;
@@ -614,16 +630,16 @@ apply plugin: &#39;com.bmuschko.cargo&#39;
 sourceCompatibility = 1.7
 
 // In this section you declare where to find the dependencies of your project
-repositories {
+repositories &#123;
     // We use Mavel Central instead of jcenter
     mavenCentral()
-}
+&#125;
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile) &#123;
     options.warnings = false
-}
+&#125;
 
-dependencies {
+dependencies &#123;
     // Add jar files in libs/ into dependencies
     compile fileTree(dir: &#39;libs&#39;, include: [&#39;*.jar&#39;])
     // List your dependencies here
@@ -632,17 +648,17 @@ dependencies {
     // ......
     // Use JUnit test framework
     testCompile &#39;junit:junit:4.11&#39;
-}
+&#125;
 
-cargo {
+cargo &#123;
     // Deploy to Tomcat 7
     containerId = &#39;tomcat7x&#39;
 
-    deployable {
+    deployable &#123;
         context = &#39;/&#39;
-    }
+    &#125;
 
-    local {
+    local &#123;
         // JVM args to speed up container performance!
         jvmArgs = &#39;-XX:PermSize=256M -XX:MaxPermSize=512m -Xms256m -Xmx1024m&#39;
         // Set environment variable TOMCAT_HOME to the home of your local tomcat
@@ -652,17 +668,23 @@ cargo {
         logFile = file(&#39;build/log.txt&#39;)
         logLevel = &#39;high&#39;
 
-        containerProperties {
+        containerProperties &#123;
             property &#39;cargo.tomcat.ajp.port&#39;, 9099
-        }
-    }
-}
+        &#125;
+    &#125;
+&#125;
 
 // Ensure that the WAR is up-to-date before deployment
-cargoRunLocal.dependsOn assemble</code></pre><p>可以看到，Gradle的依赖管理比添加jar包更加轻松，只需要一行代码，就可以自动从仓库下载对应版本的依赖，这很方便管理项目的依赖，也不需要把一大堆jar包也加入VCS里了。当然，Maven Central中没有的jar包也可以直接放入<code>libs/</code>目录。</p>
+cargoRunLocal.dependsOn assemble
+</code></pre>
+<p>可以看到，Gradle的依赖管理比添加jar包更加轻松，只需要一行代码，就可以自动从仓库下载对应版本的依赖，这很方便管理项目的依赖，也不需要把一大堆jar包也加入VCS里了。当然，Maven Central中没有的jar包也可以直接放入<code>libs/</code>目录。</p>
 <p>现在，只要运行：</p>
-<pre><code>$ gradle assemble</code></pre><p>或</p>
-<pre><code>$ ./gradlew assemble</code></pre><p>，就会自动下载依赖、编译、打包了。接下来，我们通过cargo插件，增加部署到本地Tomcat的任务。参照上面的脚本，在cargo域里面可以配置很多东西，而这些东西在其他开发者刚用IDE打开项目之后，都不需要对着IDE专门配置一遍！</p>
+<pre><code>$ gradle assemble
+</code></pre>
+<p>或</p>
+<pre><code>$ ./gradlew assemble
+</code></pre>
+<p>，就会自动下载依赖、编译、打包了。接下来，我们通过cargo插件，增加部署到本地Tomcat的任务。参照上面的脚本，在cargo域里面可以配置很多东西，而这些东西在其他开发者刚用IDE打开项目之后，都不需要对着IDE专门配置一遍！</p>
 <p>不过必须注意的是，<strong>必须配置环境变量TOMCAT_HOME，指向本地Tomcat的安装路径。</strong></p>
 <p>接下来，运行任务<code>cargoRunLocal</code>就可以启动容器：</p>
 <pre><code>perqin@PQNACRUBT:~/Workspace/project$ ./gradlew cargoRunLocal
@@ -674,10 +696,14 @@ Starting a Gradle Daemon (subsequent builds will be faster)
 :assemble UP-TO-DATE
 :cargoRunLocal
 Press Ctrl-C to stop the container...
-&gt; Building 83% &gt; :cargoRunLocal</code></pre><p>可以看到日志也被输出到目录了：</p>
+&gt; Building 83% &gt; :cargoRunLocal
+</code></pre>
+<p>可以看到日志也被输出到目录了：</p>
 <pre><code>perqin@PQNACRUBT:~/Workspace/project/build$ ls -l | grep txt
 -rw-rw-r-- 1 perqin perqin     6509 2月  27 22:10 log.txt
--rw-rw-r-- 1 perqin perqin 34139380 2月  27 22:12 output.txt</code></pre><p>至此，一个项目的Gradle构建就配置好了，即使是命令行，也只需要一两条语句就能完成构建到部署。在IDE中，也能通过简单的双击完成Gradle任务，比如构建、测试等。</p>
+-rw-rw-r-- 1 perqin perqin 34139380 2月  27 22:12 output.txt
+</code></pre>
+<p>至此，一个项目的Gradle构建就配置好了，即使是命令行，也只需要一两条语句就能完成构建到部署。在IDE中，也能通过简单的双击完成Gradle任务，比如构建、测试等。</p>
 
         
     
@@ -857,7 +883,7 @@ Press Ctrl-C to stop the container...
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -867,7 +893,7 @@ Press Ctrl-C to stop the container...
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -877,11 +903,21 @@ Press Ctrl-C to stop the container...
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1174,7 +1210,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

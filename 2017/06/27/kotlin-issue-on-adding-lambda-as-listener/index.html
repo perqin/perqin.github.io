@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,android,kotlin">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Tue Jun 27 2017 16:04:03 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/index.html",
     "headline": "Kotlin将只读lambda表达式作为监听器使用的坑",
     "datePublished": "Tue Jun 27 2017 16:04:03 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -420,7 +424,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/kotlin/">kotlin</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/kotlin/" rel="tag">kotlin</a>
     </ul>
     
 
@@ -502,59 +506,61 @@
         <p>谷歌爸爸在今年的I/O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。</p>
 <p>我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到<code>ClipboardManager</code>，而在停止的时候则会移除该监听器。奇怪的事情是，添加是可以的，移除却失败了。</p>
 <p>百思不得其解之下，我开始查看<code>ClipboardManager</code>的源码，其中添加和移除监听器的源码如下：</p>
-<pre><code class="java">    public void addPrimaryClipChangedListener(OnPrimaryClipChangedListener what) {
-        synchronized (mPrimaryClipChangedListeners) {
-            if (mPrimaryClipChangedListeners.size() == 0) {
-                try {
+<pre><code class="java">    public void addPrimaryClipChangedListener(OnPrimaryClipChangedListener what) &#123;
+        synchronized (mPrimaryClipChangedListeners) &#123;
+            if (mPrimaryClipChangedListeners.size() == 0) &#123;
+                try &#123;
                     getService().addPrimaryClipChangedListener(
                             mPrimaryClipChangedServiceListener, mContext.getOpPackageName());
-                } catch (RemoteException e) {
+                &#125; catch (RemoteException e) &#123;
                     throw e.rethrowFromSystemServer();
-                }
-            }
+                &#125;
+            &#125;
             mPrimaryClipChangedListeners.add(what);
-        }
-    }
+        &#125;
+    &#125;
 
-    public void removePrimaryClipChangedListener(OnPrimaryClipChangedListener what) {
-        synchronized (mPrimaryClipChangedListeners) {
+    public void removePrimaryClipChangedListener(OnPrimaryClipChangedListener what) &#123;
+        synchronized (mPrimaryClipChangedListeners) &#123;
             mPrimaryClipChangedListeners.remove(what);
-            if (mPrimaryClipChangedListeners.size() == 0) {
-                try {
+            if (mPrimaryClipChangedListeners.size() == 0) &#123;
+                try &#123;
                     getService().removePrimaryClipChangedListener(
                             mPrimaryClipChangedServiceListener);
-                } catch (RemoteException e) {
+                &#125; catch (RemoteException e) &#123;
                     throw e.rethrowFromSystemServer();
-                }
-            }
-        }
-    }</code></pre>
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+</code></pre>
 <p>而这个<code>mPrimaryClipChangedListeners</code>不过是个<code>ArrayList</code>而已。</p>
 <p>如果排除了这是Android系统的bug，那么唯一的解释就是：移除监听器的时候传递的对象和一开始添加的监听器并不是同一个！（请自行脑补名侦探柯南BGM）</p>
 <p>那么就让我们来看看这个Service被编译成什么样子了吧。下面是原来的Kotlin代码（省略了业务逻辑，只保留几个Log）：</p>
-<pre><code class="kotlin">class CopyListenerService : Service() {
+<pre><code class="kotlin">class CopyListenerService : Service() &#123;
     override fun onBind(p0: Intent?): IBinder? = null
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int &#123;
         clipboardManager.addPrimaryClipChangedListener(onPrimaryClipChangedListener)
         return START_STICKY
-    }
+    &#125;
 
-    override fun onDestroy() {
+    override fun onDestroy() &#123;
         super.onDestroy()
         clipboardManager.removePrimaryClipChangedListener(onPrimaryClipChangedListener)
-    }
+    &#125;
 
-    val clipboardManager by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
-    val onPrimaryClipChangedListener = {
+    val clipboardManager by lazy &#123; getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager &#125;
+    val onPrimaryClipChangedListener = &#123;
         Log.d(TAG, &quot;Clip Item count: &quot; + clipboardManager.primaryClip.itemCount)
         Unit
-    }
+    &#125;
 
-    companion object {
+    companion object &#123;
         val TAG = &quot;CopyListenerService&quot;
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p>可以看到，我的<code>onPrimaryClipChangedListener</code>只是一个纯洁的lambda表达式而已。</p>
 <p>我们点击菜单<code>Tools - Kotlin - Show Kotlin Bytecode</code>，右边会多出一个编辑器，我们点击那个编辑器顶部的<code>Decompile</code>按钮，左边的编辑器就多了一个<code>CopyListenerService.decompiled.java</code>的文件。由于是反编译的，所以非常丑而且还有很多IDE飘红，不过这不影响我们找出元凶。下面是反编译结果，巨长：</p>
 <pre><code class="java">// CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3.java
@@ -566,23 +572,23 @@ import kotlin.jvm.functions.Function0;
 import kotlin.jvm.internal.Intrinsics;
 
 @Metadata(
-   mv = {1, 1, 6},
-   bv = {1, 0, 1},
+   mv = &#123;1, 1, 6&#125;,
+   bv = &#123;1, 0, 1&#125;,
    k = 3
 )
-final class CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 implements OnPrimaryClipChangedListener {
+final class CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 implements OnPrimaryClipChangedListener &#123;
    // $FF: synthetic field
    private final Function0 function;
 
-   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) {
+   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) &#123;
       this.function = var1;
-   }
+   &#125;
 
    // $FF: synthetic method
-   public final void onPrimaryClipChanged() {
+   public final void onPrimaryClipChanged() &#123;
       Intrinsics.checkExpressionValueIsNotNull(this.function.invoke(), &quot;invoke(...)&quot;);
-   }
-}
+   &#125;
+&#125;
 // CopyListenerService.java
 package com.perqin.copyshare;
 
@@ -606,161 +612,165 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Metadata(
-   mv = {1, 1, 6},
-   bv = {1, 0, 1},
+   mv = &#123;1, 1, 6&#125;,
+   bv = &#123;1, 0, 1&#125;,
    k = 1,
-   d1 = {&quot;\u00006\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0010\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\b\n\u0002\b\u0005\u0018\u0000 \u00182\u00020\u0001:\u0001\u0018B\u0005¢\u0006\u0002\u0010\u0002J\u0014\u0010\u000e\u001a\u0004\u0018\u00010\u000f2\b\u0010\u0010\u001a\u0004\u0018\u00010\u0011H\u0016J\b\u0010\u0012\u001a\u00020\u000bH\u0016J\&quot;\u0010\u0013\u001a\u00020\u00142\b\u0010\u0015\u001a\u0004\u0018\u00010\u00112\u0006\u0010\u0016\u001a\u00020\u00142\u0006\u0010\u0017\u001a\u00020\u0014H\u0016R\u001b\u0010\u0003\u001a\u00020\u00048FX\u0086\u0084\u0002¢\u0006\f\n\u0004\b\u0007\u0010\b\u001a\u0004\b\u0005\u0010\u0006R\u0017\u0010\t\u001a\b\u0012\u0004\u0012\u00020\u000b0\n¢\u0006\b\n\u0000\u001a\u0004\b\f\u0010\r¨\u0006\u0019&quot;},
-   d2 = {&quot;Lcom/perqin/copyshare/CopyListenerService;&quot;, &quot;Landroid/app/Service;&quot;, &quot;()V&quot;, &quot;clipboardManager&quot;, &quot;Landroid/content/ClipboardManager;&quot;, &quot;getClipboardManager&quot;, &quot;()Landroid/content/ClipboardManager;&quot;, &quot;clipboardManager$delegate&quot;, &quot;Lkotlin/Lazy;&quot;, &quot;onPrimaryClipChangedListener&quot;, &quot;Lkotlin/Function0;&quot;, &quot;&quot;, &quot;getOnPrimaryClipChangedListener&quot;, &quot;()Lkotlin/jvm/functions/Function0;&quot;, &quot;onBind&quot;, &quot;Landroid/os/IBinder;&quot;, &quot;p0&quot;, &quot;Landroid/content/Intent;&quot;, &quot;onDestroy&quot;, &quot;onStartCommand&quot;, &quot;&quot;, &quot;intent&quot;, &quot;flags&quot;, &quot;startId&quot;, &quot;Companion&quot;, &quot;production sources for module app&quot;}
+   d1 = &#123;&quot;\u00006\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0010\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\b\n\u0002\b\u0005\u0018\u0000 \u00182\u00020\u0001:\u0001\u0018B\u0005¢\u0006\u0002\u0010\u0002J\u0014\u0010\u000e\u001a\u0004\u0018\u00010\u000f2\b\u0010\u0010\u001a\u0004\u0018\u00010\u0011H\u0016J\b\u0010\u0012\u001a\u00020\u000bH\u0016J\&quot;\u0010\u0013\u001a\u00020\u00142\b\u0010\u0015\u001a\u0004\u0018\u00010\u00112\u0006\u0010\u0016\u001a\u00020\u00142\u0006\u0010\u0017\u001a\u00020\u0014H\u0016R\u001b\u0010\u0003\u001a\u00020\u00048FX\u0086\u0084\u0002¢\u0006\f\n\u0004\b\u0007\u0010\b\u001a\u0004\b\u0005\u0010\u0006R\u0017\u0010\t\u001a\b\u0012\u0004\u0012\u00020\u000b0\n¢\u0006\b\n\u0000\u001a\u0004\b\f\u0010\r¨\u0006\u0019&quot;&#125;,
+   d2 = &#123;&quot;Lcom/perqin/copyshare/CopyListenerService;&quot;, &quot;Landroid/app/Service;&quot;, &quot;()V&quot;, &quot;clipboardManager&quot;, &quot;Landroid/content/ClipboardManager;&quot;, &quot;getClipboardManager&quot;, &quot;()Landroid/content/ClipboardManager;&quot;, &quot;clipboardManager$delegate&quot;, &quot;Lkotlin/Lazy;&quot;, &quot;onPrimaryClipChangedListener&quot;, &quot;Lkotlin/Function0;&quot;, &quot;&quot;, &quot;getOnPrimaryClipChangedListener&quot;, &quot;()Lkotlin/jvm/functions/Function0;&quot;, &quot;onBind&quot;, &quot;Landroid/os/IBinder;&quot;, &quot;p0&quot;, &quot;Landroid/content/Intent;&quot;, &quot;onDestroy&quot;, &quot;onStartCommand&quot;, &quot;&quot;, &quot;intent&quot;, &quot;flags&quot;, &quot;startId&quot;, &quot;Companion&quot;, &quot;production sources for module app&quot;&#125;
 )
-public final class CopyListenerService extends Service {
+public final class CopyListenerService extends Service &#123;
    @NotNull
-   private final Lazy clipboardManager$delegate = LazyKt.lazy((Function0)(new Function0() {
+   private final Lazy clipboardManager$delegate = LazyKt.lazy((Function0)(new Function0() &#123;
       // $FF: synthetic method
       // $FF: bridge method
-      public Object invoke() {
+      public Object invoke() &#123;
          return this.invoke();
-      }
+      &#125;
 
       @NotNull
-      public final ClipboardManager invoke() {
+      public final ClipboardManager invoke() &#123;
          Object var10000 = CopyListenerService.this.getSystemService(&quot;clipboard&quot;);
-         if(var10000 == null) {
+         if(var10000 == null) &#123;
             throw new TypeCastException(&quot;null cannot be cast to non-null type android.content.ClipboardManager&quot;);
-         } else {
+         &#125; else &#123;
             return (ClipboardManager)var10000;
-         }
-      }
-   }));
+         &#125;
+      &#125;
+   &#125;));
    @NotNull
-   private final Function0 onPrimaryClipChangedListener = (Function0)(new Function0() {
+   private final Function0 onPrimaryClipChangedListener = (Function0)(new Function0() &#123;
       // $FF: synthetic method
       // $FF: bridge method
-      public Object invoke() {
+      public Object invoke() &#123;
          this.invoke();
          return Unit.INSTANCE;
-      }
+      &#125;
 
-      public final void invoke() {
+      public final void invoke() &#123;
          Log.d(CopyListenerService.Companion.getTAG(), &quot;Clip Item count: &quot; + CopyListenerService.this.getClipboardManager().getPrimaryClip().getItemCount());
-      }
-   });
+      &#125;
+   &#125;);
    @NotNull
    private static final String TAG = &quot;CopyListenerService&quot;;
    // $FF: synthetic field
-   static final KProperty[] $$delegatedProperties = new KProperty[]{(KProperty)Reflection.property1(new PropertyReference1Impl(Reflection.getOrCreateKotlinClass(CopyListenerService.class), &quot;clipboardManager&quot;, &quot;getClipboardManager()Landroid/content/ClipboardManager;&quot;))};
+   static final KProperty[] $$delegatedProperties = new KProperty[]&#123;(KProperty)Reflection.property1(new PropertyReference1Impl(Reflection.getOrCreateKotlinClass(CopyListenerService.class), &quot;clipboardManager&quot;, &quot;getClipboardManager()Landroid/content/ClipboardManager;&quot;))&#125;;
    public static final CopyListenerService.Companion Companion = new CopyListenerService.Companion((DefaultConstructorMarker)null);
 
    @Nullable
-   public IBinder onBind(@Nullable Intent p0) {
+   public IBinder onBind(@Nullable Intent p0) &#123;
       return null;
-   }
+   &#125;
 
-   public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+   public int onStartCommand(@Nullable Intent intent, int flags, int startId) &#123;
       ClipboardManager var10000 = this.getClipboardManager();
       CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
       Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
+      if(this.onPrimaryClipChangedListener == null) &#123;
          Object var10002 = null;
-      } else {
+      &#125; else &#123;
          var10001.&lt;init&gt;(var10003);
-      }
+      &#125;
 
       var10000.addPrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
       return 1;
-   }
+   &#125;
 
-   public void onDestroy() {
+   public void onDestroy() &#123;
       super.onDestroy();
       ClipboardManager var10000 = this.getClipboardManager();
       CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
       Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
+      if(this.onPrimaryClipChangedListener == null) &#123;
          Object var10002 = null;
-      } else {
+      &#125; else &#123;
          var10001.&lt;init&gt;(var10003);
-      }
+      &#125;
 
       var10000.removePrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
-   }
+   &#125;
 
    @NotNull
-   public final ClipboardManager getClipboardManager() {
+   public final ClipboardManager getClipboardManager() &#123;
       Lazy var1 = this.clipboardManager$delegate;
       KProperty var3 = $$delegatedProperties[0];
       return (ClipboardManager)var1.getValue();
-   }
+   &#125;
 
    @NotNull
-   public final Function0 getOnPrimaryClipChangedListener() {
+   public final Function0 getOnPrimaryClipChangedListener() &#123;
       return this.onPrimaryClipChangedListener;
-   }
+   &#125;
 
    @Metadata(
-      mv = {1, 1, 6},
-      bv = {1, 0, 1},
+      mv = &#123;1, 1, 6&#125;,
+      bv = &#123;1, 0, 1&#125;,
       k = 1,
-      d1 = {&quot;\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0003\b\u0086\u0003\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002R\u0014\u0010\u0003\u001a\u00020\u0004X\u0086D¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006¨\u0006\u0007&quot;},
-      d2 = {&quot;Lcom/perqin/copyshare/CopyListenerService$Companion;&quot;, &quot;&quot;, &quot;()V&quot;, &quot;TAG&quot;, &quot;&quot;, &quot;getTAG&quot;, &quot;()Ljava/lang/String;&quot;, &quot;production sources for module app&quot;}
+      d1 = &#123;&quot;\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0003\b\u0086\u0003\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002R\u0014\u0010\u0003\u001a\u00020\u0004X\u0086D¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006¨\u0006\u0007&quot;&#125;,
+      d2 = &#123;&quot;Lcom/perqin/copyshare/CopyListenerService$Companion;&quot;, &quot;&quot;, &quot;()V&quot;, &quot;TAG&quot;, &quot;&quot;, &quot;getTAG&quot;, &quot;()Ljava/lang/String;&quot;, &quot;production sources for module app&quot;&#125;
    )
-   public static final class Companion {
+   public static final class Companion &#123;
       @NotNull
-      public final String getTAG() {
+      public final String getTAG() &#123;
          return CopyListenerService.TAG;
-      }
+      &#125;
 
-      private Companion() {
-      }
+      private Companion() &#123;
+      &#125;
 
       // $FF: synthetic method
-      public Companion(DefaultConstructorMarker $constructor_marker) {
+      public Companion(DefaultConstructorMarker $constructor_marker) &#123;
          this();
-      }
-   }
-}</code></pre>
+      &#125;
+   &#125;
+&#125;
+</code></pre>
 <p>接下来，我们来简单分析试试。</p>
 <p>首先，我们的lambda监听器被转换成什么代码了呢？</p>
 <pre><code class="java">   @NotNull
-   private final Function0 onPrimaryClipChangedListener = (Function0)(new Function0() {
+   private final Function0 onPrimaryClipChangedListener = (Function0)(new Function0() &#123;
       // $FF: synthetic method
       // $FF: bridge method
-      public Object invoke() {
+      public Object invoke() &#123;
          this.invoke();
          return Unit.INSTANCE;
-      }
+      &#125;
 
-      public final void invoke() {
+      public final void invoke() &#123;
          Log.d(CopyListenerService.Companion.getTAG(), &quot;Clip Item count: &quot; + CopyListenerService.this.getClipboardManager().getPrimaryClip().getItemCount());
-      }
-   });</code></pre>
+      &#125;
+   &#125;);
+</code></pre>
 <p>我们发现，我们在监听器里的实现被转换成了一个<code>Function0</code>对象，具体的实现代码被放在了<code>invoke</code>方法里。</p>
 <p>接下来，我们来看看我们添加监听器的代码被转换成的样子：</p>
-<pre><code class="java">   public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+<pre><code class="java">   public int onStartCommand(@Nullable Intent intent, int flags, int startId) &#123;
       ClipboardManager var10000 = this.getClipboardManager();
       CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
       Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
+      if(this.onPrimaryClipChangedListener == null) &#123;
          Object var10002 = null;
-      } else {
+      &#125; else &#123;
          var10001.&lt;init&gt;(var10003);
-      }
+      &#125;
 
       var10000.addPrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
       return 1;
-   }</code></pre>
+   &#125;
+</code></pre>
 <p>可以看到，我们添加监听器的时候传递的对象是<code>var10001</code>，而它是一个<code>CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3</code>类的实例。这个类又是个什么鬼？我们接着看：</p>
-<pre><code class="java">final class CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 implements OnPrimaryClipChangedListener {
+<pre><code class="java">final class CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 implements OnPrimaryClipChangedListener &#123;
    // $FF: synthetic field
    private final Function0 function;
 
-   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) {
+   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) &#123;
       this.function = var1;
-   }
+   &#125;
 
    // $FF: synthetic method
-   public final void onPrimaryClipChanged() {
+   public final void onPrimaryClipChanged() &#123;
       Intrinsics.checkExpressionValueIsNotNull(this.function.invoke(), &quot;invoke(...)&quot;);
-   }
-}</code></pre>
+   &#125;
+&#125;
+</code></pre>
 <p>原来如此，这个名字巨长的类正是实现了<code>OnPrimaryClipChangedListener</code>的类，它持有一个<code>Function0</code>的引用，而它的<code>onPrimaryClipChanged</code>实现其实不过是调用这个对象的<code>invoke</code>方法。</p>
 <p>现在再回去看看添加监听器的代码，我们就可以整理出这样的思路：</p>
 <ul>
@@ -771,46 +781,50 @@ public final class CopyListenerService extends Service {
 <li>最后把这个构造出来的对象作为真正的监听器丢进去</li>
 </ul>
 <p>等等，好像有哪里不对……构造一个对象？！？让我们看看这行代码：</p>
-<pre><code class="java">      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;</code></pre>
+<pre><code class="java">      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
+</code></pre>
 <p>这是个局部变量啊！！！丢进去之后就拿不到它了啊！那我还怎么remove它呢？？</p>
 <p>来看看移除监听器是怎么写的：</p>
-<pre><code class="java">   public void onDestroy() {
+<pre><code class="java">   public void onDestroy() &#123;
       super.onDestroy();
       ClipboardManager var10000 = this.getClipboardManager();
       CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
       Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
+      if(this.onPrimaryClipChangedListener == null) &#123;
          Object var10002 = null;
-      } else {
+      &#125; else &#123;
          var10001.&lt;init&gt;(var10003);
-      }
+      &#125;
 
       var10000.removePrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
-   }</code></pre>
+   &#125;
+</code></pre>
 <p>咳咳，这么骚的吗？</p>
 <p>所以，我们终于得出了结论：虽然我们的lambda表达式对应的是不变的<code>Function0</code>对象，但是每次从它得到的监听器却不是同一个监听器！</p>
 <p>有了这个结论，也就有了一个解决方法：我们不要让<code>onPrimaryClipChangedListener</code>成为lambda表达式，而是一个正正经经的监听器匿名内部类对象，我们改改代码：</p>
-<pre><code class="kotlin">    val onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener {
+<pre><code class="kotlin">    val onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener &#123;
         Log.d(TAG, &quot;Clip Item count: &quot; + clipboardManager.primaryClip.itemCount)
         Unit
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>额额，好像只是加了两个单词……接下来看看反编译的代码：</p>
 <pre><code class="java">   @NotNull
-   private final OnPrimaryClipChangedListener onPrimaryClipChangedListener = (OnPrimaryClipChangedListener)(new OnPrimaryClipChangedListener() {
-      public final void onPrimaryClipChanged() {
+   private final OnPrimaryClipChangedListener onPrimaryClipChangedListener = (OnPrimaryClipChangedListener)(new OnPrimaryClipChangedListener() &#123;
+      public final void onPrimaryClipChanged() &#123;
          Log.d(CopyListenerService.Companion.getTAG(), &quot;Clip Item count: &quot; + CopyListenerService.this.getClipboardManager().getPrimaryClip().getItemCount());
-      }
-   });
+      &#125;
+   &#125;);
 
-   public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+   public int onStartCommand(@Nullable Intent intent, int flags, int startId) &#123;
       this.getClipboardManager().addPrimaryClipChangedListener(this.onPrimaryClipChangedListener);
       return 1;
-   }
+   &#125;
 
-   public void onDestroy() {
+   public void onDestroy() &#123;
       super.onDestroy();
       this.getClipboardManager().removePrimaryClipChangedListener(this.onPrimaryClipChangedListener);
-   }</code></pre>
+   &#125;
+</code></pre>
 <p>这次，<code>this.onPrimaryClipChangedListener</code>终于不再是一个<code>Function0</code>对象，而是一个监听器了！</p>
 <p><del>然而，过了那么久都没有人在应用商店反馈这个bug，我该高兴还是不高兴呢……</del></p>
 
@@ -992,7 +1006,7 @@ public final class CopyListenerService extends Service {
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1002,7 +1016,7 @@ public final class CopyListenerService extends Service {
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1012,11 +1026,21 @@ public final class CopyListenerService extends Service {
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1309,7 +1333,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,jenkins,continuous-integration">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Sun Jun 11 2017 17:20:39 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/index.html",
     "headline": "Jenkins持续集成搭建笔记",
     "datePublished": "Sun Jun 11 2017 17:20:39 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Why-CI"><span class="post-toc-number">1.</span> <span class="post-toc-text">Why CI</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Why-Jenkins"><span class="post-toc-number">2.</span> <span class="post-toc-text">Why Jenkins</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#踩坑记录"><span class="post-toc-number">3.</span> <span class="post-toc-text">踩坑记录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用户权限配置兼服务器权限配置（伪）最佳实践"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">用户权限配置兼服务器权限配置（伪）最佳实践</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何重置Jenkins管理员用户"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">如何重置Jenkins管理员用户</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正确启用Jenkins的GitHub-Webhook"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">正确启用Jenkins的GitHub Webhook</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#项目名字不要乱来"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">项目名字不要乱来</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#www-data为你带来无尽烦恼"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">www-data为你带来无尽烦恼</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CI无法解决部署失败的问题"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">CI无法解决部署失败的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Why-CI"><span class="post-toc-number">1.</span> <span class="post-toc-text">Why CI</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Why-Jenkins"><span class="post-toc-number">2.</span> <span class="post-toc-text">Why Jenkins</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="post-toc-number">3.</span> <span class="post-toc-text">踩坑记录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE%E5%85%BC%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9D%83%E9%99%90%E9%85%8D%E7%BD%AE%EF%BC%88%E4%BC%AA%EF%BC%89%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">用户权限配置兼服务器权限配置（伪）最佳实践</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%A6%82%E4%BD%95%E9%87%8D%E7%BD%AEJenkins%E7%AE%A1%E7%90%86%E5%91%98%E7%94%A8%E6%88%B7"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">如何重置Jenkins管理员用户</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%AD%A3%E7%A1%AE%E5%90%AF%E7%94%A8Jenkins%E7%9A%84GitHub-Webhook"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">正确启用Jenkins的GitHub Webhook</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%90%8D%E5%AD%97%E4%B8%8D%E8%A6%81%E4%B9%B1%E6%9D%A5"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">项目名字不要乱来</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#www-data%E4%B8%BA%E4%BD%A0%E5%B8%A6%E6%9D%A5%E6%97%A0%E5%B0%BD%E7%83%A6%E6%81%BC"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">www-data为你带来无尽烦恼</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CI%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E9%83%A8%E7%BD%B2%E5%A4%B1%E8%B4%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">CI无法解决部署失败的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%80%BB%E7%BB%93"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/continuous-integration/">continuous-integration</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/jenkins/">jenkins</a>
+        <a class="post_tag-none-link" href="/tags/continuous-integration/" rel="tag">continuous-integration</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/jenkins/" rel="tag">jenkins</a>
     </ul>
     
 
@@ -521,10 +525,14 @@
 #JENKINS_USER=$NAME
 #JENKINS_GROUP=$NAME
 JENKINS_USER=www-data
-JENKINS_GROUP=www-data</code></pre><p>然后，我们需要把Jenkins操作的目录改为<code>www-data</code>可读写：</p>
+JENKINS_GROUP=www-data
+</code></pre>
+<p>然后，我们需要把Jenkins操作的目录改为<code>www-data</code>可读写：</p>
 <pre><code>$ sudo chown -R www-data:www-data /var/lib/jenkins/
 $ sudo chown -R www-data:www-data /var/log/jenkins/
-$ sudo chown -R www-data:www-data /var/cache/jenkins/</code></pre><p>最后即可重启Jenkins守护进程。</p>
+$ sudo chown -R www-data:www-data /var/cache/jenkins/
+</code></pre>
+<p>最后即可重启Jenkins守护进程。</p>
 <p>值得一提的是关于服务器的用户权限配置实践，我的方案是：<code>www-data</code>用户作为服务器应用的运行用户，<code>www-admin</code>作为管理用户。<code>www-data</code>应该是尽可能低权限的，因此它没有可用的shell，没有home目录，其<code>HOME</code>环境变量为<code>/var/www</code>。之所以其权限这么低，是因为它运行了大量服务器应用，应当避免某个应用的恶意代码（可能是bug，也可能是真的恶意代码）导致服务器安全性收到威胁。</p>
 <p>而我们又需要一个用户对服务器进行管理，包括安装运行时环境、部署应用等，因此我们需要一个带有shell、位于sudo用户组的用户，我将它命名为<code>www-admin</code>。</p>
 <p>但这就产生了一个矛盾，使用该用户的话，Web应用部署的文件都是属于<code>www-admin:www-admin</code>的，那么<code>www-data</code>如何修改这些文件呢？总不能将可被写的文件都改为<code>666</code>（所有人可读写）权限吧。于是，这里的最佳方案是将<code>www-admin</code>用户的主用户组设置为<code>www-data</code>，这样<code>www-admin</code>创建的所有文件都是属于<code>www-damin:www-data</code>的，且默认都是<code>rwxr-xr-x</code>的权限，这样<code>www-data</code>也具有了读权限，<code>www-admin</code>也不必每次都chown了。而对于需要写的目录，比如某个服务器应用需要支持图片上传，那么我们将上传目录设置为用户组可写即可。</p>
@@ -536,16 +544,16 @@ $ sudo chown -R www-data:www-data /var/cache/jenkins/</code></pre><p>最后即�
 <h3 id="正确启用Jenkins的GitHub-Webhook"><a href="#正确启用Jenkins的GitHub-Webhook" class="headerlink" title="正确启用Jenkins的GitHub Webhook"></a>正确启用Jenkins的GitHub Webhook</h3><p>GitHub Webhook的意义在于将你的Jenkins的预设URL提供给GitHub，一旦你的某个仓库有人push代码，GitHub服务器就会把这次push的详细信息通过一个HTTP请求发送到你的这个URL上，Jenkins会收到并进行解析。如果这个仓库就是你的某个流水线项目（Jenkins的一种CI类型），则Jenkins会自动拉取新的代码并进入后续的CI操作。</p>
 <p>但是，这里面需要注意两点：</p>
 <ul>
-<li>配置项目的时候，在<em>Build Triggers</em>配置里不仅要勾上<em>GitHub hook trigger for GITScm polling</em>，还要勾上<em>Poll SCM</em>，也就是说仍然要启用轮询，只是不需要设置轮询间隔。</li>
-<li>首次配置的流水线项目需要手动构建一次，即项目左边的<em>Build Now</em>，这样才能触发后续的Webhook。</li>
+<li> 配置项目的时候，在<em>Build Triggers</em>配置里不仅要勾上<em>GitHub hook trigger for GITScm polling</em>，还要勾上<em>Poll SCM</em>，也就是说仍然要启用轮询，只是不需要设置轮询间隔。</li>
+<li> 首次配置的流水线项目需要手动构建一次，即项目左边的<em>Build Now</em>，这样才能触发后续的Webhook。</li>
 </ul>
 <h3 id="项目名字不要乱来"><a href="#项目名字不要乱来" class="headerlink" title="项目名字不要乱来"></a>项目名字不要乱来</h3><p>Jenkins默认会在<code>/var/lib/jenkins/workspaces/&lt;your_project_name&gt;</code>目录中拉取你的项目代码，所以一定要注意项目的命名，如果你的命名包含空格，那么可能导致一些会获取PWD的构建流程接受到错误的参数。</p>
 <h3 id="www-data为你带来无尽烦恼"><a href="#www-data为你带来无尽烦恼" class="headerlink" title="www-data为你带来无尽烦恼"></a><code>www-data</code>为你带来无尽烦恼</h3><p>这个用户前面说到了，HOME目录在<code>/var/www</code>，而按照前面的配置，这个目录默认是不会给<code>www-data</code>写入权限的，于是，在部署的时候就会遇到很多问题，比如pip安装的时候会无法启用cache，因为<code>/var/www/.pip</code>目录不可写入；进程管理工具PM2更是无法正常工作，因为<code>/var/www/.pm2</code>无法写入。目前除了手动创建这些目录并赋予用户组写入权限以外，还没有更加优雅的解决方案。</p>
 <h3 id="CI无法解决部署失败的问题"><a href="#CI无法解决部署失败的问题" class="headerlink" title="CI无法解决部署失败的问题"></a>CI无法解决部署失败的问题</h3><p>CI最大的问题在于，CI的成功不能表示部署成功。这是因为，每一次CI都不能阻塞，而服务器天生就需要作为守护进程运行，这就意味着CI中的部署流程只能通过PM2这样的进程管理器完成。但是，进程管理器执行后，服务器是否正常部署、运行，却无法反馈给CI，因此会出现CI完全正常，但服务器不可访问的问题。</p>
 <p>目前，我没有找到很完美的解决方案，只有两个可选的方案：</p>
 <ul>
-<li>在CI的Test流程中加入对运行时环境的检查，尽可能多地将部署的失败在CI中就体现出来</li>
-<li>对PM2等进程管理工具下文章，比如部署出错就发送邮件等，但是目前来看这些进程管理工具似乎都暂不支持直接配置部署失败的邮件通知。</li>
+<li> 在CI的Test流程中加入对运行时环境的检查，尽可能多地将部署的失败在CI中就体现出来</li>
+<li> 对PM2等进程管理工具下文章，比如部署出错就发送邮件等，但是目前来看这些进程管理工具似乎都暂不支持直接配置部署失败的邮件通知。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>CI是一种一次配置，永远可用的服务，如果可能的话，任何项目都应该尽早部署，这会给项目的后续开发、部署和维护带来巨大收益，节省大量时间。现在，我已经养成了后台应用部署必用Jenkins的习惯，就像HTTPS一样，既然花不了多少时间，有什么理由不顺便做了呢？</p>
 
@@ -597,7 +605,7 @@ $ sudo chown -R www-data:www-data /var/cache/jenkins/</code></pre><p>最后即�
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/06/16/showcases/gan-dear/" id="post_nav-newer" class="prev-content">
+        <a href="/showcases/gan-dear/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -727,7 +735,7 @@ $ sudo chown -R www-data:www-data /var/cache/jenkins/</code></pre><p>最后即�
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -737,7 +745,7 @@ $ sudo chown -R www-data:www-data /var/cache/jenkins/</code></pre><p>最后即�
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -747,11 +755,21 @@ $ sudo chown -R www-data:www-data /var/cache/jenkins/</code></pre><p>最后即�
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1044,7 +1062,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

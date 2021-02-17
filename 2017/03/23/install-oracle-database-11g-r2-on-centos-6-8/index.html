@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,oracle-database,centos">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Thu Mar 23 2017 23:43:12 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html",
     "headline": "在 CentOS 6.8 上安装 Oracle Database 11g Release 2",
     "datePublished": "Thu Mar 23 2017 23:43:12 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取-Response-File"><span class="post-toc-number">1.</span> <span class="post-toc-text">获取 Response File</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置依赖"><span class="post-toc-number">2.</span> <span class="post-toc-text">配置依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备安装用户和目录"><span class="post-toc-number">3.</span> <span class="post-toc-text">准备安装用户和目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备安装包"><span class="post-toc-number">4.</span> <span class="post-toc-text">准备安装包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#增大-swap-分区"><span class="post-toc-number">5.</span> <span class="post-toc-text">增大 swap 分区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开始安装"><span class="post-toc-number">6.</span> <span class="post-toc-text">开始安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置环境变量"><span class="post-toc-number">7.</span> <span class="post-toc-text">配置环境变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#完成"><span class="post-toc-number">8.</span> <span class="post-toc-text">完成</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%8E%B7%E5%8F%96-Response-File"><span class="post-toc-number">1.</span> <span class="post-toc-text">获取 Response File</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96"><span class="post-toc-number">2.</span> <span class="post-toc-text">配置依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E7%94%A8%E6%88%B7%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="post-toc-number">3.</span> <span class="post-toc-text">准备安装用户和目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E5%8C%85"><span class="post-toc-number">4.</span> <span class="post-toc-text">准备安装包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%A2%9E%E5%A4%A7-swap-%E5%88%86%E5%8C%BA"><span class="post-toc-number">5.</span> <span class="post-toc-text">增大 swap 分区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="post-toc-number">6.</span> <span class="post-toc-text">开始安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="post-toc-number">7.</span> <span class="post-toc-text">配置环境变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%8C%E6%88%90"><span class="post-toc-number">8.</span> <span class="post-toc-text">完成</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/centos/">centos</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/oracle-database/">oracle-database</a>
+        <a class="post_tag-none-link" href="/tags/centos/" rel="tag">centos</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/oracle-database/" rel="tag">oracle-database</a>
     </ul>
     
 
@@ -557,39 +561,69 @@ SECURITY_UPDATES_VIA_MYORACLESUPPORT=false
 # Must be true to avoid PROXY related error
 DECLINE_SECURITY_UPDATES=true
 PROXY_HOST=
-PROXY_PORT=</code></pre><p>其中需要注意的配置项已经在上面用注释说明。</p>
+PROXY_PORT=
+</code></pre>
+<p>其中需要注意的配置项已经在上面用注释说明。</p>
 <h2 id="配置依赖"><a href="#配置依赖" class="headerlink" title="配置依赖"></a>配置依赖</h2><p>Oracle Database 安装之前不仅要安装依赖，还需要调整各种内核参数。幸运的是，Oracle 已经为我们准备了一键配置包。</p>
 <p>首先添加源：</p>
 <pre><code>$ wget http://public-yum.oracle.com/public-yum-ol6.repo
-# mv public-yum-ol6.repo /etc/yum.repos.d/</code></pre><p>然后获取公钥：</p>
-<pre><code># wget http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle</code></pre><p>接下来我们就可以安装依赖包了：</p>
-<pre><code># yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel unixODBC unixODBC-devel</code></pre><h2 id="准备安装用户和目录"><a href="#准备安装用户和目录" class="headerlink" title="准备安装用户和目录"></a>准备安装用户和目录</h2><p>安装好之后，Oracle 已经为我们添加了一个用户<code>oracle</code>和其用户组<code>oinstall</code>，我们接下来需要通过这个帐号安装（使用<code>root</code>运行安装程序会被拒绝），所以我们要先更改其密码，并事先创建好安装目录并配置好权限（如果选择安装到其他位置，前面的 Response File 需要相应地修改）：</p>
+# mv public-yum-ol6.repo /etc/yum.repos.d/
+</code></pre>
+<p>然后获取公钥：</p>
+<pre><code># wget http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+</code></pre>
+<p>接下来我们就可以安装依赖包了：</p>
+<pre><code># yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel unixODBC unixODBC-devel
+</code></pre>
+<h2 id="准备安装用户和目录"><a href="#准备安装用户和目录" class="headerlink" title="准备安装用户和目录"></a>准备安装用户和目录</h2><p>安装好之后，Oracle 已经为我们添加了一个用户<code>oracle</code>和其用户组<code>oinstall</code>，我们接下来需要通过这个帐号安装（使用<code>root</code>运行安装程序会被拒绝），所以我们要先更改其密码，并事先创建好安装目录并配置好权限（如果选择安装到其他位置，前面的 Response File 需要相应地修改）：</p>
 <pre><code># passwd oracle
 # usermod -aG wheel oracle
 # mkdir -p /opt/oracle
-# chown oracle:oinstall /opt/oracle</code></pre><h2 id="准备安装包"><a href="#准备安装包" class="headerlink" title="准备安装包"></a>准备安装包</h2><p>以下步骤中美元符号开头的命令均使用<code>oracle</code>用户执行。</p>
+# chown oracle:oinstall /opt/oracle
+</code></pre>
+<h2 id="准备安装包"><a href="#准备安装包" class="headerlink" title="准备安装包"></a>准备安装包</h2><p>以下步骤中美元符号开头的命令均使用<code>oracle</code>用户执行。</p>
 <p>从官方网站下载了两个 zip 之后通过<code>unzip</code>命令解压，就能在目录中看到<code>database</code>目录，里面有安装所需一切文件：</p>
 <pre><code>$ unzip linux.x64_11gR2_database_1of2.zip
-$ unzip linux.x64_11gR2_database_2of2.zip</code></pre><h2 id="增大-swap-分区"><a href="#增大-swap-分区" class="headerlink" title="增大 swap 分区"></a>增大 swap 分区</h2><p>如果你的 CentOS 的 swap 分区没有启用或者不足 8G，安装将会失败。通过以下配置可以添加新的 swap 分区。创建分区文件也可以用<code>dd</code>命令，这里不详述：</p>
+$ unzip linux.x64_11gR2_database_2of2.zip
+</code></pre>
+<h2 id="增大-swap-分区"><a href="#增大-swap-分区" class="headerlink" title="增大 swap 分区"></a>增大 swap 分区</h2><p>如果你的 CentOS 的 swap 分区没有启用或者不足 8G，安装将会失败。通过以下配置可以添加新的 swap 分区。创建分区文件也可以用<code>dd</code>命令，这里不详述：</p>
 <pre><code># fallocate -l 8G /swapfile
 # chmod 600 /swapfile
 # mkswap /swapfile
-# swapon /swapfile</code></pre><p>然后编辑文件<code>/etc/sysctl.conf</code>，修改下面的一行如下：</p>
-<pre><code>vm.swappiness = 10</code></pre><p>保存之后执行：</p>
-<pre><code># sysctl -p</code></pre><p>为了能够在服务器启动后自动挂载，可以在<code>/etc/fstab</code>中追加下面一行：</p>
-<pre><code>/swapfile            none                    swap    sw              0 0</code></pre><h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>安装的时候只要用<code>oracle</code>用户执行一行命令。部分 log 会直接刷到标准输出，其中说明了日志的路径，只要静静等待安装完成时标准输出出现执行相关脚本的字眼即可。安装命令如下：</p>
-<pre><code>$ ./database/runInstaller -silent -noconfig -ignoreSysPrereqs -ignorePrereq -responseFile /home/oracle/db.rsp</code></pre><p>注意修改上面的 Response File 的路径。</p>
+# swapon /swapfile
+</code></pre>
+<p>然后编辑文件<code>/etc/sysctl.conf</code>，修改下面的一行如下：</p>
+<pre><code>vm.swappiness = 10
+</code></pre>
+<p>保存之后执行：</p>
+<pre><code># sysctl -p
+</code></pre>
+<p>为了能够在服务器启动后自动挂载，可以在<code>/etc/fstab</code>中追加下面一行：</p>
+<pre><code>/swapfile            none                    swap    sw              0 0
+</code></pre>
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>安装的时候只要用<code>oracle</code>用户执行一行命令。部分 log 会直接刷到标准输出，其中说明了日志的路径，只要静静等待安装完成时标准输出出现执行相关脚本的字眼即可。安装命令如下：</p>
+<pre><code>$ ./database/runInstaller -silent -noconfig -ignoreSysPrereqs -ignorePrereq -responseFile /home/oracle/db.rsp
+</code></pre>
+<p>注意修改上面的 Response File 的路径。</p>
 <p>安装完成之后，<strong>使用<code>root</code>用户</strong>执行两个脚本：</p>
 <pre><code># /opt/oracle/oraInventory/orainstRoot.sh
-# /opt/oracle/oracle11g/product/11.2.0/dbhome_1/root.sh</code></pre><h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>在<code>/etc/profile</code>中添加以下环境变量配置：</p>
+# /opt/oracle/oracle11g/product/11.2.0/dbhome_1/root.sh
+</code></pre>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>在<code>/etc/profile</code>中添加以下环境变量配置：</p>
 <pre><code>export ORACLE_BASE=/opt/oracle/oracle11g
 export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
 export ORACLE_SID=orcl
 export ORACLE_UNQNAME=orcl
 export NLS_LANG=.AL32UTF8
-export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64</code></pre><h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>执行<code>. /etc/profile</code>或重新登入之后，就可以启动监听器了：</p>
-<pre><code>$ lsnrctl start</code></pre><p>可以通过下面的命令验证 Oracle Database 已经可以使用：</p>
-<pre><code>$ sqlplus / as sysdba</code></pre><p>由于之前配置好了<code>oracle</code>用户，所以可以直接登录而不询问密码。</p>
+export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64
+</code></pre>
+<h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>执行<code>. /etc/profile</code>或重新登入之后，就可以启动监听器了：</p>
+<pre><code>$ lsnrctl start
+</code></pre>
+<p>可以通过下面的命令验证 Oracle Database 已经可以使用：</p>
+<pre><code>$ sqlplus / as sysdba
+</code></pre>
+<p>由于之前配置好了<code>oracle</code>用户，所以可以直接登录而不询问密码。</p>
 
         
     
@@ -769,7 +803,7 @@ export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64</code></pre><h2 id="完�
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -779,7 +813,7 @@ export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64</code></pre><h2 id="完�
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -789,11 +823,21 @@ export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64</code></pre><h2 id="完�
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1086,7 +1130,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

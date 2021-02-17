@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,Android,ProGuard">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Tue Sep 10 2019 21:33:28 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html",
     "headline": "Android代码混淆问题处理两则",
     "datePublished": "Tue Sep 10 2019 21:33:28 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ProGuard处理可选依赖错误"><span class="post-toc-number">1.</span> <span class="post-toc-text">ProGuard处理可选依赖错误</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Serializable对象混淆后不可用"><span class="post-toc-number">2.</span> <span class="post-toc-text">Serializable对象混淆后不可用</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ProGuard%E5%A4%84%E7%90%86%E5%8F%AF%E9%80%89%E4%BE%9D%E8%B5%96%E9%94%99%E8%AF%AF"><span class="post-toc-number">1.</span> <span class="post-toc-text">ProGuard处理可选依赖错误</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Serializable%E5%AF%B9%E8%B1%A1%E6%B7%B7%E6%B7%86%E5%90%8E%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="post-toc-number">2.</span> <span class="post-toc-text">Serializable对象混淆后不可用</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/android/">Android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/proguard/">ProGuard</a>
+        <a class="post_tag-none-link" href="/tags/android/" rel="tag">Android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/proguard/" rel="tag">ProGuard</a>
     </ul>
     
 
@@ -510,16 +514,16 @@
     
         <p>代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。</p>
 <p>然而代码混淆之路并非一帆风顺，而且往往在运行到目标代码之前，无法确定混淆是否出了问题。本文记载两则代码混淆中遇到的问题和处理方案。</p>
-<p>本文提及的代码可以在<a href="https://github.com/perqin/ProGuardBugTest" target="_blank" rel="noopener">https://github.com/perqin/ProGuardBugTest</a>找到。</p>
+<p>本文提及的代码可以在<a target="_blank" rel="noopener" href="https://github.com/perqin/ProGuardBugTest">https://github.com/perqin/ProGuardBugTest</a>找到。</p>
 <h2 id="ProGuard处理可选依赖错误"><a href="#ProGuard处理可选依赖错误" class="headerlink" title="ProGuard处理可选依赖错误"></a>ProGuard处理可选依赖错误</h2><p>在我维护的SDK项目中的一个版本中，我需要支持多个SDK之间不强制依赖。Base模块为基础库；Core和GUI模块均依赖Base库，但GUI模块对Core的依赖是可选的。</p>
 <p>在实现上，我让Web对Core的依赖为<code>compileOnly</code>：</p>
 <pre><code class="groovy">// gui/build.gradle
 apply plugin: &#39;java-library&#39;
 
-dependencies {
+dependencies &#123;
     implementation project(&#39;:base&#39;)
     compileOnly project(&#39;:core&#39;)
-}
+&#125;
 
 sourceCompatibility = &quot;7&quot;
 targetCompatibility = &quot;7&quot;
@@ -529,9 +533,9 @@ targetCompatibility = &quot;7&quot;
 
 import com.example.base.Account;
 
-public interface AccountStore {
+public interface AccountStore &#123;
     Account getAccount();
-}
+&#125;
 </code></pre>
 <p>接下来，GUI模块中有一段对Core模块的选择性调用逻辑：</p>
 <pre><code class="java">package com.example.gui;
@@ -539,51 +543,56 @@ public interface AccountStore {
 import com.example.core.AccountStore;
 import com.example.core.CoreMain;
 
-public class GuiMain {
+public class GuiMain &#123;
     private static final boolean HAS_CORE;
-    static {
+    static &#123;
         boolean hasCore;
-        try {
+        try &#123;
             new CoreMain();
             hasCore = true;
-        } catch (NoClassDefFoundError e) {
+        &#125; catch (NoClassDefFoundError e) &#123;
             hasCore = false;
-        }
+        &#125;
         System.out.println(&quot;hasCore: &quot; + hasCore);
         HAS_CORE = hasCore;
-    }
+    &#125;
 
     private AccountStore accountStore = null;
 
-    public void setAccountStore(AccountStore accountStore) {
+    public void setAccountStore(AccountStore accountStore) &#123;
         this.accountStore = accountStore;
-    }
+    &#125;
 
-    public String tryGetAccountName() {
-        if (HAS_CORE) {
-            if (accountStore != null) {
+    public String tryGetAccountName() &#123;
+        if (HAS_CORE) &#123;
+            if (accountStore != null) &#123;
                 return accountStore.getAccount().name;
-            }
-        }
+            &#125;
+        &#125;
         return &quot;&quot;;
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p>该类通过Core中才有的<code>CoreMain</code>类来判断可选依赖的类是否存在，<code>tryGetAccountName</code>中进行了判断，如果Core模块不存在，必定不会引用到<code>AccountStore</code>接口，也不应该会出现任何问题。</p>
 <p>接下来，我们将Base和Gui分别打包为jar并给app模块引用，注意Core未被引用。</p>
 <p>然后我们<strong>启用代码混淆</strong>，注意添加以下规则避免混淆失败：</p>
 <pre><code># ProGuard rule file
--dontwarn com.example.**</code></pre><p>随后在<code>gradle.properties</code>中禁用R8（原因后面会提到）：</p>
-<pre><code class="properties">android.enableR8=false</code></pre>
+-dontwarn com.example.**
+</code></pre>
+<p>随后在<code>gradle.properties</code>中禁用R8（原因后面会提到）：</p>
+<pre><code class="properties">android.enableR8=false
+</code></pre>
 <p>最后我们进行简单的调用：</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity {
+<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) &#123;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println(&quot;account: &quot; + new Account());
         System.out.println(&quot;account name: &quot; + new GuiMain().tryGetAccountName());
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p>不出意外的话，上面这段人畜无害的代码在Android 8.0会翻车：</p>
 <pre><code>2019-09-10 21:56:10.327 3667-3667/? E/AndroidRuntime: FATAL EXCEPTION: main
     Process: com.example.proguardbugtest, PID: 3667
@@ -599,16 +608,18 @@ public class GuiMain {
         at android.app.ActivityThread.main(ActivityThread.java:6541)
         at java.lang.reflect.Method.invoke(Native Method)
         at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)</code></pre><p>在谷歌搜索了很久，对于<code>VerifyError</code>这个简单的错误很难找到明确的答案，只能拔出Android Studio大宝剑，分析apk字节码一探究竟。</p>
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
+</code></pre>
+<p>在谷歌搜索了很久，对于<code>VerifyError</code>这个简单的错误很难找到明确的答案，只能拔出Android Studio大宝剑，分析apk字节码一探究竟。</p>
 <p>我将<code>MainActivity</code>的<code>onCreate</code>的完整字节码粘贴到下面，其中<code>########</code>开头的是我补充的注释：</p>
 <pre><code>.method public onCreate(Landroid/os/Bundle;)V
     .registers 5
 
-    invoke-super {p0, p1}, Landroidx/appcompat/app/c;-&gt;onCreate(Landroid/os/Bundle;)V
+    invoke-super &#123;p0, p1&#125;, Landroidx/appcompat/app/c;-&gt;onCreate(Landroid/os/Bundle;)V
 
     const p1, 0x7f0a001c
 
-    invoke-virtual {p0, p1}, Lcom/example/proguardbugtest/MainActivity;-&gt;setContentView(I)V
+    invoke-virtual &#123;p0, p1&#125;, Lcom/example/proguardbugtest/MainActivity;-&gt;setContentView(I)V
 
     sget-object p1, Ljava/lang/System;-&gt;out:Ljava/io/PrintStream;
 
@@ -616,20 +627,20 @@ public class GuiMain {
 
     const-string v1, &quot;account: &quot;
 
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V
+    invoke-direct &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V
 
     ######## 1
     new-instance v1, Lcom/example/a/a;
 
-    invoke-direct {v1}, Lcom/example/a/a;-&gt;&lt;init&gt;()V
+    invoke-direct &#123;v1&#125;, Lcom/example/a/a;-&gt;&lt;init&gt;()V
 
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    invoke-virtual &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;
+    invoke-virtual &#123;v0&#125;, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;
 
     move-result-object v0
 
-    invoke-virtual {p1, v0}, Ljava/io/PrintStream;-&gt;println(Ljava/lang/String;)V
+    invoke-virtual &#123;p1, v0&#125;, Ljava/io/PrintStream;-&gt;println(Ljava/lang/String;)V
 
     sget-object p1, Ljava/lang/System;-&gt;out:Ljava/io/PrintStream;
 
@@ -637,11 +648,11 @@ public class GuiMain {
 
     const-string v1, &quot;account name: &quot;
 
-    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V
+    invoke-direct &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V
 
     new-instance v1, Lcom/example/b/a;
 
-    invoke-direct {v1}, Lcom/example/b/a;-&gt;&lt;init&gt;()V
+    invoke-direct &#123;v1&#125;, Lcom/example/b/a;-&gt;&lt;init&gt;()V
 
     sget-boolean v2, Lcom/example/b/a;-&gt;a:Z
 
@@ -654,7 +665,7 @@ public class GuiMain {
     iget-object v1, v1, Lcom/example/b/a;-&gt;b:Lcom/example/core/AccountStore;
 
     ######## 2
-    invoke-interface {v1}, Lcom/example/core/AccountStore;-&gt;getAccount()Lcom/example/base/Account;
+    invoke-interface &#123;v1&#125;, Lcom/example/core/AccountStore;-&gt;getAccount()Lcom/example/base/Account;
 
     move-result-object v1
 
@@ -666,16 +677,18 @@ public class GuiMain {
     const-string v1, &quot;&quot;
 
     :goto_42
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;
+    invoke-virtual &#123;v0&#125;, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;
 
     move-result-object v0
 
-    invoke-virtual {p1, v0}, Ljava/io/PrintStream;-&gt;println(Ljava/lang/String;)V
+    invoke-virtual &#123;p1, v0&#125;, Ljava/io/PrintStream;-&gt;println(Ljava/lang/String;)V
 
     return-void
-.end method</code></pre><p>可以看到，「1」处注释的<code>new-instance</code>指令显然是要构造<code>Account</code>对象，从这里我们也可以得知<code>com.example.base.Account</code>被混淆成了<code>com.example.a.a</code>，这个也可以在ProGuard生成的mapping文件中中得到证实。</p>
+.end method
+</code></pre>
+<p>可以看到，「1」处注释的<code>new-instance</code>指令显然是要构造<code>Account</code>对象，从这里我们也可以得知<code>com.example.base.Account</code>被混淆成了<code>com.example.a.a</code>，这个也可以在ProGuard生成的mapping文件中中得到证实。</p>
 <p>然而，「2」处注释的<code>invoke-interface</code>却出现了<code>com/example/base/Account</code>！之所以这段代码出现在了MainActivity中，是因为ProGuard进行了优化，但已经被混淆的类却以原名的形式出现在这里，这不科学。</p>
 <p>好吧，就算这样，但我们的Core包并不存在，也不会执行到这里，不应该出现崩溃才对，而这也是为什么我前面特别提到Android 8.0了。经过验证，这段代码在Android 8.0上必定崩溃，但在我的Android Q上却稳如老狗，可以认为不同版本的Android对类的校验逻辑不同，Android 8.0的校验显然过分严格。</p>
 <p>问题的真相调查清楚，接下来就是解决了，我们当然可以直接将<code>Account</code>加入到<code>-keep</code>规则中，但这只是治标不治本。</p>
@@ -689,51 +702,54 @@ public class GuiMain {
 
 import java.io.Serializable;
 
-class SerializableMeta implements Serializable {
+class SerializableMeta implements Serializable &#123;
     private static final long serialVersionUID = -7822771794489130246L;
 
     private String nickname;
     private int age;
 
-    SerializableMeta(String nickname, int age) {
+    SerializableMeta(String nickname, int age) &#123;
         this.nickname = nickname;
         this.age = age;
-    }
+    &#125;
 
-    public String getNickname() {
+    public String getNickname() &#123;
         return nickname;
-    }
+    &#125;
 
-    public int getAge() {
+    public int getAge() &#123;
         return age;
-    }
-}</code></pre>
+    &#125;
+&#125;
+</code></pre>
 <p>以及这样一段启动Activity的代码：</p>
-<pre><code class="java">public class MainActivity extends Activity {
+<pre><code class="java">public class MainActivity extends Activity &#123;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) &#123;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() &#123;
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) &#123;
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.putExtra(&quot;meta&quot;, new SerializableMeta(&quot;Perqin&quot;, 233));
                 startActivity(intent);
-            }
-        });
-    }
-}
+            &#125;
+        &#125;);
+    &#125;
+&#125;
 </code></pre>
 <p>然后，我们再简单地配置代码混淆规则：</p>
-<pre><code>-keepclassmembers class * implements java.io.Serializable {
+<pre><code>-keepclassmembers class * implements java.io.Serializable &#123;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
     private void writeObject(java.io.ObjectOutputStream);
     private void readObject(java.io.ObjectInputStream);
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
-}</code></pre><p>以上规则来自ProGuard的官方文档，但<strong>后面就会发现这里是有问题的</strong>。</p>
+&#125;
+</code></pre>
+<p>以上规则来自ProGuard的官方文档，但<strong>后面就会发现这里是有问题的</strong>。</p>
 <p>最后，我们简单地启动，简单地点击按钮，然后：</p>
 <pre><code>2019-09-10 22:56:02.456 6516-6516/com.example.proguardbugtest E/AndroidRuntime: FATAL EXCEPTION: main
     Process: com.example.proguardbugtest, PID: 6516
@@ -764,9 +780,11 @@ class SerializableMeta implements Serializable {
         at android.app.ActivityThread.main(ActivityThread.java:6077)
         at java.lang.reflect.Method.invoke(Native Method)
         at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:866)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:756)</code></pre><p>这个崩溃甚至只有类名，连异常消息都不给了。如果此时去分析字节码，是不会发现什么异常的。</p>
-<p>于是，我根据错误去读源码，以下是抛出异常的代码（地址：<a href="http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509" target="_blank" rel="noopener">http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509</a>）：</p>
-<pre><code class="java">    private ObjectStreamClass(final Class&lt;?&gt; cl) {
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:756)
+</code></pre>
+<p>这个崩溃甚至只有类名，连异常消息都不给了。如果此时去分析字节码，是不会发现什么异常的。</p>
+<p>于是，我根据错误去读源码，以下是抛出异常的代码（地址：<a target="_blank" rel="noopener" href="http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509">http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509</a>）：</p>
+<pre><code class="java">    private ObjectStreamClass(final Class&lt;?&gt; cl) &#123;
         this.cl = cl;
         name = cl.getName();
         isProxy = Proxy.isProxyClass(cl);
@@ -778,81 +796,82 @@ class SerializableMeta implements Serializable {
         superDesc = (superCl != null) ? lookup(superCl, false) : null;
         localDesc = this;
 
-        if (serializable) {
-            AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() {
-                public Void run() {
-                    if (isEnum) {
+        if (serializable) &#123;
+            AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() &#123;
+                public Void run() &#123;
+                    if (isEnum) &#123;
                         suid = Long.valueOf(0);
                         fields = NO_FIELDS;
                         return null;
-                    }
-                    if (cl.isArray()) {
+                    &#125;
+                    if (cl.isArray()) &#123;
                         fields = NO_FIELDS;
                         return null;
-                    }
+                    &#125;
 
                     suid = getDeclaredSUID(cl);
-                    try {
+                    try &#123;
                         fields = getSerialFields(cl);
                         computeFieldOffsets();
-                    } catch (InvalidClassException e) {
+                    &#125; catch (InvalidClassException e) &#123;
                         serializeEx = deserializeEx =
                             new ExceptionInfo(e.classname, e.getMessage());
                         fields = NO_FIELDS;
-                    }
+                    &#125;
 
-                    if (externalizable) {
+                    if (externalizable) &#123;
                         cons = getExternalizableConstructor(cl);
-                    } else {
+                    &#125; else &#123;
                         cons = getSerializableConstructor(cl);
                         writeObjectMethod = getPrivateMethod(cl, &quot;writeObject&quot;,
-                            new Class&lt;?&gt;[] { ObjectOutputStream.class },
+                            new Class&lt;?&gt;[] &#123; ObjectOutputStream.class &#125;,
                             Void.TYPE);
                         readObjectMethod = getPrivateMethod(cl, &quot;readObject&quot;,
-                            new Class&lt;?&gt;[] { ObjectInputStream.class },
+                            new Class&lt;?&gt;[] &#123; ObjectInputStream.class &#125;,
                             Void.TYPE);
                         readObjectNoDataMethod = getPrivateMethod(
                             cl, &quot;readObjectNoData&quot;, null, Void.TYPE);
                         hasWriteObjectData = (writeObjectMethod != null);
-                    }
+                    &#125;
                     writeReplaceMethod = getInheritableMethod(
                         cl, &quot;writeReplace&quot;, null, Object.class);
                     readResolveMethod = getInheritableMethod(
                         cl, &quot;readResolve&quot;, null, Object.class);
                     return null;
-                }
-            });
-        } else {
+                &#125;
+            &#125;);
+        &#125; else &#123;
             suid = Long.valueOf(0);
             fields = NO_FIELDS;
-        }
+        &#125;
 
-        try {
+        try &#123;
             fieldRefl = getReflector(fields, this);
-        } catch (InvalidClassException ex) {
+        &#125; catch (InvalidClassException ex) &#123;
             // field mismatches impossible when matching local fields vs. self
             throw new InternalError();
-        }
+        &#125;
 
-        if (deserializeEx == null) {
-            if (isEnum) {
+        if (deserializeEx == null) &#123;
+            if (isEnum) &#123;
                 deserializeEx = new ExceptionInfo(name, &quot;enum type&quot;);
-            } else if (cons == null) {
+            &#125; else if (cons == null) &#123;
                 deserializeEx = new ExceptionInfo(name, &quot;no valid constructor&quot;);
-            }
-        }
-        for (int i = 0; i &lt; fields.length; i++) {
-            if (fields[i].getField() == null) {
+            &#125;
+        &#125;
+        for (int i = 0; i &lt; fields.length; i++) &#123;
+            if (fields[i].getField() == null) &#123;
                 defaultSerializeEx = new ExceptionInfo(
                     name, &quot;unmatched serializable field(s) declared&quot;);
-            }
-        }
-    }</code></pre>
+            &#125;
+        &#125;
+    &#125;
+</code></pre>
 <p>追溯<code>getReflector</code>下去，最终我们定位到抛出异常的地方：</p>
 <pre><code class="java">private static ObjectStreamField[] matchFields(ObjectStreamField[] fields,
                                                    ObjectStreamClass localDesc)
         throws InvalidClassException
-    {
+    &#123;
         ObjectStreamField[] localFields = (localDesc != null) ?
             localDesc.fields : NO_FIELDS;
 
@@ -868,51 +887,55 @@ class SerializableMeta implements Serializable {
          */
 
         ObjectStreamField[] matches = new ObjectStreamField[fields.length];
-        for (int i = 0; i &lt; fields.length; i++) {
+        for (int i = 0; i &lt; fields.length; i++) &#123;
             ObjectStreamField f = fields[i], m = null;
-            for (int j = 0; j &lt; localFields.length; j++) {
+            for (int j = 0; j &lt; localFields.length; j++) &#123;
                 ObjectStreamField lf = localFields[j];
-                if (f.getName().equals(lf.getName())) {
+                if (f.getName().equals(lf.getName())) &#123;
                     if ((f.isPrimitive() || lf.isPrimitive()) &amp;&amp;
                         f.getTypeCode() != lf.getTypeCode())
-                    {
+                    &#123;
                         throw new InvalidClassException(localDesc.name,
                             &quot;incompatible types for field &quot; + f.getName());
-                    }
-                    if (lf.getField() != null) {
+                    &#125;
+                    if (lf.getField() != null) &#123;
                         m = new ObjectStreamField(
                             lf.getField(), lf.isUnshared(), false);
-                    } else {
+                    &#125; else &#123;
                         m = new ObjectStreamField(
                             lf.getName(), lf.getSignature(), lf.isUnshared());
-                    }
-                }
-            }
-            if (m == null) {
+                    &#125;
+                &#125;
+            &#125;
+            if (m == null) &#123;
                 m = new ObjectStreamField(
                     f.getName(), f.getSignature(), false);
-            }
+            &#125;
             m.setOffset(f.getOffset());
             matches[i] = m;
-        }
+        &#125;
         return matches;
-    }</code></pre>
+    &#125;
+</code></pre>
 <p>可以看到，对<code>fields</code>和<code>localFields</code>进行比较的时候，当两个成员变量中至少有一个是基本类型，并且他们的变量名相同但类型不同的时候，就会抛出异常。</p>
 <p>此时，我们再次拔出大宝剑，会看到<code>SerializableMeta</code>的两个成员变量名字是相同的：</p>
-<p><img src="fields-with-the-same-name.png" alt></p>
-<p>查阅这个类在Android 6.0的代码（<a href="http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java</a>）后发现，这个类在旧版本中甚至没有<code>matchFields</code>方法，应该是进行了较大的重构或更新；而查阅Android 7.1的代码（<a href="http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java" target="_blank" rel="noopener">http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java</a>），会发现谷歌爸爸很快就修复了这个问题：</p>
+<p><img src="fields-with-the-same-name.png"></p>
+<p>查阅这个类在Android 6.0的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java</a>）后发现，这个类在旧版本中甚至没有<code>matchFields</code>方法，应该是进行了较大的重构或更新；而查阅Android 7.1的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java</a>），会发现谷歌爸爸很快就修复了这个问题：</p>
 <pre><code class="java">// ...
 // Android-changed: We can have fields with a same name and a different type.
 if (f.getName().equals(lf.getName()) &amp;&amp;
-  f.getSignature().equals(lf.getSignature())) {
-  if (lf.getField() != null) {
-// ...</code></pre>
+  f.getSignature().equals(lf.getSignature())) &#123;
+  if (lf.getField() != null) &#123;
+// ...
+</code></pre>
 <p>实际上，Android和JVM都允许成员变量名称相同，混淆为尽可能相同的名字可以减小体积并增大阅读难度。</p>
 <p>但<strong>实际上ProGuard默认并不会启用如此激进的混淆方式</strong>（写这篇文章的时候我艰难地尝试复现而不断失败……）。在我的GitHub代码上会看到我在混淆的规则中藏了一条：</p>
-<pre><code>-overloadaggressively</code></pre><p>查阅文档之后就会知道，启用这个选项后，才会导致成员变量被混淆为同样的名字。</p>
-<p>继续搜索，发现<a href="https://sourceforge.net/p/proguard/bugs/274/" target="_blank" rel="noopener">这篇帖子</a>，有人反馈了这个问题，作者表示：我并不太想给JRE的错误实现擦屁股，在代码里硬编码绕过这个问题（I’m not really eager to hard-code a workaround for what looks like a bug in the JRE implementation of serialization, but I’ll consider it.）。</p>
-<p>最后是对于该问题的解决，移除<code>-overloadaggressively</code>当然有效，但如果这个规则来自某个依赖库的Consumer ProGuard规则的话，就不那么好用了。而另一个方法是使用<code>-useuniqueclassmembernames</code>，这个选项会避免生成同名成员，但带来的副作用就是增大体积，另外，<a href="https://sourceforge.net/p/proguard/bugs/413/" target="_blank" rel="noopener">这篇帖子</a>也提到这个选项不只是刚好关掉了<code>-overloadaggressively</code>，还有其他副作用。</p>
-<p>因此，最后我选择了RTFM：重新看了一下ProGuard官方文档中<a href="https://www.guardsquare.com/en/products/proguard/manual/examples#serializable" target="_blank" rel="noopener">关于Serializable的规则建议</a>。使用它提供的完整规则后，会发现Serializable中的变量都被保留并不再导致问题出现了。</p>
+<pre><code>-overloadaggressively
+</code></pre>
+<p>查阅文档之后就会知道，启用这个选项后，才会导致成员变量被混淆为同样的名字。</p>
+<p>继续搜索，发现<a target="_blank" rel="noopener" href="https://sourceforge.net/p/proguard/bugs/274/">这篇帖子</a>，有人反馈了这个问题，作者表示：我并不太想给JRE的错误实现擦屁股，在代码里硬编码绕过这个问题（I’m not really eager to hard-code a workaround for what looks like a bug in the JRE implementation of serialization, but I’ll consider it.）。</p>
+<p>最后是对于该问题的解决，移除<code>-overloadaggressively</code>当然有效，但如果这个规则来自某个依赖库的Consumer ProGuard规则的话，就不那么好用了。而另一个方法是使用<code>-useuniqueclassmembernames</code>，这个选项会避免生成同名成员，但带来的副作用就是增大体积，另外，<a target="_blank" rel="noopener" href="https://sourceforge.net/p/proguard/bugs/413/">这篇帖子</a>也提到这个选项不只是刚好关掉了<code>-overloadaggressively</code>，还有其他副作用。</p>
+<p>因此，最后我选择了RTFM：重新看了一下ProGuard官方文档中<a target="_blank" rel="noopener" href="https://www.guardsquare.com/en/products/proguard/manual/examples#serializable">关于Serializable的规则建议</a>。使用它提供的完整规则后，会发现Serializable中的变量都被保留并不再导致问题出现了。</p>
 
         
     
@@ -1084,7 +1107,7 @@ if (f.getName().equals(lf.getName()) &amp;&amp;
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1094,7 +1117,7 @@ if (f.getName().equals(lf.getName()) &amp;&amp;
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -1104,11 +1127,21 @@ if (f.getName().equals(lf.getName()) &amp;&amp;
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1401,7 +1434,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

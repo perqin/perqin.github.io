@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,Android,bootloader,AOSP,ROM,魅族,魅蓝2">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Thu Apr 14 2016 01:16:53 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/index.html",
     "headline": "魅族魅蓝2解锁bootloader并刷入AOSP ROM",
     "datePublished": "Thu Apr 14 2016 01:16:53 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#说明"><span class="post-toc-number">1.</span> <span class="post-toc-text">说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原出处"><span class="post-toc-number">2.</span> <span class="post-toc-text">原出处</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#0-前提"><span class="post-toc-number">3.</span> <span class="post-toc-text">0. 前提</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-解锁bootloader"><span class="post-toc-number">4.</span> <span class="post-toc-text">1. 解锁bootloader</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-刷入第三方Recovery"><span class="post-toc-number">5.</span> <span class="post-toc-text">2. 刷入第三方Recovery</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-刷入AOSP-ROM"><span class="post-toc-number">6.</span> <span class="post-toc-text">3. 刷入AOSP ROM</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="post-toc-number">1.</span> <span class="post-toc-text">说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%8E%9F%E5%87%BA%E5%A4%84"><span class="post-toc-number">2.</span> <span class="post-toc-text">原出处</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#0-%E5%89%8D%E6%8F%90"><span class="post-toc-number">3.</span> <span class="post-toc-text">0. 前提</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-%E8%A7%A3%E9%94%81bootloader"><span class="post-toc-number">4.</span> <span class="post-toc-text">1. 解锁bootloader</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-%E5%88%B7%E5%85%A5%E7%AC%AC%E4%B8%89%E6%96%B9Recovery"><span class="post-toc-number">5.</span> <span class="post-toc-text">2. 刷入第三方Recovery</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-%E5%88%B7%E5%85%A5AOSP-ROM"><span class="post-toc-number">6.</span> <span class="post-toc-text">3. 刷入AOSP ROM</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/aosp/">AOSP</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/android/">Android</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/rom/">ROM</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/bootloader/">bootloader</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/魅族/">魅族</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/魅蓝2/">魅蓝2</a>
+        <a class="post_tag-none-link" href="/tags/aosp/" rel="tag">AOSP</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/android/" rel="tag">Android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/rom/" rel="tag">ROM</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/bootloader/" rel="tag">bootloader</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/%E9%AD%85%E6%97%8F/" rel="tag">魅族</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/%E9%AD%85%E8%93%9D2/" rel="tag">魅蓝2</a>
     </ul>
     
 
@@ -508,14 +512,14 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>俄罗斯论坛<a href="http://4pda.ru/forum/index.php" target="_blank" rel="noopener">4pda</a>的一些大神成功的解锁了bootloader，我把教程翻译成了英文并完成了刷机，记录如下。</p>
+        <p>俄罗斯论坛<a target="_blank" rel="noopener" href="http://4pda.ru/forum/index.php">4pda</a>的一些大神成功的解锁了bootloader，我把教程翻译成了英文并完成了刷机，记录如下。</p>
 <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ol>
 <li>本教程需要一定计算机操作基础知识。</li>
 <li>文章中提供的资源均来自Google Drive文件分享。</li>
 </ol>
 <h1 id="原出处"><a href="#原出处" class="headerlink" title="原出处"></a>原出处</h1><ol>
-<li>解锁bootloader：<a href="http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5300#entry45261414" target="_blank" rel="noopener">http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5300#entry45261414</a></li>
-<li>第三方recovery.img下载：<a href="http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5280#entry45259035" target="_blank" rel="noopener">http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5280#entry45259035</a></li>
+<li>解锁bootloader：<a target="_blank" rel="noopener" href="http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5300#entry45261414">http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5300#entry45261414</a></li>
+<li>第三方recovery.img下载：<a target="_blank" rel="noopener" href="http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5280#entry45259035">http://4pda.ru/forum/index.php?showtopic=683361&amp;st=5280#entry45259035</a></li>
 </ol>
 <h1 id="0-前提"><a href="#0-前提" class="headerlink" title="0. 前提"></a>0. 前提</h1><ol>
 <li>手机已经获取root权限。</li>
@@ -524,7 +528,7 @@
 <h1 id="1-解锁bootloader"><a href="#1-解锁bootloader" class="headerlink" title="1. 解锁bootloader"></a>1. 解锁bootloader</h1><ol>
 <li>安装手机的驱动（在Windows10下直接插入手机就会自动安装），下载adb工具，将adb.exe加入到环境变量。</li>
 <li>下载脚本unlock_bootloader.sh并拷贝到手机里（如内置存储的根目录）。</li>
-<li>下载<a href>Terminal 1.0.70</a>和<a href>BusyBox + Free.ver.33.build.183</a>并安装。</li>
+<li>下载<a href="">Terminal 1.0.70</a>和<a href="">BusyBox + Free.ver.33.build.183</a>并安装。</li>
 <li>运行BusyBox并授权root权限，点击“Install System”。</li>
 <li>安装完成并重启手机之后，打开Terminal，输入<code>su</code>提权，授权root权限后进入到保存unlock_bootloader.sh的目录，输入<code>sh unlock_bootloader.sh</code>运行脚本。</li>
 <li>运行成功之后，打开Windows的命令行工具，将手机连接电脑并打开USB调试，在命令行中输入<code>adb reboot bootloader</code>。</li>
@@ -539,7 +543,7 @@
 <li>刷写完成后长按电源键重启即可。</li>
 </ol>
 <h1 id="3-刷入AOSP-ROM"><a href="#3-刷入AOSP-ROM" class="headerlink" title="3. 刷入AOSP ROM"></a>3. 刷入AOSP ROM</h1><ol>
-<li>下载<a href>AOSP.zip</a>并放入手机内置存储中。</li>
+<li>下载<a href="">AOSP.zip</a>并放入手机内置存储中。</li>
 <li>手机重启，一旦显示出MEIZU的字样时立刻同时按住<code>电源</code>键和<code>音量+</code>键直到进入第三方Recovery。</li>
 <li>使用第三方Recovery选择刷机包刷入并清除相关数据（Darvik、cache等）。</li>
 <li>重启手机，享受原生Android吧！</li>
@@ -715,7 +719,7 @@
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -725,7 +729,7 @@
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -735,11 +739,21 @@
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1032,7 +1046,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>

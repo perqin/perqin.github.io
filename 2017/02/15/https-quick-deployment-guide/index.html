@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
-    <head><meta name="generator" content="Hexo 3.9.0">
+    <head>
     <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2017/02/15/https-quick-deployment-guide//amp/index.html">
+    
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
@@ -24,12 +28,12 @@
     <meta http-equiv="x-dns-prefetch-control" content="on">
 
 
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net">
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
 
 
 
 
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com">
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
 
 
 
@@ -57,14 +61,14 @@
     <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
     <link rel="icon" href="/img/avatar.png">
 
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
     <meta name="keywords" content="Perqin,https,debian,certbot,letsencrypt">
     <meta name="theme-color" content="#673AB7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -231,7 +235,7 @@
     <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8">
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
     
 
     <!-- RSS -->
@@ -247,7 +251,7 @@
 
     
         <meta property="article:published_time" content="Thu Feb 16 2017 03:14:17 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 11:51:01 GMT+0000">
+        <meta property="article:modified_time" content="Wed Feb 17 2021 18:07:33 GMT+0000">
     
 
     <!-- The Twitter Card protocol -->
@@ -255,7 +259,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://perqin.github.io/2017/02/15/https-quick-deployment-guide/index.html">
+        <link rel="canonical" href="https://perqin.github.io/2017/02/15/https-quick-deployment-guide/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -270,7 +274,7 @@
     "mainEntityOfPage": "https://perqin.github.io/2017/02/15/https-quick-deployment-guide/index.html",
     "headline": "HTTPS快速部署上车指南",
     "datePublished": "Thu Feb 16 2017 03:14:17 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 11:51:01 GMT+0000",
+    "dateModified": "Wed Feb 17 2021 18:07:33 GMT+0000",
     "author": {
         "@type": "Person",
         "name": "Perqin",
@@ -304,7 +308,7 @@
     <!-- Custom Head -->
     
 
-</head>
+<meta name="generator" content="Hexo 5.3.0"></head>
 
 
     
@@ -354,7 +358,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境说明"><span class="post-toc-number">1.</span> <span class="post-toc-text">环境说明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Nginx的初始配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">Nginx的初始配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置静态站点"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置静态站点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置certbot"><span class="post-toc-number">4.</span> <span class="post-toc-text">配置certbot</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="post-toc-number">1.</span> <span class="post-toc-text">环境说明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Nginx%E7%9A%84%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE"><span class="post-toc-number">2.</span> <span class="post-toc-text">Nginx的初始配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置静态站点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AEcertbot"><span class="post-toc-number">4.</span> <span class="post-toc-text">配置certbot</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%80%BB%E7%BB%93"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li></ol>
     </ul>
     
 
@@ -429,7 +433,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/certbot/">certbot</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/debian/">debian</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/https/">https</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/letsencrypt/">letsencrypt</a>
+        <a class="post_tag-none-link" href="/tags/certbot/" rel="tag">certbot</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/debian/" rel="tag">debian</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/https/" rel="tag">https</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/letsencrypt/" rel="tag">letsencrypt</a>
     </ul>
     
 
@@ -508,38 +512,41 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>2017年的今天，全站HTTPS几乎已经成为一个网站的基本要求之一，最新版本的Chrome和Firefox都已经开始对HTTP站点显示“不安全”提示。由于HTTP使用明文传输，不仅会被嗅探报文，甚至会遭遇中间人攻击，不需要很多经验的攻击者就可以截取你的权限信息并肆意更改你的账户。更重要的是，随着HTTPS被大力推广，越来越多免费证书可供选择，HTTPS带来的性能负担也逐渐被削弱以及从考虑重心中排除。本文以部署Debian Jessie上的Node.js应用为例，提供快速HTTPS部署方案，我们采用的是<a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let’s Encrypt</a>提供的免费证书，一次获取可以使用3个月。</p>
+        <p>2017年的今天，全站HTTPS几乎已经成为一个网站的基本要求之一，最新版本的Chrome和Firefox都已经开始对HTTP站点显示“不安全”提示。由于HTTP使用明文传输，不仅会被嗅探报文，甚至会遭遇中间人攻击，不需要很多经验的攻击者就可以截取你的权限信息并肆意更改你的账户。更重要的是，随着HTTPS被大力推广，越来越多免费证书可供选择，HTTPS带来的性能负担也逐渐被削弱以及从考虑重心中排除。本文以部署Debian Jessie上的Node.js应用为例，提供快速HTTPS部署方案，我们采用的是<a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a>提供的免费证书，一次获取可以使用3个月。</p>
 <h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>我的服务器使用的发行版是Debian Jessie，服务器程序是Nginx。一般而言，不同的发行版只是安装certbot的方法不一样，其他应该是一样的。</p>
 <h2 id="Nginx的初始配置"><a href="#Nginx的初始配置" class="headerlink" title="Nginx的初始配置"></a>Nginx的初始配置</h2><p>在没有启用HTTPS的情况下，相信读者对下面的Nginx配置非常熟悉，它可以为域名myapp.perqin.com设置一个监听3000端口的Node.js应用：</p>
-<pre><code>server {
+<pre><code>server &#123;
     listen        80;
     server_name    myapp.perqin.com;
-
-    location / {
+    
+    location / &#123;
         proxy_set_header    X-Real-IP $remote_addr;
         proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header    X-NginX-Proxy true;
         proxy_pass        http://localhost:3000/;
         proxy_cache_bypass    $http_upgrade;
         proxy_redirect        off;
-    }
-}
-</code></pre><p>除此以外，Nginx还有一个用于静态站点的默认配置，我们也会用到：</p>
-<pre><code>server {
+    &#125;
+&#125;
+</code></pre>
+<p>除此以外，Nginx还有一个用于静态站点的默认配置，我们也会用到：</p>
+<pre><code>server &#123;
     listen       80;
     server_name  localhost;
-
-    location / {
+    
+    location / &#123;
         root   /usr/share/nginx/html;
         index  index.html index.htm;
-    }
+    &#125;
 
     # redirect server error pages to the static page /50x.html
     error_page   500 502 503 504  /50x.html;
-    location = /50x.html {
+    location = /50x.html &#123;
         root   /usr/share/nginx/html;
-    }
-}</code></pre><p>以上就是部署HTTPS之前的服务器状态，假设Nginx和Node.js应用都已经可以正常使用，现在我们准备刷卡上车了！</p>
+    &#125;
+&#125;
+</code></pre>
+<p>以上就是部署HTTPS之前的服务器状态，假设Nginx和Node.js应用都已经可以正常使用，现在我们准备刷卡上车了！</p>
 <h2 id="配置静态站点"><a href="#配置静态站点" class="headerlink" title="配置静态站点"></a>配置静态站点</h2><p>简单科普一下（如有错误请指出）：</p>
 <blockquote>
 <p> HTTPS使用了TLS，它涉及了对称和非对称加密，对称的主密钥用于加密HTTP请求，非对称密钥用于加解密主密钥。网站的证书由CA签发，用户（浏览器等）通过检验证书是否的确由CA签发，就可以确定其中包含的公钥是否属于该域名，并用它加密。私钥只有域名所属的服务器拥有，所以可以保证该流量只能被真实的目的服务器获取并解读。浏览器等一般都内置了各大CA的证书，因此可以检验服务器提供的证书是否由相应的CA签发。</p>
@@ -548,35 +555,35 @@
 </blockquote>
 <p>因此，我们需要修改myapp.perqin.com的Nginx配置，使得：</p>
 <ul>
-<li>对于<code>http://myapp.perqin.com/.well-knwon/*</code>的请求，一律放行到静态目录，如<code>/usr/share/nginx/html</code></li>
-<li>对于其他的HTTP请求，一律返回302跳转，跳转到对应的HTTPS网址</li>
-<li>对于HTTPS请求，转发到Node.js应用</li>
+<li> 对于<code>http://myapp.perqin.com/.well-knwon/*</code>的请求，一律放行到静态目录，如<code>/usr/share/nginx/html</code></li>
+<li> 对于其他的HTTP请求，一律返回302跳转，跳转到对应的HTTPS网址</li>
+<li> 对于HTTPS请求，转发到Node.js应用</li>
 </ul>
 <p>于是，我们得到一下配置：</p>
 <pre><code># HTTP - only for obtaining cert
-server {
+server &#123;
     listen        80;
     server_name    myapp.perqin.com;
 
-    location /.well-known {
+    location /.well-known &#123;
         root    /usr/share/nginx/html;
         allow    all;
-    }
+    &#125;
 
-    location / {
+    location / &#123;
         return    301 https://$host$request_uri;
-    }
-}
+    &#125;
+&#125;
 
 # HTTPS - serve nodejs app
-server {
+server &#123;
     listen        443 ssl;
     server_name    myapp.perqin.com;
 
     #ssl_certificate        /etc/letsencrypt/live/myapp.perqin.com/fullchain.pem;
     #ssl_certificate_key    /etc/letsencrypt/live/myapp.perqin.com/privkey.pem;
 
-    location / {
+    location / &#123;
         proxy_set_header    X-Real-IP $remote_addr;
         proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header    X-NginX-Proxy true;
@@ -585,26 +592,35 @@ server {
         proxy_set_header    Host $http_host;
         proxy_cache_bypass    $http_upgrade;
         proxy_redirect        off;
-    }
-}
-</code></pre><p>注意：</p>
+    &#125;
+&#125;
+</code></pre>
+<p>注意：</p>
 <ul>
-<li>修改相关域名、端口号为你的域名、Node.js监听端口号</li>
-<li>L21-L22需要暂时注释掉，因为此时你的证书还没有生成，不注释将无法使用</li>
+<li> 修改相关域名、端口号为你的域名、Node.js监听端口号</li>
+<li> L21-L22需要暂时注释掉，因为此时你的证书还没有生成，不注释将无法使用</li>
 </ul>
 <p>接下来重启Nginx：</p>
-<pre><code>$ sudo systemctl restart nginx.service</code></pre><h2 id="配置certbot"><a href="#配置certbot" class="headerlink" title="配置certbot"></a>配置certbot</h2><p>certbot是Let’s Encrypt推荐的工具，他会自动完成证书验证、获取、存储和定时续签任务。</p>
-<p>英文好的同学可以直接转乘<a href="https://certbot.eff.org/all-instructions/#debian-8-jessie-none-of-the-above" target="_blank" rel="noopener">Certbot - All Instructions</a>阅读配置教程。</p>
+<pre><code>$ sudo systemctl restart nginx.service
+</code></pre>
+<h2 id="配置certbot"><a href="#配置certbot" class="headerlink" title="配置certbot"></a>配置certbot</h2><p>certbot是Let’s Encrypt推荐的工具，他会自动完成证书验证、获取、存储和定时续签任务。</p>
+<p>英文好的同学可以直接转乘<a target="_blank" rel="noopener" href="https://certbot.eff.org/all-instructions/#debian-8-jessie-none-of-the-above">Certbot - All Instructions</a>阅读配置教程。</p>
 <p>首先，我们需要为Debian添加backports仓库源，编辑<code>/etc/apt/source.list.d/jessie-backports.list</code>：</p>
-<pre><code>deb http://ftp.debian.org/debian jessie-backports main</code></pre><p>保存之后运行：</p>
+<pre><code>deb http://ftp.debian.org/debian jessie-backports main
+</code></pre>
+<p>保存之后运行：</p>
 <pre><code>$ sudo apt-get update
-$ sudo apt-get install certbot -t jessie-backports</code></pre><p>安装certbot之后，我们可以使用它的webroot插件获取证书：</p>
-<pre><code>$ sudo certbot certonly --webroot -w /usr/share/nginx/html -d myapp.perqin.com</code></pre><p>上述命令中<code>certonly</code>表示只获取证书，<code>--webroot</code>制定插件，<code>-w</code>后面是你的Nginx静态目录，<code>-d</code>后面就是域名了。注意这里<code>myapp.perqin.com</code>和<code>perqin.com</code>是不一样的，如果需要两个都上车，则需要连续两次<code>-d subdomain.domain.tld</code>。</p>
+$ sudo apt-get install certbot -t jessie-backports
+</code></pre>
+<p>安装certbot之后，我们可以使用它的webroot插件获取证书：</p>
+<pre><code>$ sudo certbot certonly --webroot -w /usr/share/nginx/html -d myapp.perqin.com
+</code></pre>
+<p>上述命令中<code>certonly</code>表示只获取证书，<code>--webroot</code>制定插件，<code>-w</code>后面是你的Nginx静态目录，<code>-d</code>后面就是域名了。注意这里<code>myapp.perqin.com</code>和<code>perqin.com</code>是不一样的，如果需要两个都上车，则需要连续两次<code>-d subdomain.domain.tld</code>。</p>
 <p>另外，由于证书、日志都分别存储在了<code>/etc</code>和<code>/var/log</code>中，因此需要root权限。</p>
 <p>等待片刻，就能看到提示消息，此时你的证书已经躺在他给出的位置（一般也是我前面Nginx配置文件中的位置），而且自动配置了crontab计划任务，每天两次判断是否有即将过期的证书并续签。</p>
 <p>初次配置可能会要求输入邮箱，大可放心输入，它用于你的证书要GG的时候给你发提醒。</p>
 <p>最后，再次编辑Nginx的配置文件，去除那两行的注释并保存，然后重启Nginx服务。</p>
-<p>现在，在浏览器输入myapp.perqin.com，你会发现你被重定向到了<a href="https://myapp.perqin.com！" target="_blank" rel="noopener">https://myapp.perqin.com！</a></p>
+<p>现在，在浏览器输入myapp.perqin.com，你会发现你被重定向到了<a target="_blank" rel="noopener" href="https://myapp.perqin.com!/">https://myapp.perqin.com！</a></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，整个过程是非常简单的，Nginx的配置对每个网站都是大同小异的，可以直接复制粘贴修改前述模板。certbot的安装也很简单，配置参数也很自然。当然，当初第一次折腾的时候我也研究了半天才得出了前面的Nginx模板，保证既能通过HTTP请求<code>/.well-knwon/</code>，又能屏蔽其他的全部HTTP请求。看完本文，你应该也能快速发车，给你的网站系上HTTPS安全带了！</p>
 
         
@@ -785,7 +801,7 @@ $ sudo apt-get install certbot -t jessie-backports</code></pre><p>安装certbot�
         
     
         <li>
-            <a href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -795,7 +811,7 @@ $ sudo apt-get install certbot -t jessie-backports</code></pre><p>安装certbot�
         
     
         <li>
-            <a href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
@@ -805,11 +821,21 @@ $ sudo apt-get install certbot -t jessie-backports</code></pre><p>安装certbot�
         
     
         <li>
-            <a href="https://blog.qshen.cc/" title="浮游大陆">
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
                 
                     <i class="material-icons sidebar-material-icons">public</i>
                 
                 浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
             </a>
         </li>
         
@@ -1102,7 +1128,9 @@ It will not impact the appearance and can give developers a lot of support :)
 <script>
 	var agent = navigator.userAgent.toLowerCase();
 	if(agent.indexOf('ucbrowser')>0) {
-		document.write('<link rel="stylesheet" href="/css/uc.css">');
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
 	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
 	}
 </script>
