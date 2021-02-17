@@ -74,6 +74,30 @@ theme_made:
   weibo: http://weibo.com/perqin
   duoshuo_shortname: perqinblog
 
+generator_amp:
+  templateDir:  amp-template
+  assetDistDir: amp-dist
+  logo:
+    path:   logo.png
+    width:  600
+    height: 60
+  logo_topImage:
+    path:   yoursite-logo.png
+    width:  1024
+    height: 400
+  substituteTitleImage:
+    path:   substituteTitleImage.png
+    width:  1024
+    height: 800
+  placeholderImg:
+    path: placeholder.png
+  cssFilePath:      amp.css
+  templateFilePath: amp.ejs
+
+authorDetail:
+  avatar:
+    path:   avator.png
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
