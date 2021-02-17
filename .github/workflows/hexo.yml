@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: A job to deploy blog.
+    env:
+      node_version: '12.x'
     steps:
     # Checks out a copy of your repository on the ubuntu-latest machine
     - name: Checkout code
@@ -15,19 +17,17 @@ jobs:
       with:
         submodules: true
     # SHould match the version used by hexo-action
-    - name: Use Node.js 12
+    - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: ${{ env.node_version }}
     # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
     - name: Cache node modules
       uses: actions/cache@v1
       id: cache
       with:
         path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+        key: ${{ runner.os }}-node-${{ env.node_version }}-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
