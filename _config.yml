@@ -69,12 +69,6 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: material
 
-# Made theme config
-theme_made:
-  github: https://github.com/perqin
-  weibo: http://weibo.com/perqin
-  duoshuo_shortname: perqinblog
-
 generator_amp:
   templateDir:  amp-template
   assetDistDir: amp-dist
