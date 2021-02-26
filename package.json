@@ -1,14 +1,14 @@
 {
   "name": "perqin.github.io",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "hexo": {
     "version": "5.3.0"
   },
   "dependencies": {
+    "@perqin/hexo-generator-amp": "^3.2.0-patch-01",
     "hexo": "^5.3.0",
     "hexo-deployer-git": "^3.0.0",
-    "hexo-generator-amp": "^3.2.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index": "^2.0.0",

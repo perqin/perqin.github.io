@@ -89,6 +89,11 @@ generator_amp:
   cssFilePath:      amp.css
   templateFilePath: amp.ejs
 
+# Sitemap
+sitemap:
+  # Custom template that supports amp pages
+  template: ./sitemap-template.xml
+
 authorDetail:
   avatar:
     path:   avator.png
