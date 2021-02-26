@@ -2,6 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://perqin.github.io/2016/08/08/tips-to-save-your-time-on-ubuntu/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  <url>
+    <loc>https://perqin.github.io/2016/08/08/tips-to-save-your-time-on-ubuntu/amp/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  <url>
+    <loc>https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/amp/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+  
+  
+  <url>
     <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
     
     <lastmod>2021-02-26</lastmod>
@@ -12,6 +46,57 @@
   
   <url>
     <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/amp/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  <url>
+    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/amp/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  <url>
+    <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/amp/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  <url>
+    <loc>https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/amp/</loc>
     
     <lastmod>2021-02-26</lastmod>
     
@@ -121,40 +206,6 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2016/08/08/tips-to-save-your-time-on-ubuntu/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  <url>
-    <loc>https://perqin.github.io/2016/08/08/tips-to-save-your-time-on-ubuntu/amp/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  <url>
-    <loc>https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/amp/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-  
-  
-  <url>
     <loc>https://perqin.github.io/showcases/gan-dear/</loc>
     
     <lastmod>2021-02-26</lastmod>
@@ -182,7 +233,7 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/</loc>
+    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
     
     <lastmod>2021-02-26</lastmod>
     
@@ -191,41 +242,7 @@
   <!-- AMP page -->
   
   <url>
-    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/amp/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  <url>
-    <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/amp/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  <url>
-    <loc>https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/amp/</loc>
+    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/amp/</loc>
     
     <lastmod>2021-02-26</lastmod>
     
@@ -267,6 +284,23 @@
   
   
   <url>
+    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  <url>
+    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/amp/</loc>
+    
+    <lastmod>2021-02-26</lastmod>
+    
+  </url>
+  
+  
+  <url>
     <loc>https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/</loc>
     
     <lastmod>2021-02-26</lastmod>
@@ -294,40 +328,6 @@
   
   <url>
     <loc>https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/amp/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  <url>
-    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/amp/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/</loc>
-    
-    <lastmod>2021-02-26</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  <url>
-    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/amp/</loc>
     
     <lastmod>2021-02-26</lastmod>
     
