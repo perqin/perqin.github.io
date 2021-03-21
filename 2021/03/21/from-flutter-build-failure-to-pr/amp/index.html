@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html ⚡>
+  <head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/" >
+    <title>从Flutter编译错误到给Flutter贡献代码 - Perqin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    
+    <meta property="og:title" content="从Flutter编译错误到给Flutter贡献代码">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/">
+	
+		<meta property="og:image" content="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/flutter-gen-bugfix-commit.png">
+	
+	<meta property="og:site_name" content="Perqin&#39;s Blog">
+	
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="Perqin&#39;s Blog">
+	<meta name="twitter:url" content="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/">
+	<meta name="twitter:title" content="从Flutter编译错误到给Flutter贡献代码 - Perqin&#39;s Blog">
+	
+    
+    	<meta name="twitter:image" content="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/flutter-gen-bugfix-commit.png">
+	
+	
+	
+    
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+    <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
+    <!--
+  	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+    -->
+    
+    
+    
+    
+    
+    
+    
+    
+      <script async custom-element="amp-mathml" src="https://cdn.ampproject.org/v0/amp-mathml-0.1.js"></script>
+    
+    
+    
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "BlogPosting",
+			"headline": "从Flutter编译错误到给Flutter贡献代码",
+			
+			"mainEntityOfPage":{
+			    "@type":"WebPage",
+			    "@id":"https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/"
+			},
+			"datePublished": "2021-03-21T05:55:38.000Z",
+			"dateModified": "2021-03-21T09:34:23.858Z",
+			
+			"image": {
+				"@type": "ImageObject",
+				"url": "https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/flutter-gen-bugfix-commit.png",
+				"width" : "1543",
+				"height" : "252"
+			},
+			
+			"author": {
+			    "@type": "Person",
+			    "name": "Perqin"
+			},
+			"publisher": {
+			    "@type": "Organization",
+			    "name": "Perqin&#39;s Blog"
+			    
+			    ,
+			    "logo": {
+			      "@type": "ImageObject",
+			      "url": "https://perqin.github.io/amp-dist/logo.png",
+			      "width": 600,
+			      "height": 60
+			    }
+			    
+			}
+		}
+	</script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<style amp-custom>
+		
+abbr,
+acronym,
+address,
+applet,
+big,
+blockquote,
+body,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+object,
+ol,
+p,
+pre,
+q,
+s,
+samp,
+small,
+span,
+strike,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+tt,
+ul,
+var {
+  border: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-style: inherit;
+  font-weight: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+abbr {
+  cursor: help;
+  border-bottom: 1px dotted;
+  font-variant: normal;
+}
+acronym {
+  border-bottom: 1px dotted;
+  font-variant: normal;
+}
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  background: #fff;
+  color: #2d3d40;
+  font-family: sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2rem;
+  text-rendering: optimizelegibility;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner,
+figure.highlight td,
+.post .entry-content figure.highlight th {
+  border: 0;
+  padding: 0;
+}
+caption,
+table,
+td,
+th {
+  vertical-align: middle;
+}
+caption,
+td,
+th,
+.table-align-left {
+  text-align: left;
+}
+del {
+  text-decoration: line-through;
+}
+html {
+  font-size: 14px;
+}
+:root sub,
+:root sup {
+  vertical-align: baseline;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+a {
+  color: #e91e63;
+  text-decoration: none;
+  -webkit-transition: 0.7s;
+  -ms-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -o-transition: 0.7s;
+  -webkit-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -o-transition: 0.7s;
+  -ms-transition: 0.7s;
+  transition: 0.7s;
+  border: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-style: inherit;
+  font-weight: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+a img {
+  border: none;
+}
+a:hover {
+  -webkit-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -ms-transition: 0.2s;
+  transition: 0.2s;
+  color: #930e3b;
+}
+@media (min-width: 481px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 0px) and (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+.clearfix:after {
+  clear: both;
+  visibility: hidden;
+  content: ".";
+  display: block;
+  height: 0;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.circle {
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.thumbImg-w {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.thumbImg {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.__web-inspector-hide-shortcut__ {
+  visibility: hidden ;
+}
+button {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -o-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  cursor: default;
+  color: buttontext;
+  background-color: buttonface;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2px 6px 3px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  -webkit-border-image: initial;
+  -moz-border-image: initial;
+  -o-border-image: initial;
+  border-image: initial;
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em 0em 0em 0em;
+  font: 11px system-ui;
+  -webkit-writing-mode: horizontal-tb;
+  -webkit-appearance: button;
+}
+.hamburger {
+  display: inline-block;
+  background-color: transparent;
+  background-image: url("data:image/svg+xmlutf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-3 -6 24 24\"><path fill=\"#4A4A4A\" d=\"M0 12h18v-2H0v2M0 7h18V5H0v2M0 0v2h18V0H0\"/></svg>");
+  background-repeat: no-repeat;
+  -webkit-background-size: 30px 24px;
+  -moz-background-size: 30px 24px;
+  background-size: 30px 24px;
+  background-position: center center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  -webkit-align-self: center;
+  align-self: center;
+  -ms-flex-item-align: center;
+}
+.nav ul:after {
+  clear: both;
+  visibility: hidden;
+}
+.nav,
+.nav-icon {
+  position: relative;
+}
+.nav ul {
+  display: block;
+}
+.nav ul li {
+  display: block;
+}
+.nav ul li a {
+  display: block;
+}
+.tab {
+  position: relative;
+  color: #424242;
+  padding: 6px;
+  margin: 0 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: 0.1s ease color;
+  -webkit-transition: 0.1s ease color;
+  -moz-transition: 0.1s ease color;
+  -o-transition: 0.1s ease color;
+  -ms-transition: 0.1s ease color;
+  transition: 0.1s ease color;
+}
+amp-sidebar {
+  width: 200px;
+}
+amp-sidebar ul {
+  padding: 10px 0;
+}
+amp-sidebar li a {
+  display: block;
+  padding: 10px 20px;
+}
+header {
+  height: 60px;
+  background-color: #222f31;
+  -webkit-box-shadow: 0 -1px 0 #3c5155 inset, 0 -3px 0 #1e292b inset;
+  box-shadow: 0 -1px 0 #3c5155 inset, 0 -3px 0 #1e292b inset;
+  -webkit-box-shadow: 0 -1px 0 #3c5155 inset, 0 -3px 0 #1e292b inset;
+}
+header .header-title a {
+  padding: 0 0 0 20px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 0.2em;
+}
+header .nav-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+header .left-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-box-pack: start;
+  -moz-box-pack: start;
+  -o-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  font-size: 20px;
+  margin-left: 0;
+  font-weight: 300;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-box-pack: start;
+  -moz-box-pack: start;
+  -o-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  text-align: left;
+  width: auto;
+  font-size: 15px;
+}
+header .right {
+  font-size: 15px;
+}
+header .alt {
+  padding: 0;
+  text-align: right;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  -o-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  align-items: stretch;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.blog-title a {
+  position: relative;
+}
+button {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -o-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  cursor: default;
+  color: buttontext;
+  background-color: buttonface;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2px 6px 3px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  -webkit-border-image: initial;
+  -moz-border-image: initial;
+  -o-border-image: initial;
+  border-image: initial;
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em 0em 0em 0em;
+  font: 11px system-ui;
+  -webkit-writing-mode: horizontal-tb;
+  -webkit-appearance: button;
+}
+.__web-inspector-hide-shortcut__ {
+  visibility: hidden ;
+}
+.hamburger {
+  display: inline-block;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-3 -6 24 24\"><path fill=\"#FFF\" d=\"M0 12h18v-2H0v2M0 7h18V5H0v2M0 0v2h18V0H0\"/></svg>");
+  background-repeat: no-repeat;
+  -webkit-background-size: 30px 24px;
+  -moz-background-size: 30px 24px;
+  background-size: 30px 24px;
+  background-position: center center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  -webkit-align-self: center;
+  align-self: center;
+  -ms-flex-item-align: center;
+}
+.tab {
+  position: relative;
+  color: #2d3d40;
+  padding: 6px;
+  margin: 0 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: 0.1s ease color;
+  -webkit-transition: 0.1s ease color;
+  -moz-transition: 0.1s ease color;
+  -o-transition: 0.1s ease color;
+  -ms-transition: 0.1s ease color;
+  transition: 0.1s ease color;
+}
+amp-sidebar {
+  width: 250px;
+  background-color: #182022;
+}
+amp-sidebar ul {
+  padding: 10px 0;
+}
+amp-sidebar li {
+  border-top: 1px solid #2f4043;
+}
+amp-sidebar li:last-child {
+  border-bottom: 1px solid #2f4043;
+}
+amp-sidebar li a {
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 10px 20px;
+}
+amp-sidebar li a:hover {
+  color: #ccc;
+  background-color: #030404;
+}
+.categories-header {
+  background-color: #2d3d40;
+  padding: 0rem 0.8rem;
+}
+.categories-header a {
+  color: #fff;
+}
+.categories-header a:hover {
+  color: #fff;
+}
+.categories-header .breadcrumb ol li {
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+}
+.categories-header .breadcrumb ol li span {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.categories-header .breadcrumb ol li:after {
+  content: "/";
+  color: #fff;
+  display: inline-block;
+  margin: 0 0.4rem;
+}
+.categories-header .breadcrumb ol li:last-child:after {
+  content: "";
+  margin: 0;
+}
+.entry-header {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.entry-header .flx:first-child {
+  margin: 0 1rem 0 0;
+}
+.header-cap {
+  -webkit-flex-grow: 3;
+  -webkit-box-flex: 3;
+  -moz-box-flex: 3;
+  -o-box-flex: 3;
+  -ms-box-flex: 3;
+  box-flex: 3;
+  -webkit-flex-grow: 3;
+  flex-grow: 3;
+}
+.title-cover {
+  background-color: #fff;
+  color: #2d3d40;
+  padding: 1.5rem 0.8rem 0 0.8rem;
+}
+.title-cover a {
+  font-size: 1.2rem;
+  color: #2d3d40;
+  text-align: left;
+  font-weight: bold;
+}
+.entry-title {
+  margin: 0;
+}
+.entry-meta-header {
+  font-size: 0.85rem;
+  text-align: center;
+}
+.entry-meta-header .date {
+  font-family: sans-serif;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: #2d3d40;
+  text-decoration: none;
+}
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover {
+  color: #e91e63;
+}
+#container {
+  margin-left: auto;
+  margin-right: auto;
+}
+#main {
+  margin-bottom: 3em;
+  padding-left: 0;
+}
+.post {
+  margin-bottom: 3rem;
+  position: relative;
+}
+.entry-content {
+  margin: 0 0.6rem;
+  font-size: 1rem;
+}
+.entry-content h1 {
+  font-size: 1.7rem;
+  line-height: 1.5;
+  margin: 1em 0 0.8em;
+}
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6,
+.entry-content h2 span,
+.entry-content h3 span,
+.entry-content h4 span,
+.entry-content h5 span,
+.entry-content h6 span {
+  color: #98b8be;
+  font-weight: bold;
+}
+.entry-content h2,
+.entry-content h2 span {
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  text-align: center;
+}
+.entry-content h2 {
+  border-bottom: 2px solid #cce4e8;
+  margin: 4.5rem 0 0.5em;
+  padding: 0.8em 0;
+}
+.entry-content h3,
+.entry-content h3 span {
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  text-align: center;
+}
+.entry-content h3 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content h4,
+.entry-content h4 span {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  text-align: center;
+}
+.entry-content h4 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content h5,
+.entry-content h5 span {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  text-align: center;
+}
+.entry-content h5 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content h6,
+.entry-content h6 span {
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  text-align: center;
+}
+.entry-content h6 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content p {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  line-height: 2.2rem;
+  margin: 3rem 0.8rem;
+}
+.entry-content p a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: inline;
+  border-bottom: 1px dashed #f1729d;
+  padding-bottom: 0.3rem;
+}
+.entry-content p a:hover {
+  border-bottom: 1px dashed #9c0f3f;
+  padding-bottom: 0.4rem;
+}
+.entry-content em {
+  background-color: #f9f5d1;
+  color: #886d00;
+  font-style: normal;
+  margin: 0 2px;
+  padding: 0.4em;
+}
+.entry-content strong {
+  color: #871c1c;
+  font-style: normal;
+  margin: 0 2px;
+  padding: 0.4em;
+  background-color: #fadcdc;
+}
+.entry-content hr {
+  border: 0;
+  border-top: 3px solid #cce4e8;
+  margin: 3rem auto;
+  width: 20%;
+}
+.entry-content img,
+.entry-content video {
+  display: block;
+  height: auto;
+  margin: auto;
+  max-width: 100%;
+}
+.entry-content iframe {
+  width: 100% ;
+}
+.entry-content blockquote {
+  margin: 3rem 0.8rem;
+  padding: 1rem 1.8rem;
+  position: relative;
+  background-color: none;
+  border-left: 3px solid #98b8be;
+  font-style: italic;
+}
+.entry-content blockquote p {
+  margin: 0.5rem 0;
+}
+.entry-content blockquote blockquote {
+  border-left: none;
+}
+.entry-content .table-wrapper {
+  margin: 3rem 0.8rem;
+}
+.entry-content table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow: auto;
+  display: block;
+  font-size: 0.85rem;
+  margin: 0 auto;
+  width: auto;
+}
+.entry-content td,
+.entry-content th {
+  line-height: 1.8em;
+  padding: 0.8rem 0.8rem;
+  font-size: 0.85rem;
+}
+.entry-content td em,
+.entry-content th em,
+.entry-content td strong,
+.entry-content th strong,
+.entry-content td a,
+.entry-content th a {
+  font-size: 0.85rem;
+}
+.entry-content td {
+  border: 1px solid #c4c4c4;
+}
+.entry-content th {
+  background-color: #ecf5f7;
+  border: 1px solid #c4c4c4;
+}
+.entry-content .table-align-center {
+  text-align: center;
+}
+.entry-content .table-align-right {
+  text-align: right;
+}
+.entry-content ul,
+.entry-content ol,
+.entry-content dl {
+  margin: 3rem 0 3rem 1.6rem;
+  padding: 0;
+  list-style: none;
+  font-size: 1rem;
+}
+.entry-content ul li,
+.entry-content ol li,
+.entry-content dl li {
+  line-height: 2rem;
+  position: relative;
+  padding: 0;
+}
+.entry-content ul li p,
+.entry-content ol li p,
+.entry-content dl li p {
+  line-height: 2rem;
+  margin: 0;
+}
+.entry-content ul li p:not(:first-child),
+.entry-content ol li p:not(:first-child),
+.entry-content dl li p:not(:first-child) {
+  color: #57767c;
+  margin: 0.5rem;
+}
+.entry-content ul li ul,
+.entry-content ol li ul,
+.entry-content dl li ul,
+.entry-content ul li ol,
+.entry-content ol li ol,
+.entry-content dl li ol,
+.entry-content ul li dl,
+.entry-content ol li dl,
+.entry-content dl li dl {
+  margin: 1rem;
+}
+.entry-content ul li {
+  margin: 0.4rem 0 0.4rem 0.8rem;
+}
+.entry-content ul li::after {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 0.75rem;
+  left: -1rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #cce4e8;
+  border-radius: 100%;
+}
+.entry-content ol {
+  counter-reset: number;
+}
+.entry-content ol li {
+  margin: 0.4rem 0 0.4rem 2rem;
+}
+.entry-content ol li p:first-child {
+  display: inline-block;
+  line-height: 1.6rem;
+  height: 1.6rem;
+}
+.entry-content ol li:before {
+  position: absolute;
+  display: inline-block;
+  float: left;
+  margin: 0 0.2rem 0 0;
+  padding: 0;
+  counter-increment: number;
+  content: counter(number);
+  left: -2.2rem;
+  top: 0.2rem;
+  background-color: #98b8be;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+  line-height: 1.6rem;
+}
+kbd {
+  font-family: sans-serif;
+  text-align: center;
+  display: inline-block;
+  color: #425a5e;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-border-radius: 3px;
+  -webkit-box-shadow: 0 0 10px #e8e8e8 inset, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 3px 3px #333;
+  box-shadow: 0 0 10px #e8e8e8 inset, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 3px 3px #333;
+  -webkit-box-shadow: 0 0 10px #e2e2e2 inset, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 3px 3px #333;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background: #fff;
+  border-left: 1px solid #fff;
+  border-radius: 3px;
+  border-right: 1px solid #e6e6e6;
+  border-top: 1px solid #fff;
+  font-size: 0.85rem;
+  line-height: 1rem;
+  margin: 5px;
+  padding: 6px 8px 3px;
+  text-shadow: 0 1px 0 #fff;
+  vertical-align: baseline;
+  
+}
+img.responsive-img {
+  height: auto;
+  max-width: 100%;
+}
+video.responsive-video {
+  height: auto;
+  max-width: 100%;
+}
+amp-instagram,
+amp-vimeo,
+amp-video,
+amp-youtube,
+amp-twitter,
+.soundcloud-wrapper,
+.amp-img-wrapper,
+.googleAdPost,
+.ad-footer {
+  margin: 3rem 0.8rem;
+}
+code,
+figure.highlight .code,
+pre {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+code,
+pre,
+samp {
+  font-family: Menlo, Consolas, Monaco, Consolas, monospace;
+}
+p code {
+  font-size: 1rem;
+}
+code,
+pre {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+  background-color: #ecf5f7;
+  color: #007e96;
+}
+code {
+  margin: 0 3px;
+  padding: 0.4em;
+}
+samp {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+}
+sub,
+sup {
+  font-size: 0.75rem;
+  line-height: 0;
+  position: relative;
+}
+sub {
+  bottom: -0.2em;
+}
+sup {
+  top: -0.5em;
+}
+pre {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  margin: 0 3px;
+  padding: 15px;
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  border: 0;
+  line-height: 1.3rem;
+  overflow-x: auto;
+}
+pre .addition,
+pre .css .tag,
+pre .keyword,
+pre .method,
+pre .nginx .title,
+pre .request,
+pre .status,
+pre .winutils {
+  color: #66d9ef;
+}
+pre .attr_selector,
+pre .cdata,
+pre .clojure .title,
+pre .diff .change,
+pre .important {
+  color: #9882eb;
+}
+pre .preprocessor {
+  color: #9882eb;
+}
+pre .preprocessor .keyword {
+  color: #9882eb;
+}
+pre .shebang,
+pre .special,
+pre .subst {
+  color: #9882eb;
+}
+pre .symbol {
+  color: #9882eb;
+}
+pre .symbol .string {
+  color: #9882eb;
+}
+pre .attribute,
+pre .class .title,
+pre .constant,
+pre .haskell .type,
+pre .lisp .body,
+pre .parent,
+pre .smalltalk .number,
+pre .variable {
+  color: #a6e22e;
+}
+pre .built_in,
+pre .chunk,
+pre .decorator,
+pre .id,
+pre .identifier,
+pre .literal,
+pre .localvars,
+pre .title,
+pre .vhdl,
+pre .deletion {
+  color: #f92672;
+}
+pre .command,
+pre .hexcolor,
+pre .number,
+pre .phpdoc,
+pre .regexp,
+pre .string,
+pre .tag .value,
+pre .tex .formula {
+  color: #e6db74;
+}
+pre .comment,
+pre .diff .header,
+pre .doctype,
+pre .javadoc,
+pre .lisp .string,
+pre .pi,
+pre .template_comment {
+  color: #75715e;
+  font-weight: normal;
+}
+.line {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+  line-height: 2rem;
+  color: #f8f8f2;
+}
+.line span {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+}
+.gist {
+  background: #fff;
+  border: 1px solid color-gutter;
+  color: #f8f8f2;
+  line-height: 1.6rem;
+  margin-top: 15px;
+  overflow: auto;
+  padding: 7px 15px;
+}
+.gist .gist-file {
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  letter-spacing: 0;
+  margin: 0;
+}
+.gist .gist-file .gist-data {
+  background: 0 0;
+  border-bottom: none;
+}
+.gist .gist-file .gist-data pre {
+  font-family: Menlo, Consolas, Monaco, Consolas, monospace;
+  padding: 0 ;
+}
+.gist .gist-file .gist-meta {
+  background: 0 0;
+  color: #f8f8f2;
+  font-size: 1rem;
+  margin-top: 5px;
+  padding: 0;
+}
+.gist .gist-file .gist-meta a {
+  color: #f8f8f2;
+}
+.gist .gist-file .gist-meta a:visited {
+  color: #f8f8f2;
+}
+figure.highlight {
+  font-size: 0.95rem;
+  margin: 3rem 0.8rem;
+  background: #263338;
+  border: 1px solid color-gutter;
+  line-height: 2rem;
+  overflow: auto;
+  position: relative;
+}
+figure.highlight .code {
+  padding: 0 1em 1em 1em;
+  color: #f8f8f2;
+}
+figure.highlight .gutter {
+  display: none;
+}
+figure.highlight figcaption {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e9e9d6;
+  background-color: #1e282c;
+  padding: 0.6em 1em;
+}
+figure.highlight figcaption a {
+  position: absolute;
+  right: 1rem;
+}
+figure.highlight figcaption:before {
+  content: "\f121";
+  font-family: "fontawesome";
+  text-align: center;
+  display: inline-block;
+  margin-right: 0.6em;
+}
+figure.highlight pre {
+  background: 0 0;
+  border: none;
+  margin: 0;
+  padding: 0.5rem;
+}
+figure.highlight table {
+  border-spacing: 0;
+  margin: 0;
+}
+figure.highlight th {
+  border: 0;
+  font-weight: 400;
+  padding: 0;
+}
+figure.highlight td {
+  border: 0;
+  font-size: 1.1rem;
+  padding: 0;
+}
+.entry-content .toc {
+  background: #fff;
+  padding: 0.5rem;
+  margin: 3rem 0;
+  border: 1px solid #cce4e8;
+  border-radius: 2px;
+}
+.entry-content .toc ul {
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #5d8b93;
+  border-radius: 2px;
+}
+.entry-content .toc ul:first-child {
+  border-top: none;
+}
+.entry-content .toc ul ul,
+.entry-content .toc ul ol {
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
+}
+.entry-content .toc ul li {
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #5d8b93;
+}
+.entry-content .toc ul li:first-child {
+  border-top: none;
+}
+.entry-content .toc ul li::after,
+.entry-content .toc ul li::before {
+  content: normal;
+}
+.entry-content .toc ul li a {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: block;
+  padding: 1rem;
+  background-color: #3d5b61;
+  color: #fff;
+  -webkit-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s;
+}
+.entry-content .toc ul li a:hover {
+  color: #fff;
+  background-color: #2c4145;
+}
+.entry-content .toc ul li a:before {
+  content: "\f02d";
+  font-family: "fontawesome";
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  margin-right: 0.8rem;
+}
+.entry-content .toc ul li ul,
+.entry-content .toc ul li ol {
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
+}
+.entry-content .toc ul li ul li a,
+.entry-content .toc ul li ol li a {
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  font-size: 0.9rem;
+  background-color: #416167;
+}
+.entry-content .toc ul li ul li a:before,
+.entry-content .toc ul li ol li a:before {
+  content: "\f0da";
+  font-family: "fontawesome";
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  margin-right: 0.6rem;
+}
+.entry-content .toc ul li ul li ul li a,
+.entry-content .toc ul li ol li ul li a {
+  padding: 0.5rem 0.75rem 0.5rem 4rem;
+}
+.entry-content .toc ul li ul li ul li a:before,
+.entry-content .toc ul li ol li ul li a:before {
+  content: none;
+}
+.meta-content {
+  background-color: #fff;
+  margin: 1.5rem 0.8rem;
+  padding: 0;
+  border-top: 1px dotted #cce4e8;
+  letter-spacing: 0.05rem;
+}
+.meta-wrapper {
+  margin: 3rem 0.8rem;
+  padding: 0;
+  background-color: #fff;
+}
+h6.tag,
+h6.categories {
+  color: #2d3d40;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.article-tag-list {
+  padding: 0;
+}
+.article-tag,
+.article-tag-list,
+.article-categories,
+.article-categories-list {
+  padding: 0;
+  margin: 0;
+}
+.article-categories {
+  margin-bottom: 1.6em;
+}
+.article-tag-list li,
+.article-categories-list li {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0.2rem 0.1rem;
+}
+.article-tag-list li a,
+.article-categories-list li a {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.4rem 0.8rem;
+  margin: 0;
+  background-color: #ecf5f7;
+  color: #2d3d40;
+  border-radius: 2px;
+  display: block;
+}
+.article-tag-list li a:before,
+.article-categories-list li a:before {
+  content: "#";
+}
+.article-tag-list li a:hover,
+.article-categories-list li a:hover {
+  color: #fff;
+  background-color: #2d3d40;
+}
+.widget {
+  margin: 1.5rem 0.8rem;
+  padding: 0;
+}
+.widget-h {
+  text-align: center;
+  margin: 1.6rem 0;
+}
+.widget-h h6 {
+  color: #fff;
+  background-color: #2d3d40;
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.posts-list li {
+  list-style: none;
+  margin: 0.8rem 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.posts-list li .posts-list-link {
+  -webkit-flex-grow: 3;
+  -webkit-box-flex: 3;
+  -moz-box-flex: 3;
+  -o-box-flex: 3;
+  -ms-box-flex: 3;
+  box-flex: 3;
+  -webkit-flex-grow: 3;
+  flex-grow: 3;
+}
+.posts-list li .posts-list-link a {
+  color: #2d3d40;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.posts-list li .posts-list-link a:hover {
+  color: #e91e63;
+}
+.posts-list li .posts-list-meta {
+  font-size: 0.7rem;
+}
+.posts-list li .flx:first-child {
+  margin: 0 1rem 0 0;
+}
+.posts-list li amp-img {
+  border-radius: 2px;
+}
+#footer {
+  background-color: #2d3d40;
+  color: #fff;
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  line-height: 2rem;
+  margin: 3rem 0 0 0;
+  padding: 0;
+}
+.site-author-info {
+  margin: 0;
+  padding: 3rem 1.6rem;
+}
+.site-author-info h6 {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: bold;
+  display: inline-block;
+  background-color: #222f31;
+  padding: 0.4rem 0.8rem;
+}
+.site-author-info-wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.site-author-info-wrapper .flx:first-child {
+  margin: 0 1rem 0 0;
+}
+.authorCap-wrapper {
+  -webkit-flex-grow: 3;
+  -webkit-box-flex: 3;
+  -moz-box-flex: 3;
+  -o-box-flex: 3;
+  -ms-box-flex: 3;
+  box-flex: 3;
+  -webkit-flex-grow: 3;
+  flex-grow: 3;
+}
+.authorCap {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.authorReading {
+  font-size: 0.7rem;
+}
+.site-author-desc {
+  font-size: 0.8rem;
+  line-height: 1.6rem;
+  margin: 1.4rem 0;
+}
+.copyright-tool {
+  margin: 0;
+  padding: 1.5rem 1.6rem;
+  border-top: 1px solid #384b4f;
+}
+.copyright-notice p {
+  font-size: 0.6rem;
+  letter-spacing: 0.05rem;
+  line-height: 1.2rem;
+  color: #8ba8ae;
+}
+.copyright-title {
+  font-size: 1rem;
+  text-align: center;
+  margin: 0.8rem 0 0.4rem 0;
+}
+.copyright-license {
+  margin: 0.4rem 0 0.8rem 0;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.copyright-license a {
+  color: #e6e6e6;
+  font-size: 0.7rem;
+}
+.copyright-license a:hover {
+  color: #b3b3b3;
+}
+.sns-link {
+  margin: 0;
+  text-align: center;
+}
+.sns-link a {
+  display: inline-block;
+  font-size: 1.6rem;
+  text-align: center;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0.6rem;
+  margin: 0 0.1rem;
+  background-color: #222f31;
+  color: #fff;
+  border-radius: 4px;
+}
+.sns-link a:hover {
+  color: #ccc;
+  background-color: #030404;
+}
+.footer-menu {
+  padding: 1.5rem 0.8rem;
+  border-top: 1px solid #384b4f;
+}
+.footer-menu ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.footer-menu ul li a {
+  display: block;
+  padding: 0.6rem;
+  margin: 0.2rem 1.6rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #222f31;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+.footer-menu ul li a:hover {
+  color: #ccc;
+  background-color: #030404;
+}
+.social-share {
+  margin: 1.5rem 0.8rem;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.social-share amp-social-share,
+.social-share .sbtn {
+  margin: 5px;
+}
+.sbtn {
+  padding: 0;
+  width: 4rem;
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 4px;
+}
+.sbtn:hover {
+  color: #fff;
+}
+.tw {
+  background-color: #1cafe8;
+}
+.tw:hover {
+  background-color: #0f6b8f;
+}
+.fb {
+  background-color: #4f677f;
+}
+.fb:hover {
+  background-color: #283440;
+}
+.ht {
+  background-color: #35acda;
+}
+.ht:hover {
+  background-color: #1a6e8f;
+}
+.gp {
+  background-color: #d56153;
+}
+.gp:hover {
+  background-color: #9c3326;
+}
+.tb {
+  background-color: #465f79;
+}
+.tb:hover {
+  background-color: #212c38;
+}
+.icon-hatena:before {
+  content: "B";
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+#totop {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.6rem;
+  font-size: 1.2rem;
+  z-index: 995;
+}
+#totop a {
+  background: rgba(152,184,190,0.6);
+  text-decoration: none;
+  color: #fff;
+  padding: 0.8rem;
+  border-radius: 50%;
+}
+#totop a:before {
+  content: "\f062";
+  font-family: "fontawesome";
+  font-size: 1.2rem;
+}
+#totop a:hover {
+  text-decoration: none;
+  background: #5d8b93;
+  color: #fff;
+  line-height: 2.3em;
+}
+@media (min-width: 800px) {
+  .title-cover,
+  .entry-content,
+  .categories,
+  .meta-content,
+  .site-author-info {
+    width: 780px;
+    margin: 0 auto;
+  }
+  .nav-container {
+    width: 800px;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 0px) and (max-width: 480px) {
+  .site-author-info-wrapper {
+    display: block;
+  }
+  .gravatar-area {
+    text-align: center;
+  }
+  .gravatar-area amp-img {
+    display: inline-block;
+  }
+  .entry-content td,
+  .entry-content th {
+    line-height: 1.8em;
+    padding: 0.6rem 0.6rem;
+    font-size: 0.5rem;
+  }
+  .entry-content td em,
+  .entry-content th em,
+  .entry-content td strong,
+  .entry-content th strong,
+  .entry-content td a,
+  .entry-content th a {
+    font-size: 0.5rem;
+  }
+}
+
+	</style>
+	
+  </head>
+  <body>
+  	
+  	
+  	<!-- google analytics -->
+  	
+  	
+  	
+  	<!-- menu -->
+  	<header>
+  		<div class="nav-container">
+	  		<div class="left-nav">
+	  			<div class="header-title">
+	  				<a href="/">Perqin&#39;s Blog</a>
+	  			</div>
+	  		</div>
+	  		
+	  	</div>
+    </header>
+  	
+  	
+  	<!-- sidebar -->
+  	
+  	
+  	<!-- container -->
+  	<div id="container">
+	  	<div id="main">
+		    <article id="post-from-flutter-build-failure-to-pr" class="post">
+		    
+		   		<!-- categories and bread crumb -->
+		    	
+		    
+		    	<!-- entry title -->
+				<div class="title-cover">
+					<div class="entry-header">
+						
+						
+						
+			          	<div class="header-thumb flx">
+			          		<div class="thumbImg-w circle">
+			          			<amp-img class="thumbImg" layout="fixed" width="612" height="100" src="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/flutter-gen-bugfix-commit.png">
+			          			</amp-img>
+			          		</div>
+			          	</div>
+			            
+			            
+			            <div class="header-cap flx">
+							
+							  <h1 class="article-title entry-title" itemprop="name">
+							    <a href="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/" target="_blank" itemprop="url">从Flutter编译错误到给Flutter贡献代码</a>
+							  </h1>
+							
+						</div>
+					</div>
+					
+					<!-- datePublished -->
+					<div class="entry-meta-header">
+						<span class="meta-elements date">
+							<span class="fa fa-fw fa-clock-o"></span>
+							<time datetime="2021-03-21" itemprop="datePublished">2021.03.21</time>
+						</span>
+					</div>
+				</div>
+				
+				
+				
+				<!-- entry content -->
+			    <div class="entry-content ecp">
+			    	<!-- social share button -->
+			    	
+			    	
+			    	
+                    <!-- google Adsense Matched content -->
+                    
+                    
+			    	<!-- content -->
+			  		<h1 id="Flutter国际化"><a href="#Flutter国际化" class="headerlink" title="Flutter国际化"></a>Flutter国际化</h1><p><a href="https://flutter.dev/docs/development/accessibility-and-localization/internationalization">Flutter的官方文档</a>中给出了Flutter应用的国际化和本地化流程。</p>
+<p>简而言之，Flutter的国际化依赖代码生成。以JSON格式在指定文件中定义国际化的资源，然后通过Flutter提供的工具动态生成Flutter代码，随后便可以在应用中使用这些代码中的变量。</p>
+<p>在根目录（注意<a href="https://github.com/flutter/flutter/issues/75977">不是lib目录下</a>www）下的l10n.yaml中配置本地化配置：</p>
+<pre><code class="yaml">arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+</code></pre>
+<p>然后在lib/l10n中添加各语言的本地化资源文件，其中作为模板的app_en.arb如下所示：</p>
+<pre><code class="json">{
+  "appName": "Fandori",
+  "@appName": {},
+  "information": "Information",
+  "@information": {},
+  "characters": "Characters",
+  "@characters": {},
+  "cards": "Cards",
+  "@cards": {}
+}
+</code></pre>
+<p>而其它语言文件就不需要<code>@</code>开头的描述性字段了：</p>
+<pre><code class="json">{
+  "appName": "Fandori",
+  "information": "信息",
+  "characters": "角色",
+  "cards": "卡牌"
+}
+</code></pre>
+<p>在pubspec.yaml中启用本地化：</p>
+<pre><code class="yaml">dependencies:
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.16.1
+flutter:
+  generate: true
+</code></pre>
+<p>这之后每次运行<code>flutter pub get</code>时，都会触发本地化资源的生成。</p>
+<h1 id="JSON序列化"><a href="#JSON序列化" class="headerlink" title="JSON序列化"></a>JSON序列化</h1><p>众所周知，<a href="https://flutter.dev/docs/development/data-and-backend/json#is-there-a-gsonjacksonmoshi-equivalent-in-flutter">Flutter禁止了反射</a>。因此，JSON序列化也需要使用代码生成来实现。</p>
+<p>在pubspec.yaml中添加JSON序列化相关的配置：</p>
+<pre><code class="yaml">dependencies:
+  json_annotation: ^3.1.1
+dev_dependencies:
+  build_runner: ^1.11.1
+  json_serializable: ^3.5.1
+</code></pre>
+<p>然后定义需要支持JSON序列化、反序列化的Model类：</p>
+<pre><code class="dart">import 'package:json_annotation/json_annotation.dart';
+
+part 'get_band.g.dart';
+
+@JsonSerializable()
+class Band {
+  int bandId;
+  String bandName;
+  String introductions;
+
+  Band(
+    this.bandId,
+    this.bandName,
+    this.introductions,
+  );
+
+  factory Band.fromJson(Map&lt;String, dynamic&gt; json) =&gt; _$BandFromJson(json);
+
+  Map&lt;String, dynamic&gt; toJson() =&gt; _$BandToJson(this);
+}
+</code></pre>
+<p>对于任意文件<code>some_file.dart</code>中使用<code>JsonSerializable</code>注解标记的类<code>SomeClass</code>，<code>json_serializable</code>会在<code>some_file.g.dart</code>中生成用于序列化的<code>_<amp-mathml layout="container" inline="" data-formula="\[SomeClassToJson</code>和用于反序列化的<code>\]"></amp-mathml>_SomeClassFromJson</code>方法。</p>
+<p>只需要运行<code>flutter pub run build_runner build</code>就可以生成上述<code>.g.dart</code>文件。</p>
+<h1 id="build-runner与flutter-generate的冲突"><a href="#build-runner与flutter-generate的冲突" class="headerlink" title="build_runner与flutter_generate的冲突"></a>build_runner与flutter_generate的冲突</h1><p>如果你使用的是1.24以前（不含1.24）的Flutter版本，那么在你运行build_runner的时候，便会遇到这样的错误：</p>
+<pre><code>Bad state: Unable to generate package graph, no /home/perqin/Workspaces/fandori/.dart_tool/flutter_gen/pubspec.yaml found.
+</code></pre>
+<p>完整的错误现场可以看GitHub上<a href="https://github.com/flutter/flutter/issues/75333">另一位老哥发的issue</a>。</p>
+<p>这个未被找到的文件位于项目根目录下的<code>.dart_tool/flutter_gen/</code>。查看目录下的文件就会发现，这里面就是Flutter本地化工具生成的代码存放处。</p>
+<p>于是我产生了两个疑问：</p>
+<ul>
+<li>build_runner为什么会检查这个目录下面有没有pubspec.yaml？</li>
+<li>Flutter为什么没有在这个目录下生成pubspec.yaml？</li>
+</ul>
+<h1 id="探索build-runner"><a href="#探索build-runner" class="headerlink" title="探索build_runner"></a>探索build_runner</h1><p>你可以在Flutter安装目录下的.pub-cache\hosted\pub.dartlang.org中找到build_runner的源码（如果你使用了Flutter China的镜像的话，你要在hosted目录下找pub.flutter-io.cn目录）。</p>
+<p>顺着错误栈，我们找到了build_runner入口的第一行代码：</p>
+<pre><code class="dart">// build_runner:build_runner.dart
+Future&lt;void&gt; main(List&lt;String&gt; args) async {
+  // Use the actual command runner to parse the args and immediately print the
+  // usage information if there is no command provided or the help command was
+  // explicitly invoked.
+  var commandRunner =
+      BuildCommandRunner([], await PackageGraph.forThisPackage());
+  // ...
+}
+</code></pre>
+<p>在进行后续逻辑之前，build_runner会先获取我们项目的包依赖图（Package Graph）。顺着错误栈找下去吧（中文注释是我加上去的）：</p>
+<pre><code class="dart">// build_runner_core:src/package_graph/package_graph.dart
+class PackageGraph {
+  /// Creates a [PackageGraph] for the package in which you are currently
+  /// running.
+  static Future&lt;PackageGraph&gt; forThisPackage() =&gt;
+      // 读取项目的PackageGraph
+      PackageGraph.forPath(p.current);
+
+  /// Creates a [PackageGraph] for the package whose top level directory lives
+  /// at [packagePath] (no trailing slash).
+  static Future&lt;PackageGraph&gt; forPath(String packagePath) async {
+    // ...
+    // 读取PackageConfig，Flutter会把项目的包依赖信息放在PackageConfig里
+    final packageConfig =
+        await findPackageConfig(Directory(packagePath), recurse: false);
+    // ...
+    // 通过PackageConfig解析包依赖
+    final packageDependencies = _parsePackageDependencies(
+        packageConfig.packages.where((p) =&gt; p.name != rootPackageName));
+    // ...
+}
+
+/// Read the pubspec for each package in [packages] and finds it's
+/// dependencies.
+Map&lt;String, List&lt;String&gt;&gt; _parsePackageDependencies(
+    Iterable&lt;Package&gt; packages) {
+  final dependencies = &lt;String, List&lt;String&gt;&gt;{};
+  for (final package in packages) {
+    // 针对每个包，读取它的pubspec.yaml
+    final pubspec = _pubspecForPath(package.root.toFilePath());
+    dependencies[package.name] = _depsFromYaml(pubspec);
+  }
+  return dependencies;
+}
+
+/// Should point to the top level directory for the package.
+YamlMap _pubspecForPath(String absolutePath) {
+  var pubspecPath = p.join(absolutePath, 'pubspec.yaml');
+  var pubspec = File(pubspecPath);
+  if (!pubspec.existsSync()) {
+    // .dart_tool/flutter_gen这个包也被列入了依赖，而这个包里没有pubspec.yaml，所以在这里报了错
+    throw StateError(
+        'Unable to generate package graph, no `$pubspecPath` found.');
+  }
+  return loadYaml(pubspec.readAsStringSync()) as YamlMap;
+}
+</code></pre>
+<p>那么为什么flutter_gen目录会被当作一个包被列入包依赖图的生成呢？package_config这个包中有答案：</p>
+<pre><code class="dart">// package_config:package_config.dart
+Future&lt;PackageConfig&gt; findPackageConfig(Directory directory,
+        {bool recurse = true, void onError(Object error)}) =&gt;
+    discover.findPackageConfig(directory, recurse, onError ?? throwError);
+</code></pre>
+<pre><code class="dart">// package_config:src/discovery.dart
+Future&lt;PackageConfig /*?*/ &gt; findPackageConfig(
+    Directory baseDirectory, bool recursive, void onError(Object error)) async {
+  var directory = baseDirectory;
+  if (!directory.isAbsolute) directory = directory.absolute;
+  if (!await directory.exists()) {
+    return null;
+  }
+  do {
+    // Check for $cwd/.packages
+    // 读取项目根目录下的.packages信息
+    var packageConfig = await findPackagConfigInDirectory(directory, onError);
+    if (packageConfig != null) return packageConfig;
+    if (!recursive) break;
+    // Check in parent directories.
+    var parentDirectory = directory.parent;
+    if (parentDirectory.path == directory.path) break;
+    directory = parentDirectory;
+  } while (true);
+  return null;
+}
+</code></pre>
+<p>现在我们打开项目根目录下的.packages：</p>
+<pre><code># generated by package:package_config at 2021-02-19 10:26:07.001909
+# 前面省略……
+flutter_gen:.dart_tool/flutter_gen/
+</code></pre>
+<p>于是我们可以推断出事件的全貌：</p>
+<p>Flutter的本地化工具会在.dart_tool目录下生成一个本地的Dart包：flutter_gen，并把生成的本地化代码放入其中。Flutter会把项目的依赖包列表都写入到.packages中，供包括build_runner在内的其他工具使用。</p>
+<p>也就是说锅并不是build_runner的，而是Flutter的本地化工具的。</p>
+<h1 id="探索Flutter-Localization"><a href="#探索Flutter-Localization" class="headerlink" title="探索Flutter Localization"></a>探索Flutter Localization</h1><p>前面提到，在运行<code>flutter pub get</code>的时候会刷新Flutter本地化代码，这句话的依据在Flutter安装目录下的packages\flutter_tools\lib\src\commands\packages.dart中：</p>
+<pre><code class="dart">class PackagesGetCommand extends FlutterCommand {
+  Future&lt;void&gt; _runPubGet(String directory, FlutterProject flutterProject) async {
+    if (flutterProject.manifest.generateSyntheticPackage) {
+      final Environment environment = Environment(
+        artifacts: globals.artifacts,
+        logger: globals.logger,
+        cacheDir: globals.cache.getRoot(),
+        engineVersion: globals.flutterVersion.engineRevision,
+        fileSystem: globals.fs,
+        flutterRootDir: globals.fs.directory(Cache.flutterRoot),
+        outputDir: globals.fs.directory(getBuildDirectory()),
+        processManager: globals.processManager,
+        projectDir: flutterProject.directory,
+      );
+
+      await generateLocalizationsSyntheticPackage(
+        environment: environment,
+        buildSystem: globals.buildSystem,
+      );
+      // ...
+    }
+  }
+}
+</code></pre>
+<p>那么我是怎么找到这个文件的呢www</p>
+<p>在pubspec.yaml中，有这样一个配置：</p>
+<pre><code class="yaml">flutter:
+  uses-material-design: true
+</code></pre>
+<p>在Flutter的GitHub仓库中搜索“uses-material-design”，过滤出Dart文件，很容易就能找到文件packages/flutter_tools/lib/src/flutter_manifest.dart，其中就包含了判断本地化是否启用的代码：</p>
+<pre><code class="dart">class FlutterManifest {
+  /// Whether a synthetic flutter_gen package should be generated.
+  ///
+  /// This can be provided to the [Pub] interface to inject a new entry
+  /// into the package_config.json file which points to `.dart_tool/flutter_gen`.
+  ///
+  /// This allows generated source code to be imported using a package
+  /// alias.
+  bool get generateSyntheticPackage =&gt; _generateSyntheticPackage ??= _computeGenerateSyntheticPackage();
+  bool _generateSyntheticPackage;
+  bool _computeGenerateSyntheticPackage() {
+    if (!_flutterDescriptor.containsKey('generate')) {
+      return false;
+    }
+    final Object value = _flutterDescriptor['generate'];
+    if (value is! bool) {
+      return false;
+    }
+    return value as bool;
+  }
+}
+</code></pre>
+<p>再顺着generateSyntheticPackage就能找到本地化工具的具体实现了。</p>
+<p>回到generateLocalizationsSyntheticPackage：</p>
+<pre><code class="dart">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart
+Future&lt;void&gt; generateLocalizationsSyntheticPackage({
+  @required Environment environment,
+  @required BuildSystem buildSystem,
+}) async {
+  // ...
+  final BuildResult result = await buildSystem.build(
+    const GenerateLocalizationsTarget(),
+    environment,
+  );
+
+  if (result == null || result.hasException) {
+    throwToolExit('Generating synthetic localizations package has failed.');
+  }
+}
+</code></pre>
+<p>显然，生成flutter_gen的逻辑就在GenerateLocalizationsTarget了：</p>
+<pre><code class="dart">// packages/flutter_tools/lib/src/build_system/targets/localizations.dart
+class GenerateLocalizationsTarget extends Target {
+  @override
+  Future&lt;void&gt; build(Environment environment) async {
+    // ...
+    generateLocalizations(
+      logger: environment.logger,
+      options: options,
+      projectDir: environment.projectDir,
+      dependenciesDir: environment.buildDir,
+      localizationsGenerator: LocalizationsGenerator(environment.fileSystem),
+    );
+    // ...
+  }
+}
+</code></pre>
+<pre><code class="dart">// packages/flutter_tools/lib/src/localizations/gen_l10n.dart
+/// Run the localizations generation script with the configuration [options].
+void generateLocalizations({
+  @required Directory projectDir,
+  @required Directory dependenciesDir,
+  @required LocalizationOptions options,
+  @required LocalizationsGenerator localizationsGenerator,
+  @required Logger logger,
+}) {
+  // ...
+  try {
+    localizationsGenerator
+      ..initialize(
+        inputsAndOutputsListPath: dependenciesDir?.path,
+        projectPathString: projectDir.path,
+        inputPathString: inputPathString,
+        templateArbFileName: templateArbFileName,
+        outputFileString: outputFileString,
+        outputPathString: options?.outputDirectory?.path,
+        classNameString: options.outputClass ?? 'AppLocalizations',
+        preferredSupportedLocales: options.preferredSupportedLocales,
+        headerString: options.header,
+        headerFile: options?.headerFile?.toFilePath(),
+        useDeferredLoading: options.deferredLoading ?? false,
+        useSyntheticPackage: options.useSyntheticPackage ?? true,
+        areResourceAttributesRequired: options.areResourceAttributesRequired ?? false,
+        untranslatedMessagesFile: options?.untranslatedMessagesFile?.toFilePath(),
+      )
+      ..loadResources()
+      ..writeOutputFiles(logger, isFromYaml: true);
+  } on L10nException catch (e) {
+    logger.printError(e.message);
+    throw Exception();
+  }
+}
+
+class LocalizationsGenerator {
+  void writeOutputFiles(Logger logger, { bool isFromYaml = false }) {
+    // First, generate the string contents of all necessary files.
+    _generateCode();
+
+    // A pubspec.yaml file is required when using a synthetic package. If it does not
+    // exist, create a blank one.
+    if (_useSyntheticPackage) {
+      final Directory syntheticPackageDirectory = _fs.directory(defaultSyntheticPackagePath);
+      syntheticPackageDirectory.createSync(recursive: true);
+      final File flutterGenPubspec = syntheticPackageDirectory.childFile('pubspec.yaml');
+      if (!flutterGenPubspec.existsSync()) {
+        flutterGenPubspec.writeAsStringSync(emptyPubspecTemplate);
+      }
+    }
+
+    // ...
+}
+</code></pre>
+<p>当时我是在GitHub上看这段代码的，很明显在writeOutputFiles中是包含了pubspec.yaml的生成逻辑的，怎么还会找不到呢？</p>
+<p>我们切换到v1.22.6这个tag，再看<a href="https://github.com/flutter/flutter/blob/9b2d32b605630f28625709ebd9d78ab3016b2bf6/packages/flutter_tools/lib/src/localizations/gen_l10n.dart#L1003">这个文件</a>：</p>
+<pre><code class="dart">// ...
+void writeOutputFiles() {
+    // First, generate the string contents of all necessary files.
+    _generateCode();
+
+    // Since all validity checks have passed up to this point,
+    // write the contents into the directory.
+    if (!outputDirectory.existsSync()) {
+      outputDirectory.createSync(recursive: true);
+    }
+
+    // Ensure that the created directory has read/write permissions.
+    final FileStat fileStat = outputDirectory.statSync();
+    if (_isNotReadable(fileStat) || _isNotWritable(fileStat)) {
+      throw L10nException(
+        "The 'output-dir' directory, $outputDirectory, doesn't allow reading and writing.\n"
+        'Please ensure that the user has read and write permissions.'
+      );
+    }
+
+    // Generate the required files for localizations.
+    _languageFileMap.forEach((File file, String contents) {
+      file.writeAsStringSync(contents);
+      if (_inputsAndOutputsListFile != null) {
+        _outputFileList.add(file.absolute.path);
+      }
+    });
+
+    baseOutputFile.writeAsStringSync(_generatedLocalizationsFile);
+    if (_inputsAndOutputsListFile != null) {
+      _outputFileList.add(baseOutputFile.absolute.path);
+
+      // Generate a JSON file containing the inputs and outputs of the gen_l10n script.
+      if (!_inputsAndOutputsListFile.existsSync()) {
+        _inputsAndOutputsListFile.createSync(recursive: true);
+      }
+
+      _inputsAndOutputsListFile.writeAsStringSync(
+        json.encode(&lt;String, Object&gt; {
+          'inputs': _inputFileList,
+          'outputs': _outputFileList,
+        }),
+      );
+    }
+  }
+  // ...
+</code></pre>
+<p>可见在此刻的最新版本（此时1.23以及更新的版本都还没有进入stable）上还有这个bug，而最新的master代码已经修复了。我们很容易找到<a href="https://github.com/flutter/flutter/pull/68206">对应的PR</a>，查看这个文件的改动对应的<a href="https://github.com/flutter/flutter/commit/38ebc5588b3d80b5bcce1a0a8114f96813de593f">commit</a>可以看到我们最早也要在1.24中才能收到这个修复了：</p>
+<div class="amp-img-wrapper"><amp-img src="/2021/03/21/from-flutter-build-failure-to-pr/flutter-gen-bugfix-commit.png" width="1543" height="252" layout="responsive"></amp-img></div>
+<p>如果你不想等待1.24发布正式版，你也可以：</p>
+<ul>
+<li>手动创建pubspec.yaml文件</li>
+<li>切换到beta channel</li>
+</ul>
+<h1 id="Flutter-Localization中的另一个bug"><a href="#Flutter-Localization中的另一个bug" class="headerlink" title="Flutter Localization中的另一个bug"></a>Flutter Localization中的另一个bug</h1><p>在阅读代码的过程中，我留意到GenerateLocalizationsTarget中的代码有些不对劲：</p>
+<pre><code class="dart">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart
+Future&lt;void&gt; generateLocalizationsSyntheticPackage({
+  @required Environment environment,
+  @required BuildSystem buildSystem,
+}) async {
+  assert(environment != null);
+  assert(buildSystem != null);
+
+  final FileSystem fileSystem = environment.fileSystem;
+  final File l10nYamlFile = fileSystem.file(
+    fileSystem.path.join(environment.projectDir.path, 'l10n.yaml'));
+
+  // If pubspec.yaml has generate:true and if l10n.yaml exists in the
+  // root project directory, check to see if a synthetic package should
+  // be generated for gen_l10n.
+  if (!l10nYamlFile.existsSync()) {
+    return;
+  }
+
+  final YamlNode yamlNode = loadYamlNode(l10nYamlFile.readAsStringSync());
+  if (yamlNode.value != null &amp;&amp; yamlNode is! YamlMap) {
+    throwToolExit(
+      'Expected ${l10nYamlFile.path} to contain a map, instead was $yamlNode'
+    );
+  }
+
+  BuildResult result;
+  // If an l10n.yaml file exists but is empty, attempt to build synthetic
+  // package with default settings.
+  if (yamlNode.value == null) {
+    result = await buildSystem.build(
+      const GenerateLocalizationsTarget(),
+      environment,
+    );
+  } else {
+    final YamlMap yamlMap = yamlNode as YamlMap;
+    final Object value = yamlMap['synthetic-package'];
+    if (value is! bool &amp;&amp; value != null) {
+      throwToolExit(
+        'Expected "synthetic-package" to have a bool value, '
+        'instead was "$value"'
+      );
+    }
+
+    // Generate gen_l10n synthetic package only if synthetic-package: true or
+    // synthetic-package is null.
+    final bool isSyntheticL10nPackage = value as bool ?? true;
+    if (!isSyntheticL10nPackage) {
+      return;
+    }
+  }
+
+  result = await buildSystem.build(
+    const GenerateLocalizationsTarget(),
+    environment,
+  );
+
+  if (result == null || result.hasException) {
+    throwToolExit('Generating synthetic localizations package has failed.');
+  }
+}
+</code></pre>
+<p>可以看到上述代码片段中的31、53行都调用了buildSystem.build，这不是重复调用了？？</p>
+<p>为了确认这个问题，首先我将本地Flutter安装目录下的bin/cache/flutter_tools.snapshot删掉，这个文件是Flutter在运行的时候将flutter_tools这个包预先编译成的二进制文件，从而避免每次运行都需要解释执行Dart源码。因此，在修改本地代码之前，需要删掉相应的snapshot文件。</p>
+<p>在generate_synthetic_packages.dart文件中的两个build调用前都加上print日志打印，然后观察这段代码，可以看出当<code>(yamlNode.value == null || yamlNode is YamlMap) &amp;&amp; yamlNode.value == null</code>，也就是yamlNode.value为null的时候能够触发。</p>
+<p>在l10n.yaml中为空字符串或者null的时候，yamlNode.value为null，而进一步确认packages/flutter_tools/lib/src/localizations/localizations_utils.dart：</p>
+<pre><code class="dart">LocalizationOptions parseLocalizationsOptions({
+  @required File file,
+  @required Logger logger,
+}) {
+  final String contents = file.readAsStringSync();
+  if (contents.trim().isEmpty) {
+    return const LocalizationOptions();
+  }
+  final YamlNode yamlNode = loadYamlNode(file.readAsStringSync());
+  if (yamlNode is! YamlMap) {
+    logger.printError('Expected ${file.path} to contain a map, instead was $yamlNode');
+    throw Exception();
+  }
+  // ...
+}
+</code></pre>
+<p>可见如果l10n.yaml包含注释或者null等内容，则会抛出异常，从而在第一次build调用中就会中止。</p>
+<p>因此我们打开l10n.yaml，清空其中的内容，然后运行<code>flutter pub get</code>，你就会看到两次build调用的日志打印了。由于这篇文章是拖延了两个月后才写的，当时的现场我懒得复原了www</p>
+<p>事实上，只要GenerateLocalizationsTarget的实现是稳定的，那么不论重复运行多少次，应该都能生成一样的本地化相关代码，这个bug并不算严重，但是<del>为了环保</del>我还是尝试了修复。</p>
+<p>修复办法平平无奇，这里就不贴了。</p>
+<h1 id="将bug掩藏起来的错误的单元测试"><a href="#将bug掩藏起来的错误的单元测试" class="headerlink" title="将bug掩藏起来的错误的单元测试"></a>将bug掩藏起来的错误的单元测试</h1><p>Flutter这样大型的开源项目必然会使用单元测试高强度覆盖，以保证代码质量。上面这个bug涉及的代码也是有单元测试的，那么为什么单元测试没有测出这个问题呢？</p>
+<p>上述文件对应的测试代码在packages/flutter_tools/test/general.shard/dart/generate_synthetic_packages_test.dart，可以看到第一个测试用例就是l10n.yaml为空的场景：</p>
+<pre><code class="dart">void main() {
+  testWithoutContext('calls buildSystem.build with blank l10n.yaml file', () {
+    // ...
+    expect(
+      () =&gt; generateLocalizationsSyntheticPackage(
+        environment: environment,
+        buildSystem: buildSystem,
+      ),
+      throwsToolExit(message: 'Generating synthetic localizations package has failed.'),
+    );
+    // [BuildSystem] should have called build with [GenerateLocalizationsTarget].
+    verify(buildSystem.build(
+      const GenerateLocalizationsTarget(),
+      environment,
+    )).called(1);
+  });
+  // ...
+}
+</code></pre>
+<p>我本地运行这个用例，发现这个用例居然是可以通过的！</p>
+<p>百思不得其解之际，我在verify处和build调用处都打了断点，意外发现调用顺序如下：</p>
+<ol>
+<li>第一次build调用</li>
+<li>verify</li>
+<li>第二次build调用</li>
+</ol>
+<p>这就奇怪了，第二次build调用还没开始的时候，generateLocalizationsSyntheticPackage还没有执行完毕，怎么就走到verify了呢？</p>
+<p>我随便点开了<code>throwsToolExit</code>的实现，发现<code>throwsToolExit</code>实际上返回的是<code>throwsA</code>：</p>
+<pre><code class="dart">// packages/flutter_tools/test/src/common.dart
+/// Matcher for functions that throw [ToolExit].
+Matcher throwsToolExit({ int exitCode, Pattern message }) {
+  Matcher matcher = isToolExit;
+  if (exitCode != null) {
+    matcher = allOf(matcher, (ToolExit e) =&gt; e.exitCode == exitCode);
+  }
+  if (message != null) {
+    matcher = allOf(matcher, (ToolExit e) =&gt; e.message?.contains(message) ?? false);
+  }
+  return throwsA(matcher);
+}
+</code></pre>
+<p>然后打开Flutter的官方文档：</p>
+<blockquote>
+<h1 id="throwsA-function"><a href="#throwsA-function" class="headerlink" title="throwsA function"></a>throwsA function</h1><p>This can be used to match three kinds of objects:</p>
+<ul>
+<li>A <a href="https://api.flutter.dev/flutter/dart-core/Function-class.html">Function</a> that throws an exception when called. The function cannot take any arguments. If you want to test that a function expecting arguments throws, wrap it in another zero-argument function that calls the one you want to test.</li>
+<li>A <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> that completes with an exception. Note that this creates an asynchronous expectation. The call to <code>expect()</code> that includes this will return immediately and execution will continue. Later, when the future completes, the actual expectation will run.</li>
+<li>A <a href="https://api.flutter.dev/flutter/dart-core/Function-class.html">Function</a> that returns a <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> that completes with an exception.</li>
+</ul>
+<p>In all three cases, when an exception is thrown, this will test that the exception object matches <code>matcher</code>. If <code>matcher</code> is not an instance of <a href="https://api.flutter.dev/flutter/package-matcher_matcher/Matcher-class.html">Matcher</a>, it will implicitly be treated as <code>equals(matcher)</code>.</p>
+</blockquote>
+<p>可以看到，如果被expect的对象是一个Future对象，那么这个expect会立刻返回，而不会等待Future执行完毕。在我们这个场景下，expect的对象不是Future，而是一个返回Future的Function，但阅读throwsA的实现会发现这种情况下expect也是会立刻返回的。</p>
+<p>在一般情况下，使用throwsA并没有什么问题，throwsA可以保证测试用例所在的方法执行完毕后仍然保持测试用例处于未结束的状态，等待这个expect获得结果后再结束。</p>
+<p>在在这个用例中，我们expect之后马上就调用了verify检查build被调用的次数，显然此时throwsA的这个特性就会带来问题：此时build调用次数确实为1，但后一次调用还在来的路上呢。</p>
+<p>查阅expect的文档：</p>
+<blockquote>
+<p>Certain matchers, like <a href="https://pub.dev/documentation/test_api/latest/test_api/completion.html">completion</a> and <a href="https://pub.dev/documentation/test_api/latest/test_api/throwsA.html">throwsA</a>, either match or fail asynchronously. When you use <a href="https://pub.dev/documentation/test_api/latest/test_api/expect.html">expect</a> with these matchers, it ensures that the test doesn’t complete until the matcher has either matched or failed. If you want to wait for the matcher to complete before continuing the test, you can call <a href="https://pub.dev/documentation/test_api/latest/test_api/expectLater.html">expectLater</a> instead and <code>await</code> the result.</p>
+</blockquote>
+<p>于是可见，我们应该把测试用例改成：</p>
+<pre><code class="dart">void main() {
+  // 增加async关键字，我们需要使用await
+  testWithoutContext('calls buildSystem.build with blank l10n.yaml file', () async {
+    // ...
+    // 改用expectLater，并await以保证被expect的方法已经结束并返回
+    await expectLater(
+      () =&gt; generateLocalizationsSyntheticPackage(
+        environment: environment,
+        buildSystem: buildSystem,
+      ),
+      throwsToolExit(message: 'Generating synthetic localizations package has failed.'),
+    );
+    // [BuildSystem] should have called build with [GenerateLocalizationsTarget].
+    verify(buildSystem.build(
+      const GenerateLocalizationsTarget(),
+      environment,
+    )).called(1);
+  });
+  // ...
+}
+</code></pre>
+<p>这样修改之后，我们的测试用例就失败了，因此也就可以修改代码修复这个bug了。</p>
+<h1 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h1><p>throwsA会导致expect异步执行，在和verify搭配使用的时候这样的错误隐蔽又致命，但似乎Flutter和Dart的文档中都没有特别提到这一点，不知道Flutter代码中还有多少这样错误的测试用例代码呢www</p>
+<p>另外，明明都是自动生成代码，JSON Annotation库使用的是Build Runner，但Flutter Localization使用的却是Flutter Generate，而且从代码中可以看到这块逻辑几乎完全耦合在Flutter代码中（以至于pubspec.yaml中的<code>generate</code>似乎仅仅用于本地化这个模块），为什么不把Localization也交给Build Runner来做呢？</p>
+
+			  		
+			  		<!-- google Adsense -->
+			  		
+					
+					
+					
+					
+			    	
+					
+					<!-- google Adsense Matched content -->
+			  		
+			  	</div>
+				
+		  	</article>
+		  	
+		  	
+		  	<!-- TAGS -->
+		  	
+		  	<div class="meta-content">
+				
+				<div class="widget">
+				  	<h6 class="tag"><span class="fa fa-fw fa-tag"></span>TAGS</h6>
+				  	<div class="article-tag">
+						<ul class="article-tag-list">
+							
+					    		<li class="article-tag-list-item">
+					    			<a class="article-tag-list-link" href="/tags/flutter/">
+					    				Flutter
+					    			</a>
+					    		</li>
+							
+					    		<li class="article-tag-list-item">
+					    			<a class="article-tag-list-link" href="/tags/i18n/">
+					    				i18n
+					    			</a>
+					    		</li>
+							
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		  	
+		  	
+		  	<!-- Categories posts -->
+		  	
+		  	
+		  	
+		  	<!-- Detailed categories  posts -->
+		  	
+		  	
+		  	
+		  	<!-- Latests -->
+		  	
+			
+		</div>
+		
+		
+		<footer id="footer">
+		
+			
+			<div class="site-author-info">
+				<h6>Profile</h6>
+				<div class="site-author-info-wrapper">
+				
+					
+					
+					
+					<div class="authorCap-wrapper flx">
+						<div class="authorCap">Perqin&nbsp;
+							
+						</div>
+						
+						
+					</div>
+					
+					
+				</div>
+			</div>
+			
+			
+			
+			
+			<div class="copyright-tool">
+				
+				
+				
+				<div class="copyright-title">
+					<span>
+					&copy; 2021&nbsp;Perqin&#39;s Blog
+					</span>
+				</div>
+				
+				<div class="copyright-license">
+					<aside>
+						Powered by <a href="https://hexo.io/">Hexo</a>. <a href="https://github.com/tea3/hexo-generator-amp">AMP-Theme</a> designed by <a href="https://github.com/tea3/">tea</a>.
+					</aside>
+				</div>
+			</div>
+			
+		</footer>
+
+
+  	<div id="totop"><a href="#"></a></div>
+
+
+  </body>
+</html>

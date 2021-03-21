@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!-- AMP support -->
+    
+        <link rel="amphtml" href="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr//amp/index.html">
+    
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.6 -->
+    <script>
+        window.materialVersion = "1.5.6"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0',
+            '1.5.2',
+            '1.5.5'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+
+
+
+
+    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
+
+
+
+    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            从Flutter编译错误到给Flutter贡献代码 | 
+        
+        Perqin&#39;s Blog
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/avatar.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+    <meta name="keywords" content="Perqin,Flutter,i18n">
+    <meta name="theme-color" content="#673AB7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: ;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #673AB7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #673AB7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #673AB7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Perqin&#39;s Blog">
+    <meta name="msapplication-starturl" content="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/">
+    <meta name="msapplication-navbutton-color" content="#673AB7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="从Flutter编译错误到给Flutter贡献代码 | Perqin&#39;s Blog">
+    <meta property="og:image" content="/img/avatar.png">
+    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+    <meta property="og:article:tag" content="Flutter"> <meta property="og:article:tag" content="i18n"> 
+
+    
+        <meta property="article:published_time" content="Sun Mar 21 2021 13:55:38 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 21 2021 09:34:23 GMT+0000">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/index.html",
+    "headline": "从Flutter编译错误到给Flutter贡献代码",
+    "datePublished": "Sun Mar 21 2021 13:55:38 GMT+0800",
+    "dateModified": "Sun Mar 21 2021 09:34:23 GMT+0000",
+    "author": {
+        "@type": "Person",
+        "name": "Perqin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Blogging is as painful as writing docs..."
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Perqin&#39;s Blog",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/avatar.png"
+        }
+    },
+    "keywords": ",Flutter,i18nPerqin",
+    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+        <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
+</div>
+    
+
+    <!-- Custom Head -->
+    
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Flutter%E5%9B%BD%E9%99%85%E5%8C%96"><span class="post-toc-number">1.</span> <span class="post-toc-text">Flutter国际化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JSON%E5%BA%8F%E5%88%97%E5%8C%96"><span class="post-toc-number">2.</span> <span class="post-toc-text">JSON序列化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#build-runner%E4%B8%8Eflutter-generate%E7%9A%84%E5%86%B2%E7%AA%81"><span class="post-toc-number">3.</span> <span class="post-toc-text">build_runner与flutter_generate的冲突</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E6%8E%A2%E7%B4%A2build-runner"><span class="post-toc-number">4.</span> <span class="post-toc-text">探索build_runner</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E6%8E%A2%E7%B4%A2Flutter-Localization"><span class="post-toc-number">5.</span> <span class="post-toc-text">探索Flutter Localization</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Flutter-Localization%E4%B8%AD%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AAbug"><span class="post-toc-number">6.</span> <span class="post-toc-text">Flutter Localization中的另一个bug</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%B0%86bug%E6%8E%A9%E8%97%8F%E8%B5%B7%E6%9D%A5%E7%9A%84%E9%94%99%E8%AF%AF%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="post-toc-number">7.</span> <span class="post-toc-text">将bug掩藏起来的错误的单元测试</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#throwsA-function"><span class="post-toc-number">8.</span> <span class="post-toc-text">throwsA function</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%90%90%E6%A7%BD"><span class="post-toc-number">9.</span> <span class="post-toc-text">吐槽</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                从Flutter编译错误到给Flutter贡献代码
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Perqin</strong>
+        <span>3月 21, 2021</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-none-link" href="/tags/flutter/" rel="tag">Flutter</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/i18n/" rel="tag">i18n</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+    <!-- Leancloud Views -->
+        <a class="post_share-link" href="#">
+            <li class="mdl-menu__item">
+                <span id="/2021/03/21/from-flutter-build-failure-to-pr/" class="leancloud-views_num" data-flag-title="从Flutter编译错误到给Flutter贡献代码">
+     &nbsp;浏览量
+</span>
+
+            </li>
+        </a>
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=从Flutter编译错误到给Flutter贡献代码&url=https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=从Flutter编译错误到给Flutter贡献代码&url=https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/index.html&via=Perqin" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="Flutter国际化"><a href="#Flutter国际化" class="headerlink" title="Flutter国际化"></a>Flutter国际化</h1><p><a target="_blank" rel="noopener" href="https://flutter.dev/docs/development/accessibility-and-localization/internationalization">Flutter的官方文档</a>中给出了Flutter应用的国际化和本地化流程。</p>
+<p>简而言之，Flutter的国际化依赖代码生成。以JSON格式在指定文件中定义国际化的资源，然后通过Flutter提供的工具动态生成Flutter代码，随后便可以在应用中使用这些代码中的变量。</p>
+<p>在根目录（注意<a target="_blank" rel="noopener" href="https://github.com/flutter/flutter/issues/75977">不是lib目录下</a>www）下的l10n.yaml中配置本地化配置：</p>
+<pre><code class="yaml">arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+</code></pre>
+<p>然后在lib/l10n中添加各语言的本地化资源文件，其中作为模板的app_en.arb如下所示：</p>
+<pre><code class="json">&#123;
+  &quot;appName&quot;: &quot;Fandori&quot;,
+  &quot;@appName&quot;: &#123;&#125;,
+  &quot;information&quot;: &quot;Information&quot;,
+  &quot;@information&quot;: &#123;&#125;,
+  &quot;characters&quot;: &quot;Characters&quot;,
+  &quot;@characters&quot;: &#123;&#125;,
+  &quot;cards&quot;: &quot;Cards&quot;,
+  &quot;@cards&quot;: &#123;&#125;
+&#125;
+</code></pre>
+<p>而其它语言文件就不需要<code>@</code>开头的描述性字段了：</p>
+<pre><code class="json">&#123;
+  &quot;appName&quot;: &quot;Fandori&quot;,
+  &quot;information&quot;: &quot;信息&quot;,
+  &quot;characters&quot;: &quot;角色&quot;,
+  &quot;cards&quot;: &quot;卡牌&quot;
+&#125;
+</code></pre>
+<p>在pubspec.yaml中启用本地化：</p>
+<pre><code class="yaml">dependencies:
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.16.1
+flutter:
+  generate: true
+</code></pre>
+<p>这之后每次运行<code>flutter pub get</code>时，都会触发本地化资源的生成。</p>
+<h1 id="JSON序列化"><a href="#JSON序列化" class="headerlink" title="JSON序列化"></a>JSON序列化</h1><p>众所周知，<a target="_blank" rel="noopener" href="https://flutter.dev/docs/development/data-and-backend/json#is-there-a-gsonjacksonmoshi-equivalent-in-flutter">Flutter禁止了反射</a>。因此，JSON序列化也需要使用代码生成来实现。</p>
+<p>在pubspec.yaml中添加JSON序列化相关的配置：</p>
+<pre><code class="yaml">dependencies:
+  json_annotation: ^3.1.1
+dev_dependencies:
+  build_runner: ^1.11.1
+  json_serializable: ^3.5.1
+</code></pre>
+<p>然后定义需要支持JSON序列化、反序列化的Model类：</p>
+<pre><code class="dart">import &#39;package:json_annotation/json_annotation.dart&#39;;
+
+part &#39;get_band.g.dart&#39;;
+
+@JsonSerializable()
+class Band &#123;
+  int bandId;
+  String bandName;
+  String introductions;
+
+  Band(
+    this.bandId,
+    this.bandName,
+    this.introductions,
+  );
+
+  factory Band.fromJson(Map&lt;String, dynamic&gt; json) =&gt; _$BandFromJson(json);
+
+  Map&lt;String, dynamic&gt; toJson() =&gt; _$BandToJson(this);
+&#125;
+</code></pre>
+<p>对于任意文件<code>some_file.dart</code>中使用<code>JsonSerializable</code>注解标记的类<code>SomeClass</code>，<code>json_serializable</code>会在<code>some_file.g.dart</code>中生成用于序列化的<code>_$SomeClassToJson</code>和用于反序列化的<code>$_SomeClassFromJson</code>方法。</p>
+<p>只需要运行<code>flutter pub run build_runner build</code>就可以生成上述<code>.g.dart</code>文件。</p>
+<h1 id="build-runner与flutter-generate的冲突"><a href="#build-runner与flutter-generate的冲突" class="headerlink" title="build_runner与flutter_generate的冲突"></a>build_runner与flutter_generate的冲突</h1><p>如果你使用的是1.24以前（不含1.24）的Flutter版本，那么在你运行build_runner的时候，便会遇到这样的错误：</p>
+<pre><code>Bad state: Unable to generate package graph, no /home/perqin/Workspaces/fandori/.dart_tool/flutter_gen/pubspec.yaml found.
+</code></pre>
+<p>完整的错误现场可以看GitHub上<a target="_blank" rel="noopener" href="https://github.com/flutter/flutter/issues/75333">另一位老哥发的issue</a>。</p>
+<p>这个未被找到的文件位于项目根目录下的<code>.dart_tool/flutter_gen/</code>。查看目录下的文件就会发现，这里面就是Flutter本地化工具生成的代码存放处。</p>
+<p>于是我产生了两个疑问：</p>
+<ul>
+<li>build_runner为什么会检查这个目录下面有没有pubspec.yaml？</li>
+<li>Flutter为什么没有在这个目录下生成pubspec.yaml？</li>
+</ul>
+<h1 id="探索build-runner"><a href="#探索build-runner" class="headerlink" title="探索build_runner"></a>探索build_runner</h1><p>你可以在Flutter安装目录下的.pub-cache\hosted\pub.dartlang.org中找到build_runner的源码（如果你使用了Flutter China的镜像的话，你要在hosted目录下找pub.flutter-io.cn目录）。</p>
+<p>顺着错误栈，我们找到了build_runner入口的第一行代码：</p>
+<pre><code class="dart">// build_runner:build_runner.dart
+Future&lt;void&gt; main(List&lt;String&gt; args) async &#123;
+  // Use the actual command runner to parse the args and immediately print the
+  // usage information if there is no command provided or the help command was
+  // explicitly invoked.
+  var commandRunner =
+      BuildCommandRunner([], await PackageGraph.forThisPackage());
+  // ...
+&#125;
+</code></pre>
+<p>在进行后续逻辑之前，build_runner会先获取我们项目的包依赖图（Package Graph）。顺着错误栈找下去吧（中文注释是我加上去的）：</p>
+<pre><code class="dart">// build_runner_core:src/package_graph/package_graph.dart
+class PackageGraph &#123;
+  /// Creates a [PackageGraph] for the package in which you are currently
+  /// running.
+  static Future&lt;PackageGraph&gt; forThisPackage() =&gt;
+      // 读取项目的PackageGraph
+      PackageGraph.forPath(p.current);
+
+  /// Creates a [PackageGraph] for the package whose top level directory lives
+  /// at [packagePath] (no trailing slash).
+  static Future&lt;PackageGraph&gt; forPath(String packagePath) async &#123;
+    // ...
+    // 读取PackageConfig，Flutter会把项目的包依赖信息放在PackageConfig里
+    final packageConfig =
+        await findPackageConfig(Directory(packagePath), recurse: false);
+    // ...
+    // 通过PackageConfig解析包依赖
+    final packageDependencies = _parsePackageDependencies(
+        packageConfig.packages.where((p) =&gt; p.name != rootPackageName));
+    // ...
+&#125;
+
+/// Read the pubspec for each package in [packages] and finds it&#39;s
+/// dependencies.
+Map&lt;String, List&lt;String&gt;&gt; _parsePackageDependencies(
+    Iterable&lt;Package&gt; packages) &#123;
+  final dependencies = &lt;String, List&lt;String&gt;&gt;&#123;&#125;;
+  for (final package in packages) &#123;
+    // 针对每个包，读取它的pubspec.yaml
+    final pubspec = _pubspecForPath(package.root.toFilePath());
+    dependencies[package.name] = _depsFromYaml(pubspec);
+  &#125;
+  return dependencies;
+&#125;
+
+/// Should point to the top level directory for the package.
+YamlMap _pubspecForPath(String absolutePath) &#123;
+  var pubspecPath = p.join(absolutePath, &#39;pubspec.yaml&#39;);
+  var pubspec = File(pubspecPath);
+  if (!pubspec.existsSync()) &#123;
+    // .dart_tool/flutter_gen这个包也被列入了依赖，而这个包里没有pubspec.yaml，所以在这里报了错
+    throw StateError(
+        &#39;Unable to generate package graph, no `$pubspecPath` found.&#39;);
+  &#125;
+  return loadYaml(pubspec.readAsStringSync()) as YamlMap;
+&#125;
+</code></pre>
+<p>那么为什么flutter_gen目录会被当作一个包被列入包依赖图的生成呢？package_config这个包中有答案：</p>
+<pre><code class="dart">// package_config:package_config.dart
+Future&lt;PackageConfig&gt; findPackageConfig(Directory directory,
+        &#123;bool recurse = true, void onError(Object error)&#125;) =&gt;
+    discover.findPackageConfig(directory, recurse, onError ?? throwError);
+</code></pre>
+<pre><code class="dart">// package_config:src/discovery.dart
+Future&lt;PackageConfig /*?*/ &gt; findPackageConfig(
+    Directory baseDirectory, bool recursive, void onError(Object error)) async &#123;
+  var directory = baseDirectory;
+  if (!directory.isAbsolute) directory = directory.absolute;
+  if (!await directory.exists()) &#123;
+    return null;
+  &#125;
+  do &#123;
+    // Check for $cwd/.packages
+    // 读取项目根目录下的.packages信息
+    var packageConfig = await findPackagConfigInDirectory(directory, onError);
+    if (packageConfig != null) return packageConfig;
+    if (!recursive) break;
+    // Check in parent directories.
+    var parentDirectory = directory.parent;
+    if (parentDirectory.path == directory.path) break;
+    directory = parentDirectory;
+  &#125; while (true);
+  return null;
+&#125;
+</code></pre>
+<p>现在我们打开项目根目录下的.packages：</p>
+<pre><code># generated by package:package_config at 2021-02-19 10:26:07.001909
+# 前面省略……
+flutter_gen:.dart_tool/flutter_gen/
+</code></pre>
+<p>于是我们可以推断出事件的全貌：</p>
+<p>Flutter的本地化工具会在.dart_tool目录下生成一个本地的Dart包：flutter_gen，并把生成的本地化代码放入其中。Flutter会把项目的依赖包列表都写入到.packages中，供包括build_runner在内的其他工具使用。</p>
+<p>也就是说锅并不是build_runner的，而是Flutter的本地化工具的。</p>
+<h1 id="探索Flutter-Localization"><a href="#探索Flutter-Localization" class="headerlink" title="探索Flutter Localization"></a>探索Flutter Localization</h1><p>前面提到，在运行<code>flutter pub get</code>的时候会刷新Flutter本地化代码，这句话的依据在Flutter安装目录下的packages\flutter_tools\lib\src\commands\packages.dart中：</p>
+<pre><code class="dart">class PackagesGetCommand extends FlutterCommand &#123;
+  Future&lt;void&gt; _runPubGet(String directory, FlutterProject flutterProject) async &#123;
+    if (flutterProject.manifest.generateSyntheticPackage) &#123;
+      final Environment environment = Environment(
+        artifacts: globals.artifacts,
+        logger: globals.logger,
+        cacheDir: globals.cache.getRoot(),
+        engineVersion: globals.flutterVersion.engineRevision,
+        fileSystem: globals.fs,
+        flutterRootDir: globals.fs.directory(Cache.flutterRoot),
+        outputDir: globals.fs.directory(getBuildDirectory()),
+        processManager: globals.processManager,
+        projectDir: flutterProject.directory,
+      );
+
+      await generateLocalizationsSyntheticPackage(
+        environment: environment,
+        buildSystem: globals.buildSystem,
+      );
+      // ...
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>那么我是怎么找到这个文件的呢www</p>
+<p>在pubspec.yaml中，有这样一个配置：</p>
+<pre><code class="yaml">flutter:
+  uses-material-design: true
+</code></pre>
+<p>在Flutter的GitHub仓库中搜索“uses-material-design”，过滤出Dart文件，很容易就能找到文件packages/flutter_tools/lib/src/flutter_manifest.dart，其中就包含了判断本地化是否启用的代码：</p>
+<pre><code class="dart">class FlutterManifest &#123;
+  /// Whether a synthetic flutter_gen package should be generated.
+  ///
+  /// This can be provided to the [Pub] interface to inject a new entry
+  /// into the package_config.json file which points to `.dart_tool/flutter_gen`.
+  ///
+  /// This allows generated source code to be imported using a package
+  /// alias.
+  bool get generateSyntheticPackage =&gt; _generateSyntheticPackage ??= _computeGenerateSyntheticPackage();
+  bool _generateSyntheticPackage;
+  bool _computeGenerateSyntheticPackage() &#123;
+    if (!_flutterDescriptor.containsKey(&#39;generate&#39;)) &#123;
+      return false;
+    &#125;
+    final Object value = _flutterDescriptor[&#39;generate&#39;];
+    if (value is! bool) &#123;
+      return false;
+    &#125;
+    return value as bool;
+  &#125;
+&#125;
+</code></pre>
+<p>再顺着generateSyntheticPackage就能找到本地化工具的具体实现了。</p>
+<p>回到generateLocalizationsSyntheticPackage：</p>
+<pre><code class="dart">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart
+Future&lt;void&gt; generateLocalizationsSyntheticPackage(&#123;
+  @required Environment environment,
+  @required BuildSystem buildSystem,
+&#125;) async &#123;
+  // ...
+  final BuildResult result = await buildSystem.build(
+    const GenerateLocalizationsTarget(),
+    environment,
+  );
+
+  if (result == null || result.hasException) &#123;
+    throwToolExit(&#39;Generating synthetic localizations package has failed.&#39;);
+  &#125;
+&#125;
+</code></pre>
+<p>显然，生成flutter_gen的逻辑就在GenerateLocalizationsTarget了：</p>
+<pre><code class="dart">// packages/flutter_tools/lib/src/build_system/targets/localizations.dart
+class GenerateLocalizationsTarget extends Target &#123;
+  @override
+  Future&lt;void&gt; build(Environment environment) async &#123;
+    // ...
+    generateLocalizations(
+      logger: environment.logger,
+      options: options,
+      projectDir: environment.projectDir,
+      dependenciesDir: environment.buildDir,
+      localizationsGenerator: LocalizationsGenerator(environment.fileSystem),
+    );
+    // ...
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="dart">// packages/flutter_tools/lib/src/localizations/gen_l10n.dart
+/// Run the localizations generation script with the configuration [options].
+void generateLocalizations(&#123;
+  @required Directory projectDir,
+  @required Directory dependenciesDir,
+  @required LocalizationOptions options,
+  @required LocalizationsGenerator localizationsGenerator,
+  @required Logger logger,
+&#125;) &#123;
+  // ...
+  try &#123;
+    localizationsGenerator
+      ..initialize(
+        inputsAndOutputsListPath: dependenciesDir?.path,
+        projectPathString: projectDir.path,
+        inputPathString: inputPathString,
+        templateArbFileName: templateArbFileName,
+        outputFileString: outputFileString,
+        outputPathString: options?.outputDirectory?.path,
+        classNameString: options.outputClass ?? &#39;AppLocalizations&#39;,
+        preferredSupportedLocales: options.preferredSupportedLocales,
+        headerString: options.header,
+        headerFile: options?.headerFile?.toFilePath(),
+        useDeferredLoading: options.deferredLoading ?? false,
+        useSyntheticPackage: options.useSyntheticPackage ?? true,
+        areResourceAttributesRequired: options.areResourceAttributesRequired ?? false,
+        untranslatedMessagesFile: options?.untranslatedMessagesFile?.toFilePath(),
+      )
+      ..loadResources()
+      ..writeOutputFiles(logger, isFromYaml: true);
+  &#125; on L10nException catch (e) &#123;
+    logger.printError(e.message);
+    throw Exception();
+  &#125;
+&#125;
+
+class LocalizationsGenerator &#123;
+  void writeOutputFiles(Logger logger, &#123; bool isFromYaml = false &#125;) &#123;
+    // First, generate the string contents of all necessary files.
+    _generateCode();
+
+    // A pubspec.yaml file is required when using a synthetic package. If it does not
+    // exist, create a blank one.
+    if (_useSyntheticPackage) &#123;
+      final Directory syntheticPackageDirectory = _fs.directory(defaultSyntheticPackagePath);
+      syntheticPackageDirectory.createSync(recursive: true);
+      final File flutterGenPubspec = syntheticPackageDirectory.childFile(&#39;pubspec.yaml&#39;);
+      if (!flutterGenPubspec.existsSync()) &#123;
+        flutterGenPubspec.writeAsStringSync(emptyPubspecTemplate);
+      &#125;
+    &#125;
+
+    // ...
+&#125;
+</code></pre>
+<p>当时我是在GitHub上看这段代码的，很明显在writeOutputFiles中是包含了pubspec.yaml的生成逻辑的，怎么还会找不到呢？</p>
+<p>我们切换到v1.22.6这个tag，再看<a target="_blank" rel="noopener" href="https://github.com/flutter/flutter/blob/9b2d32b605630f28625709ebd9d78ab3016b2bf6/packages/flutter_tools/lib/src/localizations/gen_l10n.dart#L1003">这个文件</a>：</p>
+<pre><code class="dart">// ...
+void writeOutputFiles() &#123;
+    // First, generate the string contents of all necessary files.
+    _generateCode();
+
+    // Since all validity checks have passed up to this point,
+    // write the contents into the directory.
+    if (!outputDirectory.existsSync()) &#123;
+      outputDirectory.createSync(recursive: true);
+    &#125;
+
+    // Ensure that the created directory has read/write permissions.
+    final FileStat fileStat = outputDirectory.statSync();
+    if (_isNotReadable(fileStat) || _isNotWritable(fileStat)) &#123;
+      throw L10nException(
+        &quot;The &#39;output-dir&#39; directory, $outputDirectory, doesn&#39;t allow reading and writing.\n&quot;
+        &#39;Please ensure that the user has read and write permissions.&#39;
+      );
+    &#125;
+
+    // Generate the required files for localizations.
+    _languageFileMap.forEach((File file, String contents) &#123;
+      file.writeAsStringSync(contents);
+      if (_inputsAndOutputsListFile != null) &#123;
+        _outputFileList.add(file.absolute.path);
+      &#125;
+    &#125;);
+
+    baseOutputFile.writeAsStringSync(_generatedLocalizationsFile);
+    if (_inputsAndOutputsListFile != null) &#123;
+      _outputFileList.add(baseOutputFile.absolute.path);
+
+      // Generate a JSON file containing the inputs and outputs of the gen_l10n script.
+      if (!_inputsAndOutputsListFile.existsSync()) &#123;
+        _inputsAndOutputsListFile.createSync(recursive: true);
+      &#125;
+
+      _inputsAndOutputsListFile.writeAsStringSync(
+        json.encode(&lt;String, Object&gt; &#123;
+          &#39;inputs&#39;: _inputFileList,
+          &#39;outputs&#39;: _outputFileList,
+        &#125;),
+      );
+    &#125;
+  &#125;
+  // ...
+</code></pre>
+<p>可见在此刻的最新版本（此时1.23以及更新的版本都还没有进入stable）上还有这个bug，而最新的master代码已经修复了。我们很容易找到<a target="_blank" rel="noopener" href="https://github.com/flutter/flutter/pull/68206">对应的PR</a>，查看这个文件的改动对应的<a target="_blank" rel="noopener" href="https://github.com/flutter/flutter/commit/38ebc5588b3d80b5bcce1a0a8114f96813de593f">commit</a>可以看到我们最早也要在1.24中才能收到这个修复了：</p>
+<p><img src="flutter-gen-bugfix-commit.png"></p>
+<p>如果你不想等待1.24发布正式版，你也可以：</p>
+<ul>
+<li>手动创建pubspec.yaml文件</li>
+<li>切换到beta channel</li>
+</ul>
+<h1 id="Flutter-Localization中的另一个bug"><a href="#Flutter-Localization中的另一个bug" class="headerlink" title="Flutter Localization中的另一个bug"></a>Flutter Localization中的另一个bug</h1><p>在阅读代码的过程中，我留意到GenerateLocalizationsTarget中的代码有些不对劲：</p>
+<pre><code class="dart">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart
+Future&lt;void&gt; generateLocalizationsSyntheticPackage(&#123;
+  @required Environment environment,
+  @required BuildSystem buildSystem,
+&#125;) async &#123;
+  assert(environment != null);
+  assert(buildSystem != null);
+
+  final FileSystem fileSystem = environment.fileSystem;
+  final File l10nYamlFile = fileSystem.file(
+    fileSystem.path.join(environment.projectDir.path, &#39;l10n.yaml&#39;));
+
+  // If pubspec.yaml has generate:true and if l10n.yaml exists in the
+  // root project directory, check to see if a synthetic package should
+  // be generated for gen_l10n.
+  if (!l10nYamlFile.existsSync()) &#123;
+    return;
+  &#125;
+
+  final YamlNode yamlNode = loadYamlNode(l10nYamlFile.readAsStringSync());
+  if (yamlNode.value != null &amp;&amp; yamlNode is! YamlMap) &#123;
+    throwToolExit(
+      &#39;Expected $&#123;l10nYamlFile.path&#125; to contain a map, instead was $yamlNode&#39;
+    );
+  &#125;
+
+  BuildResult result;
+  // If an l10n.yaml file exists but is empty, attempt to build synthetic
+  // package with default settings.
+  if (yamlNode.value == null) &#123;
+    result = await buildSystem.build(
+      const GenerateLocalizationsTarget(),
+      environment,
+    );
+  &#125; else &#123;
+    final YamlMap yamlMap = yamlNode as YamlMap;
+    final Object value = yamlMap[&#39;synthetic-package&#39;];
+    if (value is! bool &amp;&amp; value != null) &#123;
+      throwToolExit(
+        &#39;Expected &quot;synthetic-package&quot; to have a bool value, &#39;
+        &#39;instead was &quot;$value&quot;&#39;
+      );
+    &#125;
+
+    // Generate gen_l10n synthetic package only if synthetic-package: true or
+    // synthetic-package is null.
+    final bool isSyntheticL10nPackage = value as bool ?? true;
+    if (!isSyntheticL10nPackage) &#123;
+      return;
+    &#125;
+  &#125;
+
+  result = await buildSystem.build(
+    const GenerateLocalizationsTarget(),
+    environment,
+  );
+
+  if (result == null || result.hasException) &#123;
+    throwToolExit(&#39;Generating synthetic localizations package has failed.&#39;);
+  &#125;
+&#125;
+</code></pre>
+<p>可以看到上述代码片段中的31、53行都调用了buildSystem.build，这不是重复调用了？？</p>
+<p>为了确认这个问题，首先我将本地Flutter安装目录下的bin/cache/flutter_tools.snapshot删掉，这个文件是Flutter在运行的时候将flutter_tools这个包预先编译成的二进制文件，从而避免每次运行都需要解释执行Dart源码。因此，在修改本地代码之前，需要删掉相应的snapshot文件。</p>
+<p>在generate_synthetic_packages.dart文件中的两个build调用前都加上print日志打印，然后观察这段代码，可以看出当<code>(yamlNode.value == null || yamlNode is YamlMap) &amp;&amp; yamlNode.value == null</code>，也就是yamlNode.value为null的时候能够触发。</p>
+<p>在l10n.yaml中为空字符串或者null的时候，yamlNode.value为null，而进一步确认packages/flutter_tools/lib/src/localizations/localizations_utils.dart：</p>
+<pre><code class="dart">LocalizationOptions parseLocalizationsOptions(&#123;
+  @required File file,
+  @required Logger logger,
+&#125;) &#123;
+  final String contents = file.readAsStringSync();
+  if (contents.trim().isEmpty) &#123;
+    return const LocalizationOptions();
+  &#125;
+  final YamlNode yamlNode = loadYamlNode(file.readAsStringSync());
+  if (yamlNode is! YamlMap) &#123;
+    logger.printError(&#39;Expected $&#123;file.path&#125; to contain a map, instead was $yamlNode&#39;);
+    throw Exception();
+  &#125;
+  // ...
+&#125;
+</code></pre>
+<p>可见如果l10n.yaml包含注释或者null等内容，则会抛出异常，从而在第一次build调用中就会中止。</p>
+<p>因此我们打开l10n.yaml，清空其中的内容，然后运行<code>flutter pub get</code>，你就会看到两次build调用的日志打印了。由于这篇文章是拖延了两个月后才写的，当时的现场我懒得复原了www</p>
+<p>事实上，只要GenerateLocalizationsTarget的实现是稳定的，那么不论重复运行多少次，应该都能生成一样的本地化相关代码，这个bug并不算严重，但是<del>为了环保</del>我还是尝试了修复。</p>
+<p>修复办法平平无奇，这里就不贴了。</p>
+<h1 id="将bug掩藏起来的错误的单元测试"><a href="#将bug掩藏起来的错误的单元测试" class="headerlink" title="将bug掩藏起来的错误的单元测试"></a>将bug掩藏起来的错误的单元测试</h1><p>Flutter这样大型的开源项目必然会使用单元测试高强度覆盖，以保证代码质量。上面这个bug涉及的代码也是有单元测试的，那么为什么单元测试没有测出这个问题呢？</p>
+<p>上述文件对应的测试代码在packages/flutter_tools/test/general.shard/dart/generate_synthetic_packages_test.dart，可以看到第一个测试用例就是l10n.yaml为空的场景：</p>
+<pre><code class="dart">void main() &#123;
+  testWithoutContext(&#39;calls buildSystem.build with blank l10n.yaml file&#39;, () &#123;
+    // ...
+    expect(
+      () =&gt; generateLocalizationsSyntheticPackage(
+        environment: environment,
+        buildSystem: buildSystem,
+      ),
+      throwsToolExit(message: &#39;Generating synthetic localizations package has failed.&#39;),
+    );
+    // [BuildSystem] should have called build with [GenerateLocalizationsTarget].
+    verify(buildSystem.build(
+      const GenerateLocalizationsTarget(),
+      environment,
+    )).called(1);
+  &#125;);
+  // ...
+&#125;
+</code></pre>
+<p>我本地运行这个用例，发现这个用例居然是可以通过的！</p>
+<p>百思不得其解之际，我在verify处和build调用处都打了断点，意外发现调用顺序如下：</p>
+<ol>
+<li>第一次build调用</li>
+<li>verify</li>
+<li>第二次build调用</li>
+</ol>
+<p>这就奇怪了，第二次build调用还没开始的时候，generateLocalizationsSyntheticPackage还没有执行完毕，怎么就走到verify了呢？</p>
+<p>我随便点开了<code>throwsToolExit</code>的实现，发现<code>throwsToolExit</code>实际上返回的是<code>throwsA</code>：</p>
+<pre><code class="dart">// packages/flutter_tools/test/src/common.dart
+/// Matcher for functions that throw [ToolExit].
+Matcher throwsToolExit(&#123; int exitCode, Pattern message &#125;) &#123;
+  Matcher matcher = isToolExit;
+  if (exitCode != null) &#123;
+    matcher = allOf(matcher, (ToolExit e) =&gt; e.exitCode == exitCode);
+  &#125;
+  if (message != null) &#123;
+    matcher = allOf(matcher, (ToolExit e) =&gt; e.message?.contains(message) ?? false);
+  &#125;
+  return throwsA(matcher);
+&#125;
+</code></pre>
+<p>然后打开Flutter的官方文档：</p>
+<blockquote>
+<h1 id="throwsA-function"><a href="#throwsA-function" class="headerlink" title="throwsA function"></a>throwsA function</h1><p>This can be used to match three kinds of objects:</p>
+<ul>
+<li>A <a target="_blank" rel="noopener" href="https://api.flutter.dev/flutter/dart-core/Function-class.html">Function</a> that throws an exception when called. The function cannot take any arguments. If you want to test that a function expecting arguments throws, wrap it in another zero-argument function that calls the one you want to test.</li>
+<li>A <a target="_blank" rel="noopener" href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> that completes with an exception. Note that this creates an asynchronous expectation. The call to <code>expect()</code> that includes this will return immediately and execution will continue. Later, when the future completes, the actual expectation will run.</li>
+<li>A <a target="_blank" rel="noopener" href="https://api.flutter.dev/flutter/dart-core/Function-class.html">Function</a> that returns a <a target="_blank" rel="noopener" href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a> that completes with an exception.</li>
+</ul>
+<p>In all three cases, when an exception is thrown, this will test that the exception object matches <code>matcher</code>. If <code>matcher</code> is not an instance of <a target="_blank" rel="noopener" href="https://api.flutter.dev/flutter/package-matcher_matcher/Matcher-class.html">Matcher</a>, it will implicitly be treated as <code>equals(matcher)</code>.</p>
+</blockquote>
+<p>可以看到，如果被expect的对象是一个Future对象，那么这个expect会立刻返回，而不会等待Future执行完毕。在我们这个场景下，expect的对象不是Future，而是一个返回Future的Function，但阅读throwsA的实现会发现这种情况下expect也是会立刻返回的。</p>
+<p>在一般情况下，使用throwsA并没有什么问题，throwsA可以保证测试用例所在的方法执行完毕后仍然保持测试用例处于未结束的状态，等待这个expect获得结果后再结束。</p>
+<p>在在这个用例中，我们expect之后马上就调用了verify检查build被调用的次数，显然此时throwsA的这个特性就会带来问题：此时build调用次数确实为1，但后一次调用还在来的路上呢。</p>
+<p>查阅expect的文档：</p>
+<blockquote>
+<p>Certain matchers, like <a target="_blank" rel="noopener" href="https://pub.dev/documentation/test_api/latest/test_api/completion.html">completion</a> and <a target="_blank" rel="noopener" href="https://pub.dev/documentation/test_api/latest/test_api/throwsA.html">throwsA</a>, either match or fail asynchronously. When you use <a target="_blank" rel="noopener" href="https://pub.dev/documentation/test_api/latest/test_api/expect.html">expect</a> with these matchers, it ensures that the test doesn’t complete until the matcher has either matched or failed. If you want to wait for the matcher to complete before continuing the test, you can call <a target="_blank" rel="noopener" href="https://pub.dev/documentation/test_api/latest/test_api/expectLater.html">expectLater</a> instead and <code>await</code> the result.</p>
+</blockquote>
+<p>于是可见，我们应该把测试用例改成：</p>
+<pre><code class="dart">void main() &#123;
+  // 增加async关键字，我们需要使用await
+  testWithoutContext(&#39;calls buildSystem.build with blank l10n.yaml file&#39;, () async &#123;
+    // ...
+    // 改用expectLater，并await以保证被expect的方法已经结束并返回
+    await expectLater(
+      () =&gt; generateLocalizationsSyntheticPackage(
+        environment: environment,
+        buildSystem: buildSystem,
+      ),
+      throwsToolExit(message: &#39;Generating synthetic localizations package has failed.&#39;),
+    );
+    // [BuildSystem] should have called build with [GenerateLocalizationsTarget].
+    verify(buildSystem.build(
+      const GenerateLocalizationsTarget(),
+      environment,
+    )).called(1);
+  &#125;);
+  // ...
+&#125;
+</code></pre>
+<p>这样修改之后，我们的测试用例就失败了，因此也就可以修改代码修复这个bug了。</p>
+<h1 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h1><p>throwsA会导致expect异步执行，在和verify搭配使用的时候这样的错误隐蔽又致命，但似乎Flutter和Dart的文档中都没有特别提到这一点，不知道Flutter代码中还有多少这样错误的测试用例代码呢www</p>
+<p>另外，明明都是自动生成代码，JSON Annotation库使用的是Build Runner，但Flutter Localization使用的却是Flutter Generate，而且从代码中可以看到这块逻辑几乎完全耦合在Flutter代码中（以至于pubspec.yaml中的<code>generate</code>似乎仅仅用于本地化这个模块），为什么不把Localization也交给Build Runner来做呢？</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//perqin-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/09/10/two-issues-on-android-obfuscation/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Perqin's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        perqinxie@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/showcases" title="Showcase">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                Showcase
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                BirdZhang&#39;s Blog
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                Dospy-梦影决幻
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                浮游大陆
+            </a>
+        </li>
+        
+    
+        <li>
+            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
+                
+                    <i class="material-icons sidebar-material-icons">public</i>
+                
+                FrodoLuo
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/perqinxie" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/perqin" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+
+    <!-- V2EX -->
+    
+
+    <!-- Segmentfault -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#FF4081'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#FF4081',
+        'border-left-color': '#FF4081'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+    <!-- Leancloud -->
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>
+        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
+    </script>
+    <script type="text/ls-javascript" id="leancloud-views-script">
+    function showTime(Counter) {
+        var query = new AV.Query(Counter);
+        $('.leancloud-views_num').each(function() {
+            var url = $(this).attr('id').trim();
+            query.equalTo('url', url);
+            query.find({
+                success: function(results) {
+                    if (results.length === 0) {
+                        var content = '0 ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                        return;
+                    }
+                    for (var i = 0; i < results.length; i++) {
+                        var object = results[i];
+                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    }
+                },
+                error: function(object, error) {
+                    console.log('Error: ' + error.code + ' ' + error.message);
+                }
+            });
+        });
+    }
+
+    function addCount(Counter) {
+      var Counter = AV.Object.extend('Counter');
+      url = $('.leancloud-views_num').attr('id').trim();
+      title = $('.leancloud-views_num').attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+      query.equalTo('url', url);
+      query.find({
+          success: function(results) {
+            if (results.length > 0) {
+                var counter = results[0];
+                counter.fetchWhenSave(true);
+                counter.increment('time');
+                counter.save(null, {
+                    success: function(counter) {
+                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+                        $(document.getElementById(url)).text(content);
+                    },
+                    error: function(counter, error) {
+                        console.log('Failed to save Visitor num, with error message: ' + error.message);
+                    }
+                });
+            } else {
+              var newcounter = new Counter();
+              newcounter.set('title', title);
+              newcounter.set('url', url);
+              newcounter.set('time', 1);
+              newcounter.save(null, {
+                  success: function(newcounter) {
+                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
+                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+                      $(document.getElementById(url)).text(content);
+                  },
+                  error: function(newcounter, error) {
+                      console.log('Failed to create');
+                  }
+              });
+            }
+        },
+        error: function(error) {
+            console.log('Error:' + error.code + ' ' + error.message);
+        }
+      });
+    }
+    $(function() {
+        var Counter = AV.Object.extend('Counter');
+        if ($('.leancloud-views_num').length === 1) {
+            addCount(Counter);
+        } else if ($('.post-title-link').length > 1) {
+            showTime(Counter);
+        }
+    });
+</script>
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('
+<link rel="stylesheet" href="/css/uc.css">
+');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    var copyrightNow = new Date().getFullYear();
+    var textContent = document.querySelector('span[year]')
+
+    copyrightSince = 2016;
+    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
+        textContent.textContent = copyrightNow
+    } else {
+        textContent.textContent = copyrightSince + ' - ' + copyrightNow
+    }
+
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
