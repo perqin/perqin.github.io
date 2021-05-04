@@ -84,7 +84,7 @@ $Env:BINDGEN_EXTRA_CLANG_ARGS = "--target=aarch64-linux-android23 -isystem '$ndk
 
 在这个过程中，我也稍微了解了一下Rust的构建流程（虽然我完全不会Rust来着）：
 
-![](Untitled Diagram.png)
+![](rust-build.png)
 
 如图所示，某些Rust库会有一个build.rs文件，这个文件是用于构建这个库的，里面的代码会以开发者的**本地机器**为目标平台编译，并运行编译后的可执行文件来提前构建一些外部依赖。例如Leaf需要在编译它自身的Rust源码之前先编译好lwip等其他语言写的库，就需要在build.rs中进行编译。
 
