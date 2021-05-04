@@ -38,11 +38,11 @@ cargo build --target aarch64-linux-android --no-default-features --features "lea
 
 在Linux中打开NDK的LLVM工具链，会发现libclang是存在的：
 
-![](/image-20210504223012028.png)
+![](image-20210504223012028.png)
 
 而Windows版本的NDK里居然没有：
 
-![](/image-20210504223158768.png)
+![](image-20210504223158768.png)
 
 我在NDK的仓库里提了[issue](https://github.com/android/ndk/issues/1491)，得到的答复是：Linux上的libclang是送你的，我们本来就不准备提供这些玩意儿。
 
@@ -60,7 +60,7 @@ $Env:LIBCLANG_PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Commun
 
 我们可以先运行NDK中的clang，随便编译一个文件，带上`-v`参数看看它带了什么路径：
 
-![](/image-20210504224300456.png)
+![](image-20210504224300456.png)
 
 然后我们就可以通过`BINDGEN_EXTRA_CLANG_ARGS`这个环境变量将需要额外指定给Clang的参数带进去。在编译Leaf的时候实际上只用到了`<android/log.h>`，所以不需要那么多路径，我这里是这样指定的（其中`ndkLlvmRoot`变量的值是NDK中LLVM工具链的路径）：
 
@@ -84,7 +84,7 @@ $Env:BINDGEN_EXTRA_CLANG_ARGS = "--target=aarch64-linux-android23 -isystem '$ndk
 
 在这个过程中，我也稍微了解了一下Rust的构建流程（虽然我完全不会Rust来着）：
 
-![](/Untitled Diagram.png)
+![](Untitled Diagram.png)
 
 如图所示，某些Rust库会有一个build.rs文件，这个文件是用于构建这个库的，里面的代码会以开发者的**本地机器**为目标平台编译，并运行编译后的可执行文件来提前构建一些外部依赖。例如Leaf需要在编译它自身的Rust源码之前先编译好lwip等其他语言写的库，就需要在build.rs中进行编译。
 
@@ -453,7 +453,7 @@ pub fn start(rt_id: RuntimeId, opts: StartOptions) -> Result<(), Error> {
 
 这个文件描述符在Java层是通过`VpnService.Builder.establish`方法返回的ParcelFileDescriptor对象中获得的。我们会看到他的注释中明确说明需要app主动关闭这个文件描述符：
 
-![](/index.png)
+![](index.png)
 
 而要让native来负责关闭的话，就需要调用`detachFd`，在Java层主动释放对文件描述符的拥有权。调用这个方法之后，stopLeaf果然不会奔溃了。
 
@@ -517,7 +517,7 @@ public int detachFd() {
 
 我们再去cs.android.com搜索`IoUtils.setFdOwner`的实现：
 
-![](/image-20210505004002025.png)
+![](image-20210505004002025.png)
 
 在注释里我们看到了……哟，这不是fdsan吗？~~几天不见，这么拉了~~
 
@@ -525,7 +525,7 @@ public int detachFd() {
 
 谷歌搜索一下fdsan：
 
-![](/image-20210505004251692.png)
+![](image-20210505004251692.png)
 
 可知fdsan是Android 10才被引入的，而Android 11上发生了行为变更，在10的时候检测到误关闭时只会打印警告，但是11上会直接崩溃。
 
