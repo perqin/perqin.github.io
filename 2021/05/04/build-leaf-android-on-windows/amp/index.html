@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/"
 			},
 			"datePublished": "2021-05-04T13:50:02.000Z",
-			"dateModified": "2021-05-04T16:49:27.710Z",
+			"dateModified": "2021-05-04T16:56:31.360Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1855,7 +1855,7 @@ $Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER = 'C:\Users\Perqin\AppData\Local\
 <p>于是，我装上WSL2，在WSL2中配置好构建环境，又编译了一次，发现WSL中编译的so也是可以运行的。</p>
 <p>在构建target产出目录中摸索的时候，我终于发现了其中的不同：在我的<code>target\aarch64-linux-android\release\build\leaf-f624836c6ef73483\out</code>目录中，只有一个<code>mobile_bindings.rs</code>文件，但根据Leaf的<a href="https://github.com/eycorsican/leaf/blob/10e600d27db13d0aada6917c3df9ad4afec5cf40/leaf/build.rs"><code>build.rs</code></a>文件，这个目录中还需要产出liblwip.a等lwip库的编译产出物才对。</p>
 <p>在这个过程中，我也稍微了解了一下Rust的构建流程（虽然我完全不会Rust来着）：</p>
-<p>![](/Untitled Diagram.png)</p>
+<p>![](Untitled Diagram.png)</p>
 <p>如图所示，某些Rust库会有一个build.rs文件，这个文件是用于构建这个库的，里面的代码会以开发者的<strong>本地机器</strong>为目标平台编译，并运行编译后的可执行文件来提前构建一些外部依赖。例如Leaf需要在编译它自身的Rust源码之前先编译好lwip等其他语言写的库，就需要在build.rs中进行编译。</p>
 <p>而我遇到的文件就在于此，在旧的build.rs中使用了cfg选项来条件编译，作者应该是希望仅Android目标编译lwip：</p>
 <pre><code class="rust">    #[cfg(all(
