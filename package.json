@@ -16,8 +16,11 @@
     "hexo-generator-tag": "^1.0.0",
     "hexo-renderer-ejs": "^1.0.0",
     "hexo-renderer-marked": "^4.0.0",
+    "hexo-renderer-stylus": "^2.0.1",
     "hexo-server": "^2.0.0",
-    "hexo-showcase": "^0.0.5"
+    "hexo-showcase": "^0.0.5",
+    "hexo-theme-fluid": "^1.8.10",
+    "nunjucks": "^3.2.3"
   },
   "PERQIN_reinstall": {
     "hexo-browsersync": "^0.2.0",

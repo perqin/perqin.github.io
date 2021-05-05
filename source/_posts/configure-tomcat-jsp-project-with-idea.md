@@ -2,7 +2,8 @@
 title: 使用Intellij IDEA配置Tomcat JSP工程过程记录
 date: 2016-12-23 01:37:38
 tags: [IDEA, Tomcat, JSP]
-thumbnail: /images/covers/configure-tomcat-jsp-project-with-idea.png
+index_img: /img/covers/configure-tomcat-jsp-project-with-idea.png
+banner_img: /img/covers/configure-tomcat-jsp-project-with-idea.png
 ---
 
 最近开始参与一个相关的大坑，第一次接触到了JSP服务器。原来的项目是基于一个收费的IDE，正版狗果断不能忍啊- -于是开始尝试使用Intellij IDEA配置项目，一次就配置成功了也是很好运- -遂记录如下。

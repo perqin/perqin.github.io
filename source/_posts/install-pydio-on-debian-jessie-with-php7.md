@@ -2,7 +2,8 @@
 title: Debian Jessie基于PHP7安装Pydio
 date: 2016-12-24 01:18:09
 tags: [Pydio, PHP, Debian]
-thumbnail: /images/covers/install-pydio-on-debian-jessie-with-php7.png
+index_img: /img/covers/install-pydio-on-debian-jessie-with-php7.png
+banner_img: /img/covers/install-pydio-on-debian-jessie-with-php7.png
 ---
 
 > **Edit history**

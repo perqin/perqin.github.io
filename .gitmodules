@@ -1,3 +1,0 @@
-[submodule "themes/material"]
-	path = themes/material
-	url = git@github.com:bollnh/hexo-theme-material.git

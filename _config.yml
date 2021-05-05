@@ -67,7 +67,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: material
+theme: fluid
 
 generator_amp:
   templateDir:  amp-template

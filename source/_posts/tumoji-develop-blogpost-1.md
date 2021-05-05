@@ -2,7 +2,8 @@
 title: Tumoji开发记录 (1)
 date: 2017-01-08 00:52:12
 tags: [tumoji, android, mvp]
-thumbnail: /images/covers/tumoji-develop-blogpost-1.png
+index_img: /img/covers/tumoji-develop-blogpost-1.png
+banner_img: /img/covers/tumoji-develop-blogpost-1.png
 ---
 
 >  修改记录
