@@ -1,4 +1,0 @@
-[submodule "themes/material"]
-	path = themes/material
-	url = git@github.com:perqin/hexo-theme-material.git
-	branch = customize
