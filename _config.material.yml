@@ -1,2 +1,151 @@
+head:
+  favicon: "favicon.ico"
+  high_res_favicon: "favicon-high-res.png"
+  apple_touch_icon: "favicon-high-res.png"
+  keywords: Perqin
+  site_verification:
+    google: LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8
+  structured_data: true
+
+url:
+  logo: "/"
+
+scheme: Paradox
+
+uiux:
+  slogan: "Blogging is as painful as writing docs..."
+  theme_color: "#673AB7"
+  theme_sub_color: "#69F0AE"
+  #theme_sub_color: "#B2FF59"
+  hyperlink_color: "#00838F"
+  button_color: "#757575"
+  android_chrome_color: "#673AB7"
+  nprogress_color: "#FF4081"
+  nprogress_buffer: "800"
+
+js_effect:
+  fade: true
+
+reading:
+  entry_excerpt: 80
+
+thumbnail:
+  random_amount: 19
+
+background:
+  purecolor: "#F5F5F5"
+  bing:
+    enable: false
+
+img:
+  logo: "/theme-material/img/logo.png"
+  avatar: "/theme-material/img/logo.png"
+  daily_pic: "/theme-material/img/sidebar_header.jpg"
+  sidebar_header: "/theme-material/img/sidebar_header.jpg"
+  footerico: "/img/footer/footer_ico-"
+  random_thumbnail: "/img/random/material-"
+
+fonts:
+  use: ustc
+
+card_elevation: 2
+
+copyright_since: 2016
+
+qrcode:
+  enable: false
+prettify:
+  enable: true
+  theme: "github-v2"
+
+hanabi:
+  enable: false
+
+gallery:
+  panel_show: false
+  left_show: true
+  left_title: Introduction
+  left_info: This is a Example.
+  right_show: true
+  right_title: Get in touch
+
+toc:
+  linenumber: true
+
+sns:
+  email: perqinxie@gmail.com
+  twitter: "https://twitter.com/perqinxie"
+  github: "https://github.com/perqin"
+
+sns_share:
+  twitter: true
+  weibo: true
+  qq: true
+  telegram: true
+
+sidebar:
+  dropdown:
+    Email Me:
+      link: "mailto:perqinxie@gmail.com"
+      icon: email
+  homepage:
+    use: true
+    icon: home
+    divider: false
+  archives:
+    use: true
+    icon: inbox
+    divider: false
+  categories:
+    use: false
+    icon: chrome_reader_mode
+    divider: false
+  pages:
+    Showcase:
+      link: "/showcases"
+      icon: public
+      divider: true
+    BirdZhang's Blog:
+      link: "https://birdzhang.xyz/"
+      icon: public
+      divider: false
+    Dospy-梦影决幻:
+      link: "https://weibo.com/435312561"
+      icon: public
+      divider: false
+    浮游大陆:
+      link: "https://blog.qshen.cc/"
+      icon: public
+      divider: false
+    FrodoLuo:
+      link: "https://www.frodoluo.ink/blog"
+      icon: public
+      divider: false
+  article_num:
+    use: false
+    divider: false
+  footer:
+    divider: true
+    theme: true
+    support: false
+    feedback: false
+    material: false
+
+comment:
+  use: "disqus"
+  shortname: "perqin-github-io"
+
+search:
+  use: google
+
 analytics:
   cnzz_site_id: '1279692316'
+
+leancloud:
+  enable: false
+
+busuanzi:
+  enable: false
+
+vendors:
+  materialcdn:
