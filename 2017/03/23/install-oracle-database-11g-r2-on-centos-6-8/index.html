@@ -1,1227 +1,516 @@
+
+
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
-    <meta charset="utf-8">
-    <!-- AMP support -->
-    
-        <link rel="amphtml" href="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8//amp/index.html">
-    
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
-
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
-
-
-
-    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            在 CentOS 6.8 上安装 Oracle Database 11g Release 2 | 
-        
-        Perqin&#39;s Blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/avatar.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,oracle-database,centos">
-    <meta name="theme-color" content="#673AB7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: ;
-    overflow-x: hidden !important;
-  }
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
+  <meta name="theme-color" content="#7108B2">
+  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+  <title>在 CentOS 6.8 上安装 Oracle Database 11g Release 2 - Perqin&#39;s Blog</title>
 
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #673AB7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #673AB7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #673AB7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-<!-- Theme Background Related-->
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Perqin&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/">
-    <meta name="msapplication-navbutton-color" content="#673AB7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="在 CentOS 6.8 上安装 Oracle Database 11g Release 2 | Perqin&#39;s Blog">
-    <meta property="og:image" content="/img/avatar.png">
-    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="oracle-database"> <meta property="og:article:tag" content="centos"> 
-
-    
-        <meta property="article:published_time" content="Thu Mar 23 2017 23:43:12 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 04 2021 17:04:54 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html",
-    "headline": "在 CentOS 6.8 上安装 Oracle Database 11g Release 2",
-    "datePublished": "Thu Mar 23 2017 23:43:12 GMT+0800",
-    "dateModified": "Tue May 04 2021 17:04:54 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Perqin",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Blogging is as painful as writing docs..."
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Perqin&#39;s Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/avatar.png"
-        }
-    },
-    "keywords": ",oracle-database,centosPerqin",
-    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
+  
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
     
-        <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
-</div>
-    
+  
 
-    <!-- Custom Head -->
-    
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.3.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="在 CentOS 6.8 上安装 Oracle Database 11g Release 2">
+              
             </span>
-        </a>
-    </div>
-    -->
 
-
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%8E%B7%E5%8F%96-Response-File"><span class="post-toc-number">1.</span> <span class="post-toc-text">获取 Response File</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96"><span class="post-toc-number">2.</span> <span class="post-toc-text">配置依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E7%94%A8%E6%88%B7%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="post-toc-number">3.</span> <span class="post-toc-text">准备安装用户和目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E5%8C%85"><span class="post-toc-number">4.</span> <span class="post-toc-text">准备安装包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%A2%9E%E5%A4%A7-swap-%E5%88%86%E5%8C%BA"><span class="post-toc-number">5.</span> <span class="post-toc-text">增大 swap 分区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="post-toc-number">6.</span> <span class="post-toc-text">开始安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="post-toc-number">7.</span> <span class="post-toc-text">配置环境变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%8C%E6%88%90"><span class="post-toc-number">8.</span> <span class="post-toc-text">完成</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                在 CentOS 6.8 上安装 Oracle Database 11g Release 2
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Perqin</strong>
-        <span>3月 23, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/centos/" rel="tag">centos</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/oracle-database/" rel="tag">oracle-database</a>
-    </ul>
-    
-
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-    <!-- Leancloud Views -->
-        <a class="post_share-link" href="#">
-            <li class="mdl-menu__item">
-                <span id="/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/" class="leancloud-views_num" data-flag-title="在 CentOS 6.8 上安装 Oracle Database 11g Release 2">
-     &nbsp;浏览量
-</span>
-
-            </li>
-        </a>
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=在 CentOS 6.8 上安装 Oracle Database 11g Release 2&url=https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=在 CentOS 6.8 上安装 Oracle Database 11g Release 2&url=https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html&via=Perqin" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-    
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-03-23 23:43" pubdate>
+        2017年3月23日 晚上
+      </time>
+    </span>
+  
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+<div class="mt-1">
+  
     
-        <p>Oracle Database 的安装一般需要图形化界面，因此这里我将使用 Response File 安装的方法记录下来以供参考。</p>
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">在 CentOS 6.8 上安装 Oracle Database 11g Release 2</h1>
+            
+            <div class="markdown-body">
+              <p>Oracle Database 的安装一般需要图形化界面，因此这里我将使用 Response File 安装的方法记录下来以供参考。</p>
 <h2 id="获取-Response-File"><a href="#获取-Response-File" class="headerlink" title="获取 Response File"></a>获取 Response File</h2><p>要通过静默安装的方式安装，我们需要一个 Response File，可以看作这个文件代替我们回答了图形化安装界面里的每个步骤的选项。我通过本地的虚拟机获得了该文件，也可以在安装目录里的<code>response/db_install.rsp</code>中看到默认的配置，这里我的配置如下（删除了注释）：</p>
-<pre><code>oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
-oracle.install.option=INSTALL_DB_SWONLY
-ORACLE_HOSTNAME=localhost
-UNIX_GROUP_NAME=oinstall
-INVENTORY_LOCATION=/opt/oracle/oraInventory
-SELECTED_LANGUAGES=en
-ORACLE_HOME=/opt/oracle/oracle11g/product/11.2.0/dbhome_1
-ORACLE_BASE=/opt/oracle/oracle11g
-oracle.install.db.InstallEdition=EE
-oracle.install.db.isCustomInstall=false
-oracle.install.db.customComponents=
-oracle.install.db.DBA_GROUP=dba
-# Use wheel group which can issue sudo command
-oracle.install.db.OPER_GROUP=wheel
-oracle.install.db.CLUSTER_NODES=
-oracle.install.db.config.starterdb.type=GENERAL_PURPOSE
-oracle.install.db.config.starterdb.globalDBName=
-oracle.install.db.config.starterdb.SID=
-oracle.install.db.config.starterdb.characterSet=
-oracle.install.db.config.starterdb.memoryLimit=
-oracle.install.db.config.starterdb.memoryOption=false
-oracle.install.db.config.starterdb.installExampleSchemas=false
-oracle.install.db.config.starterdb.enableSecuritySettings=true
-oracle.install.db.config.starterdb.password.ALL=
-oracle.install.db.config.starterdb.password.SYS=
-oracle.install.db.config.starterdb.password.SYSTEM=
-oracle.install.db.config.starterdb.password.SYSMAN=
-oracle.install.db.config.starterdb.password.DBSNMP=
-oracle.install.db.config.starterdb.control=DB_CONTROL
-oracle.install.db.config.starterdb.gridcontrol.gridControlServiceURL=
-oracle.install.db.config.starterdb.dbcontrol.enableEmailNotification=false
-oracle.install.db.config.starterdb.dbcontrol.emailAddress=
-oracle.install.db.config.starterdb.dbcontrol.SMTPServer=
-oracle.install.db.config.starterdb.automatedBackup.enable=false
-oracle.install.db.config.starterdb.automatedBackup.osuid=
-oracle.install.db.config.starterdb.automatedBackup.ospwd=
-oracle.install.db.config.starterdb.storageType=
-oracle.install.db.config.starterdb.fileSystemStorage.dataLocation=
-oracle.install.db.config.starterdb.fileSystemStorage.recoveryLocation=
-oracle.install.db.config.asm.diskGroup=
-oracle.install.db.config.asm.ASMSNMPPassword=
-MYORACLESUPPORT_USERNAME=
-MYORACLESUPPORT_PASSWORD=
-SECURITY_UPDATES_VIA_MYORACLESUPPORT=false
-# Must be true to avoid PROXY related error
-DECLINE_SECURITY_UPDATES=true
-PROXY_HOST=
-PROXY_PORT=
-</code></pre>
+<figure class="highlight nix"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs nix">oracle.install.<span class="hljs-attr">responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0</span><br>oracle.install.<span class="hljs-attr">option=INSTALL_DB_SWONLY</span><br><span class="hljs-attr">ORACLE_HOSTNAME=localhost</span><br><span class="hljs-attr">UNIX_GROUP_NAME=oinstall</span><br><span class="hljs-attr">INVENTORY_LOCATION=/opt/oracle/oraInventory</span><br><span class="hljs-attr">SELECTED_LANGUAGES=en</span><br><span class="hljs-attr">ORACLE_HOME=/opt/oracle/oracle11g/product/11.2.0/dbhome_1</span><br><span class="hljs-attr">ORACLE_BASE=/opt/oracle/oracle11g</span><br>oracle.install.db.<span class="hljs-attr">InstallEdition=EE</span><br>oracle.install.db.<span class="hljs-attr">isCustomInstall=false</span><br>oracle.install.db.<span class="hljs-attr">customComponents=</span><br>oracle.install.db.<span class="hljs-attr">DBA_GROUP=dba</span><br><span class="hljs-comment"># Use wheel group which can issue sudo command</span><br>oracle.install.db.<span class="hljs-attr">OPER_GROUP=wheel</span><br>oracle.install.db.<span class="hljs-attr">CLUSTER_NODES=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">type=GENERAL_PURPOSE</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">globalDBName=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">SID=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">characterSet=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">memoryLimit=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">memoryOption=false</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">installExampleSchemas=false</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">enableSecuritySettings=true</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">ALL=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">SYS=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">SYSTEM=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">SYSMAN=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">DBSNMP=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">control=DB_CONTROL</span><br>oracle.install.db.config.starterdb.gridcontrol.<span class="hljs-attr">gridControlServiceURL=</span><br>oracle.install.db.config.starterdb.dbcontrol.<span class="hljs-attr">enableEmailNotification=false</span><br>oracle.install.db.config.starterdb.dbcontrol.<span class="hljs-attr">emailAddress=</span><br>oracle.install.db.config.starterdb.dbcontrol.<span class="hljs-attr">SMTPServer=</span><br>oracle.install.db.config.starterdb.automatedBackup.<span class="hljs-attr">enable=false</span><br>oracle.install.db.config.starterdb.automatedBackup.<span class="hljs-attr">osuid=</span><br>oracle.install.db.config.starterdb.automatedBackup.<span class="hljs-attr">ospwd=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">storageType=</span><br>oracle.install.db.config.starterdb.fileSystemStorage.<span class="hljs-attr">dataLocation=</span><br>oracle.install.db.config.starterdb.fileSystemStorage.<span class="hljs-attr">recoveryLocation=</span><br>oracle.install.db.config.asm.<span class="hljs-attr">diskGroup=</span><br>oracle.install.db.config.asm.<span class="hljs-attr">ASMSNMPPassword=</span><br><span class="hljs-attr">MYORACLESUPPORT_USERNAME=</span><br><span class="hljs-attr">MYORACLESUPPORT_PASSWORD=</span><br><span class="hljs-attr">SECURITY_UPDATES_VIA_MYORACLESUPPORT=false</span><br><span class="hljs-comment"># Must be true to avoid PROXY related error</span><br><span class="hljs-attr">DECLINE_SECURITY_UPDATES=true</span><br><span class="hljs-attr">PROXY_HOST=</span><br><span class="hljs-attr">PROXY_PORT=</span><br></code></pre></div></td></tr></table></figure>
 <p>其中需要注意的配置项已经在上面用注释说明。</p>
 <h2 id="配置依赖"><a href="#配置依赖" class="headerlink" title="配置依赖"></a>配置依赖</h2><p>Oracle Database 安装之前不仅要安装依赖，还需要调整各种内核参数。幸运的是，Oracle 已经为我们准备了一键配置包。</p>
 <p>首先添加源：</p>
-<pre><code>$ wget http://public-yum.oracle.com/public-yum-ol6.repo
-# mv public-yum-ol6.repo /etc/yum.repos.d/
-</code></pre>
+<figure class="highlight gradle"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle">$ wget http:<span class="hljs-comment">//public-yum.oracle.com/public-yum-ol6.repo</span><br># mv <span class="hljs-keyword">public</span>-yum-ol6.repo <span class="hljs-regexp">/etc/yum</span>.repos.d/<br></code></pre></div></td></tr></table></figure>
 <p>然后获取公钥：</p>
-<pre><code># wget http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
-</code></pre>
+<figure class="highlight 1c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs 1c"><span class="hljs-meta"># wget http:<span class="hljs-comment">//public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle</span></span><br></code></pre></div></td></tr></table></figure>
 <p>接下来我们就可以安装依赖包了：</p>
-<pre><code># yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel unixODBC unixODBC-devel
-</code></pre>
+<figure class="highlight vala"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel unixODBC unixODBC-devel</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="准备安装用户和目录"><a href="#准备安装用户和目录" class="headerlink" title="准备安装用户和目录"></a>准备安装用户和目录</h2><p>安装好之后，Oracle 已经为我们添加了一个用户<code>oracle</code>和其用户组<code>oinstall</code>，我们接下来需要通过这个帐号安装（使用<code>root</code>运行安装程序会被拒绝），所以我们要先更改其密码，并事先创建好安装目录并配置好权限（如果选择安装到其他位置，前面的 Response File 需要相应地修改）：</p>
-<pre><code># passwd oracle
-# usermod -aG wheel oracle
-# mkdir -p /opt/oracle
-# chown oracle:oinstall /opt/oracle
-</code></pre>
+<figure class="highlight vala"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># passwd oracle</span><br><span class="hljs-meta"># usermod -aG wheel oracle</span><br><span class="hljs-meta"># mkdir -p /opt/oracle</span><br><span class="hljs-meta"># chown oracle:oinstall /opt/oracle</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="准备安装包"><a href="#准备安装包" class="headerlink" title="准备安装包"></a>准备安装包</h2><p>以下步骤中美元符号开头的命令均使用<code>oracle</code>用户执行。</p>
 <p>从官方网站下载了两个 zip 之后通过<code>unzip</code>命令解压，就能在目录中看到<code>database</code>目录，里面有安装所需一切文件：</p>
-<pre><code>$ unzip linux.x64_11gR2_database_1of2.zip
-$ unzip linux.x64_11gR2_database_2of2.zip
-</code></pre>
+<figure class="highlight stylus"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stylus">$ unzip linux<span class="hljs-selector-class">.x64_11gR2_database_1of2</span>.zip<br>$ unzip linux<span class="hljs-selector-class">.x64_11gR2_database_2of2</span>.zip<br></code></pre></div></td></tr></table></figure>
 <h2 id="增大-swap-分区"><a href="#增大-swap-分区" class="headerlink" title="增大 swap 分区"></a>增大 swap 分区</h2><p>如果你的 CentOS 的 swap 分区没有启用或者不足 8G，安装将会失败。通过以下配置可以添加新的 swap 分区。创建分区文件也可以用<code>dd</code>命令，这里不详述：</p>
-<pre><code># fallocate -l 8G /swapfile
-# chmod 600 /swapfile
-# mkswap /swapfile
-# swapon /swapfile
-</code></pre>
+<figure class="highlight vala"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># fallocate -l 8G /swapfile</span><br><span class="hljs-meta"># chmod 600 /swapfile</span><br><span class="hljs-meta"># mkswap /swapfile</span><br><span class="hljs-meta"># swapon /swapfile</span><br></code></pre></div></td></tr></table></figure>
 <p>然后编辑文件<code>/etc/sysctl.conf</code>，修改下面的一行如下：</p>
-<pre><code>vm.swappiness = 10
-</code></pre>
+<figure class="highlight ini"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ini"><span class="hljs-attr">vm.swappiness</span> = <span class="hljs-number">10</span><br></code></pre></div></td></tr></table></figure>
 <p>保存之后执行：</p>
-<pre><code># sysctl -p
-</code></pre>
+<figure class="highlight vala"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># sysctl -p</span><br></code></pre></div></td></tr></table></figure>
 <p>为了能够在服务器启动后自动挂载，可以在<code>/etc/fstab</code>中追加下面一行：</p>
-<pre><code>/swapfile            none                    swap    sw              0 0
-</code></pre>
+<figure class="highlight avrasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs avrasm">/swapfile            none                    <span class="hljs-keyword">swap</span>    sw              <span class="hljs-number">0</span> <span class="hljs-number">0</span><br></code></pre></div></td></tr></table></figure>
 <h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>安装的时候只要用<code>oracle</code>用户执行一行命令。部分 log 会直接刷到标准输出，其中说明了日志的路径，只要静静等待安装完成时标准输出出现执行相关脚本的字眼即可。安装命令如下：</p>
-<pre><code>$ ./database/runInstaller -silent -noconfig -ignoreSysPrereqs -ignorePrereq -responseFile /home/oracle/db.rsp
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ .<span class="hljs-regexp">/database/</span>runInstaller -silent -noconfig -ignoreSysPrereqs -ignorePrereq -responseFile <span class="hljs-regexp">/home/</span>oracle/db.rsp<br></code></pre></div></td></tr></table></figure>
 <p>注意修改上面的 Response File 的路径。</p>
 <p>安装完成之后，<strong>使用<code>root</code>用户</strong>执行两个脚本：</p>
-<pre><code># /opt/oracle/oraInventory/orainstRoot.sh
-# /opt/oracle/oracle11g/product/11.2.0/dbhome_1/root.sh
-</code></pre>
+<figure class="highlight gradle"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle"># <span class="hljs-regexp">/opt/</span>oracle<span class="hljs-regexp">/oraInventory/</span>orainstRoot.sh<br># <span class="hljs-regexp">/opt/</span>oracle<span class="hljs-regexp">/oracle11g/</span>product<span class="hljs-regexp">/11.2.0/</span>dbhome_1/root.sh<br></code></pre></div></td></tr></table></figure>
 <h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>在<code>/etc/profile</code>中添加以下环境变量配置：</p>
-<pre><code>export ORACLE_BASE=/opt/oracle/oracle11g
-export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
-export ORACLE_SID=orcl
-export ORACLE_UNQNAME=orcl
-export NLS_LANG=.AL32UTF8
-export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64
-</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros"><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_BASE</span>=/opt/oracle/oracle11g<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_HOME</span>=<span class="hljs-variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_SID</span>=orcl<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_UNQNAME</span>=orcl<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">NLS_LANG</span>=.AL32UTF8<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64<br></code></pre></div></td></tr></table></figure>
 <h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>执行<code>. /etc/profile</code>或重新登入之后，就可以启动监听器了：</p>
-<pre><code>$ lsnrctl start
-</code></pre>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> lsnrctl <span class="hljs-built_in">start</span><br></code></pre></div></td></tr></table></figure>
 <p>可以通过下面的命令验证 Oracle Database 已经可以使用：</p>
-<pre><code>$ sqlplus / as sysdba
-</code></pre>
+<figure class="highlight actionscript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs actionscript">$ sqlplus / <span class="hljs-keyword">as</span> sysdba<br></code></pre></div></td></tr></table></figure>
 <p>由于之前配置好了<code>oracle</code>用户，所以可以直接登录而不询问密码。</p>
 
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//perqin-github-io.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
             </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/04/03/explore-event-dispatching-from-source-2/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/03/21/explore-event-dispatching-from-source-1/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Perqin's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        perqinxie@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2021/05/">五月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/showcases" title="Showcase">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Showcase
-            </a>
-        </li>
-        
-            <li class="divider"></li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                BirdZhang&#39;s Blog
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Dospy-梦影决幻
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                浮游大陆
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                FrodoLuo
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/perqinxie" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/perqin" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
+            <hr>
             <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/oracle-database/">oracle-database</a>
+                    
+                      <a class="hover-with-bg" href="/tags/centos/">centos</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/04/03/explore-event-dispatching-from-source-2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">从源码探索事件分发 2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/03/21/explore-event-dispatching-from-source-1/">
+                        <span class="hidden-mobile">从源码探索事件分发 1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
     
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/';
+          this.page.identifier = '/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
 </footer>
 
 
-                    <!-- Import JS File -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+<!-- Plugins -->
 
 
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#FF4081'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#FF4081',
-        'border-left-color': '#FF4081'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
+  
 
 
-    <!-- Leancloud -->
-    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-    <script>
-        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
-    </script>
-    <script type="text/ls-javascript" id="leancloud-views-script">
-    function showTime(Counter) {
-        var query = new AV.Query(Counter);
-        $('.leancloud-views_num').each(function() {
-            var url = $(this).attr('id').trim();
-            query.equalTo('url', url);
-            query.find({
-                success: function(results) {
-                    if (results.length === 0) {
-                        var content = '0 ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                        return;
-                    }
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    }
-                },
-                error: function(object, error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            });
-        });
-    }
 
-    function addCount(Counter) {
-      var Counter = AV.Object.extend('Counter');
-      url = $('.leancloud-views_num').attr('id').trim();
-      title = $('.leancloud-views_num').attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-      query.equalTo('url', url);
-      query.find({
-          success: function(results) {
-            if (results.length > 0) {
-                var counter = results[0];
-                counter.fetchWhenSave(true);
-                counter.increment('time');
-                counter.save(null, {
-                    success: function(counter) {
-                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    },
-                    error: function(counter, error) {
-                        console.log('Failed to save Visitor num, with error message: ' + error.message);
-                    }
-                });
-            } else {
-              var newcounter = new Counter();
-              newcounter.set('title', title);
-              newcounter.set('url', url);
-              newcounter.set('time', 1);
-              newcounter.save(null, {
-                  success: function(newcounter) {
-                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
-                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
-                      $(document.getElementById(url)).text(content);
-                  },
-                  error: function(newcounter, error) {
-                      console.log('Failed to create');
-                  }
-              });
-            }
-        },
-        error: function(error) {
-            console.log('Error:' + error.code + ' ' + error.message);
-        }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       });
-    }
-    $(function() {
-        var Counter = AV.Object.extend('Counter');
-        if ($('.leancloud-views_num').length === 1) {
-            addCount(Counter);
-        } else if ($('.post-title-link').length > 1) {
-            showTime(Counter);
-        }
-    });
-</script>
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 2016;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
     })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
+  </script>
 
-                </main>
-            </div>
-        </body>
-    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

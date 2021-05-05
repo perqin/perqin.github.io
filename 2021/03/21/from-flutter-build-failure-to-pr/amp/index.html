@@ -55,7 +55,7 @@
 			    "@id":"https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/"
 			},
 			"datePublished": "2021-03-21T05:55:38.000Z",
-			"dateModified": "2021-05-04T17:04:54.380Z",
+			"dateModified": "2021-05-05T16:18:30.333Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1819,74 +1819,23 @@ h6.categories {
 			  		<h1 id="Flutter国际化"><a href="#Flutter国际化" class="headerlink" title="Flutter国际化"></a>Flutter国际化</h1><p><a href="https://flutter.dev/docs/development/accessibility-and-localization/internationalization">Flutter的官方文档</a>中给出了Flutter应用的国际化和本地化流程。</p>
 <p>简而言之，Flutter的国际化依赖代码生成。以JSON格式在指定文件中定义国际化的资源，然后通过Flutter提供的工具动态生成Flutter代码，随后便可以在应用中使用这些代码中的变量。</p>
 <p>在根目录（注意<a href="https://github.com/flutter/flutter/issues/75977">不是lib目录下</a>www）下的l10n.yaml中配置本地化配置：</p>
-<pre><code class="yaml">arb-dir: lib/l10n
-template-arb-file: app_en.arb
-output-localization-file: app_localizations.dart
-</code></pre>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">arb-dir:</span> <span class="hljs-string">lib/l10n</span><br><span class="hljs-attr">template-arb-file:</span> <span class="hljs-string">app_en.arb</span><br><span class="hljs-attr">output-localization-file:</span> <span class="hljs-string">app_localizations.dart</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后在lib/l10n中添加各语言的本地化资源文件，其中作为模板的app_en.arb如下所示：</p>
-<pre><code class="json">{
-  "appName": "Fandori",
-  "@appName": {},
-  "information": "Information",
-  "@information": {},
-  "characters": "Characters",
-  "@characters": {},
-  "cards": "Cards",
-  "@cards": {}
-}
-</code></pre>
+<figure class="highlight json"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">{<br>  <span class="hljs-attr">"appName"</span>: <span class="hljs-string">"Fandori"</span>,<br>  <span class="hljs-attr">"@appName"</span>: {},<br>  <span class="hljs-attr">"information"</span>: <span class="hljs-string">"Information"</span>,<br>  <span class="hljs-attr">"@information"</span>: {},<br>  <span class="hljs-attr">"characters"</span>: <span class="hljs-string">"Characters"</span>,<br>  <span class="hljs-attr">"@characters"</span>: {},<br>  <span class="hljs-attr">"cards"</span>: <span class="hljs-string">"Cards"</span>,<br>  <span class="hljs-attr">"@cards"</span>: {}<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>而其它语言文件就不需要<code>@</code>开头的描述性字段了：</p>
-<pre><code class="json">{
-  "appName": "Fandori",
-  "information": "信息",
-  "characters": "角色",
-  "cards": "卡牌"
-}
-</code></pre>
+<figure class="highlight json"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">{<br>  <span class="hljs-attr">"appName"</span>: <span class="hljs-string">"Fandori"</span>,<br>  <span class="hljs-attr">"information"</span>: <span class="hljs-string">"信息"</span>,<br>  <span class="hljs-attr">"characters"</span>: <span class="hljs-string">"角色"</span>,<br>  <span class="hljs-attr">"cards"</span>: <span class="hljs-string">"卡牌"</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>在pubspec.yaml中启用本地化：</p>
-<pre><code class="yaml">dependencies:
-  flutter_localizations:
-    sdk: flutter
-  intl: ^0.16.1
-flutter:
-  generate: true
-</code></pre>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">dependencies:</span><br>  <span class="hljs-attr">flutter_localizations:</span><br>    <span class="hljs-attr">sdk:</span> <span class="hljs-string">flutter</span><br>  <span class="hljs-attr">intl:</span> <span class="hljs-string">^0.16.1</span><br><span class="hljs-attr">flutter:</span><br>  <span class="hljs-attr">generate:</span> <span class="hljs-literal">true</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>这之后每次运行<code>flutter pub get</code>时，都会触发本地化资源的生成。</p>
 <h1 id="JSON序列化"><a href="#JSON序列化" class="headerlink" title="JSON序列化"></a>JSON序列化</h1><p>众所周知，<a href="https://flutter.dev/docs/development/data-and-backend/json#is-there-a-gsonjacksonmoshi-equivalent-in-flutter">Flutter禁止了反射</a>。因此，JSON序列化也需要使用代码生成来实现。</p>
 <p>在pubspec.yaml中添加JSON序列化相关的配置：</p>
-<pre><code class="yaml">dependencies:
-  json_annotation: ^3.1.1
-dev_dependencies:
-  build_runner: ^1.11.1
-  json_serializable: ^3.5.1
-</code></pre>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">dependencies:</span><br>  <span class="hljs-attr">json_annotation:</span> <span class="hljs-string">^3.1.1</span><br><span class="hljs-attr">dev_dependencies:</span><br>  <span class="hljs-attr">build_runner:</span> <span class="hljs-string">^1.11.1</span><br>  <span class="hljs-attr">json_serializable:</span> <span class="hljs-string">^3.5.1</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后定义需要支持JSON序列化、反序列化的Model类：</p>
-<pre><code class="dart">import 'package:json_annotation/json_annotation.dart';
-
-part 'get_band.g.dart';
-
-@JsonSerializable()
-class Band {
-  int bandId;
-  String bandName;
-  String introductions;
-
-  Band(
-    this.bandId,
-    this.bandName,
-    this.introductions,
-  );
-
-  factory Band.fromJson(Map&lt;String, dynamic&gt; json) =&gt; _$BandFromJson(json);
-
-  Map&lt;String, dynamic&gt; toJson() =&gt; _$BandToJson(this);
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">'package:json_annotation/json_annotation.dart'</span>;<br><br><span class="hljs-keyword">part</span> <span class="hljs-string">'get_band.g.dart'</span>;<br><br><span class="hljs-meta">@JsonSerializable</span>()<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Band</span> </span>{<br>  <span class="hljs-built_in">int</span> bandId;<br>  <span class="hljs-built_in">String</span> bandName;<br>  <span class="hljs-built_in">String</span> introductions;<br><br>  Band(<br>    <span class="hljs-keyword">this</span>.bandId,<br>    <span class="hljs-keyword">this</span>.bandName,<br>    <span class="hljs-keyword">this</span>.introductions,<br>  );<br><br>  <span class="hljs-keyword">factory</span> Band.fromJson(<span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">dynamic</span>&gt; json) =&gt; _$BandFromJson(json);<br><br>  <span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">dynamic</span>&gt; toJson() =&gt; _$BandToJson(<span class="hljs-keyword">this</span>);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>对于任意文件<code>some_file.dart</code>中使用<code>JsonSerializable</code>注解标记的类<code>SomeClass</code>，<code>json_serializable</code>会在<code>some_file.g.dart</code>中生成用于序列化的<code>_<amp-mathml layout="container" inline="" data-formula="\[SomeClassToJson</code>和用于反序列化的<code>\]"></amp-mathml>_SomeClassFromJson</code>方法。</p>
 <p>只需要运行<code>flutter pub run build_runner build</code>就可以生成上述<code>.g.dart</code>文件。</p>
 <h1 id="build-runner与flutter-generate的冲突"><a href="#build-runner与flutter-generate的冲突" class="headerlink" title="build_runner与flutter_generate的冲突"></a>build_runner与flutter_generate的冲突</h1><p>如果你使用的是1.24以前（不含1.24）的Flutter版本，那么在你运行build_runner的时候，便会遇到这样的错误：</p>
-<pre><code>Bad state: Unable to generate package graph, no /home/perqin/Workspaces/fandori/.dart_tool/flutter_gen/pubspec.yaml found.
-</code></pre>
+<figure class="highlight gradle"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle">Bad state: Unable to generate <span class="hljs-keyword">package</span> graph, no <span class="hljs-regexp">/home/</span>perqin<span class="hljs-regexp">/Workspaces/</span>fandori<span class="hljs-regexp">/.dart_tool/</span>flutter_gen/pubspec.yaml found.<br></code></pre></div></td></tr></tbody></table></figure>
 <p>完整的错误现场可以看GitHub上<a href="https://github.com/flutter/flutter/issues/75333">另一位老哥发的issue</a>。</p>
 <p>这个未被找到的文件位于项目根目录下的<code>.dart_tool/flutter_gen/</code>。查看目录下的文件就会发现，这里面就是Flutter本地化工具生成的代码存放处。</p>
 <p>于是我产生了两个疑问：</p>
@@ -1896,292 +1845,33 @@ class Band {
 </ul>
 <h1 id="探索build-runner"><a href="#探索build-runner" class="headerlink" title="探索build_runner"></a>探索build_runner</h1><p>你可以在Flutter安装目录下的.pub-cache\hosted\pub.dartlang.org中找到build_runner的源码（如果你使用了Flutter China的镜像的话，你要在hosted目录下找pub.flutter-io.cn目录）。</p>
 <p>顺着错误栈，我们找到了build_runner入口的第一行代码：</p>
-<pre><code class="dart">// build_runner:build_runner.dart
-Future&lt;void&gt; main(List&lt;String&gt; args) async {
-  // Use the actual command runner to parse the args and immediately print the
-  // usage information if there is no command provided or the help command was
-  // explicitly invoked.
-  var commandRunner =
-      BuildCommandRunner([], await PackageGraph.forThisPackage());
-  // ...
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// build_runner:build_runner.dart</span><br>Future&lt;<span class="hljs-keyword">void</span>&gt; main(<span class="hljs-built_in">List</span>&lt;<span class="hljs-built_in">String</span>&gt; args) <span class="hljs-keyword">async</span> {<br>  <span class="hljs-comment">// Use the actual command runner to parse the args and immediately print the</span><br>  <span class="hljs-comment">// usage information if there is no command provided or the help command was</span><br>  <span class="hljs-comment">// explicitly invoked.</span><br>  <span class="hljs-keyword">var</span> commandRunner =<br>      BuildCommandRunner([], <span class="hljs-keyword">await</span> PackageGraph.forThisPackage());<br>  <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>在进行后续逻辑之前，build_runner会先获取我们项目的包依赖图（Package Graph）。顺着错误栈找下去吧（中文注释是我加上去的）：</p>
-<pre><code class="dart">// build_runner_core:src/package_graph/package_graph.dart
-class PackageGraph {
-  /// Creates a [PackageGraph] for the package in which you are currently
-  /// running.
-  static Future&lt;PackageGraph&gt; forThisPackage() =&gt;
-      // 读取项目的PackageGraph
-      PackageGraph.forPath(p.current);
-
-  /// Creates a [PackageGraph] for the package whose top level directory lives
-  /// at [packagePath] (no trailing slash).
-  static Future&lt;PackageGraph&gt; forPath(String packagePath) async {
-    // ...
-    // 读取PackageConfig，Flutter会把项目的包依赖信息放在PackageConfig里
-    final packageConfig =
-        await findPackageConfig(Directory(packagePath), recurse: false);
-    // ...
-    // 通过PackageConfig解析包依赖
-    final packageDependencies = _parsePackageDependencies(
-        packageConfig.packages.where((p) =&gt; p.name != rootPackageName));
-    // ...
-}
-
-/// Read the pubspec for each package in [packages] and finds it's
-/// dependencies.
-Map&lt;String, List&lt;String&gt;&gt; _parsePackageDependencies(
-    Iterable&lt;Package&gt; packages) {
-  final dependencies = &lt;String, List&lt;String&gt;&gt;{};
-  for (final package in packages) {
-    // 针对每个包，读取它的pubspec.yaml
-    final pubspec = _pubspecForPath(package.root.toFilePath());
-    dependencies[package.name] = _depsFromYaml(pubspec);
-  }
-  return dependencies;
-}
-
-/// Should point to the top level directory for the package.
-YamlMap _pubspecForPath(String absolutePath) {
-  var pubspecPath = p.join(absolutePath, 'pubspec.yaml');
-  var pubspec = File(pubspecPath);
-  if (!pubspec.existsSync()) {
-    // .dart_tool/flutter_gen这个包也被列入了依赖，而这个包里没有pubspec.yaml，所以在这里报了错
-    throw StateError(
-        'Unable to generate package graph, no `$pubspecPath` found.');
-  }
-  return loadYaml(pubspec.readAsStringSync()) as YamlMap;
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// build_runner_core:src/package_graph/package_graph.dart</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PackageGraph</span> </span>{<br>  <span class="hljs-comment">/// <span class="markdown">Creates a [PackageGraph] for the package in which you are currently</span></span><br>  <span class="hljs-comment">/// <span class="markdown">running.</span></span><br>  <span class="hljs-keyword">static</span> Future&lt;PackageGraph&gt; forThisPackage() =&gt;<br>      <span class="hljs-comment">// 读取项目的PackageGraph</span><br>      PackageGraph.forPath(p.current);<br><br>  <span class="hljs-comment">/// <span class="markdown">Creates a [PackageGraph] for the package whose top level directory lives</span></span><br>  <span class="hljs-comment">/// <span class="markdown">at [packagePath] (no trailing slash).</span></span><br>  <span class="hljs-keyword">static</span> Future&lt;PackageGraph&gt; forPath(<span class="hljs-built_in">String</span> packagePath) <span class="hljs-keyword">async</span> {<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// 读取PackageConfig，Flutter会把项目的包依赖信息放在PackageConfig里</span><br>    <span class="hljs-keyword">final</span> packageConfig =<br>        <span class="hljs-keyword">await</span> findPackageConfig(Directory(packagePath), recurse: <span class="hljs-keyword">false</span>);<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// 通过PackageConfig解析包依赖</span><br>    <span class="hljs-keyword">final</span> packageDependencies = _parsePackageDependencies(<br>        packageConfig.packages.where((p) =&gt; p.name != rootPackageName));<br>    <span class="hljs-comment">// ...</span><br>}<br><br><span class="hljs-comment">/// <span class="markdown">Read the pubspec for each package in [packages] and finds it's</span></span><br><span class="hljs-comment">/// <span class="markdown">dependencies.</span></span><br><span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">List</span>&lt;<span class="hljs-built_in">String</span>&gt;&gt; _parsePackageDependencies(<br>    <span class="hljs-built_in">Iterable</span>&lt;Package&gt; packages) {<br>  <span class="hljs-keyword">final</span> dependencies = &lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">List</span>&lt;<span class="hljs-built_in">String</span>&gt;&gt;{};<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">final</span> package <span class="hljs-keyword">in</span> packages) {<br>    <span class="hljs-comment">// 针对每个包，读取它的pubspec.yaml</span><br>    <span class="hljs-keyword">final</span> pubspec = _pubspecForPath(package.root.toFilePath());<br>    dependencies[package.name] = _depsFromYaml(pubspec);<br>  }<br>  <span class="hljs-keyword">return</span> dependencies;<br>}<br><br><span class="hljs-comment">/// <span class="markdown">Should point to the top level directory for the package.</span></span><br>YamlMap _pubspecForPath(<span class="hljs-built_in">String</span> absolutePath) {<br>  <span class="hljs-keyword">var</span> pubspecPath = p.join(absolutePath, <span class="hljs-string">'pubspec.yaml'</span>);<br>  <span class="hljs-keyword">var</span> pubspec = File(pubspecPath);<br>  <span class="hljs-keyword">if</span> (!pubspec.existsSync()) {<br>    <span class="hljs-comment">// .dart_tool/flutter_gen这个包也被列入了依赖，而这个包里没有pubspec.yaml，所以在这里报了错</span><br>    <span class="hljs-keyword">throw</span> StateError(<br>        <span class="hljs-string">'Unable to generate package graph, no `<span class="hljs-subst">$pubspecPath</span>` found.'</span>);<br>  }<br>  <span class="hljs-keyword">return</span> loadYaml(pubspec.readAsStringSync()) <span class="hljs-keyword">as</span> YamlMap;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>那么为什么flutter_gen目录会被当作一个包被列入包依赖图的生成呢？package_config这个包中有答案：</p>
-<pre><code class="dart">// package_config:package_config.dart
-Future&lt;PackageConfig&gt; findPackageConfig(Directory directory,
-        {bool recurse = true, void onError(Object error)}) =&gt;
-    discover.findPackageConfig(directory, recurse, onError ?? throwError);
-</code></pre>
-<pre><code class="dart">// package_config:src/discovery.dart
-Future&lt;PackageConfig /*?*/ &gt; findPackageConfig(
-    Directory baseDirectory, bool recursive, void onError(Object error)) async {
-  var directory = baseDirectory;
-  if (!directory.isAbsolute) directory = directory.absolute;
-  if (!await directory.exists()) {
-    return null;
-  }
-  do {
-    // Check for $cwd/.packages
-    // 读取项目根目录下的.packages信息
-    var packageConfig = await findPackagConfigInDirectory(directory, onError);
-    if (packageConfig != null) return packageConfig;
-    if (!recursive) break;
-    // Check in parent directories.
-    var parentDirectory = directory.parent;
-    if (parentDirectory.path == directory.path) break;
-    directory = parentDirectory;
-  } while (true);
-  return null;
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// package_config:package_config.dart</span><br>Future&lt;PackageConfig&gt; findPackageConfig(Directory directory,<br>        {<span class="hljs-built_in">bool</span> recurse = <span class="hljs-keyword">true</span>, <span class="hljs-keyword">void</span> onError(<span class="hljs-built_in">Object</span> error)}) =&gt;<br>    discover.findPackageConfig(directory, recurse, onError ?? throwError);<br></code></pre></div></td></tr></tbody></table></figure>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// package_config:src/discovery.dart</span><br>Future&lt;PackageConfig <span class="hljs-comment">/*?*/</span> &gt; findPackageConfig(<br>    Directory baseDirectory, <span class="hljs-built_in">bool</span> recursive, <span class="hljs-keyword">void</span> onError(<span class="hljs-built_in">Object</span> error)) <span class="hljs-keyword">async</span> {<br>  <span class="hljs-keyword">var</span> directory = baseDirectory;<br>  <span class="hljs-keyword">if</span> (!directory.isAbsolute) directory = directory.absolute;<br>  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">await</span> directory.exists()) {<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>  }<br>  <span class="hljs-keyword">do</span> {<br>    <span class="hljs-comment">// Check for $cwd/.packages</span><br>    <span class="hljs-comment">// 读取项目根目录下的.packages信息</span><br>    <span class="hljs-keyword">var</span> packageConfig = <span class="hljs-keyword">await</span> findPackagConfigInDirectory(directory, onError);<br>    <span class="hljs-keyword">if</span> (packageConfig != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> packageConfig;<br>    <span class="hljs-keyword">if</span> (!recursive) <span class="hljs-keyword">break</span>;<br>    <span class="hljs-comment">// Check in parent directories.</span><br>    <span class="hljs-keyword">var</span> parentDirectory = directory.parent;<br>    <span class="hljs-keyword">if</span> (parentDirectory.path == directory.path) <span class="hljs-keyword">break</span>;<br>    directory = parentDirectory;<br>  } <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>);<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>现在我们打开项目根目录下的.packages：</p>
-<pre><code># generated by package:package_config at 2021-02-19 10:26:07.001909
-# 前面省略……
-flutter_gen:.dart_tool/flutter_gen/
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-comment"># generated by package:package_config at 2021-02-19 10:26:07.001909</span><br><span class="hljs-comment"># 前面省略……</span><br>flutter_gen:.dart_tool<span class="hljs-regexp">/flutter_gen/</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>于是我们可以推断出事件的全貌：</p>
 <p>Flutter的本地化工具会在.dart_tool目录下生成一个本地的Dart包：flutter_gen，并把生成的本地化代码放入其中。Flutter会把项目的依赖包列表都写入到.packages中，供包括build_runner在内的其他工具使用。</p>
 <p>也就是说锅并不是build_runner的，而是Flutter的本地化工具的。</p>
 <h1 id="探索Flutter-Localization"><a href="#探索Flutter-Localization" class="headerlink" title="探索Flutter Localization"></a>探索Flutter Localization</h1><p>前面提到，在运行<code>flutter pub get</code>的时候会刷新Flutter本地化代码，这句话的依据在Flutter安装目录下的packages\flutter_tools\lib\src\commands\packages.dart中：</p>
-<pre><code class="dart">class PackagesGetCommand extends FlutterCommand {
-  Future&lt;void&gt; _runPubGet(String directory, FlutterProject flutterProject) async {
-    if (flutterProject.manifest.generateSyntheticPackage) {
-      final Environment environment = Environment(
-        artifacts: globals.artifacts,
-        logger: globals.logger,
-        cacheDir: globals.cache.getRoot(),
-        engineVersion: globals.flutterVersion.engineRevision,
-        fileSystem: globals.fs,
-        flutterRootDir: globals.fs.directory(Cache.flutterRoot),
-        outputDir: globals.fs.directory(getBuildDirectory()),
-        processManager: globals.processManager,
-        projectDir: flutterProject.directory,
-      );
-
-      await generateLocalizationsSyntheticPackage(
-        environment: environment,
-        buildSystem: globals.buildSystem,
-      );
-      // ...
-    }
-  }
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PackagesGetCommand</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FlutterCommand</span> </span>{<br>  Future&lt;<span class="hljs-keyword">void</span>&gt; _runPubGet(<span class="hljs-built_in">String</span> directory, FlutterProject flutterProject) <span class="hljs-keyword">async</span> {<br>    <span class="hljs-keyword">if</span> (flutterProject.manifest.generateSyntheticPackage) {<br>      <span class="hljs-keyword">final</span> Environment environment = Environment(<br>        artifacts: globals.artifacts,<br>        logger: globals.logger,<br>        cacheDir: globals.cache.getRoot(),<br>        engineVersion: globals.flutterVersion.engineRevision,<br>        fileSystem: globals.fs,<br>        flutterRootDir: globals.fs.directory(Cache.flutterRoot),<br>        outputDir: globals.fs.directory(getBuildDirectory()),<br>        processManager: globals.processManager,<br>        projectDir: flutterProject.directory,<br>      );<br><br>      <span class="hljs-keyword">await</span> generateLocalizationsSyntheticPackage(<br>        environment: environment,<br>        buildSystem: globals.buildSystem,<br>      );<br>      <span class="hljs-comment">// ...</span><br>    }<br>  }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>那么我是怎么找到这个文件的呢www</p>
 <p>在pubspec.yaml中，有这样一个配置：</p>
-<pre><code class="yaml">flutter:
-  uses-material-design: true
-</code></pre>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">flutter:</span><br>  <span class="hljs-attr">uses-material-design:</span> <span class="hljs-literal">true</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>在Flutter的GitHub仓库中搜索“uses-material-design”，过滤出Dart文件，很容易就能找到文件packages/flutter_tools/lib/src/flutter_manifest.dart，其中就包含了判断本地化是否启用的代码：</p>
-<pre><code class="dart">class FlutterManifest {
-  /// Whether a synthetic flutter_gen package should be generated.
-  ///
-  /// This can be provided to the [Pub] interface to inject a new entry
-  /// into the package_config.json file which points to `.dart_tool/flutter_gen`.
-  ///
-  /// This allows generated source code to be imported using a package
-  /// alias.
-  bool get generateSyntheticPackage =&gt; _generateSyntheticPackage ??= _computeGenerateSyntheticPackage();
-  bool _generateSyntheticPackage;
-  bool _computeGenerateSyntheticPackage() {
-    if (!_flutterDescriptor.containsKey('generate')) {
-      return false;
-    }
-    final Object value = _flutterDescriptor['generate'];
-    if (value is! bool) {
-      return false;
-    }
-    return value as bool;
-  }
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FlutterManifest</span> </span>{<br>  <span class="hljs-comment">/// <span class="markdown">Whether a synthetic flutter<span class="hljs-emphasis">_gen package should be generated.</span></span></span><br>  <span class="hljs-comment">///</span><br>  <span class="hljs-comment">/// <span class="markdown">This can be provided to the [Pub] interface to inject a new entry</span></span><br>  <span class="hljs-comment">/// <span class="markdown">into the package<span class="hljs-emphasis">_config.json file which points to `.dart_</span>tool/flutter<span class="hljs-emphasis">_gen`.</span></span></span><br>  <span class="hljs-comment">///</span><br>  <span class="hljs-comment">/// <span class="markdown">This allows generated source code to be imported using a package</span></span><br>  <span class="hljs-comment">/// <span class="markdown">alias.</span></span><br>  <span class="hljs-built_in">bool</span> <span class="hljs-keyword">get</span> generateSyntheticPackage =&gt; _generateSyntheticPackage ??= _computeGenerateSyntheticPackage();<br>  <span class="hljs-built_in">bool</span> _generateSyntheticPackage;<br>  <span class="hljs-built_in">bool</span> _computeGenerateSyntheticPackage() {<br>    <span class="hljs-keyword">if</span> (!_flutterDescriptor.containsKey(<span class="hljs-string">'generate'</span>)) {<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    }<br>    <span class="hljs-keyword">final</span> <span class="hljs-built_in">Object</span> value = _flutterDescriptor[<span class="hljs-string">'generate'</span>];<br>    <span class="hljs-keyword">if</span> (value <span class="hljs-keyword">is</span>! <span class="hljs-built_in">bool</span>) {<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    }<br>    <span class="hljs-keyword">return</span> value <span class="hljs-keyword">as</span> <span class="hljs-built_in">bool</span>;<br>  }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>再顺着generateSyntheticPackage就能找到本地化工具的具体实现了。</p>
 <p>回到generateLocalizationsSyntheticPackage：</p>
-<pre><code class="dart">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart
-Future&lt;void&gt; generateLocalizationsSyntheticPackage({
-  @required Environment environment,
-  @required BuildSystem buildSystem,
-}) async {
-  // ...
-  final BuildResult result = await buildSystem.build(
-    const GenerateLocalizationsTarget(),
-    environment,
-  );
-
-  if (result == null || result.hasException) {
-    throwToolExit('Generating synthetic localizations package has failed.');
-  }
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart</span><br>Future&lt;<span class="hljs-keyword">void</span>&gt; generateLocalizationsSyntheticPackage({<br>  <span class="hljs-meta">@required</span> Environment environment,<br>  <span class="hljs-meta">@required</span> BuildSystem buildSystem,<br>}) <span class="hljs-keyword">async</span> {<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-keyword">final</span> BuildResult result = <span class="hljs-keyword">await</span> buildSystem.build(<br>    <span class="hljs-keyword">const</span> GenerateLocalizationsTarget(),<br>    environment,<br>  );<br><br>  <span class="hljs-keyword">if</span> (result == <span class="hljs-keyword">null</span> || result.hasException) {<br>    throwToolExit(<span class="hljs-string">'Generating synthetic localizations package has failed.'</span>);<br>  }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>显然，生成flutter_gen的逻辑就在GenerateLocalizationsTarget了：</p>
-<pre><code class="dart">// packages/flutter_tools/lib/src/build_system/targets/localizations.dart
-class GenerateLocalizationsTarget extends Target {
-  @override
-  Future&lt;void&gt; build(Environment environment) async {
-    // ...
-    generateLocalizations(
-      logger: environment.logger,
-      options: options,
-      projectDir: environment.projectDir,
-      dependenciesDir: environment.buildDir,
-      localizationsGenerator: LocalizationsGenerator(environment.fileSystem),
-    );
-    // ...
-  }
-}
-</code></pre>
-<pre><code class="dart">// packages/flutter_tools/lib/src/localizations/gen_l10n.dart
-/// Run the localizations generation script with the configuration [options].
-void generateLocalizations({
-  @required Directory projectDir,
-  @required Directory dependenciesDir,
-  @required LocalizationOptions options,
-  @required LocalizationsGenerator localizationsGenerator,
-  @required Logger logger,
-}) {
-  // ...
-  try {
-    localizationsGenerator
-      ..initialize(
-        inputsAndOutputsListPath: dependenciesDir?.path,
-        projectPathString: projectDir.path,
-        inputPathString: inputPathString,
-        templateArbFileName: templateArbFileName,
-        outputFileString: outputFileString,
-        outputPathString: options?.outputDirectory?.path,
-        classNameString: options.outputClass ?? 'AppLocalizations',
-        preferredSupportedLocales: options.preferredSupportedLocales,
-        headerString: options.header,
-        headerFile: options?.headerFile?.toFilePath(),
-        useDeferredLoading: options.deferredLoading ?? false,
-        useSyntheticPackage: options.useSyntheticPackage ?? true,
-        areResourceAttributesRequired: options.areResourceAttributesRequired ?? false,
-        untranslatedMessagesFile: options?.untranslatedMessagesFile?.toFilePath(),
-      )
-      ..loadResources()
-      ..writeOutputFiles(logger, isFromYaml: true);
-  } on L10nException catch (e) {
-    logger.printError(e.message);
-    throw Exception();
-  }
-}
-
-class LocalizationsGenerator {
-  void writeOutputFiles(Logger logger, { bool isFromYaml = false }) {
-    // First, generate the string contents of all necessary files.
-    _generateCode();
-
-    // A pubspec.yaml file is required when using a synthetic package. If it does not
-    // exist, create a blank one.
-    if (_useSyntheticPackage) {
-      final Directory syntheticPackageDirectory = _fs.directory(defaultSyntheticPackagePath);
-      syntheticPackageDirectory.createSync(recursive: true);
-      final File flutterGenPubspec = syntheticPackageDirectory.childFile('pubspec.yaml');
-      if (!flutterGenPubspec.existsSync()) {
-        flutterGenPubspec.writeAsStringSync(emptyPubspecTemplate);
-      }
-    }
-
-    // ...
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// packages/flutter_tools/lib/src/build_system/targets/localizations.dart</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GenerateLocalizationsTarget</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Target</span> </span>{<br>  <span class="hljs-meta">@override</span><br>  Future&lt;<span class="hljs-keyword">void</span>&gt; build(Environment environment) <span class="hljs-keyword">async</span> {<br>    <span class="hljs-comment">// ...</span><br>    generateLocalizations(<br>      logger: environment.logger,<br>      options: options,<br>      projectDir: environment.projectDir,<br>      dependenciesDir: environment.buildDir,<br>      localizationsGenerator: LocalizationsGenerator(environment.fileSystem),<br>    );<br>    <span class="hljs-comment">// ...</span><br>  }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// packages/flutter_tools/lib/src/localizations/gen_l10n.dart</span><br><span class="hljs-comment">/// <span class="markdown">Run the localizations generation script with the configuration [options].</span></span><br><span class="hljs-keyword">void</span> generateLocalizations({<br>  <span class="hljs-meta">@required</span> Directory projectDir,<br>  <span class="hljs-meta">@required</span> Directory dependenciesDir,<br>  <span class="hljs-meta">@required</span> LocalizationOptions options,<br>  <span class="hljs-meta">@required</span> LocalizationsGenerator localizationsGenerator,<br>  <span class="hljs-meta">@required</span> Logger logger,<br>}) {<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-keyword">try</span> {<br>    localizationsGenerator<br>      ..initialize(<br>        inputsAndOutputsListPath: dependenciesDir?.path,<br>        projectPathString: projectDir.path,<br>        inputPathString: inputPathString,<br>        templateArbFileName: templateArbFileName,<br>        outputFileString: outputFileString,<br>        outputPathString: options?.outputDirectory?.path,<br>        classNameString: options.outputClass ?? <span class="hljs-string">'AppLocalizations'</span>,<br>        preferredSupportedLocales: options.preferredSupportedLocales,<br>        headerString: options.header,<br>        headerFile: options?.headerFile?.toFilePath(),<br>        useDeferredLoading: options.deferredLoading ?? <span class="hljs-keyword">false</span>,<br>        useSyntheticPackage: options.useSyntheticPackage ?? <span class="hljs-keyword">true</span>,<br>        areResourceAttributesRequired: options.areResourceAttributesRequired ?? <span class="hljs-keyword">false</span>,<br>        untranslatedMessagesFile: options?.untranslatedMessagesFile?.toFilePath(),<br>      )<br>      ..loadResources()<br>      ..writeOutputFiles(logger, isFromYaml: <span class="hljs-keyword">true</span>);<br>  } <span class="hljs-keyword">on</span> L10nException <span class="hljs-keyword">catch</span> (e) {<br>    logger.printError(e.message);<br>    <span class="hljs-keyword">throw</span> Exception();<br>  }<br>}<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LocalizationsGenerator</span> </span>{<br>  <span class="hljs-keyword">void</span> writeOutputFiles(Logger logger, { <span class="hljs-built_in">bool</span> isFromYaml = <span class="hljs-keyword">false</span> }) {<br>    <span class="hljs-comment">// First, generate the string contents of all necessary files.</span><br>    _generateCode();<br><br>    <span class="hljs-comment">// A pubspec.yaml file is required when using a synthetic package. If it does not</span><br>    <span class="hljs-comment">// exist, create a blank one.</span><br>    <span class="hljs-keyword">if</span> (_useSyntheticPackage) {<br>      <span class="hljs-keyword">final</span> Directory syntheticPackageDirectory = _fs.directory(defaultSyntheticPackagePath);<br>      syntheticPackageDirectory.createSync(recursive: <span class="hljs-keyword">true</span>);<br>      <span class="hljs-keyword">final</span> File flutterGenPubspec = syntheticPackageDirectory.childFile(<span class="hljs-string">'pubspec.yaml'</span>);<br>      <span class="hljs-keyword">if</span> (!flutterGenPubspec.existsSync()) {<br>        flutterGenPubspec.writeAsStringSync(emptyPubspecTemplate);<br>      }<br>    }<br><br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>当时我是在GitHub上看这段代码的，很明显在writeOutputFiles中是包含了pubspec.yaml的生成逻辑的，怎么还会找不到呢？</p>
 <p>我们切换到v1.22.6这个tag，再看<a href="https://github.com/flutter/flutter/blob/9b2d32b605630f28625709ebd9d78ab3016b2bf6/packages/flutter_tools/lib/src/localizations/gen_l10n.dart#L1003">这个文件</a>：</p>
-<pre><code class="dart">// ...
-void writeOutputFiles() {
-    // First, generate the string contents of all necessary files.
-    _generateCode();
-
-    // Since all validity checks have passed up to this point,
-    // write the contents into the directory.
-    if (!outputDirectory.existsSync()) {
-      outputDirectory.createSync(recursive: true);
-    }
-
-    // Ensure that the created directory has read/write permissions.
-    final FileStat fileStat = outputDirectory.statSync();
-    if (_isNotReadable(fileStat) || _isNotWritable(fileStat)) {
-      throw L10nException(
-        "The 'output-dir' directory, $outputDirectory, doesn't allow reading and writing.\n"
-        'Please ensure that the user has read and write permissions.'
-      );
-    }
-
-    // Generate the required files for localizations.
-    _languageFileMap.forEach((File file, String contents) {
-      file.writeAsStringSync(contents);
-      if (_inputsAndOutputsListFile != null) {
-        _outputFileList.add(file.absolute.path);
-      }
-    });
-
-    baseOutputFile.writeAsStringSync(_generatedLocalizationsFile);
-    if (_inputsAndOutputsListFile != null) {
-      _outputFileList.add(baseOutputFile.absolute.path);
-
-      // Generate a JSON file containing the inputs and outputs of the gen_l10n script.
-      if (!_inputsAndOutputsListFile.existsSync()) {
-        _inputsAndOutputsListFile.createSync(recursive: true);
-      }
-
-      _inputsAndOutputsListFile.writeAsStringSync(
-        json.encode(&lt;String, Object&gt; {
-          'inputs': _inputFileList,
-          'outputs': _outputFileList,
-        }),
-      );
-    }
-  }
-  // ...
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// ...</span><br><span class="hljs-keyword">void</span> writeOutputFiles() {<br>    <span class="hljs-comment">// First, generate the string contents of all necessary files.</span><br>    _generateCode();<br><br>    <span class="hljs-comment">// Since all validity checks have passed up to this point,</span><br>    <span class="hljs-comment">// write the contents into the directory.</span><br>    <span class="hljs-keyword">if</span> (!outputDirectory.existsSync()) {<br>      outputDirectory.createSync(recursive: <span class="hljs-keyword">true</span>);<br>    }<br><br>    <span class="hljs-comment">// Ensure that the created directory has read/write permissions.</span><br>    <span class="hljs-keyword">final</span> FileStat fileStat = outputDirectory.statSync();<br>    <span class="hljs-keyword">if</span> (_isNotReadable(fileStat) || _isNotWritable(fileStat)) {<br>      <span class="hljs-keyword">throw</span> L10nException(<br>        <span class="hljs-string">"The 'output-dir' directory, <span class="hljs-subst">$outputDirectory</span>, doesn't allow reading and writing.\n"</span><br>        <span class="hljs-string">'Please ensure that the user has read and write permissions.'</span><br>      );<br>    }<br><br>    <span class="hljs-comment">// Generate the required files for localizations.</span><br>    _languageFileMap.forEach((File file, <span class="hljs-built_in">String</span> contents) {<br>      file.writeAsStringSync(contents);<br>      <span class="hljs-keyword">if</span> (_inputsAndOutputsListFile != <span class="hljs-keyword">null</span>) {<br>        _outputFileList.add(file.absolute.path);<br>      }<br>    });<br><br>    baseOutputFile.writeAsStringSync(_generatedLocalizationsFile);<br>    <span class="hljs-keyword">if</span> (_inputsAndOutputsListFile != <span class="hljs-keyword">null</span>) {<br>      _outputFileList.add(baseOutputFile.absolute.path);<br><br>      <span class="hljs-comment">// Generate a JSON file containing the inputs and outputs of the gen_l10n script.</span><br>      <span class="hljs-keyword">if</span> (!_inputsAndOutputsListFile.existsSync()) {<br>        _inputsAndOutputsListFile.createSync(recursive: <span class="hljs-keyword">true</span>);<br>      }<br><br>      _inputsAndOutputsListFile.writeAsStringSync(<br>        json.encode(&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">Object</span>&gt; {<br>          <span class="hljs-string">'inputs'</span>: _inputFileList,<br>          <span class="hljs-string">'outputs'</span>: _outputFileList,<br>        }),<br>      );<br>    }<br>  }<br>  <span class="hljs-comment">// ...</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>可见在此刻的最新版本（此时1.23以及更新的版本都还没有进入stable）上还有这个bug，而最新的master代码已经修复了。我们很容易找到<a href="https://github.com/flutter/flutter/pull/68206">对应的PR</a>，查看这个文件的改动对应的<a href="https://github.com/flutter/flutter/commit/38ebc5588b3d80b5bcce1a0a8114f96813de593f">commit</a>可以看到我们最早也要在1.24中才能收到这个修复了：</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/03/21/from-flutter-build-failure-to-pr/flutter-gen-bugfix-commit.png" width="1543" height="252" layout="responsive"></amp-img></div>
 <p>如果你不想等待1.24发布正式版，你也可以：</p>
@@ -2190,113 +1880,19 @@ void writeOutputFiles() {
 <li>切换到beta channel</li>
 </ul>
 <h1 id="Flutter-Localization中的另一个bug"><a href="#Flutter-Localization中的另一个bug" class="headerlink" title="Flutter Localization中的另一个bug"></a>Flutter Localization中的另一个bug</h1><p>在阅读代码的过程中，我留意到GenerateLocalizationsTarget中的代码有些不对劲：</p>
-<pre><code class="dart">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart
-Future&lt;void&gt; generateLocalizationsSyntheticPackage({
-  @required Environment environment,
-  @required BuildSystem buildSystem,
-}) async {
-  assert(environment != null);
-  assert(buildSystem != null);
-
-  final FileSystem fileSystem = environment.fileSystem;
-  final File l10nYamlFile = fileSystem.file(
-    fileSystem.path.join(environment.projectDir.path, 'l10n.yaml'));
-
-  // If pubspec.yaml has generate:true and if l10n.yaml exists in the
-  // root project directory, check to see if a synthetic package should
-  // be generated for gen_l10n.
-  if (!l10nYamlFile.existsSync()) {
-    return;
-  }
-
-  final YamlNode yamlNode = loadYamlNode(l10nYamlFile.readAsStringSync());
-  if (yamlNode.value != null &amp;&amp; yamlNode is! YamlMap) {
-    throwToolExit(
-      'Expected ${l10nYamlFile.path} to contain a map, instead was $yamlNode'
-    );
-  }
-
-  BuildResult result;
-  // If an l10n.yaml file exists but is empty, attempt to build synthetic
-  // package with default settings.
-  if (yamlNode.value == null) {
-    result = await buildSystem.build(
-      const GenerateLocalizationsTarget(),
-      environment,
-    );
-  } else {
-    final YamlMap yamlMap = yamlNode as YamlMap;
-    final Object value = yamlMap['synthetic-package'];
-    if (value is! bool &amp;&amp; value != null) {
-      throwToolExit(
-        'Expected "synthetic-package" to have a bool value, '
-        'instead was "$value"'
-      );
-    }
-
-    // Generate gen_l10n synthetic package only if synthetic-package: true or
-    // synthetic-package is null.
-    final bool isSyntheticL10nPackage = value as bool ?? true;
-    if (!isSyntheticL10nPackage) {
-      return;
-    }
-  }
-
-  result = await buildSystem.build(
-    const GenerateLocalizationsTarget(),
-    environment,
-  );
-
-  if (result == null || result.hasException) {
-    throwToolExit('Generating synthetic localizations package has failed.');
-  }
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// packages/flutter_tools/lib/src/dart/generate_synthetic_packages.dart</span><br>Future&lt;<span class="hljs-keyword">void</span>&gt; generateLocalizationsSyntheticPackage({<br>  <span class="hljs-meta">@required</span> Environment environment,<br>  <span class="hljs-meta">@required</span> BuildSystem buildSystem,<br>}) <span class="hljs-keyword">async</span> {<br>  <span class="hljs-keyword">assert</span>(environment != <span class="hljs-keyword">null</span>);<br>  <span class="hljs-keyword">assert</span>(buildSystem != <span class="hljs-keyword">null</span>);<br><br>  <span class="hljs-keyword">final</span> FileSystem fileSystem = environment.fileSystem;<br>  <span class="hljs-keyword">final</span> File l10nYamlFile = fileSystem.file(<br>    fileSystem.path.join(environment.projectDir.path, <span class="hljs-string">'l10n.yaml'</span>));<br><br>  <span class="hljs-comment">// If pubspec.yaml has generate:true and if l10n.yaml exists in the</span><br>  <span class="hljs-comment">// root project directory, check to see if a synthetic package should</span><br>  <span class="hljs-comment">// be generated for gen_l10n.</span><br>  <span class="hljs-keyword">if</span> (!l10nYamlFile.existsSync()) {<br>    <span class="hljs-keyword">return</span>;<br>  }<br><br>  <span class="hljs-keyword">final</span> YamlNode yamlNode = loadYamlNode(l10nYamlFile.readAsStringSync());<br>  <span class="hljs-keyword">if</span> (yamlNode.value != <span class="hljs-keyword">null</span> &amp;&amp; yamlNode <span class="hljs-keyword">is</span>! YamlMap) {<br>    throwToolExit(<br>      <span class="hljs-string">'Expected <span class="hljs-subst"><!--figure19-->#123;l10nYamlFile.path}</span> to contain a map, instead was <span class="hljs-subst">$yamlNode</span>'</span><br>    );<br>  }<br><br>  BuildResult result;<br>  <span class="hljs-comment">// If an l10n.yaml file exists but is empty, attempt to build synthetic</span><br>  <span class="hljs-comment">// package with default settings.</span><br>  <span class="hljs-keyword">if</span> (yamlNode.value == <span class="hljs-keyword">null</span>) {<br>    result = <span class="hljs-keyword">await</span> buildSystem.build(<br>      <span class="hljs-keyword">const</span> GenerateLocalizationsTarget(),<br>      environment,<br>    );<br>  } <span class="hljs-keyword">else</span> {<br>    <span class="hljs-keyword">final</span> YamlMap yamlMap = yamlNode <span class="hljs-keyword">as</span> YamlMap;<br>    <span class="hljs-keyword">final</span> <span class="hljs-built_in">Object</span> value = yamlMap[<span class="hljs-string">'synthetic-package'</span>];<br>    <span class="hljs-keyword">if</span> (value <span class="hljs-keyword">is</span>! <span class="hljs-built_in">bool</span> &amp;&amp; value != <span class="hljs-keyword">null</span>) {<br>      throwToolExit(<br>        <span class="hljs-string">'Expected "synthetic-package" to have a bool value, '</span><br>        <span class="hljs-string">'instead was "<span class="hljs-subst">$value</span>"'</span><br>      );<br>    }<br><br>    <span class="hljs-comment">// Generate gen_l10n synthetic package only if synthetic-package: true or</span><br>    <span class="hljs-comment">// synthetic-package is null.</span><br>    <span class="hljs-keyword">final</span> <span class="hljs-built_in">bool</span> isSyntheticL10nPackage = value <span class="hljs-keyword">as</span> <span class="hljs-built_in">bool</span> ?? <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">if</span> (!isSyntheticL10nPackage) {<br>      <span class="hljs-keyword">return</span>;<br>    }<br>  }<br><br>  result = <span class="hljs-keyword">await</span> buildSystem.build(<br>    <span class="hljs-keyword">const</span> GenerateLocalizationsTarget(),<br>    environment,<br>  );<br><br>  <span class="hljs-keyword">if</span> (result == <span class="hljs-keyword">null</span> || result.hasException) {<br>    throwToolExit(<span class="hljs-string">'Generating synthetic localizations package has failed.'</span>);<br>  }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>可以看到上述代码片段中的31、53行都调用了buildSystem.build，这不是重复调用了？？</p>
 <p>为了确认这个问题，首先我将本地Flutter安装目录下的bin/cache/flutter_tools.snapshot删掉，这个文件是Flutter在运行的时候将flutter_tools这个包预先编译成的二进制文件，从而避免每次运行都需要解释执行Dart源码。因此，在修改本地代码之前，需要删掉相应的snapshot文件。</p>
 <p>在generate_synthetic_packages.dart文件中的两个build调用前都加上print日志打印，然后观察这段代码，可以看出当<code>(yamlNode.value == null || yamlNode is YamlMap) &amp;&amp; yamlNode.value == null</code>，也就是yamlNode.value为null的时候能够触发。</p>
 <p>在l10n.yaml中为空字符串或者null的时候，yamlNode.value为null，而进一步确认packages/flutter_tools/lib/src/localizations/localizations_utils.dart：</p>
-<pre><code class="dart">LocalizationOptions parseLocalizationsOptions({
-  @required File file,
-  @required Logger logger,
-}) {
-  final String contents = file.readAsStringSync();
-  if (contents.trim().isEmpty) {
-    return const LocalizationOptions();
-  }
-  final YamlNode yamlNode = loadYamlNode(file.readAsStringSync());
-  if (yamlNode is! YamlMap) {
-    logger.printError('Expected ${file.path} to contain a map, instead was $yamlNode');
-    throw Exception();
-  }
-  // ...
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart">LocalizationOptions parseLocalizationsOptions({<br>  <span class="hljs-meta">@required</span> File file,<br>  <span class="hljs-meta">@required</span> Logger logger,<br>}) {<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">String</span> contents = file.readAsStringSync();<br>  <span class="hljs-keyword">if</span> (contents.trim().isEmpty) {<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">const</span> LocalizationOptions();<br>  }<br>  <span class="hljs-keyword">final</span> YamlNode yamlNode = loadYamlNode(file.readAsStringSync());<br>  <span class="hljs-keyword">if</span> (yamlNode <span class="hljs-keyword">is</span>! YamlMap) {<br>    logger.printError(<span class="hljs-string">'Expected <span class="hljs-subst"><!--figure20-->#123;file.path}</span> to contain a map, instead was <span class="hljs-subst">$yamlNode</span>'</span>);<br>    <span class="hljs-keyword">throw</span> Exception();<br>  }<br>  <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>可见如果l10n.yaml包含注释或者null等内容，则会抛出异常，从而在第一次build调用中就会中止。</p>
 <p>因此我们打开l10n.yaml，清空其中的内容，然后运行<code>flutter pub get</code>，你就会看到两次build调用的日志打印了。由于这篇文章是拖延了两个月后才写的，当时的现场我懒得复原了www</p>
 <p>事实上，只要GenerateLocalizationsTarget的实现是稳定的，那么不论重复运行多少次，应该都能生成一样的本地化相关代码，这个bug并不算严重，但是<del>为了环保</del>我还是尝试了修复。</p>
 <p>修复办法平平无奇，这里就不贴了。</p>
 <h1 id="将bug掩藏起来的错误的单元测试"><a href="#将bug掩藏起来的错误的单元测试" class="headerlink" title="将bug掩藏起来的错误的单元测试"></a>将bug掩藏起来的错误的单元测试</h1><p>Flutter这样大型的开源项目必然会使用单元测试高强度覆盖，以保证代码质量。上面这个bug涉及的代码也是有单元测试的，那么为什么单元测试没有测出这个问题呢？</p>
 <p>上述文件对应的测试代码在packages/flutter_tools/test/general.shard/dart/generate_synthetic_packages_test.dart，可以看到第一个测试用例就是l10n.yaml为空的场景：</p>
-<pre><code class="dart">void main() {
-  testWithoutContext('calls buildSystem.build with blank l10n.yaml file', () {
-    // ...
-    expect(
-      () =&gt; generateLocalizationsSyntheticPackage(
-        environment: environment,
-        buildSystem: buildSystem,
-      ),
-      throwsToolExit(message: 'Generating synthetic localizations package has failed.'),
-    );
-    // [BuildSystem] should have called build with [GenerateLocalizationsTarget].
-    verify(buildSystem.build(
-      const GenerateLocalizationsTarget(),
-      environment,
-    )).called(1);
-  });
-  // ...
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() {<br>  testWithoutContext(<span class="hljs-string">'calls buildSystem.build with blank l10n.yaml file'</span>, () {<br>    <span class="hljs-comment">// ...</span><br>    expect(<br>      () =&gt; generateLocalizationsSyntheticPackage(<br>        environment: environment,<br>        buildSystem: buildSystem,<br>      ),<br>      throwsToolExit(message: <span class="hljs-string">'Generating synthetic localizations package has failed.'</span>),<br>    );<br>    <span class="hljs-comment">// [BuildSystem] should have called build with [GenerateLocalizationsTarget].</span><br>    verify(buildSystem.build(<br>      <span class="hljs-keyword">const</span> GenerateLocalizationsTarget(),<br>      environment,<br>    )).called(<span class="hljs-number">1</span>);<br>  });<br>  <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>我本地运行这个用例，发现这个用例居然是可以通过的！</p>
 <p>百思不得其解之际，我在verify处和build调用处都打了断点，意外发现调用顺序如下：</p>
 <ol>
@@ -2306,19 +1902,7 @@ Future&lt;void&gt; generateLocalizationsSyntheticPackage({
 </ol>
 <p>这就奇怪了，第二次build调用还没开始的时候，generateLocalizationsSyntheticPackage还没有执行完毕，怎么就走到verify了呢？</p>
 <p>我随便点开了<code>throwsToolExit</code>的实现，发现<code>throwsToolExit</code>实际上返回的是<code>throwsA</code>：</p>
-<pre><code class="dart">// packages/flutter_tools/test/src/common.dart
-/// Matcher for functions that throw [ToolExit].
-Matcher throwsToolExit({ int exitCode, Pattern message }) {
-  Matcher matcher = isToolExit;
-  if (exitCode != null) {
-    matcher = allOf(matcher, (ToolExit e) =&gt; e.exitCode == exitCode);
-  }
-  if (message != null) {
-    matcher = allOf(matcher, (ToolExit e) =&gt; e.message?.contains(message) ?? false);
-  }
-  return throwsA(matcher);
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-comment">// packages/flutter_tools/test/src/common.dart</span><br><span class="hljs-comment">/// <span class="markdown">Matcher for functions that throw [ToolExit].</span></span><br>Matcher throwsToolExit({ <span class="hljs-built_in">int</span> exitCode, <span class="hljs-built_in">Pattern</span> message }) {<br>  Matcher matcher = isToolExit;<br>  <span class="hljs-keyword">if</span> (exitCode != <span class="hljs-keyword">null</span>) {<br>    matcher = allOf(matcher, (ToolExit e) =&gt; e.exitCode == exitCode);<br>  }<br>  <span class="hljs-keyword">if</span> (message != <span class="hljs-keyword">null</span>) {<br>    matcher = allOf(matcher, (ToolExit e) =&gt; e.message?.contains(message) ?? <span class="hljs-keyword">false</span>);<br>  }<br>  <span class="hljs-keyword">return</span> throwsA(matcher);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后打开Flutter的官方文档：</p>
 <blockquote>
 <h1 id="throwsA-function"><a href="#throwsA-function" class="headerlink" title="throwsA function"></a>throwsA function</h1><p>This can be used to match three kinds of objects:</p>
@@ -2337,27 +1921,7 @@ Matcher throwsToolExit({ int exitCode, Pattern message }) {
 <p>Certain matchers, like <a href="https://pub.dev/documentation/test_api/latest/test_api/completion.html">completion</a> and <a href="https://pub.dev/documentation/test_api/latest/test_api/throwsA.html">throwsA</a>, either match or fail asynchronously. When you use <a href="https://pub.dev/documentation/test_api/latest/test_api/expect.html">expect</a> with these matchers, it ensures that the test doesn’t complete until the matcher has either matched or failed. If you want to wait for the matcher to complete before continuing the test, you can call <a href="https://pub.dev/documentation/test_api/latest/test_api/expectLater.html">expectLater</a> instead and <code>await</code> the result.</p>
 </blockquote>
 <p>于是可见，我们应该把测试用例改成：</p>
-<pre><code class="dart">void main() {
-  // 增加async关键字，我们需要使用await
-  testWithoutContext('calls buildSystem.build with blank l10n.yaml file', () async {
-    // ...
-    // 改用expectLater，并await以保证被expect的方法已经结束并返回
-    await expectLater(
-      () =&gt; generateLocalizationsSyntheticPackage(
-        environment: environment,
-        buildSystem: buildSystem,
-      ),
-      throwsToolExit(message: 'Generating synthetic localizations package has failed.'),
-    );
-    // [BuildSystem] should have called build with [GenerateLocalizationsTarget].
-    verify(buildSystem.build(
-      const GenerateLocalizationsTarget(),
-      environment,
-    )).called(1);
-  });
-  // ...
-}
-</code></pre>
+<figure class="highlight dart"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> main() {<br>  <span class="hljs-comment">// 增加async关键字，我们需要使用await</span><br>  testWithoutContext(<span class="hljs-string">'calls buildSystem.build with blank l10n.yaml file'</span>, () <span class="hljs-keyword">async</span> {<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// 改用expectLater，并await以保证被expect的方法已经结束并返回</span><br>    <span class="hljs-keyword">await</span> expectLater(<br>      () =&gt; generateLocalizationsSyntheticPackage(<br>        environment: environment,<br>        buildSystem: buildSystem,<br>      ),<br>      throwsToolExit(message: <span class="hljs-string">'Generating synthetic localizations package has failed.'</span>),<br>    );<br>    <span class="hljs-comment">// [BuildSystem] should have called build with [GenerateLocalizationsTarget].</span><br>    verify(buildSystem.build(<br>      <span class="hljs-keyword">const</span> GenerateLocalizationsTarget(),<br>      environment,<br>    )).called(<span class="hljs-number">1</span>);<br>  });<br>  <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这样修改之后，我们的测试用例就失败了，因此也就可以修改代码修复这个bug了。</p>
 <h1 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h1><p>throwsA会导致expect异步执行，在和verify搭配使用的时候这样的错误隐蔽又致命，但似乎Flutter和Dart的文档中都没有特别提到这一点，不知道Flutter代码中还有多少这样错误的测试用例代码呢www</p>
 <p>另外，明明都是自动生成代码，JSON Annotation库使用的是Build Runner，但Flutter Localization使用的却是Flutter Generate，而且从代码中可以看到这块逻辑几乎完全耦合在Flutter代码中（以至于pubspec.yaml中的<code>generate</code>似乎仅仅用于本地化这个模块），为什么不把Localization也交给Build Runner来做呢？</p>

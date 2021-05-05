@@ -1,515 +1,222 @@
+
+
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
-    <meta charset="utf-8">
-    <!-- AMP support -->
-    
-        <link rel="amphtml" href="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1//amp/index.html">
-    
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
-
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
-
-
-
-    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            Tumoji开发记录 (1) | 
-        
-        Perqin&#39;s Blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/avatar.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,android,tumoji,mvp">
-    <meta name="theme-color" content="#673AB7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: ;
-    overflow-x: hidden !important;
-  }
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
+  <meta name="theme-color" content="#7108B2">
+  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+  <title>Tumoji开发记录 (1) - Perqin&#39;s Blog</title>
 
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #673AB7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #673AB7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #673AB7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-<!-- Theme Background Related-->
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Perqin&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/">
-    <meta name="msapplication-navbutton-color" content="#673AB7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Tumoji开发记录 (1) | Perqin&#39;s Blog">
-    <meta property="og:image" content="/img/avatar.png">
-    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="android"> <meta property="og:article:tag" content="tumoji"> <meta property="og:article:tag" content="mvp"> 
-
-    
-        <meta property="article:published_time" content="Sun Jan 08 2017 00:52:12 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 04 2021 17:04:54 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html",
-    "headline": "Tumoji开发记录 (1)",
-    "datePublished": "Sun Jan 08 2017 00:52:12 GMT+0800",
-    "dateModified": "Tue May 04 2021 17:04:54 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Perqin",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Blogging is as painful as writing docs..."
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Perqin&#39;s Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/avatar.png"
-        }
-    },
-    "keywords": ",android,tumoji,mvpPerqin",
-    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
+  
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
     
-        <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
-</div>
-    
+  
 
-    <!-- Custom Head -->
-    
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.3.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/covers/tumoji-develop-blogpost-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Tumoji开发记录 (1)">
+              
             </span>
-        </a>
-    </div>
-    -->
 
-
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%B5%B7%E6%BA%90"><span class="post-toc-number">1.</span> <span class="post-toc-text">起源</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVP"><span class="post-toc-number">2.</span> <span class="post-toc-text">MVP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BAMVP%E6%A1%86%E6%9E%B6"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">如何搭建MVP框架</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AD%E7%9A%84%E5%9D%91%E3%80%81%E6%8F%90%E7%A4%BA%E5%92%8CMVP%E6%A1%86%E6%9E%B6%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">MVP框架搭建中的坑、提示和MVP框架的演进</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP%E7%9A%84%E5%85%B6%E4%BB%96%E7%BC%BA%E7%82%B9%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">MVP的其他缺点和解决方案</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E4%B8%8E%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="post-toc-number">3.</span> <span class="post-toc-text">第三方库与框架的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Retrofit"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Retrofit</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RxJava"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">RxJava</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%B3%E4%BA%8E%E5%9B%A2%E9%98%9F%E5%BC%80%E5%8F%91"><span class="post-toc-number">4.</span> <span class="post-toc-text">关于团队开发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%B3%E4%BA%8E%E4%BA%A7%E5%93%81"><span class="post-toc-number">5.</span> <span class="post-toc-text">关于产品</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="post-toc-number">6.</span> <span class="post-toc-text">结语</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(/images/covers/tumoji-develop-blogpost-1.png)">
-    
-            <p class="article-headline-p">
-                Tumoji开发记录 (1)
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Perqin</strong>
-        <span>1月 08, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/mvp/" rel="tag">mvp</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/tumoji/" rel="tag">tumoji</a>
-    </ul>
-    
-
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-    <!-- Leancloud Views -->
-        <a class="post_share-link" href="#">
-            <li class="mdl-menu__item">
-                <span id="/2017/01/07/tumoji-develop-blogpost-1/" class="leancloud-views_num" data-flag-title="Tumoji开发记录 (1)">
-     &nbsp;浏览量
-</span>
-
-            </li>
-        </a>
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Tumoji开发记录 (1)&url=https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Tumoji开发记录 (1)&url=https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html&via=Perqin" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-    
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-01-08 00:52" pubdate>
+        2017年1月8日 凌晨
+      </time>
+    </span>
+  
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+<div class="mt-1">
+  
     
-        <blockquote>
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      76
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Tumoji开发记录 (1)</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
 <p> 修改记录</p>
 <ul>
 <li> 17/01/08：更正了RxJava的维护者。</li>
@@ -528,30 +235,7 @@
 <p>卖完情怀，开始说MVP。很久以前无意之间了解到了MVP，但是由于自己水平有限，一直看不懂网上的MVP教程。直到这学期，无意间看到一篇博客，突然看懂了一些，然后又去看了一下Google的MVP示范（<a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/">googlesamples/android-architecture at todo-mvp</a>），然后直接在某一周的Android开发每周作业上用上了MVP。很庆幸在每周的作业中有几次MVP的尝试，终于慢慢了解了MVP的基本框架，再经过创新赛的时候的运用，终于熟悉起来了，于是在这次项目的开发中，我作为组长，一开始就确立了MVP的开发模式，到现在看来，这个模式在多人开发中绝对大有裨益。</p>
 <p>在MVP之前，我们的代码往往全部堆积在Activity类中。即使打算抽离出逻辑，往往也仅仅是创建一些操作数据的类，但是UI的交互几乎全部都写在Activity中，再加上Activity本身的生命周期，这会导致Activity变成万能对象（God Object），想想在几百行代码里面找bug的感觉吧。在涉及多人写作开发的时候，问题就更加严重了。多人开发我所知道的模式大概是两种：分模块开发和分层开发，前者类似与我负责登录注册、你负责下载上传这样，而后者类似于我负责UI交互，你负责数据库存取这样。显然，在全部代码都堆积在Activity中的时候，是难以通过后面这种方式开发的，因为负责UI、数据、交互逻辑等部分的代码都混杂在一个文件里，多人同时修改的话冲突很严重。而我认为后面的开发方式是更加合理的，因为每个人的习惯、风格不同，如果按照模块开发的话，很容易出现好几个人分别各自造轮子的情况，而相对来说，每一层之间的耦合度都是比较低的，所以可以分别按照各自的习惯开发。</p>
 <p>接下来的内容是我对MVP模式的理解了。在MVP模式中，V代表视图，M是模型，P是呈现者，这就把应用进行了分层。M一般指代的是数据层，包括数据库、文件读写、网络访问等等，他们往往是多个界面共享的（比如主界面和个人资料界面都会需要展示用户的信息）。V一般指的是一个视图单位，也就是指一个能够提供模块化的UI交互的界面，比如一个Activity、一个Fragment甚至一个Dialog。P即Presenter，我一开始的时候并不明白为什么要叫“Presenter”，后来终于明白了：一个View往往对应一个Presenter，而Presenter的作用就是控制View的变化。我们可以类比为PPT演讲，View就是PPT，而演讲者就是Presenter，Model当然就是计算机里的PPT数据啦，这样一来，就很容易理解：Presenter从Model获取数据，然后根据获取到的数据决定如何更改View的内容。我简单地画了一幅画：</p>
-<pre><code>                                User
-                                | ^
-                                v |
-+-------------------+  +-------------------+  +-------------------+
-|     Login View    |  |     Posts View    |  | Post Content View |
-+-------------------+  +-------------------+  +-------------------+
-       a | ^                    | ^                    | ^
-         v | d                  v |                    v |
-+-------------------+  +-------------------+  +-------------------+
-|       Login       |  |       Post        |  |    Post Content   |
-|     Presenter     |  |     Presenter     |  |     Presenter     |
-+-------------------+  +-------------------+  +-------------------+
-       b | ^                    | ^                    | ^
-         v | c                  v |                    v |
-+-----------------------------------------------------------------+
-|      SQLite                  File                    API        |
-|     Database               Storage                 Service      |
-+-----------------------------------------------------------------+
-
-a. Dispatch user&#39;s input
-b. Get data from Model layer
-c. Send data to Presenter layer
-d. Update view content
-</code></pre>
+<figure class="highlight gherkin"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gherkin">                                User<br>                                |<span class="hljs-string"> ^</span><br><span class="hljs-string">                                v </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>|<span class="hljs-string">     Login View    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">     Posts View    </span>|<span class="hljs-string">  </span>|<span class="hljs-string"> Post Content View </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>       a |<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^</span><br><span class="hljs-string">         v </span>|<span class="hljs-string"> d                  v </span>|<span class="hljs-string">                    v </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>|<span class="hljs-string">       Login       </span>|<span class="hljs-string">  </span>|<span class="hljs-string">       Post        </span>|<span class="hljs-string">  </span>|<span class="hljs-string">    Post Content   </span>|<br>|<span class="hljs-string">     Presenter     </span>|<span class="hljs-string">  </span>|<span class="hljs-string">     Presenter     </span>|<span class="hljs-string">  </span>|<span class="hljs-string">     Presenter     </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>       b |<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^</span><br><span class="hljs-string">         v </span>|<span class="hljs-string"> c                  v </span>|<span class="hljs-string">                    v </span>|<br>+-----------------------------------------------------------------+<br>|<span class="hljs-string">      SQLite                  File                    API        </span>|<br>|<span class="hljs-string">     Database               Storage                 Service      </span>|<br>+-----------------------------------------------------------------+<br><br>a. Dispatch user&#x27;s input<br>b. Get data from Model layer<br>c. Send data to Presenter layer<br>d. Update view content<br></code></pre></div></td></tr></table></figure>
 <p>从上图可以看出，用户的每一个操作都会被View传递给Presenter，Presenter从Model层获取对应的数据，并借此转交数据给View，View再将数据更新到UI上。</p>
 <p>我们可以发现MVP的两个特点：数据层是共享的、Presenter将Model和View完全隔离。数据层的共享是理所当然的，因为从本质上来说，一个app只是一堆数据的部分的呈现而已，而这些数据本身是自洽的，即使没有View和Presenter，Model里的数据和数据间关系都是有意义的。而Presenter将Model和View完全隔离带来的好处就是保证数据的操作都来自于Presenter，View只负责分发动作和接受新内容。</p>
 <p>在使用MVP的过程中，我还发现，Presenter和Model承载了不同种类的逻辑。何为不同种类的逻辑？举个例子来说，当我们创建一个Post的时候，下次获取PostCount时就应该比原来多1，这是数据层的逻辑，他们在Model中实现，这是为了保证不论外部（Presenter）发来怎样的调用，我都能保证我的数据在逻辑上是自洽的，不会出现诸如Post的作者id不存在、PostCount和真实Post数量不一致等问题；另一类逻辑则是UI上的逻辑，比如点击按钮A之后，如果没有登录就打开登录界面，否则打开编辑界面，这部分逻辑在Presenter中实现。</p>
@@ -617,17 +301,7 @@ d. Update view content
 </li>
 </ul>
 <p>上面的分析是自然而然的，一个操作可能导致两个结果，于是我们可以这样设计一个契约类：</p>
-<pre><code class="java">public interface ProfileContract &#123;
-  interface Presenter &#123;
-    void changeGender(bool isMale);
-  &#125;
-  
-  interface View &#123;
-    void refreshGender(bool isMale);
-    void showNetworkError();
-  &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ProfileContract</span> </span>&#123;<br>  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Presenter</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">changeGender</span><span class="hljs-params">(bool isMale)</span></span>;<br>  &#125;<br>  <br>  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">View</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">refreshGender</span><span class="hljs-params">(bool isMale)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">showNetworkError</span><span class="hljs-params">()</span></span>;<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>在<code>changeGender</code>的实现中，我们调用数据层的相关方法，向服务器发送请求更改个人性别资料，如果成功了，就调用<code>refreshGender</code>方法，否则调用<code>showNetworkError</code>。而对于View的实现而言，他只需要在<code>refreshGender</code>中设置某个RadioGroup的被选中项，在<code>showNetworkError</code>的实现中弹出一个Toast即可，而不需要考虑什么时候会被调用。</p>
 <p>定义了契约类之后，我们就可以开始实现了。实现View的一般是Fragment或Activity。一般而言，用Fragment实现是官方推荐的方法，因为我前面说过，MVP中View代表的是一个视图单位，而一个Activity可能有多个视图单位，比如在平板上，可能左栏是一个列表，右栏是详情页。另一个好处是Activity可以成为一个总的管理者，负责Presenter和View的实例化（嗯，这回真的成为God了）。</p>
 <p>而Presenter的实现，直接创建一个类实现对应Presenter接口即可，如前所述，在Activity中可以实例化一个Presenter对象。</p>
@@ -641,127 +315,41 @@ d. Update view content
 <p>还有一个小提示是生命周期的管理，这个在网上也有一些争论，不过我还只是初学者，就没有考虑太深，我把Fragment的生命周期也理解成了用户操作，比如<code>onResume</code>可以理解成用户把app调回了前台，因此我们可以在Presenter中增加这样的接口，从而完成一些与UI的生命周期有关的逻辑（比如初始化UI等等）。</p>
 <p>最后，我还想说说MVP框架的演进。这个说法比较中二，其实是因为在实际的开发过程中，契约并非一成不变。毕竟人非圣贤，一开始设计的东西后面很可能要改（你说我区区一个程序员，怎么就开始改需求了呢？）就拿Tumoji的开发来说，我们就先后发生了很多改动，多亏了MVP框架，使得这些改动对其他开发者的影响减到了最小。</p>
 <p>首先，是接口的增删。我们的团队是使用Git进行项目版本控制的，每个人从dev分支开新分支完成某个feature然后合并回dev分支，因此为了不影响其他人，dev分支的代码是必须可以正确运行的。但是我们知道，增加一个接口之后，接口的实现类如果不去实现，是编译都过不了的，而实现类是其他开发者的代码，擅自更改很容易出事，怎么办呢？其实这就是使用接口的目的了。我在Android Studio的设置中，设置了自动生成的Implement Method内容为</p>
-<pre><code class="java">// TODO
-throw new UnsupportedOperationException(&quot;Method not implemented&quot;);
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// TODO</span><br><span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;Method not implemented&quot;</span>);<br></code></pre></div></td></tr></table></figure>
 <p>这样，我对对方的代码修改就仅限于增加一些会抛异常、带TODO注释的方法，把代码冲突减到最小。</p>
 <p>当然，删除接口就更加容易了，直接在interface中把对应的接口加上<code>@deprecated</code>的JavaDoc或者注解，然后告知对应的开发者不必实现即可，完全不需要更改其他开发者的代码。</p>
 <p>使用接口带来的好处就是可以乱改需求- -一开始的时候，由于我不熟悉RxJava，所以所有Repository暴露的接口都是用Listener回调的：</p>
-<pre><code class="java">public interface IUserRepository &#123;
-  void getUser(String id, GetUserListener callback);
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IUserRepository</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getUser</span><span class="hljs-params">(String id, GetUserListener callback)</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>但是后来，我从数据层的队友那里（我负责Presenter层和框架搭建）学到了RxJava的用法，一下子觉得Listener太不优雅了，于是，我开始把所有的Listener的接口都deprecated了，然后增加了新的接口……</p>
-<pre><code class="java">public interface IUserRepository &#123;
-  /**
-   * @deprecated Use &#123;@link #getUser(String)&#125; instead.
-   */
-  void getUser(String id, GetUserListener callback);
-  
-  Observable&lt;UserModel&gt; getUser(String id);
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IUserRepository</span> </span>&#123;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@deprecated</span> Use &#123;<span class="hljs-doctag">@link</span> #getUser(String)&#125; instead.</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getUser</span><span class="hljs-params">(String id, GetUserListener callback)</span></span>;<br>  <br>  <span class="hljs-function">Observable&lt;UserModel&gt; <span class="hljs-title">getUser</span><span class="hljs-params">(String id)</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>所以，我没被队友砍死，我挺感动的……</p>
 <h3 id="MVP的其他缺点和解决方案"><a href="#MVP的其他缺点和解决方案" class="headerlink" title="MVP的其他缺点和解决方案"></a>MVP的其他缺点和解决方案</h3><p>MVP的优点，从前面就看的很清楚了：非常适合多人协作开发，而且使得项目的逻辑非常清晰，不容易出bug（很容易解决bug）。但是，MVP有一个缺点：测试不方便。</p>
 <p>我们平时写代码的时候，写一点跑一下是很轻松的，但是MVP不行，因为三个层被分开来了，对于每个界面而言，只要有一层没有实现，就没法看到效果，甚至没法运行起来，比如你的Presenter和Model都写完了，可是View还没实现，那你运行起来连调用Presenter都做不到。这带来的问题就是自己写了之后没法测试。当然，单元测试可以解决这个问题，但是很遗憾我们都没有这方面的知识，所以我得出了另一个方案：mock实现。</p>
 <p>拿Presenter来说，由于数据层的大佬比较忙，进度比我慢一些，导致我没有办法调用数据层，就没有办法测试了。此时，我可以实现一个Mock的类：</p>
-<pre><code class="java">public class MockUserRepository implements IUserRepository &#123;
-  @Override
-  public Observable&lt;UserModel&gt; getUser(String id) &#123;
-    return Observable.just(new UserModel().withId(id));
-  &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MockUserRepository</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">IUserRepository</span> </span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-function"><span class="hljs-keyword">public</span> Observable&lt;UserModel&gt; <span class="hljs-title">getUser</span><span class="hljs-params">(String id)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> Observable.just(<span class="hljs-keyword">new</span> UserModel().withId(id));<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>然后，在可用的UserRepository可用之前，我先使用这个我自己编写的MockUserRepository进行测试即可。同理，View也可以写MockPresenter进行测试，而Repository由于不面向任何一个View，所以只能使用单元测试了（嗯，所以我们项目没有测试Repository……）。</p>
 <p>一开始我就是这么写的，但是后来发现，还有更好的写法。试想，Repository已经实现了一部分了，如何部分接入呢？可以这样：</p>
-<pre><code class="java">public class UserRepository implements IUserRepository &#123;
-  private IUserRepository mDelegate;
-  
-  // This is a Singleton
-  private UserRepository(Context context) &#123;
-    mDelegate = new MockUserRepository(context);
-    // Other initialization....
-  &#125;
-  
-  @Override
-  public Observable&lt;UserModel&gt; getUser(String id) &#123;
-    // Unimplemented method
-    return mDelegate.getUer(id);
-  &#125;
-  
-  @Override
-  public Observable&lt;List&lt;UserModel&gt;&gt; getUsers() &#123;
-    // Implemented method
-    return mRemote.getUsers();
-  &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRepository</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">IUserRepository</span> </span>&#123;<br>  <span class="hljs-keyword">private</span> IUserRepository mDelegate;<br>  <br>  <span class="hljs-comment">// This is a Singleton</span><br>  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">UserRepository</span><span class="hljs-params">(Context context)</span> </span>&#123;<br>    mDelegate = <span class="hljs-keyword">new</span> MockUserRepository(context);<br>    <span class="hljs-comment">// Other initialization....</span><br>  &#125;<br>  <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-function"><span class="hljs-keyword">public</span> Observable&lt;UserModel&gt; <span class="hljs-title">getUser</span><span class="hljs-params">(String id)</span> </span>&#123;<br>    <span class="hljs-comment">// Unimplemented method</span><br>    <span class="hljs-keyword">return</span> mDelegate.getUer(id);<br>  &#125;<br>  <br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> Observable&lt;List&lt;UserModel&gt;&gt; getUsers() &#123;<br>    <span class="hljs-comment">// Implemented method</span><br>    <span class="hljs-keyword">return</span> mRemote.getUsers();<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>如上所示，我们把MockUserRepository作为一个代理，被真正的UserRepository实现类持有。这样，数据层开发者每完成一个方法，就可以去掉代理。而对Presenter而言，他还是使用UserRepository实例。</p>
 <h2 id="第三方库与框架的使用"><a href="#第三方库与框架的使用" class="headerlink" title="第三方库与框架的使用"></a>第三方库与框架的使用</h2><p>终于说完了MVP。Tumoji的开发中使用了很多框架。由于Tumoji是我们的个人作品，所以可以自由使用很多也许还不够成熟的第三方框架，他们为我们的开发节约了大量的时间和精力。</p>
 <h3 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h3><p>Retrofit这个神器我已经用得比较熟练了。当初写UWP应用的时候，我需要给每个API写一个函数，而他们都长得几乎一样：</p>
-<pre><code>public SomeType someApiMethod(params...) &#123;
-  // Set URI
-  // Set HTTP method (GET, POST, ...)
-  // Set Query (access token, ...)
-  // Set Header (Content-Type, ...)
-  // Create request body
-  // Send request
-  // Check whether the response is successful
-  // Convert response body to String or other data type
-&#125;
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">public SomeType someApiMethod(params...) &#123;<br>  <span class="hljs-regexp">//</span> Set URI<br>  <span class="hljs-regexp">//</span> Set HTTP method (GET, POST, ...)<br>  <span class="hljs-regexp">//</span> Set Query (access token, ...)<br>  <span class="hljs-regexp">//</span> Set Header (Content-Type, ...)<br>  <span class="hljs-regexp">//</span> Create request body<br>  <span class="hljs-regexp">//</span> Send request<br>  <span class="hljs-regexp">//</span> Check whether the response is successful<br>  <span class="hljs-regexp">//</span> Convert response body to String or other data type<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>可以想象十几个接口的情况下，这项工作有多么蛋疼。但是，使用Retrofit之后，我们只需要非常简单的定义接口即可：</p>
-<pre><code class="java">@GET(&quot;users/&#123;id&#125;&quot;)
-Call&lt;UserModel&gt; getUserById(@Path(&quot;id&quot;) String id, @Query(&quot;access_token&quot;) String token);
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@GET(&quot;users/&#123;id&#125;&quot;)</span><br><span class="hljs-function">Call&lt;UserModel&gt; <span class="hljs-title">getUserById</span><span class="hljs-params">(<span class="hljs-meta">@Path(&quot;id&quot;)</span> String id, <span class="hljs-meta">@Query(&quot;access_token&quot;)</span> String token)</span></span>;<br></code></pre></div></td></tr></table></figure>
 <p>大大简化了代码！</p>
 <h3 id="RxJava"><a href="#RxJava" class="headerlink" title="RxJava"></a>RxJava</h3><p>RxJava是ReactiveX框架在Java语言上的实现，前面提到的Listener模式麻烦之处在于每个请求都需要定义Listener，而且有的时候还会出现回调地狱（Callback Hell），非常容易出bug，甚至想想，如果需要根据一个数组，每个元素发一个异步请求，那代码就更加难看了。</p>
 <p>后来接触到了RxJava。在RxJava中，有一个被观察者和订阅者。被观察者一旦有人订阅，就会开始某些任务，这些任务可能会获取到一个或多个结果，这些结果作为数据由被观察者发出，再由订阅者接收。举个例子，手机充电，手机就是订阅者，插座就是被观察者，插上电源的过程就是订阅，此时插座源源不断地发出数据（电），手机的显示屏上就会得到这些数据，显示在电池电量数据上。</p>
 <p>在Tumoji中，大量使用了RxJava简化代码，举个例子：</p>
-<pre><code class="java">public class MemeRepository implements IMemeRepository &#123;
-  @Override
-  public Observable&lt;MemeModel&gt; getMeme(File parentDir, String memeId) &#123;
-    return mRemote.getMemeById(memeId)
-            .map(memeModel -&gt; mLocal.fulfillDownloaded(parentDir, memeModel));
-  &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MemeRepository</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">IMemeRepository</span> </span>&#123;<br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-function"><span class="hljs-keyword">public</span> Observable&lt;MemeModel&gt; <span class="hljs-title">getMeme</span><span class="hljs-params">(File parentDir, String memeId)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mRemote.getMemeById(memeId)<br>            .map(memeModel -&gt; mLocal.fulfillDownloaded(parentDir, memeModel));<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>这个方法的目的是从服务器获取指定表情的元数据，然后根据ID查找本地数据库是否有该表情，由于已下载的表情的路径和ID会被保存到数据库中，因此可以通过<code>fulfillDownloaded</code>，在本地已有的情况下，把表情的Uri从下载地址改为文件路径Uri，从而节约一些流量。</p>
 <p>在<code>mRemote.getMemeById</code>中，实现非常简单：</p>
-<pre><code class="java">public Observable&lt;MemeModel&gt; getMemeById(String memeId) &#123;
-  return mMemeApi.getMemeById(memeId).compose(ApplySchedulers.network());
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Observable&lt;MemeModel&gt; <span class="hljs-title">getMemeById</span><span class="hljs-params">(String memeId)</span> </span>&#123;<br>  <span class="hljs-keyword">return</span> mMemeApi.getMemeById(memeId).compose(ApplySchedulers.network());<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>如上，通过Retrofit配合RxJava，发送请求并把结果作为数据发送，返回发送该数据的Observable。后面的<code>ApplySchedulres.network</code>即类似<code>.subcribeOn(Schedulres.io()).observeOn(AndroidSchedulers.mainThread())</code>。</p>
 <p>而<code>mLocal.fulfillDownloaded</code>的实现如下：</p>
-<pre><code class="java">public MemeModel fulfillDownloaded(File parentDir, MemeModel memeModel) &#123;
-  String filename = mDb.getMemeFileNameById(memeModel.getMemeId());
-  if (filename == null) &#123;
-    memeModel.setDownloaded(false);
-    memeModel.setMemeUri(Uri.parse(memeModel.getImageUrl()));
-  &#125; else &#123;
-    memeModel.setDownloaded(true);
-    memeModel.setMemeUri(Uri.fromFile(new File(parentDir, filename)));
-  &#125;
-  return memeModel;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> MemeModel <span class="hljs-title">fulfillDownloaded</span><span class="hljs-params">(File parentDir, MemeModel memeModel)</span> </span>&#123;<br>  String filename = mDb.getMemeFileNameById(memeModel.getMemeId());<br>  <span class="hljs-keyword">if</span> (filename == <span class="hljs-keyword">null</span>) &#123;<br>    memeModel.setDownloaded(<span class="hljs-keyword">false</span>);<br>    memeModel.setMemeUri(Uri.parse(memeModel.getImageUrl()));<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    memeModel.setDownloaded(<span class="hljs-keyword">true</span>);<br>    memeModel.setMemeUri(Uri.fromFile(<span class="hljs-keyword">new</span> File(parentDir, filename)));<br>  &#125;<br>  <span class="hljs-keyword">return</span> memeModel;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p><code>mDb</code>提供了从数据库中获取对应ID的本地路径的方法。</p>
 <p>可以看到，虽然各自的实现有些复杂，但是在Repository暴露的接口上非常简洁，即使应对一系列请求也是如此，例如当我需要为每个tag发起一个添加标签的请求的时候：</p>
-<pre><code class="java">@Override
-public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&lt;TagModel&gt; tagModels) &#123;
-  ArrayList&lt;Observable&lt;TagModel&gt;&gt; observables = new ArrayList&lt;&gt;();
-  for (TagModel tagModel : tagModels) &#123;
-    observables.add(tagApi.relTagToMeme(memeId, tagModel.getTagName(), token).compose(ApplySchedulers.network()));
-  &#125;
-  return Observable.merge(observables).toList().map(new Func1&lt;List&lt;TagModel&gt;, Void&gt;() &#123;
-    @Override
-    public Void call(List&lt;TagModel&gt; tagModels) &#123;
-      return null;
-    &#125;
-  );
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Observable&lt;Void&gt; <span class="hljs-title">addTagsForMeme</span><span class="hljs-params">(String token, String memeId, List&lt;TagModel&gt; tagModels)</span> </span>&#123;<br>  ArrayList&lt;Observable&lt;TagModel&gt;&gt; observables = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>  <span class="hljs-keyword">for</span> (TagModel tagModel : tagModels) &#123;<br>    observables.add(tagApi.relTagToMeme(memeId, tagModel.getTagName(), token).compose(ApplySchedulers.network()));<br>  &#125;<br>  <span class="hljs-keyword">return</span> Observable.merge(observables).toList().map(<span class="hljs-keyword">new</span> Func1&lt;List&lt;TagModel&gt;, Void&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">call</span><span class="hljs-params">(List&lt;TagModel&gt; tagModels)</span> </span>&#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br>  );<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>代码的逻辑很明了。</p>
 <h2 id="关于团队开发"><a href="#关于团队开发" class="headerlink" title="关于团队开发"></a>关于团队开发</h2><p>说起团队开发，我也算是半个老司机了吧，之前就和他们开发了<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/WoChat">WoChat</a>，一个UWP平台的IM应用和一个模仿泡泡堂的Cocos2d-x游戏<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/FancyBubbling">天天爱打泡</a>（手动滑稽），现在我们又开发了Tumoji。WoChat的开发我们使用了MVVM框架，不过由于对UWP平台不熟悉，所以基本上是依葫芦画瓢；天天爱打泡的开发则参考了MVC，但是由于Cocos2d平台本身是多语言的，所以不容易找到针对C++的MVC框架；而Android上的MVP算是很热门也比较成熟了，所以开发起来压力比前面都要小一些。</p>
 <p>在团队开发的工程中，最大的感慨莫过于意识到扎实的基本功对架构设计的重要性。虽然学Android的时间很长，但是一直都只是皮毛，其实我个人认为我现在接触MVP还是有点早，有点霸王硬上弓了，在设计过程中就会发现，很多时候由于Android本身的机制所限，并不能单纯地划分MVP逻辑，而对Android开发的基本功不够扎实就导致框架设计中遇到了很多问题。</p>
@@ -778,597 +366,266 @@ public Observable&lt;Void&gt; addTagsForMeme(String token, String memeId, List&l
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>坦率的讲，Tumoji应该是我（参与）开发的第一款能用的app（当然之前做过一次外包，但是主要是一个师兄带我），因此我也计划将它维护下去，相信能从中学到很多东西。另外，开发进度的延误和单元测试的缺漏还是这个项目中的一些遗憾。</p>
 <p>那么，废话就说到这里，毕竟我接下来还有两科考试要挂……希望Tumoji早日在应用商店与大家见面，到时候我应该会再写一篇博客写写准备发布应用和在商店上架应用的事情。</p>
 
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//perqin-github-io.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
             </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/02/15/https-quick-deployment-guide/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2016/12/23/install-pydio-on-debian-jessie-with-php7/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Perqin's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        perqinxie@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2021/05/">五月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/showcases" title="Showcase">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Showcase
-            </a>
-        </li>
-        
-            <li class="divider"></li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                BirdZhang&#39;s Blog
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Dospy-梦影决幻
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                浮游大陆
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                FrodoLuo
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/perqinxie" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/perqin" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
+            <hr>
             <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/android/">android</a>
+                    
+                      <a class="hover-with-bg" href="/tags/tumoji/">tumoji</a>
+                    
+                      <a class="hover-with-bg" href="/tags/mvp/">mvp</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/02/15/https-quick-deployment-guide/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTTPS快速部署上车指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2016/12/23/install-pydio-on-debian-jessie-with-php7/">
+                        <span class="hidden-mobile">Debian Jessie基于PHP7安装Pydio</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
     
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/';
+          this.page.identifier = '/2017/01/07/tumoji-develop-blogpost-1/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
 </footer>
 
 
-                    <!-- Import JS File -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+<!-- Plugins -->
 
 
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#FF4081'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#FF4081',
-        'border-left-color': '#FF4081'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
+  
 
 
-    <!-- Leancloud -->
-    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-    <script>
-        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
-    </script>
-    <script type="text/ls-javascript" id="leancloud-views-script">
-    function showTime(Counter) {
-        var query = new AV.Query(Counter);
-        $('.leancloud-views_num').each(function() {
-            var url = $(this).attr('id').trim();
-            query.equalTo('url', url);
-            query.find({
-                success: function(results) {
-                    if (results.length === 0) {
-                        var content = '0 ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                        return;
-                    }
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    }
-                },
-                error: function(object, error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            });
-        });
-    }
 
-    function addCount(Counter) {
-      var Counter = AV.Object.extend('Counter');
-      url = $('.leancloud-views_num').attr('id').trim();
-      title = $('.leancloud-views_num').attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-      query.equalTo('url', url);
-      query.find({
-          success: function(results) {
-            if (results.length > 0) {
-                var counter = results[0];
-                counter.fetchWhenSave(true);
-                counter.increment('time');
-                counter.save(null, {
-                    success: function(counter) {
-                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    },
-                    error: function(counter, error) {
-                        console.log('Failed to save Visitor num, with error message: ' + error.message);
-                    }
-                });
-            } else {
-              var newcounter = new Counter();
-              newcounter.set('title', title);
-              newcounter.set('url', url);
-              newcounter.set('time', 1);
-              newcounter.save(null, {
-                  success: function(newcounter) {
-                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
-                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
-                      $(document.getElementById(url)).text(content);
-                  },
-                  error: function(newcounter, error) {
-                      console.log('Failed to create');
-                  }
-              });
-            }
-        },
-        error: function(error) {
-            console.log('Error:' + error.code + ' ' + error.message);
-        }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       });
-    }
-    $(function() {
-        var Counter = AV.Object.extend('Counter');
-        if ($('.leancloud-views_num').length === 1) {
-            addCount(Counter);
-        } else if ($('.post-title-link').length > 1) {
-            showTime(Counter);
-        }
-    });
-</script>
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 2016;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
     })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
+  </script>
 
-                </main>
-            </div>
-        </body>
-    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2017/02/15/https-quick-deployment-guide/"
 			},
 			"datePublished": "2017-02-15T19:14:17.000Z",
-			"dateModified": "2021-05-04T17:04:54.380Z",
+			"dateModified": "2021-05-05T16:18:30.333Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1817,37 +1817,9 @@ h6.categories {
 			  		<p>2017年的今天，全站HTTPS几乎已经成为一个网站的基本要求之一，最新版本的Chrome和Firefox都已经开始对HTTP站点显示“不安全”提示。由于HTTP使用明文传输，不仅会被嗅探报文，甚至会遭遇中间人攻击，不需要很多经验的攻击者就可以截取你的权限信息并肆意更改你的账户。更重要的是，随着HTTPS被大力推广，越来越多免费证书可供选择，HTTPS带来的性能负担也逐渐被削弱以及从考虑重心中排除。本文以部署Debian Jessie上的Node.js应用为例，提供快速HTTPS部署方案，我们采用的是<a href="https://letsencrypt.org/">Let’s Encrypt</a>提供的免费证书，一次获取可以使用3个月。</p>
 <h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>我的服务器使用的发行版是Debian Jessie，服务器程序是Nginx。一般而言，不同的发行版只是安装certbot的方法不一样，其他应该是一样的。</p>
 <h2 id="Nginx的初始配置"><a href="#Nginx的初始配置" class="headerlink" title="Nginx的初始配置"></a>Nginx的初始配置</h2><p>在没有启用HTTPS的情况下，相信读者对下面的Nginx配置非常熟悉，它可以为域名myapp.perqin.com设置一个监听3000端口的Node.js应用：</p>
-<pre><code>server {
-    listen        80;
-    server_name    myapp.perqin.com;
-    
-    location / {
-        proxy_set_header    X-Real-IP $remote_addr;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header    X-NginX-Proxy true;
-        proxy_pass        http://localhost:3000/;
-        proxy_cache_bypass    $http_upgrade;
-        proxy_redirect        off;
-    }
-}
-</code></pre>
+<figure class="highlight nginx"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs nginx"><span class="hljs-section">server</span> {<br>	<span class="hljs-attribute">listen</span>		<span class="hljs-number">80</span>;<br>	<span class="hljs-attribute">server_name</span>	myapp.perqin.com;<br>	<br>	<span class="hljs-attribute">location</span> / {<br>		<span class="hljs-attribute">proxy_set_header</span>	X-Real-IP $remote_addr;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-Forwarded-For $proxy_add_x_forwarded_for;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-NginX-Proxy <span class="hljs-literal">true</span>;<br>		<span class="hljs-attribute">proxy_pass</span>		http://localhost:3000/;<br>		<span class="hljs-attribute">proxy_cache_bypass</span>	$http_upgrade;<br>		<span class="hljs-attribute">proxy_redirect</span>		<span class="hljs-literal">off</span>;<br>	}<br>}<br><br></code></pre></div></td></tr></tbody></table></figure>
 <p>除此以外，Nginx还有一个用于静态站点的默认配置，我们也会用到：</p>
-<pre><code>server {
-    listen       80;
-    server_name  localhost;
-    
-    location / {
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
-    }
-
-    # redirect server error pages to the static page /50x.html
-    error_page   500 502 503 504  /50x.html;
-    location = /50x.html {
-        root   /usr/share/nginx/html;
-    }
-}
-</code></pre>
+<figure class="highlight nginx"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs nginx"><span class="hljs-section">server</span> {<br>    <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;<br>    <span class="hljs-attribute">server_name</span>  localhost;<br>    <br>    <span class="hljs-attribute">location</span> / {<br>        <span class="hljs-attribute">root</span>   /usr/share/nginx/html;<br>        <span class="hljs-attribute">index</span>  index.html index.htm;<br>    }<br><br>    <span class="hljs-comment"># redirect server error pages to the static page /50x.html</span><br>    <span class="hljs-attribute">error_page</span>   <span class="hljs-number">500</span> <span class="hljs-number">502</span> <span class="hljs-number">503</span> <span class="hljs-number">504</span>  /50x.html;<br>    <span class="hljs-attribute">location</span> = /50x.html {<br>        <span class="hljs-attribute">root</span>   /usr/share/nginx/html;<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>以上就是部署HTTPS之前的服务器状态，假设Nginx和Node.js应用都已经可以正常使用，现在我们准备刷卡上车了！</p>
 <h2 id="配置静态站点"><a href="#配置静态站点" class="headerlink" title="配置静态站点"></a>配置静态站点</h2><p>简单科普一下（如有错误请指出）：</p>
 <blockquote>
@@ -1862,61 +1834,22 @@ h6.categories {
 <li> 对于HTTPS请求，转发到Node.js应用</li>
 </ul>
 <p>于是，我们得到一下配置：</p>
-<pre><code># HTTP - only for obtaining cert
-server {
-    listen        80;
-    server_name    myapp.perqin.com;
-
-    location /.well-known {
-        root    /usr/share/nginx/html;
-        allow    all;
-    }
-
-    location / {
-        return    301 https://$host$request_uri;
-    }
-}
-
-# HTTPS - serve nodejs app
-server {
-    listen        443 ssl;
-    server_name    myapp.perqin.com;
-
-    #ssl_certificate        /etc/letsencrypt/live/myapp.perqin.com/fullchain.pem;
-    #ssl_certificate_key    /etc/letsencrypt/live/myapp.perqin.com/privkey.pem;
-
-    location / {
-        proxy_set_header    X-Real-IP $remote_addr;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header    X-NginX-Proxy true;
-        proxy_pass        http://localhost:3000/;
-        proxy_ssl_session_reuse    off;
-        proxy_set_header    Host $http_host;
-        proxy_cache_bypass    $http_upgrade;
-        proxy_redirect        off;
-    }
-}
-</code></pre>
+<figure class="highlight nginx"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs nginx"><span class="hljs-comment"># HTTP - only for obtaining cert</span><br><span class="hljs-section">server</span> {<br>	<span class="hljs-attribute">listen</span>		<span class="hljs-number">80</span>;<br>	<span class="hljs-attribute">server_name</span>	myapp.perqin.com;<br><br>	<span class="hljs-attribute">location</span> /.well-known {<br>		<span class="hljs-attribute">root</span>	/usr/share/nginx/html;<br>		<span class="hljs-attribute">allow</span>	all;<br>	}<br><br>	<span class="hljs-attribute">location</span> / {<br>		<span class="hljs-attribute">return</span>	<span class="hljs-number">301</span> https://$host$request_uri;<br>	}<br>}<br><br><span class="hljs-comment"># HTTPS - serve nodejs app</span><br><span class="hljs-section">server</span> {<br>	<span class="hljs-attribute">listen</span>		<span class="hljs-number">443</span> ssl;<br>	<span class="hljs-attribute">server_name</span>	myapp.perqin.com;<br><br>	<span class="hljs-comment">#ssl_certificate		/etc/letsencrypt/live/myapp.perqin.com/fullchain.pem;</span><br>	<span class="hljs-comment">#ssl_certificate_key	/etc/letsencrypt/live/myapp.perqin.com/privkey.pem;</span><br><br>	<span class="hljs-attribute">location</span> / {<br>		<span class="hljs-attribute">proxy_set_header</span>	X-Real-IP $remote_addr;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-Forwarded-For $proxy_add_x_forwarded_for;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-NginX-Proxy <span class="hljs-literal">true</span>;<br>		<span class="hljs-attribute">proxy_pass</span>		http://localhost:3000/;<br>		<span class="hljs-attribute">proxy_ssl_session_reuse</span>	<span class="hljs-literal">off</span>;<br>		<span class="hljs-attribute">proxy_set_header</span>	Host $http_host;<br>		<span class="hljs-attribute">proxy_cache_bypass</span>	$http_upgrade;<br>		<span class="hljs-attribute">proxy_redirect</span>		<span class="hljs-literal">off</span>;<br>	}<br>}<br><br></code></pre></div></td></tr></tbody></table></figure>
 <p>注意：</p>
 <ul>
 <li> 修改相关域名、端口号为你的域名、Node.js监听端口号</li>
 <li> L21-L22需要暂时注释掉，因为此时你的证书还没有生成，不注释将无法使用</li>
 </ul>
 <p>接下来重启Nginx：</p>
-<pre><code>$ sudo systemctl restart nginx.service
-</code></pre>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>sudo systemctl restart nginx.service<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="配置certbot"><a href="#配置certbot" class="headerlink" title="配置certbot"></a>配置certbot</h2><p>certbot是Let’s Encrypt推荐的工具，他会自动完成证书验证、获取、存储和定时续签任务。</p>
 <p>英文好的同学可以直接转乘<a href="https://certbot.eff.org/all-instructions/#debian-8-jessie-none-of-the-above">Certbot - All Instructions</a>阅读配置教程。</p>
 <p>首先，我们需要为Debian添加backports仓库源，编辑<code>/etc/apt/source.list.d/jessie-backports.list</code>：</p>
-<pre><code>deb http://ftp.debian.org/debian jessie-backports main
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">deb http:<span class="hljs-regexp">//</span>ftp.debian.org/debian jessie-backports main<br></code></pre></div></td></tr></tbody></table></figure>
 <p>保存之后运行：</p>
-<pre><code>$ sudo apt-get update
-$ sudo apt-get install certbot -t jessie-backports
-</code></pre>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">$ sudo apt-<span class="hljs-builtin-name">get</span> update<br>$ sudo apt-<span class="hljs-builtin-name">get</span> install certbot -t jessie-backports<br></code></pre></div></td></tr></tbody></table></figure>
 <p>安装certbot之后，我们可以使用它的webroot插件获取证书：</p>
-<pre><code>$ sudo certbot certonly --webroot -w /usr/share/nginx/html -d myapp.perqin.com
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ sudo certbot certonly --webroot -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/nginx/</span>html -d myapp.perqin.com<br></code></pre></div></td></tr></tbody></table></figure>
 <p>上述命令中<code>certonly</code>表示只获取证书，<code>--webroot</code>制定插件，<code>-w</code>后面是你的Nginx静态目录，<code>-d</code>后面就是域名了。注意这里<code>myapp.perqin.com</code>和<code>perqin.com</code>是不一样的，如果需要两个都上车，则需要连续两次<code>-d subdomain.domain.tld</code>。</p>
 <p>另外，由于证书、日志都分别存储在了<code>/etc</code>和<code>/var/log</code>中，因此需要root权限。</p>
 <p>等待片刻，就能看到提示消息，此时你的证书已经躺在他给出的位置（一般也是我前面Nginx配置文件中的位置），而且自动配置了crontab计划任务，每天两次判断是否有即将过期的证书并续签。</p>

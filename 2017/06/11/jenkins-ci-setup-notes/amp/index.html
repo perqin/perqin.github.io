@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/"
 			},
 			"datePublished": "2017-06-11T09:20:39.000Z",
-			"dateModified": "2021-05-04T17:04:54.416Z",
+			"dateModified": "2021-05-05T16:18:30.365Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1823,17 +1823,9 @@ h6.categories {
 <h2 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h2><p>本文并不是Jenkins持续集成的部署教程，因为这样的教程在搜索引擎、官方文档中已经有现成的文章。本文旨在记录部署过程中遇到的各种问题。</p>
 <h3 id="用户权限配置兼服务器权限配置（伪）最佳实践"><a href="#用户权限配置兼服务器权限配置（伪）最佳实践" class="headerlink" title="用户权限配置兼服务器权限配置（伪）最佳实践"></a>用户权限配置兼服务器权限配置（伪）最佳实践</h3><p>在通过apt源安装了Jenkins之后，Jenkins是运行在<code>jenkins</code>用户下的。而对于大多数网站而言，他一般都是运行在<code>www-data</code>用户下，因此我需要进行必要的修改。</p>
 <p>首先，我们编辑<code>/etc/default/jenkins</code>，修改默认的Jenkins运行用户：</p>
-<pre><code># user and group to be invoked as (default to jenkins)
-#JENKINS_USER=$NAME
-#JENKINS_GROUP=$NAME
-JENKINS_USER=www-data
-JENKINS_GROUP=www-data
-</code></pre>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs pgsql"># <span class="hljs-keyword">user</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">group</span> <span class="hljs-keyword">to</span> be invoked <span class="hljs-keyword">as</span> (<span class="hljs-keyword">default</span> <span class="hljs-keyword">to</span> jenkins)<br><span class="hljs-meta">#JENKINS_USER=$NAME</span><br><span class="hljs-meta">#JENKINS_GROUP=$NAME</span><br>JENKINS_USER=www-data<br>JENKINS_GROUP=www-data<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后，我们需要把Jenkins操作的目录改为<code>www-data</code>可读写：</p>
-<pre><code>$ sudo chown -R www-data:www-data /var/lib/jenkins/
-$ sudo chown -R www-data:www-data /var/log/jenkins/
-$ sudo chown -R www-data:www-data /var/cache/jenkins/
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ sudo chown -R www-data:www-data <span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/jenkins/</span><br>$ sudo chown -R www-data:www-data <span class="hljs-regexp">/var/</span>log<span class="hljs-regexp">/jenkins/</span><br>$ sudo chown -R www-data:www-data <span class="hljs-regexp">/var/</span>cache<span class="hljs-regexp">/jenkins/</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>最后即可重启Jenkins守护进程。</p>
 <p>值得一提的是关于服务器的用户权限配置实践，我的方案是：<code>www-data</code>用户作为服务器应用的运行用户，<code>www-admin</code>作为管理用户。<code>www-data</code>应该是尽可能低权限的，因此它没有可用的shell，没有home目录，其<code>HOME</code>环境变量为<code>/var/www</code>。之所以其权限这么低，是因为它运行了大量服务器应用，应当避免某个应用的恶意代码（可能是bug，也可能是真的恶意代码）导致服务器安全性收到威胁。</p>
 <p>而我们又需要一个用户对服务器进行管理，包括安装运行时环境、部署应用等，因此我们需要一个带有shell、位于sudo用户组的用户，我将它命名为<code>www-admin</code>。</p>

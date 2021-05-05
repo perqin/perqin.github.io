@@ -1,515 +1,222 @@
+
+
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
-    <meta charset="utf-8">
-    <!-- AMP support -->
-    
-        <link rel="amphtml" href="https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7//amp/index.html">
-    
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
-
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
-
-
-
-    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            Debian Jessie基于PHP7安装Pydio | 
-        
-        Perqin&#39;s Blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/avatar.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,Pydio,PHP,Debian">
-    <meta name="theme-color" content="#673AB7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: ;
-    overflow-x: hidden !important;
-  }
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
+  <meta name="theme-color" content="#7108B2">
+  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+  <title>Debian Jessie基于PHP7安装Pydio - Perqin&#39;s Blog</title>
 
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #673AB7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #673AB7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #673AB7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-<!-- Theme Background Related-->
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Perqin&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/">
-    <meta name="msapplication-navbutton-color" content="#673AB7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Debian Jessie基于PHP7安装Pydio | Perqin&#39;s Blog">
-    <meta property="og:image" content="/img/avatar.png">
-    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="Pydio"> <meta property="og:article:tag" content="PHP"> <meta property="og:article:tag" content="Debian"> 
-
-    
-        <meta property="article:published_time" content="Sat Dec 24 2016 01:18:09 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 04 2021 17:04:54 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html",
-    "headline": "Debian Jessie基于PHP7安装Pydio",
-    "datePublished": "Sat Dec 24 2016 01:18:09 GMT+0800",
-    "dateModified": "Tue May 04 2021 17:04:54 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Perqin",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Blogging is as painful as writing docs..."
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Perqin&#39;s Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/avatar.png"
-        }
-    },
-    "keywords": ",Pydio,PHP,DebianPerqin",
-    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
+  
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
     
-        <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
-</div>
-    
+  
 
-    <!-- Custom Head -->
-    
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.3.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/covers/install-pydio-on-debian-jessie-with-php7.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Debian Jessie基于PHP7安装Pydio">
+              
             </span>
-        </a>
-    </div>
-    -->
 
-
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85Nginx"><span class="post-toc-number">1.</span> <span class="post-toc-text">安装Nginx</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BB%8EDotDeb%E5%AE%89%E8%A3%85php7-0"><span class="post-toc-number">2.</span> <span class="post-toc-text">从DotDeb安装php7.0</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%8B%E8%BD%BDPydio"><span class="post-toc-number">3.</span> <span class="post-toc-text">下载Pydio</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%BAPydio%E9%85%8D%E7%BD%AENginx%E5%92%8Cphp-fpm"><span class="post-toc-number">4.</span> <span class="post-toc-text">为Pydio配置Nginx和php-fpm</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85PHP%E6%89%A9%E5%B1%95"><span class="post-toc-number">5.</span> <span class="post-toc-text">安装PHP扩展</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E8%A7%A3%E5%86%B3%E9%94%99%E8%AF%AF"><span class="post-toc-number">6.</span> <span class="post-toc-text">解决错误</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AESQLite"><span class="post-toc-number">7.</span> <span class="post-toc-text">配置SQLite</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AEMySQL"><span class="post-toc-number">8.</span> <span class="post-toc-text">配置MySQL</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BF%AE%E6%94%B9htaccess%E6%96%87%E4%BB%B6"><span class="post-toc-number">9.</span> <span class="post-toc-text">修改htaccess文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%89%A9%E5%A4%A7%E4%B8%8A%E4%BC%A0%E9%99%90%E5%88%B6"><span class="post-toc-number">10.</span> <span class="post-toc-text">扩大上传限制</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(/images/covers/install-pydio-on-debian-jessie-with-php7.png)">
-    
-            <p class="article-headline-p">
-                Debian Jessie基于PHP7安装Pydio
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Perqin</strong>
-        <span>12月 24, 2016</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/debian/" rel="tag">Debian</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/php/" rel="tag">PHP</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/pydio/" rel="tag">Pydio</a>
-    </ul>
-    
-
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-    <!-- Leancloud Views -->
-        <a class="post_share-link" href="#">
-            <li class="mdl-menu__item">
-                <span id="/2016/12/23/install-pydio-on-debian-jessie-with-php7/" class="leancloud-views_num" data-flag-title="Debian Jessie基于PHP7安装Pydio">
-     &nbsp;浏览量
-</span>
-
-            </li>
-        </a>
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Debian Jessie基于PHP7安装Pydio&url=https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Debian Jessie基于PHP7安装Pydio&url=https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html&via=Perqin" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-    
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2016-12-24 01:18" pubdate>
+        2016年12月24日 凌晨
+      </time>
+    </span>
+  
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+<div class="mt-1">
+  
     
-        <blockquote>
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Debian Jessie基于PHP7安装Pydio</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
 <p><strong>Edit history</strong></p>
 <p><em>2017/01/12</em></p>
 <ul>
@@ -520,123 +227,37 @@
 </blockquote>
 <p>之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。</p>
 <h2 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h2><p>为了防止遇到不支持的参数，我决定直接从官方源安装。参照官方文档，添加key：</p>
-<pre><code>$ wget http://nginx.org/keys/nginx_signing.key
-$ sudo apt-key add nginx_signing.key
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ wget http:<span class="hljs-regexp">//</span>nginx.org<span class="hljs-regexp">/keys/</span>nginx_signing.key<br>$ sudo apt-key add nginx_signing.key<br></code></pre></div></td></tr></table></figure>
 <p>然后把以下内容放进<code>/etc/apt/sources.list.d/nginx.list</code>：</p>
-<pre><code>deb http://nginx.org/packages/mainline/debian/ jessie ngin
-deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">deb http:<span class="hljs-regexp">//</span>nginx.org<span class="hljs-regexp">/packages/m</span>ainline<span class="hljs-regexp">/debian/</span> jessie ngin<br>deb-src http:<span class="hljs-regexp">//</span>nginx.org<span class="hljs-regexp">/packages/m</span>ainline<span class="hljs-regexp">/debian/</span> jessie nginx<br></code></pre></div></td></tr></table></figure>
 <p>保存之后运行：</p>
-<pre><code>$ sudo apt-get update
-$ sudo apt-get install nginx
-</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">$ sudo apt-<span class="hljs-builtin-name">get</span> update<br>$ sudo apt-<span class="hljs-builtin-name">get</span> install nginx<br></code></pre></div></td></tr></table></figure>
 <h2 id="从DotDeb安装php7-0"><a href="#从DotDeb安装php7-0" class="headerlink" title="从DotDeb安装php7.0"></a>从DotDeb安装php7.0</h2><p>Debian Jessie的官方源并不提供php7.0，所幸我们可以通过DotDeb提供的源安装。DotDeb为Debian维护了几个常用服务器组件的官方最新源，其实他们也提供了Nginx，只不过我是后来才发现的……</p>
 <p>添加以下内容到<code>/etc/apt/sources.list.d/dotdeb.list</code>：</p>
-<pre><code>deb http://packages.dotdeb.org jessie all
-deb-src http://packages.dotdeb.org jessie all
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">deb http:<span class="hljs-regexp">//</span>packages.dotdeb.org jessie all<br>deb-src http:<span class="hljs-regexp">//</span>packages.dotdeb.org jessie all<br></code></pre></div></td></tr></table></figure>
 <p>然后同样添加key：</p>
-<pre><code>$ wget https://www.dotdeb.org/dotdeb.gpg
-$ sudo apt-key add dotdeb.gpg
-</code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>wget <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/www.dotdeb.org/dotdeb</span>.gpg<br><span class="hljs-variable">$ </span>sudo apt-key add dotdeb.gpg<br></code></pre></div></td></tr></table></figure>
 <p>最后：</p>
-<pre><code>$ sudo apt-get update
-$ sudo apt-get install php7.0-fpm
-</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">$ sudo apt-<span class="hljs-builtin-name">get</span> update<br>$ sudo apt-<span class="hljs-builtin-name">get</span> install php7.0-fpm<br></code></pre></div></td></tr></table></figure>
 <p>安装完成之后，我们需要做一些配置。首先是<code>fix_pathinfo</code>的修改。DotDeb提供的php7.0的<code>php.ini</code>文件位置和默认的是不一样的……通过以下命令可以的出<code>php.ini</code>的位置：</p>
-<pre><code>$ php --ini
-Configuration File (php.ini) Path: /etc/php/7.0/cli
-Loaded Configuration File:         /etc/php/7.0/cli/php.ini
-Scan for additional .ini files in: /etc/php/7.0/cli/conf.d
-Additional .ini files parsed:      /etc/php/7.0/cli/conf.d/10-opcache.ini,
-/etc/php/7.0/cli/conf.d/10-pdo.ini,
-/etc/php/7.0/cli/conf.d/20-calendar.ini,
-/etc/php/7.0/cli/conf.d/20-ctype.ini,
-/etc/php/7.0/cli/conf.d/20-exif.ini,
-/etc/php/7.0/cli/conf.d/20-fileinfo.ini,
-/etc/php/7.0/cli/conf.d/20-ftp.ini,
-/etc/php/7.0/cli/conf.d/20-gettext.ini,
-/etc/php/7.0/cli/conf.d/20-iconv.ini,
-/etc/php/7.0/cli/conf.d/20-json.ini,
-/etc/php/7.0/cli/conf.d/20-phar.ini,
-/etc/php/7.0/cli/conf.d/20-posix.ini,
-/etc/php/7.0/cli/conf.d/20-readline.ini,
-/etc/php/7.0/cli/conf.d/20-shmop.ini,
-/etc/php/7.0/cli/conf.d/20-sockets.ini,
-/etc/php/7.0/cli/conf.d/20-sysvmsg.ini,
-/etc/php/7.0/cli/conf.d/20-sysvsem.ini,
-/etc/php/7.0/cli/conf.d/20-sysvshm.ini,
-/etc/php/7.0/cli/conf.d/20-tokenizer.ini
-</code></pre>
+<figure class="highlight gradle"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle">$ php --ini<br>Configuration <span class="hljs-keyword">File</span> (php.ini) Path: <span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<br>Loaded Configuration <span class="hljs-keyword">File</span>:         <span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli/php.ini<br>Scan <span class="hljs-keyword">for</span> additional .ini files in: <span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli/conf.d<br>Additional .ini files parsed:      <span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">10</span>-opcache.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">10</span>-pdo.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-calendar.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-ctype.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-exif.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-fileinfo.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-ftp.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-<span class="hljs-keyword">gettext</span>.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-iconv.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-json.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-phar.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-posix.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-readline.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-shmop.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-sockets.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-sysvmsg.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-sysvsem.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-sysvshm.ini,<br><span class="hljs-regexp">/etc/</span>php<span class="hljs-regexp">/7.0/</span>cli<span class="hljs-regexp">/conf.d/</span><span class="hljs-number">20</span>-tokenizer.ini<br></code></pre></div></td></tr></table></figure>
 <p><del>于是我们修改<code>/etc/php/7.0/cli/php.ini</code>，找到<code>cgi.fix_pathinfo=0</code>，把<code>1</code>改为<code>0</code>。</del><strong>由于我们的Pydio是通过fpm运行的，而fpm本身有<code>php.ini</code>，所以这里先不配置。</strong></p>
 <p>接着，我们修改fpm的配置，它在<code>/etc/php/7.0/fpm/pool.d/www.conf</code>。确定如下两行内容：</p>
-<pre><code>user = www-data
-group = www-data
-</code></pre>
+<figure class="highlight crmsh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs crmsh"><span class="hljs-keyword">user</span> <span class="hljs-title">= www-data</span><br><span class="hljs-keyword">group</span> <span class="hljs-title">= www-data</span><br></code></pre></div></td></tr></table></figure>
 <p>最后别忘了重启php-fpm：</p>
-<pre><code>$ sudo systemctl restart php7.0-fpm.service
-</code></pre>
+<figure class="highlight smali"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs smali">$ sudo<span class="hljs-keyword"> system</span>ctl restart php7.0-fpm.service<br></code></pre></div></td></tr></table></figure>
 <h2 id="下载Pydio"><a href="#下载Pydio" class="headerlink" title="下载Pydio"></a>下载Pydio</h2><p>这一部分就比较简单了，直接从官方的下载链接wget下来并解压到/<code>var/www</code>即可。另外，官方源的Nginx默认的html目录并不在<code>/var/www</code>，需要手动创建目录。</p>
-<pre><code>$ sudo mkdir /var/www
-$ wget https://download.pydio.com/pub/core/archives/pydio-core-7.0.3.tar.gz
-$ tar -xzf pydio-core-7.0.3.tar.gz
-$ sudo mv pydio-core-7.0.3 /var/www/pydio
-$ sudo chown -R www-data:www-data /var/www/pydio/data
-$ sudo chown www-data:www-data /var/www/pydio/.htaccess
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ sudo mkdir <span class="hljs-regexp">/var/</span>www<br>$ wget https:<span class="hljs-regexp">//</span>download.pydio.com<span class="hljs-regexp">/pub/</span>core<span class="hljs-regexp">/archives/</span>pydio-core-<span class="hljs-number">7.0</span>.<span class="hljs-number">3</span>.tar.gz<br>$ tar -xzf pydio-core-<span class="hljs-number">7.0</span>.<span class="hljs-number">3</span>.tar.gz<br>$ sudo mv pydio-core-<span class="hljs-number">7.0</span>.<span class="hljs-number">3</span> <span class="hljs-regexp">/var/</span>www/pydio<br>$ sudo chown -R www-data:www-data <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/pydio/</span>data<br>$ sudo chown www-data:www-data <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/pydio/</span>.htaccess<br></code></pre></div></td></tr></table></figure>
 <p>注意我们的fpm和Nginx的worker都是以www-data用户运行的（Nginx的worker默认不是www-data运行，但我后面会更改），因此需要保证Pydio的data目录是www-data可读写的。*<code>.htaccess</code>文件后面也需要可写，所以这里一并修改了。*</p>
 <h2 id="为Pydio配置Nginx和php-fpm"><a href="#为Pydio配置Nginx和php-fpm" class="headerlink" title="为Pydio配置Nginx和php-fpm"></a>为Pydio配置Nginx和php-fpm</h2><p>由于没有使用apache，php-fpm就成为了处理php请求的服务。注意Pydio的目录下提供了一个<code>nginx.conf.sample</code>，但是这个配置不能拿来就用，需要修改如下：</p>
-<pre><code>server &#123;
-        listen 80;
-        server_name your-pydio.your-domain.tld;
-        keepalive_requests    10;
-        keepalive_timeout     60 60;
-
-        client_max_body_size 800M;
-        client_body_buffer_size 128k;
-
-        # Document Root
-        root /var/www/pydio;
-        
-        index index.php index.html index.htm;
-
-        if (!-e $request_filename)&#123;
-                rewrite ^(.*)$ /index.php break;
-        &#125;
-
-        # nginx configuration
-        location ~ \.php$ &#123;
-                #include       snippets/fastcgi-php.conf;
-                fastcgi_pass  unix:/run/php/php7.0-fpm.sock;
-                # Below are from /etc/nginx/conf.d/default.conf
-                fastcgi_index index.php;
-                fastcgi_param SCRIPT_FILENAME $request_filename;
-                include       fastcgi_params;
-        &#125;
-        
-        location ~ ^/data/public/.*$ &#123;
-                allow all;
-        &#125;
-
-        location ~ ^/(conf|data) &#123;
-                deny all;
-        &#125;
-&#125;
-types &#123;
-        application/font-woff2                 woff2;
-&#125;
-</code></pre>
+<figure class="highlight glsl"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs glsl">server &#123;<br>        listen <span class="hljs-number">80</span>;<br>        server_name your-pydio.your-domain.tld;<br>        keepalive_requests    <span class="hljs-number">10</span>;<br>        keepalive_timeout     <span class="hljs-number">60</span> <span class="hljs-number">60</span>;<br><br>        client_max_body_size <span class="hljs-number">800</span>M;<br>        client_body_buffer_size <span class="hljs-number">128</span>k;<br><br>	    <span class="hljs-meta"># Document Root</span><br>        root /var/www/pydio;<br>        <br>        <span class="hljs-keyword">index</span> <span class="hljs-keyword">index</span>.php <span class="hljs-keyword">index</span>.html <span class="hljs-keyword">index</span>.htm;<br><br>        <span class="hljs-keyword">if</span> (!-e $request_filename)&#123;<br>                rewrite ^(.*)$ /<span class="hljs-keyword">index</span>.php <span class="hljs-keyword">break</span>;<br>        &#125;<br><br>        <span class="hljs-meta"># nginx configuration</span><br>        <span class="hljs-keyword">location</span> ~ \.php$ &#123;<br>                <span class="hljs-meta">#include       snippets/fastcgi-php.conf;</span><br>                fastcgi_pass  unix:/run/php/php7<span class="hljs-number">.0</span>-fpm.sock;<br>                <span class="hljs-meta"># Below are from /etc/nginx/conf.d/default.conf</span><br>                fastcgi_index <span class="hljs-keyword">index</span>.php;<br>                fastcgi_param SCRIPT_FILENAME $request_filename;<br>                include       fastcgi_params;<br>        &#125;<br>        <br>        <span class="hljs-keyword">location</span> ~ ^/data/public/.*$ &#123;<br>                allow <span class="hljs-built_in">all</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">location</span> ~ ^/(conf|data) &#123;<br>                deny <span class="hljs-built_in">all</span>;<br>        &#125;<br>&#125;<br>types &#123;<br>        application/font-woff2                 woff2;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>可以看到主要的改动是php部分，首先他原来include的<code>snippets</code>在这个版本的Nginx里是木有的……所以我参照Nginx的默认设置做了改动。同时，通过<code>/etc/php/7.0/fpm/pool.d/www.conf</code>可以发现sock的路径也需要修改。<em>另外，我还对data目录做了访问控制，后面会提到。</em></p>
 <p>修改完成，重启Nginx的服务之后，我在pydio的目录下新建了一个<code>php-test.php</code>：</p>
-<pre><code class="php">&lt;?php phpinfo(); ?&gt;
-</code></pre>
+<figure class="highlight php"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> phpinfo(); <span class="hljs-meta">?&gt;</span><br></code></pre></div></td></tr></table></figure>
 <p>然后访问，结果发现一直502。查看Nginx的log发现居然是Permission Denied，谷歌之后得知，运行fpm的进程用户是<code>www-data</code>，而其sock文件的权限是0660，悲剧的是Nginx的worker默认是用<code>nginx</code>用户运行的，因此无法把脚本传递给fpm……解决方法是修改<code>/etc/nginx/nginx.conf</code>：</p>
-<pre><code>user  www-data;
-</code></pre>
+<figure class="highlight crmsh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs crmsh"><span class="hljs-keyword">user</span>  <span class="hljs-title">www-data</span>;<br></code></pre></div></td></tr></table></figure>
 <p>然后重启Nginx：</p>
-<pre><code>$ sudo systemctl restart nginx.servive
-</code></pre>
+<figure class="highlight elixir"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>sudo systemctl restart nginx.servive<br></code></pre></div></td></tr></table></figure>
 <p>然后访问该php文件，你会看到你的php信息网页。</p>
 <h2 id="安装PHP扩展"><a href="#安装PHP扩展" class="headerlink" title="安装PHP扩展"></a>安装PHP扩展</h2><p>我兴冲冲输入了域名，迎接我的是403。</p>
 <p>差了log之后我才想起来我忘了装扩展。官方声明需要的扩展有：</p>
@@ -644,9 +265,7 @@ types &#123;
 <p> Basic PHP extensions required are intl, mbstring, gd and dom-xml. For cryptography, we require either open-ssl (recommended) or mcrypt (will be removed from PHP soon).</p>
 </blockquote>
 <p>通过<code>php -m</code>可以看到已经安装的模块。接下来我们安装缺少的模块：</p>
-<pre><code>$ sudo apt-get install php7.0-mbstring php7.0-intl php7.0-gd php7.0-xml
-$ sudo systemctl restart php7.0-fpm.service
-</code></pre>
+<figure class="highlight smali"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs smali">$ sudo apt-get install php7.0-mbstring php7.0-intl php7.0-gd php7.0-xml<br>$ sudo<span class="hljs-keyword"> system</span>ctl restart php7.0-fpm.service<br></code></pre></div></td></tr></table></figure>
 <p>（其实安装完之后还是403,，因为index的原因，我重新修改了Nginx的配置，已经一并写到前面提供的了- -）</p>
 <h2 id="解决错误"><a href="#解决错误" class="headerlink" title="解决错误"></a>解决错误</h2><p>现在输入域名，你会看到Pydio Disgnostic Tool列举出的所有有问题的地方。我遇到的问题是3个：</p>
 <ul>
@@ -655,671 +274,294 @@ $ sudo systemctl restart php7.0-fpm.service
 <li> PHP Output Buffer disabled，需要将这个设置为禁用以提高性能</li>
 </ul>
 <p>这里我遇到了悲剧……之前修改的<code>/etc/php/7.0/cli/php.ini</code>是全局的，但是fpm本身还需要一份php.ini的配置，位于<code>/etc/php/7.0/fpm/php.ini</code>，<strong>我们先参照之前的内容修改fix_pathinfo</strong>，然后找到并修改如下内容：</p>
-<pre><code>; Note: Output buffering can also be controlled via Output Buffering Control
-;   functions.
-; Possible Values:
-;   On = Enabled and buffer is unlimited. (Use with caution)
-;   Off = Disabled
-;   Integer = Enables the buffer and sets its maximum size in bytes.
-; Note: This directive is hardcoded to Off for the CLI SAPI
-; Default Value: Off
-; Development Value: 4096
-; Production Value: 4096
-; http://php.net/output-buffering
-output_buffering = Off
-</code></pre>
+<figure class="highlight ini"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ini"><span class="hljs-comment">; <span class="hljs-doctag">Note:</span> Output buffering can also be controlled via Output Buffering Control</span><br><span class="hljs-comment">;   functions.</span><br><span class="hljs-comment">; Possible Values:</span><br><span class="hljs-comment">;   On = Enabled and buffer is unlimited. (Use with caution)</span><br><span class="hljs-comment">;   Off = Disabled</span><br><span class="hljs-comment">;   Integer = Enables the buffer and sets its maximum size in bytes.</span><br><span class="hljs-comment">; <span class="hljs-doctag">Note:</span> This directive is hardcoded to Off for the CLI SAPI</span><br><span class="hljs-comment">; Default Value: Off</span><br><span class="hljs-comment">; Development Value: 4096</span><br><span class="hljs-comment">; Production Value: 4096</span><br><span class="hljs-comment">; http://php.net/output-buffering</span><br><span class="hljs-attr">output_buffering</span> = <span class="hljs-literal">Off</span><br></code></pre></div></td></tr></table></figure>
 <p>注意我把<code>output_buffering</code>改为了<code>Off</code>。</p>
 <p>重启fpm服务之后，刷新网页，解决！</p>
 <p>data权限问题源于没有在nginx中屏蔽data目录的访问，<em>这个问题如果按照我提供的配置，那么将不会遇到。我之前不知道，才遇到这个问题。以下的修改我已经加到前面了。</em>，所以我们修改<code>/etc/nginx/conf.d/pydio.conf</code>，在<code>server</code>中增加如下内容（参考自<a target="_blank" rel="noopener" href="http://martin-denizet.com/nginx-configuration-for-pydio-with-ssl/">http://martin-denizet.com/nginx-configuration-for-pydio-with-ssl/</a>）：</p>
-<pre><code>server &#123;
-    # ...
-
-    location ~ ^/data/public/.*$ &#123;
-        allow all;
-    &#125;
-
-    location ~ ^/(conf|data) &#123;
-        deny all;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight crmsh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs crmsh">server &#123;<br>	<span class="hljs-comment"># ...</span><br><br>	<span class="hljs-keyword">location</span> <span class="hljs-title">~ ^/data</span>/public/.*$ &#123;<br>		allow all;<br>	&#125;<br><br>	<span class="hljs-keyword">location</span> <span class="hljs-title">~ ^/(conf</span>|data) &#123;<br>		<span class="hljs-keyword">deny</span> all;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>上述内容会屏蔽除了<code>/data/public/*</code>以外的所有data内容。重启Nginx服务之后刷新页面，只剩下一个SSL的warning了，这个我们下次再说Orz</p>
 <h2 id="配置SQLite"><a href="#配置SQLite" class="headerlink" title="配置SQLite"></a>配置SQLite</h2><p><strong>SQLite容易引发配置文件被锁定问题，因此建议使用MySQL（见下面）。</strong></p>
 <p>开始安装向导之后，我才发现Pydio的配置数据（不包含用户文件）需要存储到数据库里，在Pydio支持的数据库中，由于MySQL和PostgreSQL都太大了，于是我决定使用SQLite 3。</p>
 <p>安装php扩展：</p>
-<pre><code>$ sudo apt-get install php7.0-sqlite3
-$ sudo systemctl restart php7.0-fpm.service
-</code></pre>
+<figure class="highlight smali"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs smali">$ sudo apt-get install php7.0-sqlite3<br>$ sudo<span class="hljs-keyword"> system</span>ctl restart php7.0-fpm.service<br></code></pre></div></td></tr></table></figure>
 <p>后面需要的缓存等我都暂时没启用。</p>
 <h2 id="配置MySQL"><a href="#配置MySQL" class="headerlink" title="配置MySQL"></a>配置MySQL</h2><p>如果你想使用MySQL，参照官网，可以使用如下命令安装：</p>
-<pre><code>$ wget https://dev.mysql.com/get/mysql-apt-config_0.8.1-1_all.deb
-$ sudo dpkg -i mysql-apt-config_0.8.1-1_all.deb
-</code></pre>
+<figure class="highlight vim"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">$ wget http<span class="hljs-variable">s:</span>//dev.mysql.<span class="hljs-keyword">com</span>/<span class="hljs-built_in">get</span>/mysql-apt-config_0.<span class="hljs-number">8.1</span>-<span class="hljs-number">1</span>_all.<span class="hljs-keyword">deb</span><br>$ sudo dpkg -i mysql-apt-config_0.<span class="hljs-number">8.1</span>-<span class="hljs-number">1</span>_all.<span class="hljs-keyword">deb</span><br></code></pre></div></td></tr></table></figure>
 <p>你可以选择需要安装的版本以及是否需要其他工具（Workbench等）。</p>
 <p>然后就可以安装MySQL服务器和php的相关扩展了：</p>
-<pre><code>$ sudo apt-get install mysql-server php7.0-mysql
-$ sudo systemctl restart php7.0-fpm
-</code></pre>
+<figure class="highlight pgsql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs pgsql">$ sudo apt-<span class="hljs-keyword">get</span> install mysql-<span class="hljs-keyword">server</span> php7<span class="hljs-number">.0</span>-mysql<br>$ sudo systemctl <span class="hljs-keyword">restart</span> php7<span class="hljs-number">.0</span>-fpm<br></code></pre></div></td></tr></table></figure>
 <p>中间需要设置root帐号的密码。安装完成之后，我们需要为Pydio创建数据库：</p>
-<pre><code>$ mysql -p
-...
-mysql&gt; CREATE DATABASE pydio;
-Query OK, 1 row affected (0.00 sec)
-
-mysql&gt; USE pydio;
-Database changed
-mysql&gt; CREATE USER &#39;pydio&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;password&#39;;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql&gt; GRANT ALL PRIVILEGES ON pydio.* TO &#39;pydio&#39;@&#39;localhost&#39;;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql&gt; exit
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ mysql -p<br>...<br>mysql&gt; CREATE DATABASE pydio;<br>Query OK, <span class="hljs-number">1</span> row affected (<span class="hljs-number">0.00</span> sec)<br><br>mysql&gt; USE pydio;<br>Database changed<br>mysql&gt; CREATE USER <span class="hljs-string">&#x27;pydio&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="hljs-string">&#x27;password&#x27;</span>;<br>Query OK, <span class="hljs-number">0</span> rows affected (<span class="hljs-number">0.00</span> sec)<br><br>mysql&gt; GRANT ALL PRIVILEGES ON pydio.* TO <span class="hljs-string">&#x27;pydio&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span>;<br>Query OK, <span class="hljs-number">0</span> rows affected (<span class="hljs-number">0.00</span> sec)<br><br>mysql&gt; <span class="hljs-keyword">exit</span><br></code></pre></div></td></tr></table></figure>
 <p>上面的命令会创建名为pydio的数据库，然后添加一个可以管理这个数据库的用户，用户名pydio密码password。接下来，只要在Pydio中选择MySQL并输入数据库名字、用户名、密码即可。</p>
 <h2 id="修改htaccess文件"><a href="#修改htaccess文件" class="headerlink" title="修改htaccess文件"></a>修改htaccess文件</h2><p><em>这里的配置也在前面已经解决了。</em>安装过程中，他提示我无法写入该文件，直接改用户！</p>
-<pre><code>$ sudo chown www-data:www-data .htaccess
-</code></pre>
+<figure class="highlight haskell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs haskell">$ sudo chown www-<span class="hljs-class"><span class="hljs-keyword">data</span>:www-<span class="hljs-keyword">data</span> .htaccess</span><br></code></pre></div></td></tr></table></figure>
 <p>刷新页面之后，就可以正常使用了！</p>
 <h2 id="扩大上传限制"><a href="#扩大上传限制" class="headerlink" title="扩大上传限制"></a>扩大上传限制</h2><p>Pydio默认的上传大小限制在2M，显然是不够的，参考<a target="_blank" rel="noopener" href="https://pydio.com/forum/f/topic/solved-how-to-change-upload-limit/">Topic: [solved] How to change Upload limit | Pydio</a>，可以改变上传大小限制：</p>
 <p>首先编辑<code>/etc/php/7.0/fpm/php.ini</code>，修改两个地方：</p>
-<pre><code>upload_max_filesize=1024M
-post_max_size=1280M
-</code></pre>
+<figure class="highlight ini"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ini"><span class="hljs-attr">upload_max_filesize</span>=<span class="hljs-number">1024</span>M<br><span class="hljs-attr">post_max_size</span>=<span class="hljs-number">1280</span>M<br></code></pre></div></td></tr></table></figure>
 <p>以上两个配置分别是上传文件的上限和POST数据的上限，所以后者比前者需要大一些。你还可以修改<code>max_file_uploads</code>来设置同时上传的文件数量上限。</p>
 <p>重启fpm服务，然后进入到<code>Settings - Application Parameters - Application Core - Uploaders Options</code>，设置<code>Limitations - File Size</code>为<code>1024M</code>，然后点击右上角保存即可。</p>
 
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//perqin-github-io.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
             </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/01/07/tumoji-develop-blogpost-1/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2016/12/22/configure-tomcat-jsp-project-with-idea/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Perqin's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        perqinxie@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2021/05/">五月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/showcases" title="Showcase">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Showcase
-            </a>
-        </li>
-        
-            <li class="divider"></li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                BirdZhang&#39;s Blog
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Dospy-梦影决幻
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                浮游大陆
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                FrodoLuo
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/perqinxie" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/perqin" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
+            <hr>
             <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/pydio/">Pydio</a>
+                    
+                      <a class="hover-with-bg" href="/tags/php/">PHP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/debian/">Debian</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/01/07/tumoji-develop-blogpost-1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tumoji开发记录 (1)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2016/12/22/configure-tomcat-jsp-project-with-idea/">
+                        <span class="hidden-mobile">使用Intellij IDEA配置Tomcat JSP工程过程记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
     
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/';
+          this.page.identifier = '/2016/12/23/install-pydio-on-debian-jessie-with-php7/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
 </footer>
 
 
-                    <!-- Import JS File -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+<!-- Plugins -->
 
 
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#FF4081'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#FF4081',
-        'border-left-color': '#FF4081'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
+  
 
 
-    <!-- Leancloud -->
-    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-    <script>
-        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
-    </script>
-    <script type="text/ls-javascript" id="leancloud-views-script">
-    function showTime(Counter) {
-        var query = new AV.Query(Counter);
-        $('.leancloud-views_num').each(function() {
-            var url = $(this).attr('id').trim();
-            query.equalTo('url', url);
-            query.find({
-                success: function(results) {
-                    if (results.length === 0) {
-                        var content = '0 ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                        return;
-                    }
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    }
-                },
-                error: function(object, error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            });
-        });
-    }
 
-    function addCount(Counter) {
-      var Counter = AV.Object.extend('Counter');
-      url = $('.leancloud-views_num').attr('id').trim();
-      title = $('.leancloud-views_num').attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-      query.equalTo('url', url);
-      query.find({
-          success: function(results) {
-            if (results.length > 0) {
-                var counter = results[0];
-                counter.fetchWhenSave(true);
-                counter.increment('time');
-                counter.save(null, {
-                    success: function(counter) {
-                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    },
-                    error: function(counter, error) {
-                        console.log('Failed to save Visitor num, with error message: ' + error.message);
-                    }
-                });
-            } else {
-              var newcounter = new Counter();
-              newcounter.set('title', title);
-              newcounter.set('url', url);
-              newcounter.set('time', 1);
-              newcounter.save(null, {
-                  success: function(newcounter) {
-                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
-                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
-                      $(document.getElementById(url)).text(content);
-                  },
-                  error: function(newcounter, error) {
-                      console.log('Failed to create');
-                  }
-              });
-            }
-        },
-        error: function(error) {
-            console.log('Error:' + error.code + ' ' + error.message);
-        }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       });
-    }
-    $(function() {
-        var Counter = AV.Object.extend('Counter');
-        if ($('.leancloud-views_num').length === 1) {
-            addCount(Counter);
-        } else if ($('.post-title-link').length > 1) {
-            showTime(Counter);
-        }
-    });
-</script>
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 2016;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
     })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
+  </script>
 
-                </main>
-            </div>
-        </body>
-    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

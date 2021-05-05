@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/"
 			},
 			"datePublished": "2017-03-23T15:43:12.000Z",
-			"dateModified": "2021-05-04T17:04:54.416Z",
+			"dateModified": "2021-05-05T16:18:30.365Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1816,115 +1816,39 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>Oracle Database 的安装一般需要图形化界面，因此这里我将使用 Response File 安装的方法记录下来以供参考。</p>
 <h2 id="获取-Response-File"><a href="#获取-Response-File" class="headerlink" title="获取 Response File"></a>获取 Response File</h2><p>要通过静默安装的方式安装，我们需要一个 Response File，可以看作这个文件代替我们回答了图形化安装界面里的每个步骤的选项。我通过本地的虚拟机获得了该文件，也可以在安装目录里的<code>response/db_install.rsp</code>中看到默认的配置，这里我的配置如下（删除了注释）：</p>
-<pre><code>oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
-oracle.install.option=INSTALL_DB_SWONLY
-ORACLE_HOSTNAME=localhost
-UNIX_GROUP_NAME=oinstall
-INVENTORY_LOCATION=/opt/oracle/oraInventory
-SELECTED_LANGUAGES=en
-ORACLE_HOME=/opt/oracle/oracle11g/product/11.2.0/dbhome_1
-ORACLE_BASE=/opt/oracle/oracle11g
-oracle.install.db.InstallEdition=EE
-oracle.install.db.isCustomInstall=false
-oracle.install.db.customComponents=
-oracle.install.db.DBA_GROUP=dba
-# Use wheel group which can issue sudo command
-oracle.install.db.OPER_GROUP=wheel
-oracle.install.db.CLUSTER_NODES=
-oracle.install.db.config.starterdb.type=GENERAL_PURPOSE
-oracle.install.db.config.starterdb.globalDBName=
-oracle.install.db.config.starterdb.SID=
-oracle.install.db.config.starterdb.characterSet=
-oracle.install.db.config.starterdb.memoryLimit=
-oracle.install.db.config.starterdb.memoryOption=false
-oracle.install.db.config.starterdb.installExampleSchemas=false
-oracle.install.db.config.starterdb.enableSecuritySettings=true
-oracle.install.db.config.starterdb.password.ALL=
-oracle.install.db.config.starterdb.password.SYS=
-oracle.install.db.config.starterdb.password.SYSTEM=
-oracle.install.db.config.starterdb.password.SYSMAN=
-oracle.install.db.config.starterdb.password.DBSNMP=
-oracle.install.db.config.starterdb.control=DB_CONTROL
-oracle.install.db.config.starterdb.gridcontrol.gridControlServiceURL=
-oracle.install.db.config.starterdb.dbcontrol.enableEmailNotification=false
-oracle.install.db.config.starterdb.dbcontrol.emailAddress=
-oracle.install.db.config.starterdb.dbcontrol.SMTPServer=
-oracle.install.db.config.starterdb.automatedBackup.enable=false
-oracle.install.db.config.starterdb.automatedBackup.osuid=
-oracle.install.db.config.starterdb.automatedBackup.ospwd=
-oracle.install.db.config.starterdb.storageType=
-oracle.install.db.config.starterdb.fileSystemStorage.dataLocation=
-oracle.install.db.config.starterdb.fileSystemStorage.recoveryLocation=
-oracle.install.db.config.asm.diskGroup=
-oracle.install.db.config.asm.ASMSNMPPassword=
-MYORACLESUPPORT_USERNAME=
-MYORACLESUPPORT_PASSWORD=
-SECURITY_UPDATES_VIA_MYORACLESUPPORT=false
-# Must be true to avoid PROXY related error
-DECLINE_SECURITY_UPDATES=true
-PROXY_HOST=
-PROXY_PORT=
-</code></pre>
+<figure class="highlight nix"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs nix">oracle.install.<span class="hljs-attr">responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0</span><br>oracle.install.<span class="hljs-attr">option=INSTALL_DB_SWONLY</span><br><span class="hljs-attr">ORACLE_HOSTNAME=localhost</span><br><span class="hljs-attr">UNIX_GROUP_NAME=oinstall</span><br><span class="hljs-attr">INVENTORY_LOCATION=/opt/oracle/oraInventory</span><br><span class="hljs-attr">SELECTED_LANGUAGES=en</span><br><span class="hljs-attr">ORACLE_HOME=/opt/oracle/oracle11g/product/11.2.0/dbhome_1</span><br><span class="hljs-attr">ORACLE_BASE=/opt/oracle/oracle11g</span><br>oracle.install.db.<span class="hljs-attr">InstallEdition=EE</span><br>oracle.install.db.<span class="hljs-attr">isCustomInstall=false</span><br>oracle.install.db.<span class="hljs-attr">customComponents=</span><br>oracle.install.db.<span class="hljs-attr">DBA_GROUP=dba</span><br><span class="hljs-comment"># Use wheel group which can issue sudo command</span><br>oracle.install.db.<span class="hljs-attr">OPER_GROUP=wheel</span><br>oracle.install.db.<span class="hljs-attr">CLUSTER_NODES=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">type=GENERAL_PURPOSE</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">globalDBName=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">SID=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">characterSet=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">memoryLimit=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">memoryOption=false</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">installExampleSchemas=false</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">enableSecuritySettings=true</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">ALL=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">SYS=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">SYSTEM=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">SYSMAN=</span><br>oracle.install.db.config.starterdb.password.<span class="hljs-attr">DBSNMP=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">control=DB_CONTROL</span><br>oracle.install.db.config.starterdb.gridcontrol.<span class="hljs-attr">gridControlServiceURL=</span><br>oracle.install.db.config.starterdb.dbcontrol.<span class="hljs-attr">enableEmailNotification=false</span><br>oracle.install.db.config.starterdb.dbcontrol.<span class="hljs-attr">emailAddress=</span><br>oracle.install.db.config.starterdb.dbcontrol.<span class="hljs-attr">SMTPServer=</span><br>oracle.install.db.config.starterdb.automatedBackup.<span class="hljs-attr">enable=false</span><br>oracle.install.db.config.starterdb.automatedBackup.<span class="hljs-attr">osuid=</span><br>oracle.install.db.config.starterdb.automatedBackup.<span class="hljs-attr">ospwd=</span><br>oracle.install.db.config.starterdb.<span class="hljs-attr">storageType=</span><br>oracle.install.db.config.starterdb.fileSystemStorage.<span class="hljs-attr">dataLocation=</span><br>oracle.install.db.config.starterdb.fileSystemStorage.<span class="hljs-attr">recoveryLocation=</span><br>oracle.install.db.config.asm.<span class="hljs-attr">diskGroup=</span><br>oracle.install.db.config.asm.<span class="hljs-attr">ASMSNMPPassword=</span><br><span class="hljs-attr">MYORACLESUPPORT_USERNAME=</span><br><span class="hljs-attr">MYORACLESUPPORT_PASSWORD=</span><br><span class="hljs-attr">SECURITY_UPDATES_VIA_MYORACLESUPPORT=false</span><br><span class="hljs-comment"># Must be true to avoid PROXY related error</span><br><span class="hljs-attr">DECLINE_SECURITY_UPDATES=true</span><br><span class="hljs-attr">PROXY_HOST=</span><br><span class="hljs-attr">PROXY_PORT=</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>其中需要注意的配置项已经在上面用注释说明。</p>
 <h2 id="配置依赖"><a href="#配置依赖" class="headerlink" title="配置依赖"></a>配置依赖</h2><p>Oracle Database 安装之前不仅要安装依赖，还需要调整各种内核参数。幸运的是，Oracle 已经为我们准备了一键配置包。</p>
 <p>首先添加源：</p>
-<pre><code>$ wget http://public-yum.oracle.com/public-yum-ol6.repo
-# mv public-yum-ol6.repo /etc/yum.repos.d/
-</code></pre>
+<figure class="highlight gradle"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle">$ wget http:<span class="hljs-comment">//public-yum.oracle.com/public-yum-ol6.repo</span><br># mv <span class="hljs-keyword">public</span>-yum-ol6.repo <span class="hljs-regexp">/etc/yum</span>.repos.d/<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后获取公钥：</p>
-<pre><code># wget http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
-</code></pre>
+<figure class="highlight 1c"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs 1c"><span class="hljs-meta"># wget http:<span class="hljs-comment">//public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle</span></span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来我们就可以安装依赖包了：</p>
-<pre><code># yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel unixODBC unixODBC-devel
-</code></pre>
+<figure class="highlight vala"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel unixODBC unixODBC-devel</span><br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="准备安装用户和目录"><a href="#准备安装用户和目录" class="headerlink" title="准备安装用户和目录"></a>准备安装用户和目录</h2><p>安装好之后，Oracle 已经为我们添加了一个用户<code>oracle</code>和其用户组<code>oinstall</code>，我们接下来需要通过这个帐号安装（使用<code>root</code>运行安装程序会被拒绝），所以我们要先更改其密码，并事先创建好安装目录并配置好权限（如果选择安装到其他位置，前面的 Response File 需要相应地修改）：</p>
-<pre><code># passwd oracle
-# usermod -aG wheel oracle
-# mkdir -p /opt/oracle
-# chown oracle:oinstall /opt/oracle
-</code></pre>
+<figure class="highlight vala"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># passwd oracle</span><br><span class="hljs-meta"># usermod -aG wheel oracle</span><br><span class="hljs-meta"># mkdir -p /opt/oracle</span><br><span class="hljs-meta"># chown oracle:oinstall /opt/oracle</span><br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="准备安装包"><a href="#准备安装包" class="headerlink" title="准备安装包"></a>准备安装包</h2><p>以下步骤中美元符号开头的命令均使用<code>oracle</code>用户执行。</p>
 <p>从官方网站下载了两个 zip 之后通过<code>unzip</code>命令解压，就能在目录中看到<code>database</code>目录，里面有安装所需一切文件：</p>
-<pre><code>$ unzip linux.x64_11gR2_database_1of2.zip
-$ unzip linux.x64_11gR2_database_2of2.zip
-</code></pre>
+<figure class="highlight stylus"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stylus">$ unzip linux<span class="hljs-selector-class">.x64_11gR2_database_1of2</span>.zip<br>$ unzip linux<span class="hljs-selector-class">.x64_11gR2_database_2of2</span>.zip<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="增大-swap-分区"><a href="#增大-swap-分区" class="headerlink" title="增大 swap 分区"></a>增大 swap 分区</h2><p>如果你的 CentOS 的 swap 分区没有启用或者不足 8G，安装将会失败。通过以下配置可以添加新的 swap 分区。创建分区文件也可以用<code>dd</code>命令，这里不详述：</p>
-<pre><code># fallocate -l 8G /swapfile
-# chmod 600 /swapfile
-# mkswap /swapfile
-# swapon /swapfile
-</code></pre>
+<figure class="highlight vala"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># fallocate -l 8G /swapfile</span><br><span class="hljs-meta"># chmod 600 /swapfile</span><br><span class="hljs-meta"># mkswap /swapfile</span><br><span class="hljs-meta"># swapon /swapfile</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后编辑文件<code>/etc/sysctl.conf</code>，修改下面的一行如下：</p>
-<pre><code>vm.swappiness = 10
-</code></pre>
+<figure class="highlight ini"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ini"><span class="hljs-attr">vm.swappiness</span> = <span class="hljs-number">10</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>保存之后执行：</p>
-<pre><code># sysctl -p
-</code></pre>
+<figure class="highlight vala"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vala"><span class="hljs-meta"># sysctl -p</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>为了能够在服务器启动后自动挂载，可以在<code>/etc/fstab</code>中追加下面一行：</p>
-<pre><code>/swapfile            none                    swap    sw              0 0
-</code></pre>
+<figure class="highlight avrasm"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs avrasm">/swapfile            none                    <span class="hljs-keyword">swap</span>    sw              <span class="hljs-number">0</span> <span class="hljs-number">0</span><br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>安装的时候只要用<code>oracle</code>用户执行一行命令。部分 log 会直接刷到标准输出，其中说明了日志的路径，只要静静等待安装完成时标准输出出现执行相关脚本的字眼即可。安装命令如下：</p>
-<pre><code>$ ./database/runInstaller -silent -noconfig -ignoreSysPrereqs -ignorePrereq -responseFile /home/oracle/db.rsp
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">$ .<span class="hljs-regexp">/database/</span>runInstaller -silent -noconfig -ignoreSysPrereqs -ignorePrereq -responseFile <span class="hljs-regexp">/home/</span>oracle/db.rsp<br></code></pre></div></td></tr></tbody></table></figure>
 <p>注意修改上面的 Response File 的路径。</p>
 <p>安装完成之后，<strong>使用<code>root</code>用户</strong>执行两个脚本：</p>
-<pre><code># /opt/oracle/oraInventory/orainstRoot.sh
-# /opt/oracle/oracle11g/product/11.2.0/dbhome_1/root.sh
-</code></pre>
+<figure class="highlight gradle"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle"># <span class="hljs-regexp">/opt/</span>oracle<span class="hljs-regexp">/oraInventory/</span>orainstRoot.sh<br># <span class="hljs-regexp">/opt/</span>oracle<span class="hljs-regexp">/oracle11g/</span>product<span class="hljs-regexp">/11.2.0/</span>dbhome_1/root.sh<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>在<code>/etc/profile</code>中添加以下环境变量配置：</p>
-<pre><code>export ORACLE_BASE=/opt/oracle/oracle11g
-export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
-export ORACLE_SID=orcl
-export ORACLE_UNQNAME=orcl
-export NLS_LANG=.AL32UTF8
-export PATH=$PATH:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64
-</code></pre>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros"><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_BASE</span>=/opt/oracle/oracle11g<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_HOME</span>=<span class="hljs-variable">$ORACLE_BASE</span>/product/11.2.0/dbhome_1<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_SID</span>=orcl<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">ORACLE_UNQNAME</span>=orcl<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">NLS_LANG</span>=.AL32UTF8<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$ORACLE_HOME/bin/:$ORACLE_HOME/lib64<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>执行<code>. /etc/profile</code>或重新登入之后，就可以启动监听器了：</p>
-<pre><code>$ lsnrctl start
-</code></pre>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> lsnrctl <span class="hljs-built_in">start</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>可以通过下面的命令验证 Oracle Database 已经可以使用：</p>
-<pre><code>$ sqlplus / as sysdba
-</code></pre>
+<figure class="highlight actionscript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs actionscript">$ sqlplus / <span class="hljs-keyword">as</span> sysdba<br></code></pre></div></td></tr></tbody></table></figure>
 <p>由于之前配置好了<code>oracle</code>用户，所以可以直接登录而不询问密码。</p>
 
 			  		

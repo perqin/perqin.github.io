@@ -55,7 +55,7 @@
 			    "@id":"https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/"
 			},
 			"datePublished": "2017-06-27T08:04:03.000Z",
-			"dateModified": "2021-05-04T17:04:54.416Z",
+			"dateModified": "2021-05-05T16:18:30.365Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1819,271 +1819,22 @@ h6.categories {
 			  		<p>谷歌爸爸在今年的I/O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。</p>
 <p>我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到<code>ClipboardManager</code>，而在停止的时候则会移除该监听器。奇怪的事情是，添加是可以的，移除却失败了。</p>
 <p>百思不得其解之下，我开始查看<code>ClipboardManager</code>的源码，其中添加和移除监听器的源码如下：</p>
-<pre><code class="java">    public void addPrimaryClipChangedListener(OnPrimaryClipChangedListener what) {
-        synchronized (mPrimaryClipChangedListeners) {
-            if (mPrimaryClipChangedListeners.size() == 0) {
-                try {
-                    getService().addPrimaryClipChangedListener(
-                            mPrimaryClipChangedServiceListener, mContext.getOpPackageName());
-                } catch (RemoteException e) {
-                    throw e.rethrowFromSystemServer();
-                }
-            }
-            mPrimaryClipChangedListeners.add(what);
-        }
-    }
-
-    public void removePrimaryClipChangedListener(OnPrimaryClipChangedListener what) {
-        synchronized (mPrimaryClipChangedListeners) {
-            mPrimaryClipChangedListeners.remove(what);
-            if (mPrimaryClipChangedListeners.size() == 0) {
-                try {
-                    getService().removePrimaryClipChangedListener(
-                            mPrimaryClipChangedServiceListener);
-                } catch (RemoteException e) {
-                    throw e.rethrowFromSystemServer();
-                }
-            }
-        }
-    }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addPrimaryClipChangedListener</span><span class="hljs-params">(OnPrimaryClipChangedListener what)</span> </span>{<br>    <span class="hljs-keyword">synchronized</span> (mPrimaryClipChangedListeners) {<br>        <span class="hljs-keyword">if</span> (mPrimaryClipChangedListeners.size() == <span class="hljs-number">0</span>) {<br>            <span class="hljs-keyword">try</span> {<br>                getService().addPrimaryClipChangedListener(<br>                        mPrimaryClipChangedServiceListener, mContext.getOpPackageName());<br>            } <span class="hljs-keyword">catch</span> (RemoteException e) {<br>                <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>            }<br>        }<br>        mPrimaryClipChangedListeners.add(what);<br>    }<br>}<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removePrimaryClipChangedListener</span><span class="hljs-params">(OnPrimaryClipChangedListener what)</span> </span>{<br>    <span class="hljs-keyword">synchronized</span> (mPrimaryClipChangedListeners) {<br>        mPrimaryClipChangedListeners.remove(what);<br>        <span class="hljs-keyword">if</span> (mPrimaryClipChangedListeners.size() == <span class="hljs-number">0</span>) {<br>            <span class="hljs-keyword">try</span> {<br>                getService().removePrimaryClipChangedListener(<br>                        mPrimaryClipChangedServiceListener);<br>            } <span class="hljs-keyword">catch</span> (RemoteException e) {<br>                <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>            }<br>        }<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>而这个<code>mPrimaryClipChangedListeners</code>不过是个<code>ArrayList</code>而已。</p>
 <p>如果排除了这是Android系统的bug，那么唯一的解释就是：移除监听器的时候传递的对象和一开始添加的监听器并不是同一个！（请自行脑补名侦探柯南BGM）</p>
 <p>那么就让我们来看看这个Service被编译成什么样子了吧。下面是原来的Kotlin代码（省略了业务逻辑，只保留几个Log）：</p>
-<pre><code class="kotlin">class CopyListenerService : Service() {
-    override fun onBind(p0: Intent?): IBinder? = null
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        clipboardManager.addPrimaryClipChangedListener(onPrimaryClipChangedListener)
-        return START_STICKY
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        clipboardManager.removePrimaryClipChangedListener(onPrimaryClipChangedListener)
-    }
-
-    val clipboardManager by lazy { getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
-    val onPrimaryClipChangedListener = {
-        Log.d(TAG, "Clip Item count: " + clipboardManager.primaryClip.itemCount)
-        Unit
-    }
-
-    companion object {
-        val TAG = "CopyListenerService"
-    }
-}
-</code></pre>
+<figure class="highlight kotlin"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CopyListenerService</span> : <span class="hljs-type">Service</span></span>() {<br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onBind</span><span class="hljs-params">(p0: <span class="hljs-type">Intent</span>?)</span></span>: IBinder? = <span class="hljs-literal">null</span><br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onStartCommand</span><span class="hljs-params">(intent: <span class="hljs-type">Intent</span>?, flags: <span class="hljs-type">Int</span>, startId: <span class="hljs-type">Int</span>)</span></span>: <span class="hljs-built_in">Int</span> {<br>        clipboardManager.addPrimaryClipChangedListener(onPrimaryClipChangedListener)<br>        <span class="hljs-keyword">return</span> START_STICKY<br>    }<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onDestroy</span><span class="hljs-params">()</span></span> {<br>        <span class="hljs-keyword">super</span>.onDestroy()<br>        clipboardManager.removePrimaryClipChangedListener(onPrimaryClipChangedListener)<br>    }<br><br>    <span class="hljs-keyword">val</span> clipboardManager <span class="hljs-keyword">by</span> lazy { getSystemService(Context.CLIPBOARD_SERVICE) <span class="hljs-keyword">as</span> ClipboardManager }<br>    <span class="hljs-keyword">val</span> onPrimaryClipChangedListener = {<br>        Log.d(TAG, <span class="hljs-string">"Clip Item count: "</span> + clipboardManager.primaryClip.itemCount)<br>        <span class="hljs-built_in">Unit</span><br>    }<br><br>    <span class="hljs-keyword">companion</span> <span class="hljs-keyword">object</span> {<br>        <span class="hljs-keyword">val</span> TAG = <span class="hljs-string">"CopyListenerService"</span><br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>可以看到，我的<code>onPrimaryClipChangedListener</code>只是一个纯洁的lambda表达式而已。</p>
 <p>我们点击菜单<code>Tools - Kotlin - Show Kotlin Bytecode</code>，右边会多出一个编辑器，我们点击那个编辑器顶部的<code>Decompile</code>按钮，左边的编辑器就多了一个<code>CopyListenerService.decompiled.java</code>的文件。由于是反编译的，所以非常丑而且还有很多IDE飘红，不过这不影响我们找出元凶。下面是反编译结果，巨长：</p>
-<pre><code class="java">// CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3.java
-package com.perqin.copyshare;
-
-import android.content.ClipboardManager.OnPrimaryClipChangedListener;
-import kotlin.Metadata;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.internal.Intrinsics;
-
-@Metadata(
-   mv = {1, 1, 6},
-   bv = {1, 0, 1},
-   k = 3
-)
-final class CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 implements OnPrimaryClipChangedListener {
-   // $FF: synthetic field
-   private final Function0 function;
-
-   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) {
-      this.function = var1;
-   }
-
-   // $FF: synthetic method
-   public final void onPrimaryClipChanged() {
-      Intrinsics.checkExpressionValueIsNotNull(this.function.invoke(), "invoke(...)");
-   }
-}
-// CopyListenerService.java
-package com.perqin.copyshare;
-
-import android.app.Service;
-import android.content.ClipboardManager;
-import android.content.Intent;
-import android.content.ClipboardManager.OnPrimaryClipChangedListener;
-import android.os.IBinder;
-import android.util.Log;
-import kotlin.Lazy;
-import kotlin.LazyKt;
-import kotlin.Metadata;
-import kotlin.TypeCastException;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.internal.DefaultConstructorMarker;
-import kotlin.jvm.internal.PropertyReference1Impl;
-import kotlin.jvm.internal.Reflection;
-import kotlin.reflect.KProperty;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-@Metadata(
-   mv = {1, 1, 6},
-   bv = {1, 0, 1},
-   k = 1,
-   d1 = {"\u00006\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0010\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\b\n\u0002\b\u0005\u0018\u0000 \u00182\u00020\u0001:\u0001\u0018B\u0005¢\u0006\u0002\u0010\u0002J\u0014\u0010\u000e\u001a\u0004\u0018\u00010\u000f2\b\u0010\u0010\u001a\u0004\u0018\u00010\u0011H\u0016J\b\u0010\u0012\u001a\u00020\u000bH\u0016J\"\u0010\u0013\u001a\u00020\u00142\b\u0010\u0015\u001a\u0004\u0018\u00010\u00112\u0006\u0010\u0016\u001a\u00020\u00142\u0006\u0010\u0017\u001a\u00020\u0014H\u0016R\u001b\u0010\u0003\u001a\u00020\u00048FX\u0086\u0084\u0002¢\u0006\f\n\u0004\b\u0007\u0010\b\u001a\u0004\b\u0005\u0010\u0006R\u0017\u0010\t\u001a\b\u0012\u0004\u0012\u00020\u000b0\n¢\u0006\b\n\u0000\u001a\u0004\b\f\u0010\r¨\u0006\u0019"},
-   d2 = {"Lcom/perqin/copyshare/CopyListenerService;", "Landroid/app/Service;", "()V", "clipboardManager", "Landroid/content/ClipboardManager;", "getClipboardManager", "()Landroid/content/ClipboardManager;", "clipboardManager$delegate", "Lkotlin/Lazy;", "onPrimaryClipChangedListener", "Lkotlin/Function0;", "", "getOnPrimaryClipChangedListener", "()Lkotlin/jvm/functions/Function0;", "onBind", "Landroid/os/IBinder;", "p0", "Landroid/content/Intent;", "onDestroy", "onStartCommand", "", "intent", "flags", "startId", "Companion", "production sources for module app"}
-)
-public final class CopyListenerService extends Service {
-   @NotNull
-   private final Lazy clipboardManager$delegate = LazyKt.lazy((Function0)(new Function0() {
-      // $FF: synthetic method
-      // $FF: bridge method
-      public Object invoke() {
-         return this.invoke();
-      }
-
-      @NotNull
-      public final ClipboardManager invoke() {
-         Object var10000 = CopyListenerService.this.getSystemService("clipboard");
-         if(var10000 == null) {
-            throw new TypeCastException("null cannot be cast to non-null type android.content.ClipboardManager");
-         } else {
-            return (ClipboardManager)var10000;
-         }
-      }
-   }));
-   @NotNull
-   private final Function0 onPrimaryClipChangedListener = (Function0)(new Function0() {
-      // $FF: synthetic method
-      // $FF: bridge method
-      public Object invoke() {
-         this.invoke();
-         return Unit.INSTANCE;
-      }
-
-      public final void invoke() {
-         Log.d(CopyListenerService.Companion.getTAG(), "Clip Item count: " + CopyListenerService.this.getClipboardManager().getPrimaryClip().getItemCount());
-      }
-   });
-   @NotNull
-   private static final String TAG = "CopyListenerService";
-   // $FF: synthetic field
-   static final KProperty[] $$delegatedProperties = new KProperty[]{(KProperty)Reflection.property1(new PropertyReference1Impl(Reflection.getOrCreateKotlinClass(CopyListenerService.class), "clipboardManager", "getClipboardManager()Landroid/content/ClipboardManager;"))};
-   public static final CopyListenerService.Companion Companion = new CopyListenerService.Companion((DefaultConstructorMarker)null);
-
-   @Nullable
-   public IBinder onBind(@Nullable Intent p0) {
-      return null;
-   }
-
-   public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-      ClipboardManager var10000 = this.getClipboardManager();
-      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
-      Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
-         Object var10002 = null;
-      } else {
-         var10001.&lt;init&gt;(var10003);
-      }
-
-      var10000.addPrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
-      return 1;
-   }
-
-   public void onDestroy() {
-      super.onDestroy();
-      ClipboardManager var10000 = this.getClipboardManager();
-      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
-      Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
-         Object var10002 = null;
-      } else {
-         var10001.&lt;init&gt;(var10003);
-      }
-
-      var10000.removePrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
-   }
-
-   @NotNull
-   public final ClipboardManager getClipboardManager() {
-      Lazy var1 = this.clipboardManager$delegate;
-      KProperty var3 = $$delegatedProperties[0];
-      return (ClipboardManager)var1.getValue();
-   }
-
-   @NotNull
-   public final Function0 getOnPrimaryClipChangedListener() {
-      return this.onPrimaryClipChangedListener;
-   }
-
-   @Metadata(
-      mv = {1, 1, 6},
-      bv = {1, 0, 1},
-      k = 1,
-      d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0003\b\u0086\u0003\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002R\u0014\u0010\u0003\u001a\u00020\u0004X\u0086D¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006¨\u0006\u0007"},
-      d2 = {"Lcom/perqin/copyshare/CopyListenerService$Companion;", "", "()V", "TAG", "", "getTAG", "()Ljava/lang/String;", "production sources for module app"}
-   )
-   public static final class Companion {
-      @NotNull
-      public final String getTAG() {
-         return CopyListenerService.TAG;
-      }
-
-      private Companion() {
-      }
-
-      // $FF: synthetic method
-      public Companion(DefaultConstructorMarker $constructor_marker) {
-         this();
-      }
-   }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3.java</span><br><span class="hljs-keyword">package</span> com.perqin.copyshare;<br><br><span class="hljs-keyword">import</span> android.content.ClipboardManager.OnPrimaryClipChangedListener;<br><span class="hljs-keyword">import</span> kotlin.Metadata;<br><span class="hljs-keyword">import</span> kotlin.jvm.functions.Function0;<br><span class="hljs-keyword">import</span> kotlin.jvm.internal.Intrinsics;<br><br><span class="hljs-meta">@Metadata(</span><br><span class="hljs-meta">   mv = {1, 1, 6},</span><br><span class="hljs-meta">   bv = {1, 0, 1},</span><br><span class="hljs-meta">   k = 3</span><br><span class="hljs-meta">)</span><br><span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CopyListenerServiceKt</span>$<span class="hljs-title">sam</span>$<span class="hljs-title">OnPrimaryClipChangedListener</span>$15<span class="hljs-title">d0add3</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">OnPrimaryClipChangedListener</span> </span>{<br>   <span class="hljs-comment">// $FF: synthetic field</span><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Function0 function;<br><br>   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) {<br>      <span class="hljs-keyword">this</span>.function = var1;<br>   }<br><br>   <span class="hljs-comment">// $FF: synthetic method</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onPrimaryClipChanged</span><span class="hljs-params">()</span> </span>{<br>      Intrinsics.checkExpressionValueIsNotNull(<span class="hljs-keyword">this</span>.function.invoke(), <span class="hljs-string">"invoke(...)"</span>);<br>   }<br>}<br><span class="hljs-comment">// CopyListenerService.java</span><br><span class="hljs-keyword">package</span> com.perqin.copyshare;<br><br><span class="hljs-keyword">import</span> android.app.Service;<br><span class="hljs-keyword">import</span> android.content.ClipboardManager;<br><span class="hljs-keyword">import</span> android.content.Intent;<br><span class="hljs-keyword">import</span> android.content.ClipboardManager.OnPrimaryClipChangedListener;<br><span class="hljs-keyword">import</span> android.os.IBinder;<br><span class="hljs-keyword">import</span> android.util.Log;<br><span class="hljs-keyword">import</span> kotlin.Lazy;<br><span class="hljs-keyword">import</span> kotlin.LazyKt;<br><span class="hljs-keyword">import</span> kotlin.Metadata;<br><span class="hljs-keyword">import</span> kotlin.TypeCastException;<br><span class="hljs-keyword">import</span> kotlin.Unit;<br><span class="hljs-keyword">import</span> kotlin.jvm.functions.Function0;<br><span class="hljs-keyword">import</span> kotlin.jvm.internal.DefaultConstructorMarker;<br><span class="hljs-keyword">import</span> kotlin.jvm.internal.PropertyReference1Impl;<br><span class="hljs-keyword">import</span> kotlin.jvm.internal.Reflection;<br><span class="hljs-keyword">import</span> kotlin.reflect.KProperty;<br><span class="hljs-keyword">import</span> org.jetbrains.annotations.NotNull;<br><span class="hljs-keyword">import</span> org.jetbrains.annotations.Nullable;<br><br><span class="hljs-meta">@Metadata(</span><br><span class="hljs-meta">   mv = {1, 1, 6},</span><br><span class="hljs-meta">   bv = {1, 0, 1},</span><br><span class="hljs-meta">   k = 1,</span><br><span class="hljs-meta">   d1 = {"\u00006\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\u0010\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\b\n\u0002\b\u0005\u0018\u0000 \u00182\u00020\u0001:\u0001\u0018B\u0005¢\u0006\u0002\u0010\u0002J\u0014\u0010\u000e\u001a\u0004\u0018\u00010\u000f2\b\u0010\u0010\u001a\u0004\u0018\u00010\u0011H\u0016J\b\u0010\u0012\u001a\u00020\u000bH\u0016J\"\u0010\u0013\u001a\u00020\u00142\b\u0010\u0015\u001a\u0004\u0018\u00010\u00112\u0006\u0010\u0016\u001a\u00020\u00142\u0006\u0010\u0017\u001a\u00020\u0014H\u0016R\u001b\u0010\u0003\u001a\u00020\u00048FX\u0086\u0084\u0002¢\u0006\f\n\u0004\b\u0007\u0010\b\u001a\u0004\b\u0005\u0010\u0006R\u0017\u0010\t\u001a\b\u0012\u0004\u0012\u00020\u000b0\n¢\u0006\b\n\u0000\u001a\u0004\b\f\u0010\r¨\u0006\u0019"},</span><br><span class="hljs-meta">   d2 = {"Lcom/perqin/copyshare/CopyListenerService;", "Landroid/app/Service;", "()V", "clipboardManager", "Landroid/content/ClipboardManager;", "getClipboardManager", "()Landroid/content/ClipboardManager;", "clipboardManager$delegate", "Lkotlin/Lazy;", "onPrimaryClipChangedListener", "Lkotlin/Function0;", "", "getOnPrimaryClipChangedListener", "()Lkotlin/jvm/functions/Function0;", "onBind", "Landroid/os/IBinder;", "p0", "Landroid/content/Intent;", "onDestroy", "onStartCommand", "", "intent", "flags", "startId", "Companion", "production sources for module app"}</span><br><span class="hljs-meta">)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CopyListenerService</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Service</span> </span>{<br>   <span class="hljs-meta">@NotNull</span><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Lazy clipboardManager$delegate = LazyKt.lazy((Function0)(<span class="hljs-keyword">new</span> Function0() {<br>      <span class="hljs-comment">// $FF: synthetic method</span><br>      <span class="hljs-comment">// $FF: bridge method</span><br>      <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">()</span> </span>{<br>         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.invoke();<br>      }<br><br>      <span class="hljs-meta">@NotNull</span><br>      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> ClipboardManager <span class="hljs-title">invoke</span><span class="hljs-params">()</span> </span>{<br>         Object var10000 = CopyListenerService.<span class="hljs-keyword">this</span>.getSystemService(<span class="hljs-string">"clipboard"</span>);<br>         <span class="hljs-keyword">if</span>(var10000 == <span class="hljs-keyword">null</span>) {<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> TypeCastException(<span class="hljs-string">"null cannot be cast to non-null type android.content.ClipboardManager"</span>);<br>         } <span class="hljs-keyword">else</span> {<br>            <span class="hljs-keyword">return</span> (ClipboardManager)var10000;<br>         }<br>      }<br>   }));<br>   <span class="hljs-meta">@NotNull</span><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Function0 onPrimaryClipChangedListener = (Function0)(<span class="hljs-keyword">new</span> Function0() {<br>      <span class="hljs-comment">// $FF: synthetic method</span><br>      <span class="hljs-comment">// $FF: bridge method</span><br>      <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">()</span> </span>{<br>         <span class="hljs-keyword">this</span>.invoke();<br>         <span class="hljs-keyword">return</span> Unit.INSTANCE;<br>      }<br><br>      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">invoke</span><span class="hljs-params">()</span> </span>{<br>         Log.d(CopyListenerService.Companion.getTAG(), <span class="hljs-string">"Clip Item count: "</span> + CopyListenerService.<span class="hljs-keyword">this</span>.getClipboardManager().getPrimaryClip().getItemCount());<br>      }<br>   });<br>   <span class="hljs-meta">@NotNull</span><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String TAG = <span class="hljs-string">"CopyListenerService"</span>;<br>   <span class="hljs-comment">// $FF: synthetic field</span><br>   <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> KProperty[] $delegatedProperties = <span class="hljs-keyword">new</span> KProperty[]{(KProperty)Reflection.property1(<span class="hljs-keyword">new</span> PropertyReference1Impl(Reflection.getOrCreateKotlinClass(CopyListenerService.class), <span class="hljs-string">"clipboardManager"</span>, <span class="hljs-string">"getClipboardManager()Landroid/content/ClipboardManager;"</span>))};<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> CopyListenerService.Companion Companion = <span class="hljs-keyword">new</span> CopyListenerService.Companion((DefaultConstructorMarker)<span class="hljs-keyword">null</span>);<br><br>   <span class="hljs-meta">@Nullable</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> IBinder <span class="hljs-title">onBind</span><span class="hljs-params">(<span class="hljs-meta">@Nullable</span> Intent p0)</span> </span>{<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>   }<br><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">onStartCommand</span><span class="hljs-params">(<span class="hljs-meta">@Nullable</span> Intent intent, <span class="hljs-keyword">int</span> flags, <span class="hljs-keyword">int</span> startId)</span> </span>{<br>      ClipboardManager var10000 = <span class="hljs-keyword">this</span>.getClipboardManager();<br>      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = <span class="hljs-keyword">new</span> CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;<br>      Function0 var10003 = <span class="hljs-keyword">this</span>.onPrimaryClipChangedListener;<br>      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.onPrimaryClipChangedListener == <span class="hljs-keyword">null</span>) {<br>         Object var10002 = <span class="hljs-keyword">null</span>;<br>      } <span class="hljs-keyword">else</span> {<br>         var10001.&lt;init&gt;(var10003);<br>      }<br><br>      var10000.addPrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);<br>      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>   }<br><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDestroy</span><span class="hljs-params">()</span> </span>{<br>      <span class="hljs-keyword">super</span>.onDestroy();<br>      ClipboardManager var10000 = <span class="hljs-keyword">this</span>.getClipboardManager();<br>      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = <span class="hljs-keyword">new</span> CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;<br>      Function0 var10003 = <span class="hljs-keyword">this</span>.onPrimaryClipChangedListener;<br>      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.onPrimaryClipChangedListener == <span class="hljs-keyword">null</span>) {<br>         Object var10002 = <span class="hljs-keyword">null</span>;<br>      } <span class="hljs-keyword">else</span> {<br>         var10001.&lt;init&gt;(var10003);<br>      }<br><br>      var10000.removePrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);<br>   }<br><br>   <span class="hljs-meta">@NotNull</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> ClipboardManager <span class="hljs-title">getClipboardManager</span><span class="hljs-params">()</span> </span>{<br>      Lazy var1 = <span class="hljs-keyword">this</span>.clipboardManager$delegate;<br>      KProperty var3 = $delegatedProperties[<span class="hljs-number">0</span>];<br>      <span class="hljs-keyword">return</span> (ClipboardManager)var1.getValue();<br>   }<br><br>   <span class="hljs-meta">@NotNull</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> Function0 <span class="hljs-title">getOnPrimaryClipChangedListener</span><span class="hljs-params">()</span> </span>{<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.onPrimaryClipChangedListener;<br>   }<br><br>   <span class="hljs-meta">@Metadata(</span><br><span class="hljs-meta">      mv = {1, 1, 6},</span><br><span class="hljs-meta">      bv = {1, 0, 1},</span><br><span class="hljs-meta">      k = 1,</span><br><span class="hljs-meta">      d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0003\b\u0086\u0003\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002R\u0014\u0010\u0003\u001a\u00020\u0004X\u0086D¢\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006¨\u0006\u0007"},</span><br><span class="hljs-meta">      d2 = {"Lcom/perqin/copyshare/CopyListenerService$Companion;", "", "()V", "TAG", "", "getTAG", "()Ljava/lang/String;", "production sources for module app"}</span><br><span class="hljs-meta">   )</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Companion</span> </span>{<br>      <span class="hljs-meta">@NotNull</span><br>      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> String <span class="hljs-title">getTAG</span><span class="hljs-params">()</span> </span>{<br>         <span class="hljs-keyword">return</span> CopyListenerService.TAG;<br>      }<br><br>      <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Companion</span><span class="hljs-params">()</span> </span>{<br>      }<br><br>      <span class="hljs-comment">// $FF: synthetic method</span><br>      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Companion</span><span class="hljs-params">(DefaultConstructorMarker $constructor_marker)</span> </span>{<br>         <span class="hljs-keyword">this</span>();<br>      }<br>   }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来，我们来简单分析试试。</p>
 <p>首先，我们的lambda监听器被转换成什么代码了呢？</p>
-<pre><code class="java">   @NotNull
-   private final Function0 onPrimaryClipChangedListener = (Function0)(new Function0() {
-      // $FF: synthetic method
-      // $FF: bridge method
-      public Object invoke() {
-         this.invoke();
-         return Unit.INSTANCE;
-      }
-
-      public final void invoke() {
-         Log.d(CopyListenerService.Companion.getTAG(), "Clip Item count: " + CopyListenerService.this.getClipboardManager().getPrimaryClip().getItemCount());
-      }
-   });
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@NotNull</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Function0 onPrimaryClipChangedListener = (Function0)(<span class="hljs-keyword">new</span> Function0() {<br>   <span class="hljs-comment">// $FF: synthetic method</span><br>   <span class="hljs-comment">// $FF: bridge method</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">()</span> </span>{<br>      <span class="hljs-keyword">this</span>.invoke();<br>      <span class="hljs-keyword">return</span> Unit.INSTANCE;<br>   }<br><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">invoke</span><span class="hljs-params">()</span> </span>{<br>      Log.d(CopyListenerService.Companion.getTAG(), <span class="hljs-string">"Clip Item count: "</span> + CopyListenerService.<span class="hljs-keyword">this</span>.getClipboardManager().getPrimaryClip().getItemCount());<br>   }<br>});<br></code></pre></div></td></tr></tbody></table></figure>
 <p>我们发现，我们在监听器里的实现被转换成了一个<code>Function0</code>对象，具体的实现代码被放在了<code>invoke</code>方法里。</p>
 <p>接下来，我们来看看我们添加监听器的代码被转换成的样子：</p>
-<pre><code class="java">   public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-      ClipboardManager var10000 = this.getClipboardManager();
-      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
-      Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
-         Object var10002 = null;
-      } else {
-         var10001.&lt;init&gt;(var10003);
-      }
-
-      var10000.addPrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
-      return 1;
-   }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">onStartCommand</span><span class="hljs-params">(<span class="hljs-meta">@Nullable</span> Intent intent, <span class="hljs-keyword">int</span> flags, <span class="hljs-keyword">int</span> startId)</span> </span>{<br>   ClipboardManager var10000 = <span class="hljs-keyword">this</span>.getClipboardManager();<br>   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = <span class="hljs-keyword">new</span> CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;<br>   Function0 var10003 = <span class="hljs-keyword">this</span>.onPrimaryClipChangedListener;<br>   <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.onPrimaryClipChangedListener == <span class="hljs-keyword">null</span>) {<br>      Object var10002 = <span class="hljs-keyword">null</span>;<br>   } <span class="hljs-keyword">else</span> {<br>      var10001.&lt;init&gt;(var10003);<br>   }<br><br>   var10000.addPrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);<br>   <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>可以看到，我们添加监听器的时候传递的对象是<code>var10001</code>，而它是一个<code>CopyListenerServiceKt<amp-mathml layout="container" inline="" data-formula="\[sam\]"></amp-mathml>OnPrimaryClipChangedListener$15d0add3</code>类的实例。这个类又是个什么鬼？我们接着看：</p>
-<pre><code class="java">final class CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 implements OnPrimaryClipChangedListener {
-   // $FF: synthetic field
-   private final Function0 function;
-
-   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) {
-      this.function = var1;
-   }
-
-   // $FF: synthetic method
-   public final void onPrimaryClipChanged() {
-      Intrinsics.checkExpressionValueIsNotNull(this.function.invoke(), "invoke(...)");
-   }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CopyListenerServiceKt</span>$<span class="hljs-title">sam</span>$<span class="hljs-title">OnPrimaryClipChangedListener</span>$15<span class="hljs-title">d0add3</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">OnPrimaryClipChangedListener</span> </span>{<br>   <span class="hljs-comment">// $FF: synthetic field</span><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Function0 function;<br><br>   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3(Function0 var1) {<br>      <span class="hljs-keyword">this</span>.function = var1;<br>   }<br><br>   <span class="hljs-comment">// $FF: synthetic method</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onPrimaryClipChanged</span><span class="hljs-params">()</span> </span>{<br>      Intrinsics.checkExpressionValueIsNotNull(<span class="hljs-keyword">this</span>.function.invoke(), <span class="hljs-string">"invoke(...)"</span>);<br>   }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>原来如此，这个名字巨长的类正是实现了<code>OnPrimaryClipChangedListener</code>的类，它持有一个<code>Function0</code>的引用，而它的<code>onPrimaryClipChanged</code>实现其实不过是调用这个对象的<code>invoke</code>方法。</p>
 <p>现在再回去看看添加监听器的代码，我们就可以整理出这样的思路：</p>
 <ul>
@@ -2094,50 +1845,16 @@ public final class CopyListenerService extends Service {
 <li>最后把这个构造出来的对象作为真正的监听器丢进去</li>
 </ul>
 <p>等等，好像有哪里不对……构造一个对象？！？让我们看看这行代码：</p>
-<pre><code class="java">      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = <span class="hljs-keyword">new</span> CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这是个局部变量啊！！！丢进去之后就拿不到它了啊！那我还怎么remove它呢？？</p>
 <p>来看看移除监听器是怎么写的：</p>
-<pre><code class="java">   public void onDestroy() {
-      super.onDestroy();
-      ClipboardManager var10000 = this.getClipboardManager();
-      CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = new CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;
-      Function0 var10003 = this.onPrimaryClipChangedListener;
-      if(this.onPrimaryClipChangedListener == null) {
-         Object var10002 = null;
-      } else {
-         var10001.&lt;init&gt;(var10003);
-      }
-
-      var10000.removePrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);
-   }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDestroy</span><span class="hljs-params">()</span> </span>{<br>   <span class="hljs-keyword">super</span>.onDestroy();<br>   ClipboardManager var10000 = <span class="hljs-keyword">this</span>.getClipboardManager();<br>   CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3 var10001 = <span class="hljs-keyword">new</span> CopyListenerServiceKt$sam$OnPrimaryClipChangedListener$15d0add3;<br>   Function0 var10003 = <span class="hljs-keyword">this</span>.onPrimaryClipChangedListener;<br>   <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.onPrimaryClipChangedListener == <span class="hljs-keyword">null</span>) {<br>      Object var10002 = <span class="hljs-keyword">null</span>;<br>   } <span class="hljs-keyword">else</span> {<br>      var10001.&lt;init&gt;(var10003);<br>   }<br><br>   var10000.removePrimaryClipChangedListener((OnPrimaryClipChangedListener)var10001);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>咳咳，这么骚的吗？</p>
 <p>所以，我们终于得出了结论：虽然我们的lambda表达式对应的是不变的<code>Function0</code>对象，但是每次从它得到的监听器却不是同一个监听器！</p>
 <p>有了这个结论，也就有了一个解决方法：我们不要让<code>onPrimaryClipChangedListener</code>成为lambda表达式，而是一个正正经经的监听器匿名内部类对象，我们改改代码：</p>
-<pre><code class="kotlin">    val onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener {
-        Log.d(TAG, "Clip Item count: " + clipboardManager.primaryClip.itemCount)
-        Unit
-    }
-</code></pre>
+<figure class="highlight kotlin"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener {<br>    Log.d(TAG, <span class="hljs-string">"Clip Item count: "</span> + clipboardManager.primaryClip.itemCount)<br>    <span class="hljs-built_in">Unit</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>额额，好像只是加了两个单词……接下来看看反编译的代码：</p>
-<pre><code class="java">   @NotNull
-   private final OnPrimaryClipChangedListener onPrimaryClipChangedListener = (OnPrimaryClipChangedListener)(new OnPrimaryClipChangedListener() {
-      public final void onPrimaryClipChanged() {
-         Log.d(CopyListenerService.Companion.getTAG(), "Clip Item count: " + CopyListenerService.this.getClipboardManager().getPrimaryClip().getItemCount());
-      }
-   });
-
-   public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-      this.getClipboardManager().addPrimaryClipChangedListener(this.onPrimaryClipChangedListener);
-      return 1;
-   }
-
-   public void onDestroy() {
-      super.onDestroy();
-      this.getClipboardManager().removePrimaryClipChangedListener(this.onPrimaryClipChangedListener);
-   }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@NotNull</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> OnPrimaryClipChangedListener onPrimaryClipChangedListener = (OnPrimaryClipChangedListener)(<span class="hljs-keyword">new</span> OnPrimaryClipChangedListener() {<br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onPrimaryClipChanged</span><span class="hljs-params">()</span> </span>{<br>      Log.d(CopyListenerService.Companion.getTAG(), <span class="hljs-string">"Clip Item count: "</span> + CopyListenerService.<span class="hljs-keyword">this</span>.getClipboardManager().getPrimaryClip().getItemCount());<br>   }<br>});<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">onStartCommand</span><span class="hljs-params">(<span class="hljs-meta">@Nullable</span> Intent intent, <span class="hljs-keyword">int</span> flags, <span class="hljs-keyword">int</span> startId)</span> </span>{<br>   <span class="hljs-keyword">this</span>.getClipboardManager().addPrimaryClipChangedListener(<span class="hljs-keyword">this</span>.onPrimaryClipChangedListener);<br>   <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>}<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDestroy</span><span class="hljs-params">()</span> </span>{<br>   <span class="hljs-keyword">super</span>.onDestroy();<br>   <span class="hljs-keyword">this</span>.getClipboardManager().removePrimaryClipChangedListener(<span class="hljs-keyword">this</span>.onPrimaryClipChangedListener);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这次，<code>this.onPrimaryClipChangedListener</code>终于不再是一个<code>Function0</code>对象，而是一个监听器了！</p>
 <p><del>然而，过了那么久都没有人在应用商店反馈这个bug，我该高兴还是不高兴呢……</del></p>
 

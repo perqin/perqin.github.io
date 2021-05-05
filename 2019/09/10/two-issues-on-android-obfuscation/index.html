@@ -1,699 +1,244 @@
+
+
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
-    <meta charset="utf-8">
-    <!-- AMP support -->
-    
-        <link rel="amphtml" href="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation//amp/index.html">
-    
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
-
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
-
-
-
-    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            Android代码混淆问题处理两则 | 
-        
-        Perqin&#39;s Blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/avatar.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,Android,ProGuard">
-    <meta name="theme-color" content="#673AB7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: ;
-    overflow-x: hidden !important;
-  }
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
+  <meta name="theme-color" content="#7108B2">
+  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+  <title>Android代码混淆问题处理两则 - Perqin&#39;s Blog</title>
 
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #673AB7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #673AB7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #673AB7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-<!-- Theme Background Related-->
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Perqin&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/">
-    <meta name="msapplication-navbutton-color" content="#673AB7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Android代码混淆问题处理两则 | Perqin&#39;s Blog">
-    <meta property="og:image" content="/img/avatar.png">
-    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="Android"> <meta property="og:article:tag" content="ProGuard"> 
-
-    
-        <meta property="article:published_time" content="Tue Sep 10 2019 21:33:28 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 04 2021 17:04:54 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html",
-    "headline": "Android代码混淆问题处理两则",
-    "datePublished": "Tue Sep 10 2019 21:33:28 GMT+0800",
-    "dateModified": "Tue May 04 2021 17:04:54 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Perqin",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Blogging is as painful as writing docs..."
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Perqin&#39;s Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/avatar.png"
-        }
-    },
-    "keywords": ",Android,ProGuardPerqin",
-    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
+  
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
     
-        <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
-</div>
-    
+  
 
-    <!-- Custom Head -->
-    
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.3.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Android代码混淆问题处理两则">
+              
             </span>
-        </a>
-    </div>
-    -->
 
-
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ProGuard%E5%A4%84%E7%90%86%E5%8F%AF%E9%80%89%E4%BE%9D%E8%B5%96%E9%94%99%E8%AF%AF"><span class="post-toc-number">1.</span> <span class="post-toc-text">ProGuard处理可选依赖错误</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Serializable%E5%AF%B9%E8%B1%A1%E6%B7%B7%E6%B7%86%E5%90%8E%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="post-toc-number">2.</span> <span class="post-toc-text">Serializable对象混淆后不可用</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                Android代码混淆问题处理两则
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Perqin</strong>
-        <span>9月 10, 2019</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/android/" rel="tag">Android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/proguard/" rel="tag">ProGuard</a>
-    </ul>
-    
-
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-    <!-- Leancloud Views -->
-        <a class="post_share-link" href="#">
-            <li class="mdl-menu__item">
-                <span id="/2019/09/10/two-issues-on-android-obfuscation/" class="leancloud-views_num" data-flag-title="Android代码混淆问题处理两则">
-     &nbsp;浏览量
-</span>
-
-            </li>
-        </a>
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Android代码混淆问题处理两则&url=https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Android代码混淆问题处理两则&url=https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html&via=Perqin" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-    
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-09-10 21:33" pubdate>
+        2019年9月10日 晚上
+      </time>
+    </span>
+  
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+<div class="mt-1">
+  
     
-        <p>代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。</p>
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      54
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Android代码混淆问题处理两则</h1>
+            
+            <div class="markdown-body">
+              <p>代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。</p>
 <p>然而代码混淆之路并非一帆风顺，而且往往在运行到目标代码之前，无法确定混淆是否出了问题。本文记载两则代码混淆中遇到的问题和处理方案。</p>
 <p>本文提及的代码可以在<a target="_blank" rel="noopener" href="https://github.com/perqin/ProGuardBugTest">https://github.com/perqin/ProGuardBugTest</a>找到。</p>
 <h2 id="ProGuard处理可选依赖错误"><a href="#ProGuard处理可选依赖错误" class="headerlink" title="ProGuard处理可选依赖错误"></a>ProGuard处理可选依赖错误</h2><p>在我维护的SDK项目中的一个版本中，我需要支持多个SDK之间不强制依赖。Base模块为基础库；Core和GUI模块均依赖Base库，但GUI模块对Core的依赖是可选的。</p>
 <p>在实现上，我让Web对Core的依赖为<code>compileOnly</code>：</p>
-<pre><code class="groovy">// gui/build.gradle
-apply plugin: &#39;java-library&#39;
-
-dependencies &#123;
-    implementation project(&#39;:base&#39;)
-    compileOnly project(&#39;:core&#39;)
-&#125;
-
-sourceCompatibility = &quot;7&quot;
-targetCompatibility = &quot;7&quot;
-</code></pre>
+<figure class="highlight groovy"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy"><span class="hljs-comment">// gui/build.gradle</span><br>apply <span class="hljs-attr">plugin:</span> <span class="hljs-string">&#x27;java-library&#x27;</span><br><br>dependencies &#123;<br>    implementation project(<span class="hljs-string">&#x27;:base&#x27;</span>)<br>    compileOnly project(<span class="hljs-string">&#x27;:core&#x27;</span>)<br>&#125;<br><br>sourceCompatibility = <span class="hljs-string">&quot;7&quot;</span><br>targetCompatibility = <span class="hljs-string">&quot;7&quot;</span><br><br></code></pre></div></td></tr></table></figure>
 <p>在Base模块中有<code>Account</code>类，在Core模块中则有一个接口使用了该类：</p>
-<pre><code class="java">package com.example.core;
-
-import com.example.base.Account;
-
-public interface AccountStore &#123;
-    Account getAccount();
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.core;<br><br><span class="hljs-keyword">import</span> com.example.base.Account;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AccountStore</span> </span>&#123;<br>    <span class="hljs-function">Account <span class="hljs-title">getAccount</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
 <p>接下来，GUI模块中有一段对Core模块的选择性调用逻辑：</p>
-<pre><code class="java">package com.example.gui;
-
-import com.example.core.AccountStore;
-import com.example.core.CoreMain;
-
-public class GuiMain &#123;
-    private static final boolean HAS_CORE;
-    static &#123;
-        boolean hasCore;
-        try &#123;
-            new CoreMain();
-            hasCore = true;
-        &#125; catch (NoClassDefFoundError e) &#123;
-            hasCore = false;
-        &#125;
-        System.out.println(&quot;hasCore: &quot; + hasCore);
-        HAS_CORE = hasCore;
-    &#125;
-
-    private AccountStore accountStore = null;
-
-    public void setAccountStore(AccountStore accountStore) &#123;
-        this.accountStore = accountStore;
-    &#125;
-
-    public String tryGetAccountName() &#123;
-        if (HAS_CORE) &#123;
-            if (accountStore != null) &#123;
-                return accountStore.getAccount().name;
-            &#125;
-        &#125;
-        return &quot;&quot;;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.gui;<br><br><span class="hljs-keyword">import</span> com.example.core.AccountStore;<br><span class="hljs-keyword">import</span> com.example.core.CoreMain;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GuiMain</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> HAS_CORE;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">boolean</span> hasCore;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">new</span> CoreMain();<br>            hasCore = <span class="hljs-keyword">true</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (NoClassDefFoundError e) &#123;<br>            hasCore = <span class="hljs-keyword">false</span>;<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;hasCore: &quot;</span> + hasCore);<br>        HAS_CORE = hasCore;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> AccountStore accountStore = <span class="hljs-keyword">null</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAccountStore</span><span class="hljs-params">(AccountStore accountStore)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.accountStore = accountStore;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">tryGetAccountName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (HAS_CORE) &#123;<br>            <span class="hljs-keyword">if</span> (accountStore != <span class="hljs-keyword">null</span>) &#123;<br>                <span class="hljs-keyword">return</span> accountStore.getAccount().name;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>该类通过Core中才有的<code>CoreMain</code>类来判断可选依赖的类是否存在，<code>tryGetAccountName</code>中进行了判断，如果Core模块不存在，必定不会引用到<code>AccountStore</code>接口，也不应该会出现任何问题。</p>
 <p>接下来，我们将Base和Gui分别打包为jar并给app模块引用，注意Core未被引用。</p>
 <p>然后我们<strong>启用代码混淆</strong>，注意添加以下规则避免混淆失败：</p>
-<pre><code># ProGuard rule file
--dontwarn com.example.**
-</code></pre>
+<figure class="highlight avrasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs avrasm"><span class="hljs-meta"># ProGuard rule file</span><br>-dontwarn <span class="hljs-keyword">com</span>.example.**<br></code></pre></div></td></tr></table></figure>
 <p>随后在<code>gradle.properties</code>中禁用R8（原因后面会提到）：</p>
-<pre><code class="properties">android.enableR8=false
-</code></pre>
+<figure class="highlight properties"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs properties"><span class="hljs-meta">android.enableR8</span>=<span class="hljs-string">false</span><br></code></pre></div></td></tr></table></figure>
 <p>最后我们进行简单的调用：</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        System.out.println(&quot;account: &quot; + new Account());
-        System.out.println(&quot;account name: &quot; + new GuiMain().tryGetAccountName());
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br>        System.out.println(<span class="hljs-string">&quot;account: &quot;</span> + <span class="hljs-keyword">new</span> Account());<br>        System.out.println(<span class="hljs-string">&quot;account name: &quot;</span> + <span class="hljs-keyword">new</span> GuiMain().tryGetAccountName());<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>不出意外的话，上面这段人畜无害的代码在Android 8.0会翻车：</p>
-<pre><code>2019-09-10 21:56:10.327 3667-3667/? E/AndroidRuntime: FATAL EXCEPTION: main
-    Process: com.example.proguardbugtest, PID: 3667
-    java.lang.VerifyError: Verifier rejected class com.example.proguardbugtest.MainActivity: void com.example.proguardbugtest.MainActivity.onCreate(android.os.Bundle) failed to verify: void com.example.proguardbugtest.MainActivity.onCreate(android.os.Bundle): [0x3D] cannot access instance field java.lang.String com.example.a.a.a from object of type Unresolved Reference: com.example.base.Account (declaration of &#39;com.example.proguardbugtest.MainActivity&#39; appears in /data/app/com.example.proguardbugtest-5HQbNJwMRzeKoIg1ZzDmjA==/base.apk)
-        at java.lang.Class.newInstance(Native Method)
-        at android.app.Instrumentation.newActivity(Instrumentation.java:1173)
-        at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2708)
-        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2892)
-        at android.app.ActivityThread.-wrap11(Unknown Source:0)
-        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1593)
-        at android.os.Handler.dispatchMessage(Handler.java:105)
-        at android.os.Looper.loop(Looper.java:164)
-        at android.app.ActivityThread.main(ActivityThread.java:6541)
-        at java.lang.reflect.Method.invoke(Native Method)
-        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
-</code></pre>
+<figure class="highlight reasonml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs reasonml"><span class="hljs-number">2019</span>-<span class="hljs-number">09</span>-<span class="hljs-number">10</span> <span class="hljs-number">21</span>:<span class="hljs-number">56</span>:<span class="hljs-number">10.327</span> <span class="hljs-number">3667</span>-<span class="hljs-number">3667</span>/? E/AndroidRuntime: FATAL EXCEPTION: main<br>    Process: com.example.proguardbugtest, PID: <span class="hljs-number">3667</span><br>    java.lang.VerifyError: Verifier rejected <span class="hljs-keyword">class</span> com.example.proguardbugtest.MainActivity: void com.example.proguardbugtest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MainActivity</span>.</span></span>on<span class="hljs-constructor">Create(<span class="hljs-params">android</span>.<span class="hljs-params">os</span>.Bundle)</span> failed <span class="hljs-keyword">to</span> verify: void com.example.proguardbugtest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MainActivity</span>.</span></span>on<span class="hljs-constructor">Create(<span class="hljs-params">android</span>.<span class="hljs-params">os</span>.Bundle)</span>: <span class="hljs-literal">[<span class="hljs-number">0x3D</span>]</span> cannot access instance field java.lang.String com.example.a.a.a from <span class="hljs-keyword">object</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">type</span> Unresolved Reference: com.example.base.Account (declaration <span class="hljs-keyword">of</span> &#x27;com.example.proguardbugtest.MainActivity&#x27; appears <span class="hljs-keyword">in</span> /data/app/com.example.proguardbugtest-<span class="hljs-number">5</span>HQbNJwMRzeKoIg1ZzDmjA==/base.apk)<br>        at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Instance(Native Method)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Instrumentation</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Activity(Instrumentation.<span class="hljs-params">java</span>:1173)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2708)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2892)</span><br>        at android.app.ActivityThread.-wrap11(Unknown Source:<span class="hljs-number">0</span>)<br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1593)</span><br>        at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:105)</span><br>        at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">164</span>)<br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6541</span>)<br>        at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>        at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Zygote$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Zygote</span>.</span></span>java:<span class="hljs-number">240</span>)<br>        at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">767</span>)<br></code></pre></div></td></tr></table></figure>
 <p>在谷歌搜索了很久，对于<code>VerifyError</code>这个简单的错误很难找到明确的答案，只能拔出Android Studio大宝剑，分析apk字节码一探究竟。</p>
 <p>我将<code>MainActivity</code>的<code>onCreate</code>的完整字节码粘贴到下面，其中<code>########</code>开头的是我补充的注释：</p>
-<pre><code>.method public onCreate(Landroid/os/Bundle;)V
-    .registers 5
-
-    invoke-super &#123;p0, p1&#125;, Landroidx/appcompat/app/c;-&gt;onCreate(Landroid/os/Bundle;)V
-
-    const p1, 0x7f0a001c
-
-    invoke-virtual &#123;p0, p1&#125;, Lcom/example/proguardbugtest/MainActivity;-&gt;setContentView(I)V
-
-    sget-object p1, Ljava/lang/System;-&gt;out:Ljava/io/PrintStream;
-
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    const-string v1, &quot;account: &quot;
-
-    invoke-direct &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V
-
-    ######## 1
-    new-instance v1, Lcom/example/a/a;
-
-    invoke-direct &#123;v1&#125;, Lcom/example/a/a;-&gt;&lt;init&gt;()V
-
-    invoke-virtual &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    invoke-virtual &#123;v0&#125;, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual &#123;p1, v0&#125;, Ljava/io/PrintStream;-&gt;println(Ljava/lang/String;)V
-
-    sget-object p1, Ljava/lang/System;-&gt;out:Ljava/io/PrintStream;
-
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    const-string v1, &quot;account name: &quot;
-
-    invoke-direct &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;&lt;init&gt;(Ljava/lang/String;)V
-
-    new-instance v1, Lcom/example/b/a;
-
-    invoke-direct &#123;v1&#125;, Lcom/example/b/a;-&gt;&lt;init&gt;()V
-
-    sget-boolean v2, Lcom/example/b/a;-&gt;a:Z
-
-    if-eqz v2, :cond_40
-
-    iget-object v2, v1, Lcom/example/b/a;-&gt;b:Lcom/example/core/AccountStore;
-
-    if-eqz v2, :cond_40
-
-    iget-object v1, v1, Lcom/example/b/a;-&gt;b:Lcom/example/core/AccountStore;
-
-    ######## 2
-    invoke-interface &#123;v1&#125;, Lcom/example/core/AccountStore;-&gt;getAccount()Lcom/example/base/Account;
-
-    move-result-object v1
-
-    iget-object v1, v1, Lcom/example/a/a;-&gt;a:Ljava/lang/String;
-
-    goto :goto_42
-
-    :cond_40
-    const-string v1, &quot;&quot;
-
-    :goto_42
-    invoke-virtual &#123;v0, v1&#125;, Ljava/lang/StringBuilder;-&gt;append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    invoke-virtual &#123;v0&#125;, Ljava/lang/StringBuilder;-&gt;toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual &#123;p1, v0&#125;, Ljava/io/PrintStream;-&gt;println(Ljava/lang/String;)V
-
-    return-void
-.end method
-</code></pre>
+<figure class="highlight smali"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs smali"><span class="hljs-keyword">.method</span><span class="hljs-keyword"> public</span> onCreate(<span class="hljs-class">Landroid/os/Bundle;</span>)V<br><span class="hljs-keyword">    .registers</span> 5<br><br>   <span class="hljs-built_in"> invoke-super </span>&#123;p0, p1&#125;, <span class="hljs-class">Landroidx/appcompat/app/c;</span>-&gt;onCreate(<span class="hljs-class">Landroid/os/Bundle;</span>)V<br><br>   <span class="hljs-built_in"> const </span>p1, 0x7f0a001c<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p0, p1&#125;, <span class="hljs-class">Lcom/example/proguardbugtest/MainActivity;</span>-&gt;setContentView(I)V<br><br>   <span class="hljs-built_in"> sget-object </span>p1, <span class="hljs-class">Ljava/lang/System;</span>-&gt;out:<span class="hljs-class">Ljava/io/PrintStream;</span><br><br>   <span class="hljs-built_in"> new-instance </span>v0, <span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;account: &quot;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;&lt;init&gt;(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>    <span class="hljs-comment">######## 1</span><br>   <span class="hljs-built_in"> new-instance </span>v1, <span class="hljs-class">Lcom/example/a/a;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/a/a;</span>-&gt;&lt;init&gt;()V<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;append(<span class="hljs-class">Ljava/lang/Object;</span>)<span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;toString()<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v0<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p1, v0&#125;, <span class="hljs-class">Ljava/io/PrintStream;</span>-&gt;println(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> sget-object </span>p1, <span class="hljs-class">Ljava/lang/System;</span>-&gt;out:<span class="hljs-class">Ljava/io/PrintStream;</span><br><br>   <span class="hljs-built_in"> new-instance </span>v0, <span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;account name: &quot;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;&lt;init&gt;(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> new-instance </span>v1, <span class="hljs-class">Lcom/example/b/a;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;&lt;init&gt;()V<br><br>   <span class="hljs-built_in"> sget-boolean </span>v2, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;a:Z<br><br>   <span class="hljs-built_in"> if-eqz </span>v2,<span class="hljs-keyword"> :cond_40</span><br><br>   <span class="hljs-built_in"> iget-object </span>v2, v1, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;b:<span class="hljs-class">Lcom/example/core/AccountStore;</span><br><br>   <span class="hljs-built_in"> if-eqz </span>v2,<span class="hljs-keyword"> :cond_40</span><br><br>   <span class="hljs-built_in"> iget-object </span>v1, v1, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;b:<span class="hljs-class">Lcom/example/core/AccountStore;</span><br><br>    <span class="hljs-comment">######## 2</span><br>   <span class="hljs-built_in"> invoke-interface </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/core/AccountStore;</span>-&gt;getAccount()<span class="hljs-class">Lcom/example/base/Account;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v1<br><br>   <span class="hljs-built_in"> iget-object </span>v1, v1, <span class="hljs-class">Lcom/example/a/a;</span>-&gt;a:<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> goto </span>:goto_42<br><br>   <span class="hljs-keyword"> :cond_40</span><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;&quot;</span><br><br>   <span class="hljs-keyword"> :goto_42</span><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;append(<span class="hljs-class">Ljava/lang/String;</span>)<span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;toString()<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v0<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p1, v0&#125;, <span class="hljs-class">Ljava/io/PrintStream;</span>-&gt;println(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>    return-void<br><span class="hljs-keyword">.end method</span><br></code></pre></div></td></tr></table></figure>
 <p>可以看到，「1」处注释的<code>new-instance</code>指令显然是要构造<code>Account</code>对象，从这里我们也可以得知<code>com.example.base.Account</code>被混淆成了<code>com.example.a.a</code>，这个也可以在ProGuard生成的mapping文件中中得到证实。</p>
 <p>然而，「2」处注释的<code>invoke-interface</code>却出现了<code>com/example/base/Account</code>！之所以这段代码出现在了MainActivity中，是因为ProGuard进行了优化，但已经被混淆的类却以原名的形式出现在这里，这不科学。</p>
 <p>好吧，就算这样，但我们的Core包并不存在，也不会执行到这里，不应该出现崩溃才对，而这也是为什么我前面特别提到Android 8.0了。经过验证，这段代码在Android 8.0上必定崩溃，但在我的Android Q上却稳如老狗，可以认为不同版本的Android对类的校验逻辑不同，Android 8.0的校验显然过分严格。</p>
@@ -704,836 +249,291 @@ public class GuiMain &#123;
 <p>在开发中，我们有一个数据结构需要在两个Activity之间传递，于是我们直接让它实现了<code>Serializable</code>接口，简单粗暴地丢进了Intent里，谁知后来测试同学就反馈SDK在启动该Activity时在魅族手机上闪退了。</p>
 <p>由于<del>贫穷的</del>测试组同学只反馈了这部魅族手机有问题，其他手机正常，所以我一开始以为魅族又魔改系统用力过猛，好在后来自己新建了一个Android 7.0的模拟器，竟然复现了这个问题，才有机会找到问题的真正原因。</p>
 <p>首先，我们有这样一段简单的数据结构的代码：</p>
-<pre><code class="java">package com.example.proguardbugtest;
-
-import java.io.Serializable;
-
-class SerializableMeta implements Serializable &#123;
-    private static final long serialVersionUID = -7822771794489130246L;
-
-    private String nickname;
-    private int age;
-
-    SerializableMeta(String nickname, int age) &#123;
-        this.nickname = nickname;
-        this.age = age;
-    &#125;
-
-    public String getNickname() &#123;
-        return nickname;
-    &#125;
-
-    public int getAge() &#123;
-        return age;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.proguardbugtest;<br><br><span class="hljs-keyword">import</span> java.io.Serializable;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SerializableMeta</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = -<span class="hljs-number">7822771794489130246L</span>;<br><br>    <span class="hljs-keyword">private</span> String nickname;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;<br><br>    SerializableMeta(String nickname, <span class="hljs-keyword">int</span> age) &#123;<br>        <span class="hljs-keyword">this</span>.nickname = nickname;<br>        <span class="hljs-keyword">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getNickname</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> nickname;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>以及这样一段启动Activity的代码：</p>
-<pre><code class="java">public class MainActivity extends Activity &#123;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Activity</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br><br>        findViewById(R.id.startButton).setOnClickListener(<span class="hljs-keyword">new</span> View.OnClickListener() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onClick</span><span class="hljs-params">(View view)</span> </span>&#123;<br>                Intent intent = <span class="hljs-keyword">new</span> Intent(MainActivity.<span class="hljs-keyword">this</span>, MainActivity.class);<br>                intent.putExtra(<span class="hljs-string">&quot;meta&quot;</span>, <span class="hljs-keyword">new</span> SerializableMeta(<span class="hljs-string">&quot;Perqin&quot;</span>, <span class="hljs-number">233</span>));<br>                startActivity(intent);<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
 
-        findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() &#123;
-            @Override
-            public void onClick(View view) &#123;
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                intent.putExtra(&quot;meta&quot;, new SerializableMeta(&quot;Perqin&quot;, 233));
-                startActivity(intent);
-            &#125;
-        &#125;);
-    &#125;
-&#125;
-</code></pre>
 <p>然后，我们再简单地配置代码混淆规则：</p>
-<pre><code>-keepclassmembers class * implements java.io.Serializable &#123;
-    private static final java.io.ObjectStreamField[] serialPersistentFields;
-    private void writeObject(java.io.ObjectOutputStream);
-    private void readObject(java.io.ObjectInputStream);
-    java.lang.Object writeReplace();
-    java.lang.Object readResolve();
-&#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">-keepclassmembers <span class="hljs-class"><span class="hljs-keyword">class</span> * <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> java.io.ObjectStreamField[] serialPersistentFields;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">writeObject</span><span class="hljs-params">(java.io.ObjectOutputStream)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">readObject</span><span class="hljs-params">(java.io.ObjectInputStream)</span></span>;<br>    java.lang.<span class="hljs-function">Object <span class="hljs-title">writeReplace</span><span class="hljs-params">()</span></span>;<br>    java.lang.<span class="hljs-function">Object <span class="hljs-title">readResolve</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>以上规则来自ProGuard的官方文档，但<strong>后面就会发现这里是有问题的</strong>。</p>
 <p>最后，我们简单地启动，简单地点击按钮，然后：</p>
-<pre><code>2019-09-10 22:56:02.456 6516-6516/com.example.proguardbugtest E/AndroidRuntime: FATAL EXCEPTION: main
-    Process: com.example.proguardbugtest, PID: 6516
-    java.lang.InternalError
-        at java.io.ObjectStreamClass.&lt;init&gt;(ObjectStreamClass.java:509)
-        at java.io.ObjectStreamClass.lookup(ObjectStreamClass.java:354)
-        at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1165)
-        at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:346)
-        at android.os.Parcel.writeSerializable(Parcel.java:1521)
-        at android.os.Parcel.writeValue(Parcel.java:1474)
-        at android.os.Parcel.writeArrayMapInternal(Parcel.java:723)
-        at android.os.BaseBundle.writeToParcelInner(BaseBundle.java:1408)
-        at android.os.Bundle.writeToParcel(Bundle.java:1133)
-        at android.os.Parcel.writeBundle(Parcel.java:763)
-        at android.content.Intent.writeToParcel(Intent.java:8655)
-        at android.app.ActivityManagerProxy.startActivity(ActivityManagerNative.java:3052)
-        at android.app.Instrumentation.execStartActivity(Instrumentation.java:1518)
-        at android.app.Activity.startActivityForResult(Activity.java:4224)
-        at android.app.Activity.startActivityForResult(Activity.java:4183)
-        at android.app.Activity.startActivity(Activity.java:4507)
-        at android.app.Activity.startActivity(Activity.java:4475)
-        at com.example.proguardbugtest.MainActivity$1.onClick(Unknown Source)
-        at android.view.View.performClick(View.java:5610)
-        at android.view.View$PerformClick.run(View.java:22265)
-        at android.os.Handler.handleCallback(Handler.java:751)
-        at android.os.Handler.dispatchMessage(Handler.java:95)
-        at android.os.Looper.loop(Looper.java:154)
-        at android.app.ActivityThread.main(ActivityThread.java:6077)
-        at java.lang.reflect.Method.invoke(Native Method)
-        at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:866)
-        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:756)
-</code></pre>
+<figure class="highlight stylus"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stylus"><span class="hljs-number">2019</span>-<span class="hljs-number">09</span>-<span class="hljs-number">10</span> <span class="hljs-number">22</span>:<span class="hljs-number">56</span>:<span class="hljs-number">02.456</span> <span class="hljs-number">6516</span>-<span class="hljs-number">6516</span>/com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span> E/AndroidRuntime: FATAL EXCEPTION: main<br>    Process: com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span>, PID: <span class="hljs-number">6516</span><br>    java<span class="hljs-selector-class">.lang</span>.InternalError<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectStreamClass</span>.&lt;init&gt;(ObjectStreamClass<span class="hljs-selector-class">.java</span>:<span class="hljs-number">509</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectStreamClass</span><span class="hljs-selector-class">.lookup</span>(ObjectStreamClass<span class="hljs-selector-class">.java</span>:<span class="hljs-number">354</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectOutputStream</span><span class="hljs-selector-class">.writeObject0</span>(ObjectOutputStream<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1165</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectOutputStream</span><span class="hljs-selector-class">.writeObject</span>(ObjectOutputStream<span class="hljs-selector-class">.java</span>:<span class="hljs-number">346</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeSerializable</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1521</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeValue</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1474</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeArrayMapInternal</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">723</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.BaseBundle</span><span class="hljs-selector-class">.writeToParcelInner</span>(BaseBundle<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1408</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Bundle</span><span class="hljs-selector-class">.writeToParcel</span>(Bundle<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1133</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeBundle</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">763</span>)<br>        at android<span class="hljs-selector-class">.content</span><span class="hljs-selector-class">.Intent</span><span class="hljs-selector-class">.writeToParcel</span>(Intent<span class="hljs-selector-class">.java</span>:<span class="hljs-number">8655</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.ActivityManagerProxy</span><span class="hljs-selector-class">.startActivity</span>(ActivityManagerNative<span class="hljs-selector-class">.java</span>:<span class="hljs-number">3052</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Instrumentation</span><span class="hljs-selector-class">.execStartActivity</span>(Instrumentation<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1518</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivityForResult</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4224</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivityForResult</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4183</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivity</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4507</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivity</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4475</span>)<br>        at com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span>.MainActivity$<span class="hljs-number">1</span><span class="hljs-selector-class">.onClick</span>(Unknown Source)<br>        at android<span class="hljs-selector-class">.view</span><span class="hljs-selector-class">.View</span><span class="hljs-selector-class">.performClick</span>(View<span class="hljs-selector-class">.java</span>:<span class="hljs-number">5610</span>)<br>        at android<span class="hljs-selector-class">.view</span>.View<span class="hljs-variable">$PerformClick</span><span class="hljs-selector-class">.run</span>(View<span class="hljs-selector-class">.java</span>:<span class="hljs-number">22265</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Handler</span><span class="hljs-selector-class">.handleCallback</span>(Handler<span class="hljs-selector-class">.java</span>:<span class="hljs-number">751</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Handler</span><span class="hljs-selector-class">.dispatchMessage</span>(Handler<span class="hljs-selector-class">.java</span>:<span class="hljs-number">95</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Looper</span><span class="hljs-selector-class">.loop</span>(Looper<span class="hljs-selector-class">.java</span>:<span class="hljs-number">154</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.ActivityThread</span><span class="hljs-selector-class">.main</span>(ActivityThread<span class="hljs-selector-class">.java</span>:<span class="hljs-number">6077</span>)<br>        at java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.Method</span><span class="hljs-selector-class">.invoke</span>(Native Method)<br>        at com<span class="hljs-selector-class">.android</span><span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.os</span>.ZygoteInit<span class="hljs-variable">$MethodAndArgsCaller</span><span class="hljs-selector-class">.run</span>(ZygoteInit<span class="hljs-selector-class">.java</span>:<span class="hljs-number">866</span>)<br>        at com<span class="hljs-selector-class">.android</span><span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.ZygoteInit</span><span class="hljs-selector-class">.main</span>(ZygoteInit<span class="hljs-selector-class">.java</span>:<span class="hljs-number">756</span>)<br></code></pre></div></td></tr></table></figure>
 <p>这个崩溃甚至只有类名，连异常消息都不给了。如果此时去分析字节码，是不会发现什么异常的。</p>
 <p>于是，我根据错误去读源码，以下是抛出异常的代码（地址：<a target="_blank" rel="noopener" href="http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509">http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509</a>）：</p>
-<pre><code class="java">    private ObjectStreamClass(final Class&lt;?&gt; cl) &#123;
-        this.cl = cl;
-        name = cl.getName();
-        isProxy = Proxy.isProxyClass(cl);
-        isEnum = Enum.class.isAssignableFrom(cl);
-        serializable = Serializable.class.isAssignableFrom(cl);
-        externalizable = Externalizable.class.isAssignableFrom(cl);
-
-        Class&lt;?&gt; superCl = cl.getSuperclass();
-        superDesc = (superCl != null) ? lookup(superCl, false) : null;
-        localDesc = this;
-
-        if (serializable) &#123;
-            AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() &#123;
-                public Void run() &#123;
-                    if (isEnum) &#123;
-                        suid = Long.valueOf(0);
-                        fields = NO_FIELDS;
-                        return null;
-                    &#125;
-                    if (cl.isArray()) &#123;
-                        fields = NO_FIELDS;
-                        return null;
-                    &#125;
-
-                    suid = getDeclaredSUID(cl);
-                    try &#123;
-                        fields = getSerialFields(cl);
-                        computeFieldOffsets();
-                    &#125; catch (InvalidClassException e) &#123;
-                        serializeEx = deserializeEx =
-                            new ExceptionInfo(e.classname, e.getMessage());
-                        fields = NO_FIELDS;
-                    &#125;
-
-                    if (externalizable) &#123;
-                        cons = getExternalizableConstructor(cl);
-                    &#125; else &#123;
-                        cons = getSerializableConstructor(cl);
-                        writeObjectMethod = getPrivateMethod(cl, &quot;writeObject&quot;,
-                            new Class&lt;?&gt;[] &#123; ObjectOutputStream.class &#125;,
-                            Void.TYPE);
-                        readObjectMethod = getPrivateMethod(cl, &quot;readObject&quot;,
-                            new Class&lt;?&gt;[] &#123; ObjectInputStream.class &#125;,
-                            Void.TYPE);
-                        readObjectNoDataMethod = getPrivateMethod(
-                            cl, &quot;readObjectNoData&quot;, null, Void.TYPE);
-                        hasWriteObjectData = (writeObjectMethod != null);
-                    &#125;
-                    writeReplaceMethod = getInheritableMethod(
-                        cl, &quot;writeReplace&quot;, null, Object.class);
-                    readResolveMethod = getInheritableMethod(
-                        cl, &quot;readResolve&quot;, null, Object.class);
-                    return null;
-                &#125;
-            &#125;);
-        &#125; else &#123;
-            suid = Long.valueOf(0);
-            fields = NO_FIELDS;
-        &#125;
-
-        try &#123;
-            fieldRefl = getReflector(fields, this);
-        &#125; catch (InvalidClassException ex) &#123;
-            // field mismatches impossible when matching local fields vs. self
-            throw new InternalError();
-        &#125;
-
-        if (deserializeEx == null) &#123;
-            if (isEnum) &#123;
-                deserializeEx = new ExceptionInfo(name, &quot;enum type&quot;);
-            &#125; else if (cons == null) &#123;
-                deserializeEx = new ExceptionInfo(name, &quot;no valid constructor&quot;);
-            &#125;
-        &#125;
-        for (int i = 0; i &lt; fields.length; i++) &#123;
-            if (fields[i].getField() == null) &#123;
-                defaultSerializeEx = new ExceptionInfo(
-                    name, &quot;unmatched serializable field(s) declared&quot;);
-            &#125;
-        &#125;
-    &#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">ObjectStreamClass</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Class&lt;?&gt; cl)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.cl = cl;<br>    name = cl.getName();<br>    isProxy = Proxy.isProxyClass(cl);<br>    isEnum = Enum.class.isAssignableFrom(cl);<br>    serializable = Serializable.class.isAssignableFrom(cl);<br>    externalizable = Externalizable.class.isAssignableFrom(cl);<br><br>    Class&lt;?&gt; superCl = cl.getSuperclass();<br>    superDesc = (superCl != <span class="hljs-keyword">null</span>) ? lookup(superCl, <span class="hljs-keyword">false</span>) : <span class="hljs-keyword">null</span>;<br>    localDesc = <span class="hljs-keyword">this</span>;<br><br>    <span class="hljs-keyword">if</span> (serializable) &#123;<br>        AccessController.doPrivileged(<span class="hljs-keyword">new</span> PrivilegedAction&lt;Void&gt;() &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>                <span class="hljs-keyword">if</span> (isEnum) &#123;<br>                    suid = Long.valueOf(<span class="hljs-number">0</span>);<br>                    fields = NO_FIELDS;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>                &#125;<br>                <span class="hljs-keyword">if</span> (cl.isArray()) &#123;<br>                    fields = NO_FIELDS;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>                &#125;<br><br>                suid = getDeclaredSUID(cl);<br>                <span class="hljs-keyword">try</span> &#123;<br>                    fields = getSerialFields(cl);<br>                    computeFieldOffsets();<br>                &#125; <span class="hljs-keyword">catch</span> (InvalidClassException e) &#123;<br>                    serializeEx = deserializeEx =<br>                        <span class="hljs-keyword">new</span> ExceptionInfo(e.classname, e.getMessage());<br>                    fields = NO_FIELDS;<br>                &#125;<br><br>                <span class="hljs-keyword">if</span> (externalizable) &#123;<br>                    cons = getExternalizableConstructor(cl);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    cons = getSerializableConstructor(cl);<br>                    writeObjectMethod = getPrivateMethod(cl, <span class="hljs-string">&quot;writeObject&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123; ObjectOutputStream.class &#125;,<br>                        Void.TYPE);<br>                    readObjectMethod = getPrivateMethod(cl, <span class="hljs-string">&quot;readObject&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123; ObjectInputStream.class &#125;,<br>                        Void.TYPE);<br>                    readObjectNoDataMethod = getPrivateMethod(<br>                        cl, <span class="hljs-string">&quot;readObjectNoData&quot;</span>, <span class="hljs-keyword">null</span>, Void.TYPE);<br>                    hasWriteObjectData = (writeObjectMethod != <span class="hljs-keyword">null</span>);<br>                &#125;<br>                writeReplaceMethod = getInheritableMethod(<br>                    cl, <span class="hljs-string">&quot;writeReplace&quot;</span>, <span class="hljs-keyword">null</span>, Object.class);<br>                readResolveMethod = getInheritableMethod(<br>                    cl, <span class="hljs-string">&quot;readResolve&quot;</span>, <span class="hljs-keyword">null</span>, Object.class);<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>            &#125;<br>        &#125;);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        suid = Long.valueOf(<span class="hljs-number">0</span>);<br>        fields = NO_FIELDS;<br>    &#125;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        fieldRefl = getReflector(fields, <span class="hljs-keyword">this</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InvalidClassException ex) &#123;<br>        <span class="hljs-comment">// field mismatches impossible when matching local fields vs. self</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InternalError();<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (deserializeEx == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (isEnum) &#123;<br>            deserializeEx = <span class="hljs-keyword">new</span> ExceptionInfo(name, <span class="hljs-string">&quot;enum type&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cons == <span class="hljs-keyword">null</span>) &#123;<br>            deserializeEx = <span class="hljs-keyword">new</span> ExceptionInfo(name, <span class="hljs-string">&quot;no valid constructor&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; fields.length; i++) &#123;<br>        <span class="hljs-keyword">if</span> (fields[i].getField() == <span class="hljs-keyword">null</span>) &#123;<br>            defaultSerializeEx = <span class="hljs-keyword">new</span> ExceptionInfo(<br>                name, <span class="hljs-string">&quot;unmatched serializable field(s) declared&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>追溯<code>getReflector</code>下去，最终我们定位到抛出异常的地方：</p>
-<pre><code class="java">private static ObjectStreamField[] matchFields(ObjectStreamField[] fields,
-                                                   ObjectStreamClass localDesc)
-        throws InvalidClassException
-    &#123;
-        ObjectStreamField[] localFields = (localDesc != null) ?
-            localDesc.fields : NO_FIELDS;
-
-        /*
-         * Even if fields == localFields, we cannot simply return localFields
-         * here.  In previous implementations of serialization,
-         * ObjectStreamField.getType() returned Object.class if the
-         * ObjectStreamField represented a non-primitive field and belonged to
-         * a non-local class descriptor.  To preserve this (questionable)
-         * behavior, the ObjectStreamField instances returned by matchFields
-         * cannot report non-primitive types other than Object.class; hence
-         * localFields cannot be returned directly.
-         */
-
-        ObjectStreamField[] matches = new ObjectStreamField[fields.length];
-        for (int i = 0; i &lt; fields.length; i++) &#123;
-            ObjectStreamField f = fields[i], m = null;
-            for (int j = 0; j &lt; localFields.length; j++) &#123;
-                ObjectStreamField lf = localFields[j];
-                if (f.getName().equals(lf.getName())) &#123;
-                    if ((f.isPrimitive() || lf.isPrimitive()) &amp;&amp;
-                        f.getTypeCode() != lf.getTypeCode())
-                    &#123;
-                        throw new InvalidClassException(localDesc.name,
-                            &quot;incompatible types for field &quot; + f.getName());
-                    &#125;
-                    if (lf.getField() != null) &#123;
-                        m = new ObjectStreamField(
-                            lf.getField(), lf.isUnshared(), false);
-                    &#125; else &#123;
-                        m = new ObjectStreamField(
-                            lf.getName(), lf.getSignature(), lf.isUnshared());
-                    &#125;
-                &#125;
-            &#125;
-            if (m == null) &#123;
-                m = new ObjectStreamField(
-                    f.getName(), f.getSignature(), false);
-            &#125;
-            m.setOffset(f.getOffset());
-            matches[i] = m;
-        &#125;
-        return matches;
-    &#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ObjectStreamField[] matchFields(ObjectStreamField[] fields,<br>                                                   ObjectStreamClass localDesc)<br>        <span class="hljs-keyword">throws</span> InvalidClassException<br>    &#123;<br>        ObjectStreamField[] localFields = (localDesc != <span class="hljs-keyword">null</span>) ?<br>            localDesc.fields : NO_FIELDS;<br><br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">         * Even if fields == localFields, we cannot simply return localFields</span><br><span class="hljs-comment">         * here.  In previous implementations of serialization,</span><br><span class="hljs-comment">         * ObjectStreamField.getType() returned Object.class if the</span><br><span class="hljs-comment">         * ObjectStreamField represented a non-primitive field and belonged to</span><br><span class="hljs-comment">         * a non-local class descriptor.  To preserve this (questionable)</span><br><span class="hljs-comment">         * behavior, the ObjectStreamField instances returned by matchFields</span><br><span class="hljs-comment">         * cannot report non-primitive types other than Object.class; hence</span><br><span class="hljs-comment">         * localFields cannot be returned directly.</span><br><span class="hljs-comment">         */</span><br><br>        ObjectStreamField[] matches = <span class="hljs-keyword">new</span> ObjectStreamField[fields.length];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; fields.length; i++) &#123;<br>            ObjectStreamField f = fields[i], m = <span class="hljs-keyword">null</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; localFields.length; j++) &#123;<br>                ObjectStreamField lf = localFields[j];<br>                <span class="hljs-keyword">if</span> (f.getName().equals(lf.getName())) &#123;<br>                    <span class="hljs-keyword">if</span> ((f.isPrimitive() || lf.isPrimitive()) &amp;&amp;<br>                        f.getTypeCode() != lf.getTypeCode())<br>                    &#123;<br>                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidClassException(localDesc.name,<br>                            <span class="hljs-string">&quot;incompatible types for field &quot;</span> + f.getName());<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-keyword">null</span>) &#123;<br>                        m = <span class="hljs-keyword">new</span> ObjectStreamField(<br>                            lf.getField(), lf.isUnshared(), <span class="hljs-keyword">false</span>);<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        m = <span class="hljs-keyword">new</span> ObjectStreamField(<br>                            lf.getName(), lf.getSignature(), lf.isUnshared());<br>                    &#125;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (m == <span class="hljs-keyword">null</span>) &#123;<br>                m = <span class="hljs-keyword">new</span> ObjectStreamField(<br>                    f.getName(), f.getSignature(), <span class="hljs-keyword">false</span>);<br>            &#125;<br>            m.setOffset(f.getOffset());<br>            matches[i] = m;<br>        &#125;<br>        <span class="hljs-keyword">return</span> matches;<br>    &#125;<br></code></pre></div></td></tr></table></figure>
 <p>可以看到，对<code>fields</code>和<code>localFields</code>进行比较的时候，当两个成员变量中至少有一个是基本类型，并且他们的变量名相同但类型不同的时候，就会抛出异常。</p>
 <p>此时，我们再次拔出大宝剑，会看到<code>SerializableMeta</code>的两个成员变量名字是相同的：</p>
-<p><img src="fields-with-the-same-name.png"></p>
+<p><img src="fields-with-the-same-name.png" srcset="/img/loading.gif" lazyload></p>
 <p>查阅这个类在Android 6.0的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java</a>）后发现，这个类在旧版本中甚至没有<code>matchFields</code>方法，应该是进行了较大的重构或更新；而查阅Android 7.1的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java</a>），会发现谷歌爸爸很快就修复了这个问题：</p>
-<pre><code class="java">// ...
-// Android-changed: We can have fields with a same name and a different type.
-if (f.getName().equals(lf.getName()) &amp;&amp;
-  f.getSignature().equals(lf.getSignature())) &#123;
-  if (lf.getField() != null) &#123;
-// ...
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// ...</span><br><span class="hljs-comment">// Android-changed: We can have fields with a same name and a different type.</span><br><span class="hljs-keyword">if</span> (f.getName().equals(lf.getName()) &amp;&amp;<br>  f.getSignature().equals(lf.getSignature())) &#123;<br>  <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-keyword">null</span>) &#123;<br><span class="hljs-comment">// ...</span><br></code></pre></div></td></tr></table></figure>
 <p>实际上，Android和JVM都允许成员变量名称相同，混淆为尽可能相同的名字可以减小体积并增大阅读难度。</p>
 <p>但<strong>实际上ProGuard默认并不会启用如此激进的混淆方式</strong>（写这篇文章的时候我艰难地尝试复现而不断失败……）。在我的GitHub代码上会看到我在混淆的规则中藏了一条：</p>
-<pre><code>-overloadaggressively
-</code></pre>
+<figure class="highlight diff"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs diff"><span class="hljs-deletion">-overloadaggressively</span><br></code></pre></div></td></tr></table></figure>
 <p>查阅文档之后就会知道，启用这个选项后，才会导致成员变量被混淆为同样的名字。</p>
 <p>继续搜索，发现<a target="_blank" rel="noopener" href="https://sourceforge.net/p/proguard/bugs/274/">这篇帖子</a>，有人反馈了这个问题，作者表示：我并不太想给JRE的错误实现擦屁股，在代码里硬编码绕过这个问题（I’m not really eager to hard-code a workaround for what looks like a bug in the JRE implementation of serialization, but I’ll consider it.）。</p>
 <p>最后是对于该问题的解决，移除<code>-overloadaggressively</code>当然有效，但如果这个规则来自某个依赖库的Consumer ProGuard规则的话，就不那么好用了。而另一个方法是使用<code>-useuniqueclassmembernames</code>，这个选项会避免生成同名成员，但带来的副作用就是增大体积，另外，<a target="_blank" rel="noopener" href="https://sourceforge.net/p/proguard/bugs/413/">这篇帖子</a>也提到这个选项不只是刚好关掉了<code>-overloadaggressively</code>，还有其他副作用。</p>
 <p>因此，最后我选择了RTFM：重新看了一下ProGuard官方文档中<a target="_blank" rel="noopener" href="https://www.guardsquare.com/en/products/proguard/manual/examples#serializable">关于Serializable的规则建议</a>。使用它提供的完整规则后，会发现Serializable中的变量都被保留并不再导致问题出现了。</p>
 
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//perqin-github-io.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
             </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2021/03/21/from-flutter-build-failure-to-pr/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Perqin's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        perqinxie@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2021/05/">五月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/showcases" title="Showcase">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Showcase
-            </a>
-        </li>
-        
-            <li class="divider"></li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                BirdZhang&#39;s Blog
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Dospy-梦影决幻
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                浮游大陆
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                FrodoLuo
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/perqinxie" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/perqin" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
+            <hr>
             <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/android/">Android</a>
+                    
+                      <a class="hover-with-bg" href="/tags/proguard/">ProGuard</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/21/from-flutter-build-failure-to-pr/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">从Flutter编译错误到给Flutter贡献代码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/">
+                        <span class="hidden-mobile">Kotlin将只读lambda表达式作为监听器使用的坑</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
     
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/';
+          this.page.identifier = '/2019/09/10/two-issues-on-android-obfuscation/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
 </footer>
 
 
-                    <!-- Import JS File -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+<!-- Plugins -->
 
 
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#FF4081'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#FF4081',
-        'border-left-color': '#FF4081'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
+  
 
 
-    <!-- Leancloud -->
-    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-    <script>
-        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
-    </script>
-    <script type="text/ls-javascript" id="leancloud-views-script">
-    function showTime(Counter) {
-        var query = new AV.Query(Counter);
-        $('.leancloud-views_num').each(function() {
-            var url = $(this).attr('id').trim();
-            query.equalTo('url', url);
-            query.find({
-                success: function(results) {
-                    if (results.length === 0) {
-                        var content = '0 ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                        return;
-                    }
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    }
-                },
-                error: function(object, error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            });
-        });
-    }
 
-    function addCount(Counter) {
-      var Counter = AV.Object.extend('Counter');
-      url = $('.leancloud-views_num').attr('id').trim();
-      title = $('.leancloud-views_num').attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-      query.equalTo('url', url);
-      query.find({
-          success: function(results) {
-            if (results.length > 0) {
-                var counter = results[0];
-                counter.fetchWhenSave(true);
-                counter.increment('time');
-                counter.save(null, {
-                    success: function(counter) {
-                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    },
-                    error: function(counter, error) {
-                        console.log('Failed to save Visitor num, with error message: ' + error.message);
-                    }
-                });
-            } else {
-              var newcounter = new Counter();
-              newcounter.set('title', title);
-              newcounter.set('url', url);
-              newcounter.set('time', 1);
-              newcounter.save(null, {
-                  success: function(newcounter) {
-                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
-                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
-                      $(document.getElementById(url)).text(content);
-                  },
-                  error: function(newcounter, error) {
-                      console.log('Failed to create');
-                  }
-              });
-            }
-        },
-        error: function(error) {
-            console.log('Error:' + error.code + ' ' + error.message);
-        }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       });
-    }
-    $(function() {
-        var Counter = AV.Object.extend('Counter');
-        if ($('.leancloud-views_num').length === 1) {
-            addCount(Counter);
-        } else if ($('.post-title-link').length > 1) {
-            showTime(Counter);
-        }
-    });
-</script>
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 2016;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
     })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
+  </script>
 
-                </main>
-            </div>
-        </body>
-    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

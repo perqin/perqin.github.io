@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2016/12/22/configure-tomcat-jsp-project-with-idea/"
 			},
 			"datePublished": "2016-12-22T17:37:38.000Z",
-			"dateModified": "2021-05-04T17:04:54.376Z",
+			"dateModified": "2021-05-05T16:18:30.329Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1819,30 +1819,14 @@ h6.categories {
 <p><em>出于保密目的，以下截图敏感信息（包括项目目录名等）均被遮盖- -</em></p>
 <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>阅读本文之前，你需要了解并准备好项目所需的运行环境（jdk、Tomcat等），并对Jetbrains的IDE有初步了解。</p>
 <h2 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a>获取源码</h2><p>通过git从仓库拉取源码，源码的目录结构大概如下：</p>
-<pre><code>the-project-directory
-+ resources
-+ src
-+ src_jar
-+ test
-+ WebContent
-- .gitignore
-- generatorConfig.xml
-</code></pre>
+<figure class="highlight diff"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs diff">the-project-directory<br><span class="hljs-addition">+ resources</span><br><span class="hljs-addition">+ src</span><br><span class="hljs-addition">+ src_jar</span><br><span class="hljs-addition">+ test</span><br><span class="hljs-addition">+ WebContent</span><br><span class="hljs-deletion">- .gitignore</span><br><span class="hljs-deletion">- generatorConfig.xml</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>其中我们感兴趣（知道）的是：src包含服务器后端的源码，WebContent包含了JSP服务器的配置和网站根目录内容。</p>
 <p>使用IDE打开项目（而不是导入项目），如下图中的<code>Open</code>：</p>
 <div class="amp-img-wrapper"><amp-img src="/2016/12/22/configure-tomcat-jsp-project-with-idea/open.png" width="508" height="457" layout="responsive"></amp-img></div>
 <p>初次打开项目之后，IDEA会检测到项目中的<code>web.xml</code>配置文件，并询问是否根据该文件配置该项目为Web应用，这里我们点击同意。也可以在<code>Event Log</code>面板找到该消息。</p>
 <h2 id="配置JDK"><a href="#配置JDK" class="headerlink" title="配置JDK"></a>配置JDK</h2><p>要运行服务器，需要配置JDK和Tomcat服务器。Tomcat的配置我会放到后面说明。</p>
 <p>在IDEA中，进入菜单<code>File - Project Structure...</code>，在左边选择<code>SDKs</code>，点击加号，选择<code>JDK</code>，选择jdk安装目录<code>jdk1.7.0_79</code>，这个目录的内容应该如下：</p>
-<pre><code>jdk1.7.0_79
-+ bin
-+ db
-+ include
-+ jre
-+ lib
-+ man
-+ ...
-</code></pre>
+<figure class="highlight diff"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs diff">jdk1.7.0_79<br><span class="hljs-addition">+ bin</span><br><span class="hljs-addition">+ db</span><br><span class="hljs-addition">+ include</span><br><span class="hljs-addition">+ jre</span><br><span class="hljs-addition">+ lib</span><br><span class="hljs-addition">+ man</span><br><span class="hljs-addition">+ ...</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>添加之后结果如下：</p>
 <div class="amp-img-wrapper"><amp-img src="/2016/12/22/configure-tomcat-jsp-project-with-idea/jdk.png" width="1070" height="702" layout="responsive"></amp-img></div>
 <p>接下来，切换到<code>Project</code>，在右侧选择项目SDK为刚刚设置的jdk，同时把项目语言等级改为7，把项目编译输出目录改为repo源码以外的目录，否则编译和构建生成的内容会被IDE索引而影响使用。</p>
@@ -1861,15 +1845,7 @@ h6.categories {
 <p>插件启用之后，我们打开菜单<code>Run - Edit Configurations...</code>，然后点击左上角的加号：<code>Tomcat Server - Local</code>，在右侧可以进行配置。下图是我事后截取的，在你的IDE中，大部分配置可能还未完成。</p>
 <div class="amp-img-wrapper"><amp-img src="/2016/12/22/configure-tomcat-jsp-project-with-idea/run-tomcat-server-before-conf.png" width="1098" height="732" layout="responsive"></amp-img></div>
 <p>首先点击<code>Application server</code>选项右侧的<code>Configure...</code>按钮添加Tomcat服务器，在对话框中，同样点击左上角的加号，在又一个新的对话框中的Tomcat Home中选择Tomcat的根目录<code>apache-tomcat-7.0.73</code>，这个目录的内容应该如下所示：</p>
-<pre><code>tomcat-7.0.73
-+ bin
-+ conf
-+ lib
-+ logs
-+ temp
-+ webapps
-+ work
-</code></pre>
+<figure class="highlight markdown"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs markdown">tomcat-7.0.73<br><span class="hljs-bullet">+</span> bin<br><span class="hljs-bullet">+</span> conf<br><span class="hljs-bullet">+</span> lib<br><span class="hljs-bullet">+</span> logs<br><span class="hljs-bullet">+</span> temp<br><span class="hljs-bullet">+</span> webapps<br><span class="hljs-bullet">+</span> work<br></code></pre></div></td></tr></tbody></table></figure>
 <p>选择之后，IDE会自动检测出Tomcat的版本和基目录，点击确定。</p>
 <div class="amp-img-wrapper"><amp-img src="/2016/12/22/configure-tomcat-jsp-project-with-idea/tomcat-home.png" width="452" height="238" layout="responsive"></amp-img></div>
 <p>回到刚刚的<code>Application Servers</code>对话框，此时Tomcat的服务器的路径已经配置好，直接点击确定即可。</p>

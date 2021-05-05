@@ -1,524 +1,222 @@
+
+
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
-    <meta charset="utf-8">
-    <!-- AMP support -->
-    
-        <link rel="amphtml" href="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations//amp/index.html">
-    
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
-
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
-
-
-
-    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            重装Ubuntu系列：Shadowsocks配置 | 
-        
-        Perqin&#39;s Blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/avatar.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,Ubuntu,Shadowsocks,Privoxy,GFW,gfwlist,翻墙">
-    <meta name="theme-color" content="#673AB7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: ;
-    overflow-x: hidden !important;
-  }
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
+  <meta name="theme-color" content="#7108B2">
+  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+  <title>重装Ubuntu系列：Shadowsocks配置 - Perqin&#39;s Blog</title>
 
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #673AB7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #673AB7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #673AB7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-<!-- Theme Background Related-->
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Perqin&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/">
-    <meta name="msapplication-navbutton-color" content="#673AB7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="重装Ubuntu系列：Shadowsocks配置 | Perqin&#39;s Blog">
-    <meta property="og:image" content="/img/avatar.png">
-    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="Ubuntu"> <meta property="og:article:tag" content="Shadowsocks"> <meta property="og:article:tag" content="Privoxy"> <meta property="og:article:tag" content="GFW"> <meta property="og:article:tag" content="gfwlist"> <meta property="og:article:tag" content="翻墙"> 
-
-    
-        <meta property="article:published_time" content="Mon Apr 18 2016 01:52:00 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 04 2021 17:04:54 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html",
-    "headline": "重装Ubuntu系列：Shadowsocks配置",
-    "datePublished": "Mon Apr 18 2016 01:52:00 GMT+0800",
-    "dateModified": "Tue May 04 2021 17:04:54 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Perqin",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Blogging is as painful as writing docs..."
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Perqin&#39;s Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/avatar.png"
-        }
-    },
-    "keywords": ",Ubuntu,Shadowsocks,Privoxy,GFW,gfwlist,翻墙Perqin",
-    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
+  
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
     
-        <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
-</div>
-    
+  
 
-    <!-- Custom Head -->
-    
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.3.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="重装Ubuntu系列：Shadowsocks配置">
+              
             </span>
-        </a>
-    </div>
-    -->
 
-
-    <!-- Left aligned menu below button -->
-    
-    
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="post-toc-number">1.</span> <span class="post-toc-text">参考链接</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85Shadowsocks-python%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="post-toc-number">2.</span> <span class="post-toc-text">安装Shadowsocks-python客户端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="post-toc-number">3.</span> <span class="post-toc-text">配置客户端</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%BF%90%E8%A1%8CShadowsocks"><span class="post-toc-number">4.</span> <span class="post-toc-text">运行Shadowsocks</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AEPrivoxy"><span class="post-toc-number">5.</span> <span class="post-toc-text">安装与配置Privoxy</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E7%BB%99%E6%B5%8F%E8%A7%88%E5%99%A8%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="post-toc-number">6.</span> <span class="post-toc-text">给浏览器配置代理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%AE%A9Shadowsocks%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="post-toc-number">7.</span> <span class="post-toc-text">让Shadowsocks开机自启动</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E8%BF%98%E4%B8%8D%E5%A4%9F%E5%AE%8C%E7%BE%8E"><span class="post-toc-number">8.</span> <span class="post-toc-text">还不够完美</span></a></li></ol>
-    </ul>
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                重装Ubuntu系列：Shadowsocks配置
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Perqin</strong>
-        <span>4月 18, 2016</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/gfw/" rel="tag">GFW</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/privoxy/" rel="tag">Privoxy</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/shadowsocks/" rel="tag">Shadowsocks</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/ubuntu/" rel="tag">Ubuntu</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/gfwlist/" rel="tag">gfwlist</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/%E7%BF%BB%E5%A2%99/" rel="tag">翻墙</a>
-    </ul>
-    
-
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-    <!-- Leancloud Views -->
-        <a class="post_share-link" href="#">
-            <li class="mdl-menu__item">
-                <span id="/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/" class="leancloud-views_num" data-flag-title="重装Ubuntu系列：Shadowsocks配置">
-     &nbsp;浏览量
-</span>
-
-            </li>
-        </a>
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=重装Ubuntu系列：Shadowsocks配置&url=https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=重装Ubuntu系列：Shadowsocks配置&url=https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html&via=Perqin" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-    
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2016-04-18 01:52" pubdate>
+        2016年4月18日 凌晨
+      </time>
+    </span>
+  
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+<div class="mt-1">
+  
     
-        <p>说实话Ubuntu（版本<code>14.04 LTS</code>）的重装成本比Windows高太多了，一方面是自己不熟悉，另一方面也不如Windows只要exe和msi就能搞定，然而搞崩Ubuntu或者改动分区之后又不得不重装（妈蛋重装系统和重搭博客是我干得最多的事！！），往往有些配置有没有记下来，于是有了写这个系列的想法。<br>作为本系列的第一蛋，自然要先把科学上网的问题解决，因为已经有了VPS，所以只需要搞定客户端的问题。</p>
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">重装Ubuntu系列：Shadowsocks配置</h1>
+            
+            <div class="markdown-body">
+              <p>说实话Ubuntu（版本<code>14.04 LTS</code>）的重装成本比Windows高太多了，一方面是自己不熟悉，另一方面也不如Windows只要exe和msi就能搞定，然而搞崩Ubuntu或者改动分区之后又不得不重装（妈蛋重装系统和重搭博客是我干得最多的事！！），往往有些配置有没有记下来，于是有了写这个系列的想法。<br>作为本系列的第一蛋，自然要先把科学上网的问题解决，因为已经有了VPS，所以只需要搞定客户端的问题。</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
 <li><a target="_blank" rel="noopener" href="http://www.ihunter.me/Ubuntu%2014.04%20VPS%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEShadowsocks%E7%9A%84%E6%96%B9%E6%B3%95.html">Ubuntu 14.04 VPS安装配置Shadowsocks的方法</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/snachx/gfwlist2privoxy">snachx/gfwlist2privoxy</a></li>
@@ -526,53 +224,29 @@
 <li><a target="_blank" rel="noopener" href="http://askubuntu.com/questions/18802/how-to-correctly-add-a-custom-daemon-to-init-d">10.04 - How to correctly add a custom daemon to init.d? - Ask Ubuntu</a></li>
 </ul>
 <h1 id="安装Shadowsocks-python客户端"><a href="#安装Shadowsocks-python客户端" class="headerlink" title="安装Shadowsocks-python客户端"></a>安装Shadowsocks-python客户端</h1><p>事实上编译<code>libev</code>版本的也是可行的，但是实在麻烦，这里图方便就用了python版本的实现。<br>在终端输入以下命令：</p>
-<pre><code>sudo apt-get update
-sudo apt-get install python-gevent python-pip python-m2crypto
-sudo pip install shadowsocks
-</code></pre>
+<figure class="highlight vim"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-keyword">update</span><br>sudo apt-<span class="hljs-built_in">get</span> install <span class="hljs-keyword">python</span>-gevent <span class="hljs-keyword">python</span>-pip <span class="hljs-keyword">python</span>-m2crypto<br>sudo pip install shadowsocks<br></code></pre></div></td></tr></table></figure>
 <p>至此Shadowsocks就安装好了。</p>
 <h1 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h1><p>Shadowsocks的python版本同时安装了客户端和服务器端，分别是<code>sslocal</code>和<code>ssserver</code>。<br>在<code>/etc/shadowsocks/</code>新建一个文件<code>sslocal.json</code>（其实放哪里无所谓，但是配置文件一般放在<code>/etc</code>里面），输入以下内容：</p>
-<pre><code>&#123;
-  &quot;server&quot;:&quot;1.2.3.4&quot;,
-  &quot;server_port&quot;:5678,
-  &quot;local_port&quot;:1080,
-  &quot;password&quot;:&quot;passfoobar&quot;,
-  &quot;timeout&quot;:600,
-  &quot;method&quot;: &quot;aes-256-cfb&quot;
-&#125;
-</code></pre>
+<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;server&quot;</span>:<span class="hljs-string">&quot;1.2.3.4&quot;</span>,<br>  <span class="hljs-attr">&quot;server_port&quot;</span>:<span class="hljs-number">5678</span>,<br>  <span class="hljs-attr">&quot;local_port&quot;</span>:<span class="hljs-number">1080</span>,<br>  <span class="hljs-attr">&quot;password&quot;</span>:<span class="hljs-string">&quot;passfoobar&quot;</span>,<br>  <span class="hljs-attr">&quot;timeout&quot;</span>:<span class="hljs-number">600</span>,<br>  <span class="hljs-attr">&quot;method&quot;</span>: <span class="hljs-string">&quot;aes-256-cfb&quot;</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>其中<code>server</code>是服务器地址，<code>server_port</code>是服务器端口，<code>local_port</code>是本地端口，一般默认就是<code>1080</code>，<code>password</code>是密码，<code>timeout</code>是超时时间（并不知道有什么用- -），<code>method</code>是加密方式，默认就是<code>aes-256-cfb</code>。</p>
 <h1 id="运行Shadowsocks"><a href="#运行Shadowsocks" class="headerlink" title="运行Shadowsocks"></a>运行Shadowsocks</h1><p>在命令行输入</p>
-<pre><code>sudo sslocal -c /etc/shadowsocks/sslocal.json -d start
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo sslocal -c <span class="hljs-regexp">/etc/</span>shadowsocks/sslocal.json -d start<br></code></pre></div></td></tr></table></figure>
 <p>之后Shadowsocks就作为守护进程在后台运行了，参数c指定了配置文件，d参数要求运行守护（后台）进程。这里需要注意的是必须用sudo运行，否则会无法读取配置文件。</p>
 <h1 id="安装与配置Privoxy"><a href="#安装与配置Privoxy" class="headerlink" title="安装与配置Privoxy"></a>安装与配置Privoxy</h1><p>运行了Shadowsocks之后你会发现即使给浏览器设置了代理端口，依然无法翻墙，这是因为Ubuntu 14.04本身不支持<code>socks5</code>协议，而python实现的Shadowsocks本身只有这个协议，因此在看了Windows上C#版本的Shadowsocks实现的源码之后想到了解决方法：使用Privoxy在<code>localhost:8123</code>运行一个HTTP代理，然后转发到1080端口上去，然后将浏览器的代理设置到8123端口就行啦！<br>事实上使用Privoxy还有一个好处，那就是可以依托Privoxy强大的action文件进行局部代理，Windows上是通过pac文件实现的，但是Privoxy不支持pac文件，怎么办呢？<br>庆幸的是，GitHub上有一个项目<code>gfwlist2privoxy</code>可以把GFWList文件转换成Privoxy的action文件，而GFWList是一个开源项目，收集更新被墙的域名列表。于是解决方法也出来了：从gfwlist下载最新的gfwlist文件，然后用gfwlist2privoxy转换成action文件即可！<br>废话说完，开始配置，首先下载Privoxy：</p>
-<pre><code>sudo apt-get install privoxy
-</code></pre>
+<figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">sudo apt-<span class="hljs-builtin-name">get</span> install privoxy<br></code></pre></div></td></tr></table></figure>
 <p>完成之后在这里下载<a target="_blank" rel="noopener" href="https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt">最新的gfwlist.txt</a>，放到个人目录里，然后安装<code>gfwlist2privoxy</code>并生成action文件：</p>
-<pre><code>sudo pip install gfwlist2privoxy
-sudo gfwlist2privoxy -i ~/gfwlist.txt -f /etc/privoxy/gfwlist.action -p &quot;127.0.0.1:1080&quot; -t socks5
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo pip install gfwlist2privoxy<br>sudo gfwlist2privoxy -i ~<span class="hljs-regexp">/gfwlist.txt -f /</span>etc<span class="hljs-regexp">/privoxy/g</span>fwlist.action -p <span class="hljs-string">&quot;127.0.0.1:1080&quot;</span> -t socks5<br></code></pre></div></td></tr></table></figure>
 <p>接下来修改Privoxy的配置文件：</p>
-<pre><code>sudo vi /etc/privoxy/config
-</code></pre>
-<p>首先指定监听地址：<br><img src="set-privoxy-listen-address.png" alt="Set Privoxy listen address"><br>然后增加action文件：<br><img src="add-privoxy-action-file.png" alt="Add Privoxy action file"><br>最后重启Privoxy服务，只要没有报错就大功告成！</p>
-<pre><code>sudo service privoxy restart
-</code></pre>
-<h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br><img src="set-proxy-for-firefox.png" alt="Set proxy for Firefox"><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><img src="set-system-proxy.png" alt="Set system proxy"><br>另一种方法是在.bashrc文件末尾加上</p>
-<pre><code>export http_proxy=http://localhost:8123
-export https_proxy=http://localhost:8123
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo vi <span class="hljs-regexp">/etc/</span>privoxy/config<br></code></pre></div></td></tr></table></figure>
+<p>首先指定监听地址：<br><img src="set-privoxy-listen-address.png" srcset="/img/loading.gif" lazyload alt="Set Privoxy listen address"><br>然后增加action文件：<br><img src="add-privoxy-action-file.png" srcset="/img/loading.gif" lazyload alt="Add Privoxy action file"><br>最后重启Privoxy服务，只要没有报错就大功告成！</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo service privoxy restart</span><br></code></pre></div></td></tr></table></figure>
+<h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br><img src="set-proxy-for-firefox.png" srcset="/img/loading.gif" lazyload alt="Set proxy for Firefox"><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><img src="set-system-proxy.png" srcset="/img/loading.gif" lazyload alt="Set system proxy"><br>另一种方法是在.bashrc文件末尾加上</p>
+<figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros"><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">http_proxy</span>=http://localhost:8123<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">https_proxy</span>=http://localhost:8123<br></code></pre></div></td></tr></table></figure>
 <p>之后输入</p>
-<pre><code>. ~/.bashrc
-</code></pre>
+<figure class="highlight asciidoc"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs asciidoc"><span class="hljs-bullet">. </span>~/.bashrc<br></code></pre></div></td></tr></table></figure>
 <p>更新环境即可。</p>
 <h1 id="让Shadowsocks开机自启动"><a href="#让Shadowsocks开机自启动" class="headerlink" title="让Shadowsocks开机自启动"></a>让Shadowsocks开机自启动</h1><p>这里一切都接近完美，但是仍然有个问题：每次开机需要手动启动Shadowsocks，能不能把Shadowsocks也变成service呢？当然可以，只需要在<code>/etc/init.d/</code>里面增加一个脚本即可。这个目录里有个<code>skeleton</code>文件，是模板文件，我已经进行了修改，虽然没有输出，但是能够正常启动，从<a target="_blank" rel="noopener" href="https://gist.github.com/perqin/2867f8fac6dbbf2514b7471095233668/raw/84207cb3a4fbf702df828504b643c5b65a77c7ab/sslocal">这里</a>下载这个文件到个人目录，然后更新服务列表启动服务：</p>
-<pre><code>sudo cp ~/sslocal /etc/init.d/sslocal
-sudo chmod a+x /etc/init.d/sslocal
-sudo update-rc.d sslocal defaults 97 03
-sudo service sslocal start
-</code></pre>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo cp ~<span class="hljs-regexp">/sslocal /</span>etc<span class="hljs-regexp">/init.d/</span>sslocal<br>sudo chmod a+x <span class="hljs-regexp">/etc/i</span>nit.d/sslocal<br>sudo update-rc.d sslocal defaults <span class="hljs-number">97</span> <span class="hljs-number">03</span><br>sudo service sslocal start<br></code></pre></div></td></tr></table></figure>
 <h1 id="还不够完美"><a href="#还不够完美" class="headerlink" title="还不够完美"></a>还不够完美</h1><p>到这里我们已经能够无痛翻墙，但是还有两个问题：</p>
 <ul>
 <li>服务自启动脚本没有输出，不能确定运行状态；</li>
@@ -580,597 +254,272 @@ sudo service sslocal start
 </ul>
 <p>这两个以后我会解决后另行发文记录，嘿嘿！</p>
 
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//perqin-github-io.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
             </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2016/08/08/tips-to-save-your-time-on-ubuntu/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Perqin's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        perqinxie@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2021/05/">五月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/showcases" title="Showcase">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Showcase
-            </a>
-        </li>
-        
-            <li class="divider"></li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                BirdZhang&#39;s Blog
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Dospy-梦影决幻
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                浮游大陆
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                FrodoLuo
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/perqinxie" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/perqin" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
+            <hr>
             <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/ubuntu/">Ubuntu</a>
+                    
+                      <a class="hover-with-bg" href="/tags/shadowsocks/">Shadowsocks</a>
+                    
+                      <a class="hover-with-bg" href="/tags/privoxy/">Privoxy</a>
+                    
+                      <a class="hover-with-bg" href="/tags/gfw/">GFW</a>
+                    
+                      <a class="hover-with-bg" href="/tags/gfwlist/">gfwlist</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BF%BB%E5%A2%99/">翻墙</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2016/08/08/tips-to-save-your-time-on-ubuntu/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">加快墙内网速提升Ubuntu使用效率的TIPS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/">
+                        <span class="hidden-mobile">魅族魅蓝2解锁bootloader并刷入AOSP ROM</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
     
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/';
+          this.page.identifier = '/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
 </footer>
 
 
-                    <!-- Import JS File -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+<!-- Plugins -->
 
 
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#FF4081'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#FF4081',
-        'border-left-color': '#FF4081'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
+  
 
 
-    <!-- Leancloud -->
-    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-    <script>
-        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
-    </script>
-    <script type="text/ls-javascript" id="leancloud-views-script">
-    function showTime(Counter) {
-        var query = new AV.Query(Counter);
-        $('.leancloud-views_num').each(function() {
-            var url = $(this).attr('id').trim();
-            query.equalTo('url', url);
-            query.find({
-                success: function(results) {
-                    if (results.length === 0) {
-                        var content = '0 ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                        return;
-                    }
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    }
-                },
-                error: function(object, error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            });
-        });
-    }
 
-    function addCount(Counter) {
-      var Counter = AV.Object.extend('Counter');
-      url = $('.leancloud-views_num').attr('id').trim();
-      title = $('.leancloud-views_num').attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-      query.equalTo('url', url);
-      query.find({
-          success: function(results) {
-            if (results.length > 0) {
-                var counter = results[0];
-                counter.fetchWhenSave(true);
-                counter.increment('time');
-                counter.save(null, {
-                    success: function(counter) {
-                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    },
-                    error: function(counter, error) {
-                        console.log('Failed to save Visitor num, with error message: ' + error.message);
-                    }
-                });
-            } else {
-              var newcounter = new Counter();
-              newcounter.set('title', title);
-              newcounter.set('url', url);
-              newcounter.set('time', 1);
-              newcounter.save(null, {
-                  success: function(newcounter) {
-                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
-                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
-                      $(document.getElementById(url)).text(content);
-                  },
-                  error: function(newcounter, error) {
-                      console.log('Failed to create');
-                  }
-              });
-            }
-        },
-        error: function(error) {
-            console.log('Error:' + error.code + ' ' + error.message);
-        }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       });
-    }
-    $(function() {
-        var Counter = AV.Object.extend('Counter');
-        if ($('.leancloud-views_num').length === 1) {
-            addCount(Counter);
-        } else if ($('.post-title-link').length > 1) {
-            showTime(Counter);
-        }
-    });
-</script>
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 2016;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
     })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
+  </script>
 
-                </main>
-            </div>
-        </body>
-    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

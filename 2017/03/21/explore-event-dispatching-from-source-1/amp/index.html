@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/"
 			},
 			"datePublished": "2017-03-21T16:37:51.000Z",
-			"dateModified": "2021-05-04T17:04:54.380Z",
+			"dateModified": "2021-05-05T16:18:30.333Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1826,100 +1826,17 @@ h6.categories {
 <p>当我们的手指落在屏幕上的时候，驱动捕获到我们的行为，发送到Android系统上层框架，最终，一个包含这次屏幕操作的MotionEvent对象被传递给了对应的Activity对象。这个Activity会把这个对象分发给这个Activity中的根View，并通过递归的形式一直传递下去，直到这个触摸行为被某个View识别并消费掉。形象地说，就像一份通知从学校教务处发到了辅导员，辅导员把它分发给他管理的班级的班长，班长分发给班级的每个宿舍长，最终被发到每个学生手上。</p>
 <p>前面说道，我们可以把一个子树看作一个View，因此我们只需要弄懂最简单的情形：一个ViewGroup包含一个View，事件从ViewGroup分发给View的情况，就可以很快理解事件在一棵巨大的View树里如何分发。</p>
 <h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><p>为了测试，我自定义了一个ViewGroup和一个View，他们的唯一目的就是在和事件分发相关的方法里输出日志。其中<code>EdFrameLayout</code>的代码如下：</p>
-<pre><code class="java">public class EdFrameLayout extends FrameLayout {
-    private static final String TAG = "EdFrameLayout";
-
-    public EdFrameLayout(Context context) {
-        super(context);
-    }
-
-    public EdFrameLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.i(TAG, "dispatchTouchEvent: " + EventNameUtils.eventNameOf(ev.getAction()));
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.i(TAG, "onInterceptTouchEvent");
-        return super.onInterceptTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG, "onTouchEvent");
-        return super.onTouchEvent(event);
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EdFrameLayout</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FrameLayout</span> </span>{<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String TAG = <span class="hljs-string">"EdFrameLayout"</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EdFrameLayout</span><span class="hljs-params">(Context context)</span> </span>{<br>        <span class="hljs-keyword">super</span>(context);<br>    }<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EdFrameLayout</span><span class="hljs-params">(Context context, AttributeSet attrs)</span> </span>{<br>        <span class="hljs-keyword">super</span>(context, attrs);<br>    }<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dispatchTouchEvent</span><span class="hljs-params">(MotionEvent ev)</span> </span>{<br>        Log.i(TAG, <span class="hljs-string">"dispatchTouchEvent: "</span> + EventNameUtils.eventNameOf(ev.getAction()));<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.dispatchTouchEvent(ev);<br>    }<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">onInterceptTouchEvent</span><span class="hljs-params">(MotionEvent ev)</span> </span>{<br>        Log.i(TAG, <span class="hljs-string">"onInterceptTouchEvent"</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.onInterceptTouchEvent(ev);<br>    }<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">onTouchEvent</span><span class="hljs-params">(MotionEvent event)</span> </span>{<br>        Log.i(TAG, <span class="hljs-string">"onTouchEvent"</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.onTouchEvent(event);<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p><code>EdView</code>的代码如下：</p>
-<pre><code class="java">public class EdView extends View {
-    private static final String TAG = "EdView";
-
-    public EdView(Context context) {
-        super(context);
-    }
-
-    public EdView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        Log.i(TAG, "dispatchTouchEvent: " + EventNameUtils.eventNameOf(event.getAction()));
-        return super.dispatchTouchEvent(event);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG, "onTouchEvent");
-        return super.onTouchEvent(event);
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EdView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">View</span> </span>{<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String TAG = <span class="hljs-string">"EdView"</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EdView</span><span class="hljs-params">(Context context)</span> </span>{<br>        <span class="hljs-keyword">super</span>(context);<br>    }<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EdView</span><span class="hljs-params">(Context context, <span class="hljs-meta">@Nullable</span> AttributeSet attrs)</span> </span>{<br>        <span class="hljs-keyword">super</span>(context, attrs);<br>    }<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dispatchTouchEvent</span><span class="hljs-params">(MotionEvent event)</span> </span>{<br>        Log.i(TAG, <span class="hljs-string">"dispatchTouchEvent: "</span> + EventNameUtils.eventNameOf(event.getAction()));<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.dispatchTouchEvent(event);<br>    }<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">onTouchEvent</span><span class="hljs-params">(MotionEvent event)</span> </span>{<br>        Log.i(TAG, <span class="hljs-string">"onTouchEvent"</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.onTouchEvent(event);<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>其中<code>EventNameUtils</code>类仅仅是为了输出事件的名称：</p>
-<pre><code class="java">public class EventNameUtils {
-    public static String eventNameOf(int action) {
-        switch (action) {
-            case MotionEvent.ACTION_DOWN: return "ACTION_DOWN";
-            case MotionEvent.ACTION_MOVE: return "ACTION_MOVE";
-            case MotionEvent.ACTION_UP: return "ACTION_UP";
-            case MotionEvent.ACTION_CANCEL: return "ACTION_CANCEL";
-            default: return "UNKNOWN ACTION";
-        }
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventNameUtils</span> </span>{<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">eventNameOf</span><span class="hljs-params">(<span class="hljs-keyword">int</span> action)</span> </span>{<br>        <span class="hljs-keyword">switch</span> (action) {<br>            <span class="hljs-keyword">case</span> MotionEvent.ACTION_DOWN: <span class="hljs-keyword">return</span> <span class="hljs-string">"ACTION_DOWN"</span>;<br>            <span class="hljs-keyword">case</span> MotionEvent.ACTION_MOVE: <span class="hljs-keyword">return</span> <span class="hljs-string">"ACTION_MOVE"</span>;<br>            <span class="hljs-keyword">case</span> MotionEvent.ACTION_UP: <span class="hljs-keyword">return</span> <span class="hljs-string">"ACTION_UP"</span>;<br>            <span class="hljs-keyword">case</span> MotionEvent.ACTION_CANCEL: <span class="hljs-keyword">return</span> <span class="hljs-string">"ACTION_CANCEL"</span>;<br>            <span class="hljs-keyword">default</span>: <span class="hljs-keyword">return</span> <span class="hljs-string">"UNKNOWN ACTION"</span>;<br>        }<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>布局文件如下：</p>
-<pre><code class="xml">&lt;com.perqin.playground.eventdispatching.EdFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.perqin.playground.activities.MainActivity"&gt;
-
-    &lt;com.perqin.playground.eventdispatching.EdView
-        android:id="@+id/ed_view"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:background="@color/colorAccent"
-        android:layout_gravity="center" /&gt;
-
-&lt;/com.perqin.playground.eventdispatching.EdFrameLayout&gt;
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml">&lt;com.perqin.playground.eventdispatching.EdFrameLayout<br>    xmlns:android="http://schemas.android.com/apk/res/android"<br>    xmlns:tools="http://schemas.android.com/tools"<br>    android:layout_width="match_parent"<br>    android:layout_height="match_parent"<br>    tools:context="com.perqin.playground.activities.MainActivity"&gt;<br><br>    &lt;com.perqin.playground.eventdispatching.EdView<br>        android:id="@+id/ed_view"<br>        android:layout_width="240dp"<br>        android:layout_height="240dp"<br>        android:background="@color/colorAccent"<br>        android:layout_gravity="center" /&gt;<br><br><span class="hljs-tag">&lt;/<span class="hljs-name">com.perqin.playground.eventdispatching.EdFrameLayout</span>&gt;</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>运行起来之后是这样的：</p>
 <div class="amp-img-wrapper"><amp-img src="/2017/03/21/explore-event-dispatching-from-source-1/playground.png" width="1080" height="1920" layout="responsive"></amp-img></div>
 <p>我们轻触中间的强调色的方块，看到日志里有这样的输出：</p>
-<pre><code>com.perqin.playground I/EdFrameLayout: dispatchTouchEvent: ACTION_DOWN
-com.perqin.playground I/EdFrameLayout: onInterceptTouchEvent
-com.perqin.playground I/EdView: dispatchTouchEvent: ACTION_DOWN
-com.perqin.playground I/EdView: onTouchEvent
-com.perqin.playground I/EdFrameLayout: onTouchEvent
-</code></pre>
+<figure class="highlight vim"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim"><span class="hljs-keyword">com</span>.perqin.playground I/EdFrameLayou<span class="hljs-variable">t:</span> dispatchTouchEven<span class="hljs-variable">t:</span> ACTION_DOWN<br><span class="hljs-keyword">com</span>.perqin.playground I/EdFrameLayou<span class="hljs-variable">t:</span> onInterceptTouchEvent<br><span class="hljs-keyword">com</span>.perqin.playground I/EdVie<span class="hljs-variable">w:</span> dispatchTouchEven<span class="hljs-variable">t:</span> ACTION_DOWN<br><span class="hljs-keyword">com</span>.perqin.playground I/EdVie<span class="hljs-variable">w:</span> onTouchEvent<br><span class="hljs-keyword">com</span>.perqin.playground I/EdFrameLayou<span class="hljs-variable">t:</span> onTouchEvent<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="再开上帝视角"><a href="#再开上帝视角" class="headerlink" title="再开上帝视角"></a>再开上帝视角</h2><p>直接从源码就把事件分发无中生有地摸清对我来说还是挺困难的，因此我之前也早已看过书、搜索过相关文章。从上面的日志也得以映证时间分发的流程：</p>
 <ul>
 <li> 某个View（不论是否是ViewGroup）的<code>dispatchTouchEvent</code>被其父节点调用，从中该View可以得到这次触摸事件的MotionEvent对象。</li>
@@ -1929,269 +1846,31 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent
 </ul>
 <p>以上描述不一定准确，但基本把事件分发的逻辑讲述了一遍。接下来，我们可以开始看源码了～</p>
 <h2 id="ViewGroup的dispatchTouchEvent"><a href="#ViewGroup的dispatchTouchEvent" class="headerlink" title="ViewGroup的dispatchTouchEvent"></a>ViewGroup的dispatchTouchEvent</h2><p>不得不说源码实在太复杂了，光是ViewGroup的<code>dispatchTouchEvent</code>就有200多行。我把里面的一些语句（包括多点触摸相关代码、只用于Debug的语句、安全校验等）删掉，得到下面的代码：</p>
-<pre><code class="java">public class ViewGroup {
-    // ...
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        boolean handled = false;
-
-        final int action = ev.getAction();
-        final int actionMasked = action &amp; MotionEvent.ACTION_MASK;
-
-        // Handle an initial down.
-        if (actionMasked == MotionEvent.ACTION_DOWN) {
-            // Throw away all previous state when starting a new touch gesture.
-            // The framework may have dropped the up or cancel event for the previous gesture
-            // due to an app switch, ANR, or some other state change.
-            cancelAndClearTouchTargets(ev);
-            resetTouchState();
-        }
-
-        // Check for interception.
-        final boolean intercepted;
-        if (actionMasked == MotionEvent.ACTION_DOWN
-                || mFirstTouchTarget != null) {
-            final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
-            if (!disallowIntercept) {
-                intercepted = onInterceptTouchEvent(ev);
-                ev.setAction(action); // restore action in case it was changed
-            } else {
-                intercepted = false;
-            }
-        } else {
-            // There are no touch targets and this action is not an initial down
-            // so this view group continues to intercept touches.
-            intercepted = true;
-        }
-
-        // Check for cancelation.
-        final boolean canceled = resetCancelNextUpFlag(this)
-                || actionMasked == MotionEvent.ACTION_CANCEL;
-
-        // Update list of touch targets for pointer down, if needed.
-        final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
-        TouchTarget newTouchTarget = null;
-        boolean alreadyDispatchedToNewTouchTarget = false;
-        if (!canceled &amp;&amp; !intercepted) {
-            if (actionMasked == MotionEvent.ACTION_DOWN) {
-                final int actionIndex = ev.getActionIndex(); // always 0 for down
-                final int idBitsToAssign = TouchTarget.ALL_POINTER_IDS;
-
-                // Clean up earlier touch targets for this pointer id in case they
-                // have become out of sync.
-                removePointersFromTouchTargets(idBitsToAssign);
-
-                final int childrenCount = mChildrenCount;
-                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
-                    final float x = ev.getX(actionIndex);
-                    final float y = ev.getY(actionIndex);
-                    // Find a child that can receive the event.
-                    // Scan children from front to back.
-                    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
-                    final boolean customOrder = preorderedList == null
-                            &amp;&amp; isChildrenDrawingOrderEnabled();
-                    final View[] children = mChildren;
-                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
-                        final int childIndex = getAndVerifyPreorderedIndex(
-                                childrenCount, i, customOrder);
-                        final View child = getAndVerifyPreorderedView(
-                                preorderedList, children, childIndex);
-
-                        if (!canViewReceivePointerEvents(child)
-                                || !isTransformedTouchPointInView(x, y, child, null)) {
-                            continue;
-                        }
-
-                        newTouchTarget = getTouchTarget(child);
-                        if (newTouchTarget != null) {
-                            // Child is already receiving touch within its bounds.
-                            // Give it the new pointer in addition to the ones it is handling.
-                            newTouchTarget.pointerIdBits |= idBitsToAssign;
-                            break;
-                        }
-
-                        resetCancelNextUpFlag(child);
-                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
-                            // Child wants to receive touch within its bounds.
-                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
-                            alreadyDispatchedToNewTouchTarget = true;
-                            break;
-                        }
-                    }
-                    if (preorderedList != null) preorderedList.clear();
-                }
-
-                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
-                    // Did not find a child to receive the event.
-                    // Assign the pointer to the least recently added target.
-                    newTouchTarget = mFirstTouchTarget;
-                    while (newTouchTarget.next != null) {
-                        newTouchTarget = newTouchTarget.next;
-                    }
-                    newTouchTarget.pointerIdBits |= idBitsToAssign;
-                }
-            }
-        }
-
-        // Dispatch to touch targets.
-        if (mFirstTouchTarget == null) {
-            // No touch targets so treat this as an ordinary view.
-            handled = dispatchTransformedTouchEvent(ev, canceled, null,
-                    TouchTarget.ALL_POINTER_IDS);
-        } else {
-            // Dispatch to touch targets, excluding the new touch target if we already
-            // dispatched to it.  Cancel touch targets if necessary.
-            TouchTarget predecessor = null;
-            TouchTarget target = mFirstTouchTarget;
-            while (target != null) {
-                final TouchTarget next = target.next;
-                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
-                    handled = true;
-                } else {
-                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
-                            || intercepted;
-                    if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
-                        handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
-                            mFirstTouchTarget = next;
-                        } else {
-                            predecessor.next = next;
-                        }
-                        target.recycle();
-                        target = next;
-                        continue;
-                    }
-                }
-                predecessor = target;
-                target = next;
-            }
-        }
-
-        // Update list of touch targets for pointer up or cancel, if needed.
-        if (canceled
-                || actionMasked == MotionEvent.ACTION_UP) {
-            resetTouchState();
-        }
-
-        return handled;
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ViewGroup</span> </span>{<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dispatchTouchEvent</span><span class="hljs-params">(MotionEvent ev)</span> </span>{<br>        <span class="hljs-keyword">boolean</span> handled = <span class="hljs-keyword">false</span>;<br><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> action = ev.getAction();<br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> actionMasked = action &amp; MotionEvent.ACTION_MASK;<br><br>        <span class="hljs-comment">// Handle an initial down.</span><br>        <span class="hljs-keyword">if</span> (actionMasked == MotionEvent.ACTION_DOWN) {<br>            <span class="hljs-comment">// Throw away all previous state when starting a new touch gesture.</span><br>            <span class="hljs-comment">// The framework may have dropped the up or cancel event for the previous gesture</span><br>            <span class="hljs-comment">// due to an app switch, ANR, or some other state change.</span><br>            cancelAndClearTouchTargets(ev);<br>            resetTouchState();<br>        }<br><br>        <span class="hljs-comment">// Check for interception.</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> intercepted;<br>        <span class="hljs-keyword">if</span> (actionMasked == MotionEvent.ACTION_DOWN<br>                || mFirstTouchTarget != <span class="hljs-keyword">null</span>) {<br>            <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != <span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">if</span> (!disallowIntercept) {<br>                intercepted = onInterceptTouchEvent(ev);<br>                ev.setAction(action); <span class="hljs-comment">// restore action in case it was changed</span><br>            } <span class="hljs-keyword">else</span> {<br>                intercepted = <span class="hljs-keyword">false</span>;<br>            }<br>        } <span class="hljs-keyword">else</span> {<br>            <span class="hljs-comment">// There are no touch targets and this action is not an initial down</span><br>            <span class="hljs-comment">// so this view group continues to intercept touches.</span><br>            intercepted = <span class="hljs-keyword">true</span>;<br>        }<br><br>        <span class="hljs-comment">// Check for cancelation.</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> canceled = resetCancelNextUpFlag(<span class="hljs-keyword">this</span>)<br>                || actionMasked == MotionEvent.ACTION_CANCEL;<br><br>        <span class="hljs-comment">// Update list of touch targets for pointer down, if needed.</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != <span class="hljs-number">0</span>;<br>        TouchTarget newTouchTarget = <span class="hljs-keyword">null</span>;<br>        <span class="hljs-keyword">boolean</span> alreadyDispatchedToNewTouchTarget = <span class="hljs-keyword">false</span>;<br>        <span class="hljs-keyword">if</span> (!canceled &amp;&amp; !intercepted) {<br>            <span class="hljs-keyword">if</span> (actionMasked == MotionEvent.ACTION_DOWN) {<br>                <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> actionIndex = ev.getActionIndex(); <span class="hljs-comment">// always 0 for down</span><br>                <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> idBitsToAssign = TouchTarget.ALL_POINTER_IDS;<br><br>                <span class="hljs-comment">// Clean up earlier touch targets for this pointer id in case they</span><br>                <span class="hljs-comment">// have become out of sync.</span><br>                removePointersFromTouchTargets(idBitsToAssign);<br><br>                <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> childrenCount = mChildrenCount;<br>                <span class="hljs-keyword">if</span> (newTouchTarget == <span class="hljs-keyword">null</span> &amp;&amp; childrenCount != <span class="hljs-number">0</span>) {<br>                    <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> x = ev.getX(actionIndex);<br>                    <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> y = ev.getY(actionIndex);<br>                    <span class="hljs-comment">// Find a child that can receive the event.</span><br>                    <span class="hljs-comment">// Scan children from front to back.</span><br>                    <span class="hljs-keyword">final</span> ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();<br>                    <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> customOrder = preorderedList == <span class="hljs-keyword">null</span><br>                            &amp;&amp; isChildrenDrawingOrderEnabled();<br>                    <span class="hljs-keyword">final</span> View[] children = mChildren;<br>                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = childrenCount - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {<br>                        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> childIndex = getAndVerifyPreorderedIndex(<br>                                childrenCount, i, customOrder);<br>                        <span class="hljs-keyword">final</span> View child = getAndVerifyPreorderedView(<br>                                preorderedList, children, childIndex);<br><br>                        <span class="hljs-keyword">if</span> (!canViewReceivePointerEvents(child)<br>                                || !isTransformedTouchPointInView(x, y, child, <span class="hljs-keyword">null</span>)) {<br>                            <span class="hljs-keyword">continue</span>;<br>                        }<br><br>                        newTouchTarget = getTouchTarget(child);<br>                        <span class="hljs-keyword">if</span> (newTouchTarget != <span class="hljs-keyword">null</span>) {<br>                            <span class="hljs-comment">// Child is already receiving touch within its bounds.</span><br>                            <span class="hljs-comment">// Give it the new pointer in addition to the ones it is handling.</span><br>                            newTouchTarget.pointerIdBits |= idBitsToAssign;<br>                            <span class="hljs-keyword">break</span>;<br>                        }<br><br>                        resetCancelNextUpFlag(child);<br>                        <span class="hljs-keyword">if</span> (dispatchTransformedTouchEvent(ev, <span class="hljs-keyword">false</span>, child, idBitsToAssign)) {<br>                            <span class="hljs-comment">// Child wants to receive touch within its bounds.</span><br>                            newTouchTarget = addTouchTarget(child, idBitsToAssign);<br>                            alreadyDispatchedToNewTouchTarget = <span class="hljs-keyword">true</span>;<br>                            <span class="hljs-keyword">break</span>;<br>                        }<br>                    }<br>                    <span class="hljs-keyword">if</span> (preorderedList != <span class="hljs-keyword">null</span>) preorderedList.clear();<br>                }<br><br>                <span class="hljs-keyword">if</span> (newTouchTarget == <span class="hljs-keyword">null</span> &amp;&amp; mFirstTouchTarget != <span class="hljs-keyword">null</span>) {<br>                    <span class="hljs-comment">// Did not find a child to receive the event.</span><br>                    <span class="hljs-comment">// Assign the pointer to the least recently added target.</span><br>                    newTouchTarget = mFirstTouchTarget;<br>                    <span class="hljs-keyword">while</span> (newTouchTarget.next != <span class="hljs-keyword">null</span>) {<br>                        newTouchTarget = newTouchTarget.next;<br>                    }<br>                    newTouchTarget.pointerIdBits |= idBitsToAssign;<br>                }<br>            }<br>        }<br><br>        <span class="hljs-comment">// Dispatch to touch targets.</span><br>        <span class="hljs-keyword">if</span> (mFirstTouchTarget == <span class="hljs-keyword">null</span>) {<br>            <span class="hljs-comment">// No touch targets so treat this as an ordinary view.</span><br>            handled = dispatchTransformedTouchEvent(ev, canceled, <span class="hljs-keyword">null</span>,<br>                    TouchTarget.ALL_POINTER_IDS);<br>        } <span class="hljs-keyword">else</span> {<br>            <span class="hljs-comment">// Dispatch to touch targets, excluding the new touch target if we already</span><br>            <span class="hljs-comment">// dispatched to it.  Cancel touch targets if necessary.</span><br>            TouchTarget predecessor = <span class="hljs-keyword">null</span>;<br>            TouchTarget target = mFirstTouchTarget;<br>            <span class="hljs-keyword">while</span> (target != <span class="hljs-keyword">null</span>) {<br>                <span class="hljs-keyword">final</span> TouchTarget next = target.next;<br>                <span class="hljs-keyword">if</span> (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {<br>                    handled = <span class="hljs-keyword">true</span>;<br>                } <span class="hljs-keyword">else</span> {<br>                    <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> cancelChild = resetCancelNextUpFlag(target.child)<br>                            || intercepted;<br>                    <span class="hljs-keyword">if</span> (dispatchTransformedTouchEvent(ev, cancelChild,<br>                            target.child, target.pointerIdBits)) {<br>                        handled = <span class="hljs-keyword">true</span>;<br>                    }<br>                    <span class="hljs-keyword">if</span> (cancelChild) {<br>                        <span class="hljs-keyword">if</span> (predecessor == <span class="hljs-keyword">null</span>) {<br>                            mFirstTouchTarget = next;<br>                        } <span class="hljs-keyword">else</span> {<br>                            predecessor.next = next;<br>                        }<br>                        target.recycle();<br>                        target = next;<br>                        <span class="hljs-keyword">continue</span>;<br>                    }<br>                }<br>                predecessor = target;<br>                target = next;<br>            }<br>        }<br><br>        <span class="hljs-comment">// Update list of touch targets for pointer up or cancel, if needed.</span><br>        <span class="hljs-keyword">if</span> (canceled<br>                || actionMasked == MotionEvent.ACTION_UP) {<br>            resetTouchState();<br>        }<br><br>        <span class="hljs-keyword">return</span> handled;<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>仍然有147行，我能怎么办，我也很绝望啊！实话说这个方法我断断续续看了几天才勉强捋清楚……好的， 废话不多说，我们来看看ViewGroup是如何分发事件的。</p>
 <p>这个方法里的<code>handled</code>局部变量就是这个ViewGroup（或其子View）最终是否消费了这个事件。<code>actionMasked</code>只是将高3个字节复位（因为action是整型），直接看作是这个事件的action就好。</p>
 <p>首先，如果这是一个<code>ACTION_DOWN</code>动作，也就是按下屏幕的一瞬间，我们需要把之前的状态重置，为这个新的手势做准备（手势就是按下、一系列的移动和抬起动作序列）：</p>
-<pre><code class="java">        // Handle an initial down.
-        if (actionMasked == MotionEvent.ACTION_DOWN) {
-            // Throw away all previous state when starting a new touch gesture.
-            // The framework may have dropped the up or cancel event for the previous gesture
-            // due to an app switch, ANR, or some other state change.
-            cancelAndClearTouchTargets(ev);
-            resetTouchState();
-        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Handle an initial down.</span><br><span class="hljs-keyword">if</span> (actionMasked == MotionEvent.ACTION_DOWN) {<br>    <span class="hljs-comment">// Throw away all previous state when starting a new touch gesture.</span><br>    <span class="hljs-comment">// The framework may have dropped the up or cancel event for the previous gesture</span><br>    <span class="hljs-comment">// due to an app switch, ANR, or some other state change.</span><br>    cancelAndClearTouchTargets(ev);<br>    resetTouchState();<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>从方法名就可以看出他们的作用是取消、清除原来的触摸目标，并重置触摸状态。这里先剧透一下，TouchTarget就是对能够接受触摸事件的子View的简单封装。</p>
 <p>然后，由于我们是一个ViewGroup，所以我们需要判断要不要拦截这次事件：</p>
-<pre><code class="java">        // Check for interception.
-        final boolean intercepted;
-        if (actionMasked == MotionEvent.ACTION_DOWN
-                || mFirstTouchTarget != null) {
-            final boolean disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != 0;
-            if (!disallowIntercept) {
-                intercepted = onInterceptTouchEvent(ev);
-                ev.setAction(action); // restore action in case it was changed
-            } else {
-                intercepted = false;
-            }
-        } else {
-            // There are no touch targets and this action is not an initial down
-            // so this view group continues to intercept touches.
-            intercepted = true;
-        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Check for interception.</span><br><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> intercepted;<br><span class="hljs-keyword">if</span> (actionMasked == MotionEvent.ACTION_DOWN<br>        || mFirstTouchTarget != <span class="hljs-keyword">null</span>) {<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> disallowIntercept = (mGroupFlags &amp; FLAG_DISALLOW_INTERCEPT) != <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (!disallowIntercept) {<br>        intercepted = onInterceptTouchEvent(ev);<br>        ev.setAction(action); <span class="hljs-comment">// restore action in case it was changed</span><br>    } <span class="hljs-keyword">else</span> {<br>        intercepted = <span class="hljs-keyword">false</span>;<br>    }<br>} <span class="hljs-keyword">else</span> {<br>    <span class="hljs-comment">// There are no touch targets and this action is not an initial down</span><br>    <span class="hljs-comment">// so this view group continues to intercept touches.</span><br>    intercepted = <span class="hljs-keyword">true</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这时我们看到了一个<code>mFirstTouchTarget</code>的属性，这个属性挺重要，但网上对这个属性的解释足够详细的实在太少。如果看完了整个<code>dispatchTouchEvent</code>方法，就会发现，ViewGroup会管理一群能够消费触摸事件的子View，ViewGroup把他们放在一个单向链表里，而这个<code>mFirstTouchTarget</code>就是这个链表的头。而为什么一个手势会被多个View同时消费我还没有深挖，从直觉来说，应该和多点触摸等有关。</p>
 <p>从上面的代码片段可以看出，如果这是手势的开始，我们就会通过调用<code>onInterceptTouchEvent</code>，决定是否拦截。如果这个链表不为空，表示有子View想消费，所以也需要判断要不要拦截。只有在手势进行到中间又没有子View愿意背锅（消费事件）的情况下，才会拦截。</p>
 <p>直接这么解释似乎很牵强，其实只要和拦截行为的表现联系起来就理解了。对于ViewGroup而言，事实上他会在一个手势的发生过程中不停地判断是否拦截，这就是为什么在子View会消费的情况下仍然要调用<code>onInterceptTouchEvent</code>。而另一方面，一旦这个ViewGroup已经决定啦，就由它自己来拦截这个事件，那么<strong>这之后<code>onInterceptTouchEvent</code>都不会再调用（废话，都决定拦截了就别反悔嘛），且之后会一直拦截下去</strong>，因为决定拦截之后，后面会给所有原来消费事件的子View发送取消事件（<code>ACTION_CANCEL</code>），并将他们从<code>mFirstTouchTarget</code>中去除，所以如果<code>mFirstTouchTarget</code>是空的，又不是初始的按下事件，那么就表示之前已经被拦截了，所以要继续拦截。</p>
 <p>注意这里的<code>disallowIntercept</code>可以先不考虑。其实子View可以通过设置父View的这个属性来强制取消父View的拦截。</p>
 <p>接下来是判断是否是取消事件：</p>
-<pre><code class="java">        // Check for cancelation.
-        final boolean canceled = resetCancelNextUpFlag(this)
-                || actionMasked == MotionEvent.ACTION_CANCEL;
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Check for cancelation.</span><br><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> canceled = resetCancelNextUpFlag(<span class="hljs-keyword">this</span>)<br>        || actionMasked == MotionEvent.ACTION_CANCEL;<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这里<code>resetCancelNextUpFlag</code>方法的目的我也不甚清楚，如果你知道，希望你能把答案留在评论区！</p>
 <p><code>split</code>我认为和多点触摸有关，在多点触摸的时候会把事件分割，因此我们先忽略……</p>
 <p>接下来，<code>newTouchTarget</code>是新的触摸对象，<code>alreadyDispatchedToNewTouchTarget</code>显然就是说明是否被分发给新的触摸对象了：</p>
-<pre><code class="java">        // Update list of touch targets for pointer down, if needed.
-        final boolean split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != 0;
-        TouchTarget newTouchTarget = null;
-        boolean alreadyDispatchedToNewTouchTarget = false;
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Update list of touch targets for pointer down, if needed.</span><br><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> split = (mGroupFlags &amp; FLAG_SPLIT_MOTION_EVENTS) != <span class="hljs-number">0</span>;<br>TouchTarget newTouchTarget = <span class="hljs-keyword">null</span>;<br><span class="hljs-keyword">boolean</span> alreadyDispatchedToNewTouchTarget = <span class="hljs-keyword">false</span>;<br></code></pre></div></td></tr></tbody></table></figure>
 <p>如果没有被取消，也没有被拦截，那么就要尝试分发给子View了：</p>
-<pre><code class="java">        if (!canceled &amp;&amp; !intercepted) {
-            if (actionMasked == MotionEvent.ACTION_DOWN) {
-                final int actionIndex = ev.getActionIndex(); // always 0 for down
-                final int idBitsToAssign = TouchTarget.ALL_POINTER_IDS;
-
-                // Clean up earlier touch targets for this pointer id in case they
-                // have become out of sync.
-                removePointersFromTouchTargets(idBitsToAssign);
-
-                final int childrenCount = mChildrenCount;
-                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
-                    // Part A
-                }
-
-                if (newTouchTarget == null &amp;&amp; mFirstTouchTarget != null) {
-                    // Part B
-                }
-            }
-        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (!canceled &amp;&amp; !intercepted) {<br>    <span class="hljs-keyword">if</span> (actionMasked == MotionEvent.ACTION_DOWN) {<br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> actionIndex = ev.getActionIndex(); <span class="hljs-comment">// always 0 for down</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> idBitsToAssign = TouchTarget.ALL_POINTER_IDS;<br><br>        <span class="hljs-comment">// Clean up earlier touch targets for this pointer id in case they</span><br>        <span class="hljs-comment">// have become out of sync.</span><br>        removePointersFromTouchTargets(idBitsToAssign);<br><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> childrenCount = mChildrenCount;<br>        <span class="hljs-keyword">if</span> (newTouchTarget == <span class="hljs-keyword">null</span> &amp;&amp; childrenCount != <span class="hljs-number">0</span>) {<br>            <span class="hljs-comment">// Part A</span><br>        }<br><br>        <span class="hljs-keyword">if</span> (newTouchTarget == <span class="hljs-keyword">null</span> &amp;&amp; mFirstTouchTarget != <span class="hljs-keyword">null</span>) {<br>            <span class="hljs-comment">// Part B</span><br>        }<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>从上面的结构可以看出，事件分发主要是在手势开始，也就是按下事件发生的时候开始决定谁来消费的。此时<code>newTouchTarget</code>显然还是空的，因此如果此时子View的数量不为0，就要从中找出能够消费事件的子View了（Part A）。注意，我认为这里的Part B是用于多点触摸的：如果Part A之后<code>newTouchTarget</code>仍然为空，那么就是说当前没有子View愿意消费，但是<code>mFirstTouchTarget</code>可能包含原来已经有的手指的触摸手势对应的触摸对象，因此是有可能不为空的。但这些暂时不是这次的主要分析目标，所以我们不考虑Part B。</p>
 <p>接下来看看Part A的代码：</p>
-<pre><code class="java">                if (newTouchTarget == null &amp;&amp; childrenCount != 0) {
-                    final float x = ev.getX(actionIndex);
-                    final float y = ev.getY(actionIndex);
-                    // Find a child that can receive the event.
-                    // Scan children from front to back.
-                    final ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();
-                    final boolean customOrder = preorderedList == null
-                            &amp;&amp; isChildrenDrawingOrderEnabled();
-                    final View[] children = mChildren;
-                    for (int i = childrenCount - 1; i &gt;= 0; i--) {
-                        // ...
-                    }
-                    if (preorderedList != null) preorderedList.clear();
-                }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (newTouchTarget == <span class="hljs-keyword">null</span> &amp;&amp; childrenCount != <span class="hljs-number">0</span>) {<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> x = ev.getX(actionIndex);<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> y = ev.getY(actionIndex);<br>    <span class="hljs-comment">// Find a child that can receive the event.</span><br>    <span class="hljs-comment">// Scan children from front to back.</span><br>    <span class="hljs-keyword">final</span> ArrayList&lt;View&gt; preorderedList = buildTouchDispatchChildList();<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> customOrder = preorderedList == <span class="hljs-keyword">null</span><br>            &amp;&amp; isChildrenDrawingOrderEnabled();<br>    <span class="hljs-keyword">final</span> View[] children = mChildren;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = childrenCount - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {<br>        <span class="hljs-comment">// ...</span><br>    }<br>    <span class="hljs-keyword">if</span> (preorderedList != <span class="hljs-keyword">null</span>) preorderedList.clear();<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>很简单，得到触摸的坐标，并开始遍历所有的子View。对于每个被遍历到的子View：</p>
-<pre><code class="java">                        final int childIndex = getAndVerifyPreorderedIndex(
-                                childrenCount, i, customOrder);
-                        final View child = getAndVerifyPreorderedView(
-                                preorderedList, children, childIndex);
-
-                        if (!canViewReceivePointerEvents(child)
-                                || !isTransformedTouchPointInView(x, y, child, null)) {
-                            continue;
-                        }
-
-                        newTouchTarget = getTouchTarget(child);
-                        if (newTouchTarget != null) {
-                            // Child is already receiving touch within its bounds.
-                            // Give it the new pointer in addition to the ones it is handling.
-                            newTouchTarget.pointerIdBits |= idBitsToAssign;
-                            break;
-                        }
-
-                        resetCancelNextUpFlag(child);
-                        if (dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)) {
-                            // Child wants to receive touch within its bounds.
-                            newTouchTarget = addTouchTarget(child, idBitsToAssign);
-                            alreadyDispatchedToNewTouchTarget = true;
-                            break;
-                        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> childIndex = getAndVerifyPreorderedIndex(<br>        childrenCount, i, customOrder);<br><span class="hljs-keyword">final</span> View child = getAndVerifyPreorderedView(<br>        preorderedList, children, childIndex);<br><br><span class="hljs-keyword">if</span> (!canViewReceivePointerEvents(child)<br>        || !isTransformedTouchPointInView(x, y, child, <span class="hljs-keyword">null</span>)) {<br>    <span class="hljs-keyword">continue</span>;<br>}<br><br>newTouchTarget = getTouchTarget(child);<br><span class="hljs-keyword">if</span> (newTouchTarget != <span class="hljs-keyword">null</span>) {<br>    <span class="hljs-comment">// Child is already receiving touch within its bounds.</span><br>    <span class="hljs-comment">// Give it the new pointer in addition to the ones it is handling.</span><br>    newTouchTarget.pointerIdBits |= idBitsToAssign;<br>    <span class="hljs-keyword">break</span>;<br>}<br><br>resetCancelNextUpFlag(child);<br><span class="hljs-keyword">if</span> (dispatchTransformedTouchEvent(ev, <span class="hljs-keyword">false</span>, child, idBitsToAssign)) {<br>    <span class="hljs-comment">// Child wants to receive touch within its bounds.</span><br>    newTouchTarget = addTouchTarget(child, idBitsToAssign);<br>    alreadyDispatchedToNewTouchTarget = <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">break</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>从上面可见，我们先得到当前遍历到的子View的对象和index序号。然后通过<code>canViewReceivePointerEvents</code>和 <code>isTransformedTouchPointInView</code>两个方法，判断这个子View能否接受这个事件。如果任何一个条件不满足，就会跳过这个子View。<code>getTouchTarget</code>方法是从<code>mFirstTouchTarget</code>触摸对象链表中找到这个View对应的触摸对象，显然是找不到的，因此会向后继续执行，调用<code>dispatchTransformedTouchEvent</code>。这个方法里面就进行了对子View调用<code>dispatchTouchEvent</code>这个操作，并从返回值判断是否被消费了（回顾前文，<code>dispatchTouchEvent</code>的返回值表示该View是否会消费这个事件）。如果消费了，那么我们通过<code>addTouchTarget</code>方法把这个View封装到一个TouchTarget里，添加到链表里，同时赋值给<code>newTouchTarget</code>，<code>alreadyDispatchedToNewTouchTarget</code>也被置为真。</p>
 <p>分发给子View的代码结束了，看下面的代码，我们判断了<code>mFirstTouchTarget</code>是否为空。那么什么时候这个链表是空的呢？</p>
 <ol>
@@ -2199,124 +1878,22 @@ com.perqin.playground I/EdFrameLayout: onTouchEvent
 <li>手势中间，但之前已经被拦截下来的时候</li>
 </ol>
 <p>在这两种情况下，我们ViewGroup自己要去考虑消费这个事件了：</p>
-<pre><code class="java">        // Dispatch to touch targets.
-        if (mFirstTouchTarget == null) {
-            // No touch targets so treat this as an ordinary view.
-            handled = dispatchTransformedTouchEvent(ev, canceled, null,
-                    TouchTarget.ALL_POINTER_IDS);
-        } else {
-            // ...
-        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Dispatch to touch targets.</span><br><span class="hljs-keyword">if</span> (mFirstTouchTarget == <span class="hljs-keyword">null</span>) {<br>    <span class="hljs-comment">// No touch targets so treat this as an ordinary view.</span><br>    handled = dispatchTransformedTouchEvent(ev, canceled, <span class="hljs-keyword">null</span>,<br>            TouchTarget.ALL_POINTER_IDS);<br>} <span class="hljs-keyword">else</span> {<br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>如上，注意虽然我们又一次调用了<code>dispatchTransformedTouchEvent</code>，但我们给View参数传递了<code>null</code>，我们后面会发现，这个方法不仅可以把事件分发给子View，还能分发给自己。</p>
 <p>如果我们已经有子View消费了事件，理论上会执行上面片段里的<code>else</code>块：</p>
-<pre><code class="java">        if (mFirstTouchTarget == null) {
-            // ...
-        } else {
-            // Dispatch to touch targets, excluding the new touch target if we already
-            // dispatched to it.  Cancel touch targets if necessary.
-            TouchTarget predecessor = null;
-            TouchTarget target = mFirstTouchTarget;
-            while (target != null) {
-                final TouchTarget next = target.next;
-                if (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {
-                    handled = true;
-                } else {
-                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
-                            || intercepted;
-                    if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
-                        handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
-                            mFirstTouchTarget = next;
-                        } else {
-                            predecessor.next = next;
-                        }
-                        target.recycle();
-                        target = next;
-                        continue;
-                    }
-                }
-                predecessor = target;
-                target = next;
-            }
-        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (mFirstTouchTarget == <span class="hljs-keyword">null</span>) {<br>    <span class="hljs-comment">// ...</span><br>} <span class="hljs-keyword">else</span> {<br>    <span class="hljs-comment">// Dispatch to touch targets, excluding the new touch target if we already</span><br>    <span class="hljs-comment">// dispatched to it.  Cancel touch targets if necessary.</span><br>    TouchTarget predecessor = <span class="hljs-keyword">null</span>;<br>    TouchTarget target = mFirstTouchTarget;<br>    <span class="hljs-keyword">while</span> (target != <span class="hljs-keyword">null</span>) {<br>        <span class="hljs-keyword">final</span> TouchTarget next = target.next;<br>        <span class="hljs-keyword">if</span> (alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget) {<br>            handled = <span class="hljs-keyword">true</span>;<br>        } <span class="hljs-keyword">else</span> {<br>            <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> cancelChild = resetCancelNextUpFlag(target.child)<br>                    || intercepted;<br>            <span class="hljs-keyword">if</span> (dispatchTransformedTouchEvent(ev, cancelChild,<br>                    target.child, target.pointerIdBits)) {<br>                handled = <span class="hljs-keyword">true</span>;<br>            }<br>            <span class="hljs-keyword">if</span> (cancelChild) {<br>                <span class="hljs-keyword">if</span> (predecessor == <span class="hljs-keyword">null</span>) {<br>                    mFirstTouchTarget = next;<br>                } <span class="hljs-keyword">else</span> {<br>                    predecessor.next = next;<br>                }<br>                target.recycle();<br>                target = next;<br>                <span class="hljs-keyword">continue</span>;<br>            }<br>        }<br>        predecessor = target;<br>        target = next;<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>初看之下，<code>else</code>块中开始遍历链表，此时链表里就只有一个新的子View，<code>alreadyDispatchedToNewTouchTarget &amp;&amp; target == newTouchTarget</code>也为真，一切都很和谐。</p>
 <p>等等，我们是不是忽略了一个情况？我们前面说过，如果我们在手势中途拦截了手势，<code>mFirstTouchTarget</code>在哪里被清空呢？正是在这个<code>else</code>块里！由于在这个情况下，<code>newTouchTarget</code>必然为空，那么原来链表里的子View都会被删除：</p>
-<pre><code class="java">                    final boolean cancelChild = resetCancelNextUpFlag(target.child)
-                            || intercepted;
-                    if (dispatchTransformedTouchEvent(ev, cancelChild,
-                            target.child, target.pointerIdBits)) {
-                        handled = true;
-                    }
-                    if (cancelChild) {
-                        if (predecessor == null) {
-                            mFirstTouchTarget = next;
-                        } else {
-                            predecessor.next = next;
-                        }
-                        target.recycle();
-                        target = next;
-                        continue;
-                    }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> cancelChild = resetCancelNextUpFlag(target.child)<br>        || intercepted;<br><span class="hljs-keyword">if</span> (dispatchTransformedTouchEvent(ev, cancelChild,<br>        target.child, target.pointerIdBits)) {<br>    handled = <span class="hljs-keyword">true</span>;<br>}<br><span class="hljs-keyword">if</span> (cancelChild) {<br>    <span class="hljs-keyword">if</span> (predecessor == <span class="hljs-keyword">null</span>) {<br>        mFirstTouchTarget = next;<br>    } <span class="hljs-keyword">else</span> {<br>        predecessor.next = next;<br>    }<br>    target.recycle();<br>    target = next;<br>    <span class="hljs-keyword">continue</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>从上可见，如果<code>intercepted</code>为真，则<code>cancelChild</code>也为真，会通过<code>dispatchTransformedTouchEvent</code>把取消事件分发给子View，并把他们都从链表中删除。注意，从上面我们也可以看出，在首次拦截的时候，如果这个事件之前是被其他子View消费的，那么我们只分发取消事件给子View，子View的<code>onTouchEvent</code>仍然会被调用（事件类型为<code>ACTION_CANCEL</code>），而这个ViewGroup的<code>onTouchEvent</code>还不会被调用，需要等待下一次的<code>ACTION_MOVE</code>。</p>
 <p>事实上，上面的<code>else</code>块还承载了分发后续事件给子View的任务：在后续的MOVE和UP事件中，由于<code>mFirstTouchTarget</code>不为空，会直接运行到<code>else</code>这个块，并由于没有<code>newTarget</code>，因此会通过上面片段的第3-4行分发这个后续事件给子View。</p>
 <p>最后，如果是取消事件或抬起手指事件，我们重置状态：</p>
-<pre><code class="java">        // Update list of touch targets for pointer up or cancel, if needed.
-        if (canceled
-                || actionMasked == MotionEvent.ACTION_UP) {
-            resetTouchState();
-        }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// Update list of touch targets for pointer up or cancel, if needed.</span><br><span class="hljs-keyword">if</span> (canceled<br>        || actionMasked == MotionEvent.ACTION_UP) {<br>    resetTouchState();<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>那么，到此为止，ViewGroup的<code>dispatchTouchEvent</code>就看完了，真累啊……</p>
 <p>对于<code>onInterceptTouchEvent</code>，源码如下，可以看作就是不拦截：</p>
-<pre><code class="java">    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (ev.isFromSource(InputDevice.SOURCE_MOUSE)
-                &amp;&amp; ev.getAction() == MotionEvent.ACTION_DOWN
-                &amp;&amp; ev.isButtonPressed(MotionEvent.BUTTON_PRIMARY)
-                &amp;&amp; isOnScrollbarThumb(ev.getX(), ev.getY())) {
-            return true;
-        }
-        return false;
-    }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">onInterceptTouchEvent</span><span class="hljs-params">(MotionEvent ev)</span> </span>{<br>    <span class="hljs-keyword">if</span> (ev.isFromSource(InputDevice.SOURCE_MOUSE)<br>            &amp;&amp; ev.getAction() == MotionEvent.ACTION_DOWN<br>            &amp;&amp; ev.isButtonPressed(MotionEvent.BUTTON_PRIMARY)<br>            &amp;&amp; isOnScrollbarThumb(ev.getX(), ev.getY())) {<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    }<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>ViewGroup并没有重写<code>onTouchEvent</code>，我们如果看View的<code>onTouchEvent</code>，会发现：</p>
-<pre><code class="java">    public boolean onTouchEvent(MotionEvent event) {
-        final float x = event.getX();
-        final float y = event.getY();
-        final int viewFlags = mViewFlags;
-        final int action = event.getAction();
-
-        if ((viewFlags &amp; ENABLED_MASK) == DISABLED) {
-            if (action == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PFLAG_PRESSED) != 0) {
-                setPressed(false);
-            }
-            // A disabled view that is clickable still consumes the touch
-            // events, it just doesn't respond to them.
-            return (((viewFlags &amp; CLICKABLE) == CLICKABLE
-                    || (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)
-                    || (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE);
-        }
-        if (mTouchDelegate != null) {
-            if (mTouchDelegate.onTouchEvent(event)) {
-                return true;
-            }
-        }
-
-        if (((viewFlags &amp; CLICKABLE) == CLICKABLE ||
-                (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE) ||
-                (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) {
-            // A lot of code...
-            return true;
-        }
-
-        return false;
-    }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">onTouchEvent</span><span class="hljs-params">(MotionEvent event)</span> </span>{<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> x = event.getX();<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> y = event.getY();<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> viewFlags = mViewFlags;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> action = event.getAction();<br><br>    <span class="hljs-keyword">if</span> ((viewFlags &amp; ENABLED_MASK) == DISABLED) {<br>        <span class="hljs-keyword">if</span> (action == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PFLAG_PRESSED) != <span class="hljs-number">0</span>) {<br>            setPressed(<span class="hljs-keyword">false</span>);<br>        }<br>        <span class="hljs-comment">// A disabled view that is clickable still consumes the touch</span><br>        <span class="hljs-comment">// events, it just doesn't respond to them.</span><br>        <span class="hljs-keyword">return</span> (((viewFlags &amp; CLICKABLE) == CLICKABLE<br>                || (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)<br>                || (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE);<br>    }<br>    <span class="hljs-keyword">if</span> (mTouchDelegate != <span class="hljs-keyword">null</span>) {<br>        <span class="hljs-keyword">if</span> (mTouchDelegate.onTouchEvent(event)) {<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        }<br>    }<br><br>    <span class="hljs-keyword">if</span> (((viewFlags &amp; CLICKABLE) == CLICKABLE ||<br>            (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE) ||<br>            (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) {<br>        <span class="hljs-comment">// A lot of code...</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    }<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>}<br><br></code></pre></div></td></tr></tbody></table></figure>
 <p>从上面的节选可以看出，如果这个View不可点击和长按（默认即是如此），那么<code>onTouchEvent</code>是返回<code>false</code>的。从源码中还可以发现，即使这个View被禁用（disabled）了，只要它是可点击的，它仍然会消费触摸事件，这个和我们的直觉是有点违背的，所以算是看源码的额外收获。很多坑也许都能从源码中找出答案！</p>
 <p>到这里，我们就弄懂了ViewGroup的事件分发逻辑：</p>
 <ul>

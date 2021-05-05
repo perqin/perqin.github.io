@@ -1,802 +1,238 @@
+
+
 <!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
-    <meta charset="utf-8">
-    <!-- AMP support -->
-    
-        <link rel="amphtml" href="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature//amp/index.html">
-    
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-    <link rel="dns-prefetch" href="https://cdn1.lncld.net"/>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
-
-    <link rel="dns-prefetch" href="https://perqin-github-io.disqus.com"/>
-
-
-
-    <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            shrinkResources：这是bug还是feature？ | 
-        
-        Perqin&#39;s Blog
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/avatar.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta name="keywords" content="Perqin,android,proguard">
-    <meta name="theme-color" content="#673AB7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?NKhlKQkXw/c66TR5p4wO+w==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-            
-                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-            
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: ;
-    overflow-x: hidden !important;
-  }
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
+  <meta name="theme-color" content="#7108B2">
+  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+  <title>shrinkResources：这是bug还是feature？ - Perqin&#39;s Blog</title>
 
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #673AB7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #673AB7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #673AB7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-<!-- Theme Background Related-->
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Perqin&#39;s Blog">
-    <meta name="msapplication-starturl" content="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/">
-    <meta name="msapplication-navbutton-color" content="#673AB7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Perqin&#39;s Blog">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
-
-    <!-- Site Verification -->
-    <meta name="google-site-verification" content="LaDI7pG-BazqdWCwGO9Q5yizwama4f7O-DKsyPGXPD8" />
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="shrinkResources：这是bug还是feature？ | Perqin&#39;s Blog">
-    <meta property="og:image" content="/img/avatar.png">
-    <meta property="og:description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
-    <meta property="og:article:tag" content="android"> <meta property="og:article:tag" content="proguard"> 
-
-    
-        <meta property="article:published_time" content="Sun Jun 18 2017 11:52:23 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 04 2021 17:04:54 GMT+0000">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html",
-    "headline": "shrinkResources：这是bug还是feature？",
-    "datePublished": "Sun Jun 18 2017 11:52:23 GMT+0800",
-    "dateModified": "Tue May 04 2021 17:04:54 GMT+0000",
-    "author": {
-        "@type": "Person",
-        "name": "Perqin",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Blogging is as painful as writing docs..."
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "Perqin&#39;s Blog",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/avatar.png"
-        }
-    },
-    "keywords": ",android,proguardPerqin",
-    "description": "Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material."
-}
-</script>
-
-
-    
-
-    <!-- Analytics -->
+  
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
     
-        <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1279692316&web_id=1279692316" language="JavaScript"></script>
-</div>
-    
+  
 
-    <!-- Custom Head -->
-    
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.3.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
-                    
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
-                    
-
-                    <!-- Post TOC -->
-
-    
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-
-    <!-- Left aligned menu below button -->
-    
-    
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
-    
-            <p class="article-headline-p">
-                shrinkResources：这是bug还是feature？
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>Perqin</strong>
-        <span>6月 18, 2017</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
-    
-
-    <!-- Tags (bookmark) -->
-    
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/android/" rel="tag">android</a></li><li class="mdl-menu__item"><a class="post_tag-none-link" href="/tags/proguard/" rel="tag">proguard</a>
-    </ul>
-    
 
-    <!-- Share -->
-    
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-    <!-- Leancloud Views -->
-        <a class="post_share-link" href="#">
-            <li class="mdl-menu__item">
-                <span id="/2017/06/18/shrink-resources-bug-or-feature/" class="leancloud-views_num" data-flag-title="shrinkResources：这是bug还是feature？">
-     &nbsp;浏览量
-</span>
-
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
             </li>
-        </a>
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=shrinkResources：这是bug还是feature？&url=https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html&pic=https://perqin.github.io/img/favicon.png&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
             </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=shrinkResources：这是bug还是feature？&url=https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html&via=Perqin" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
             </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
             </li>
-        </a>
-    
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="shrinkResources：这是bug还是feature？">
+              
+            </span>
 
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
-</ul>
-
-    
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-06-18 11:52" pubdate>
+        2017年6月18日 中午
+      </time>
+    </span>
+  
 </div>
 
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+<div class="mt-1">
+  
     
-        <p>前两天在酷安上架了一个很简单的应用（<a target="_blank" rel="noopener" href="http://www.coolapk.com/apk/com.perqin.copyshare">复制分享(com.perqin.copyshare)_0.0.2_Android应用_酷安网</a>），感觉酷安对个人开发者还是非常友好的，活跃用户多、评论区一片祥和。后来有评论说安装包体积太大了，于是就打算处理一下这个问题了。</p>
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">shrinkResources：这是bug还是feature？</h1>
+            
+            <div class="markdown-body">
+              <p>前两天在酷安上架了一个很简单的应用（<a target="_blank" rel="noopener" href="http://www.coolapk.com/apk/com.perqin.copyshare">复制分享(com.perqin.copyshare)_0.0.2_Android应用_酷安网</a>），感觉酷安对个人开发者还是非常友好的，活跃用户多、评论区一片祥和。后来有评论说安装包体积太大了，于是就打算处理一下这个问题了。</p>
 <p>根据官方文档<a target="_blank" rel="noopener" href="https://developer.android.com/studio/build/shrink-code.html">Shrink Your Code and Resources | Android Studio</a>，我启用了ProGuard代码混淆：</p>
-<pre><code class="groovy">android &#123;
-    ...
-    buildTypes &#123;
-        release &#123;
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight groovy"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy">android &#123;<br>    ...<br>    buildTypes &#123;<br>        release &#123;<br>            shrinkResources <span class="hljs-literal">true</span><br>            minifyEnabled <span class="hljs-literal">true</span><br>            proguardFiles getDefaultProguardFile(<span class="hljs-string">&#x27;proguard-android.txt&#x27;</span>), <span class="hljs-string">&#x27;proguard-rules.pro&#x27;</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>但是构建之后立刻就挂掉了！而如果将<code>shrinkResources</code>设置为<code>false</code>则可以正常启动。</p>
 <p>于是，我开始找出元凶。</p>
 <p>首先，我得拿到release构建运行时崩溃的log。编辑AndroidManifest.xml，在application标签加入如下属性：</p>
-<pre><code class="xml">  &lt;application
-    android:debuggable=&quot;true&quot;
-    ... /&gt;
-  ...
-</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml">&lt;application<br>  android:debuggable=&quot;true&quot;<br>  ... /&gt;<br>...<br></code></pre></div></td></tr></table></figure>
 <p>然后编辑应用的build.gradle文件，在<code>android</code>标签禁用检查，否则会无法通过编译：</p>
-<pre><code class="groovy">  android &#123;
-    lintOptions &#123;
-      checkReleaseBuilds false
-    &#125;
-  &#125;
-</code></pre>
+<figure class="highlight groovy"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy">android &#123;<br>  lintOptions &#123;<br>    checkReleaseBuilds <span class="hljs-literal">false</span><br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>然后再编译运行release版的应用，就能看到崩溃的日志。</p>
 <p>但是由于启用了代码混淆，你会看到一大堆abcd，因此需要反混淆。根据官方文档，ProGuard会生成一个mapping.txt，里面包含了所有混淆的对应表，Android SDK提供了反混淆工具，因此我执行如下命令：</p>
-<pre><code class="shell">~/.local/lib/android_sdk/tools/proguard/bin/retrace.sh ~/workspaces/CopyShare/CopyShare/app/build/outputs/mapping/release/mapping.txt ~/trace.txt &gt; ~/deob_trace.txt
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">~/.local/lib/android_sdk/tools/proguard/bin/retrace.sh ~/workspaces/CopyShare/CopyShare/app/build/outputs/mapping/release/mapping.txt ~/trace.txt &gt; ~/deob_trace.txt<br></code></pre></div></td></tr></table></figure>
 <p>上述命令将保存在<code>~/trace.txt</code>中的崩溃日志反混淆之后输出到<code>~/debo_trace.txt</code>。</p>
 <p>接下来我们打开输出的日志：</p>
-<pre><code>06-18 00:50:12.547 18537-18537/com.perqin.copyshare E/AndroidRuntime: FATAL EXCEPTION: main
-      Process: com.perqin.copyshare, PID: 18537
-      java.lang.RuntimeException: Unable to start activity ComponentInfo&#123;com.perqin.copyshare/com.perqin.copyshare.SettingsActivity&#125;: android.view.InflateException: Binary XML file line #25: Binary XML file line #1: Error inflating class x
-          at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2762)
-          at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2848)
-          at android.app.ActivityThread.-wrap12(ActivityThread.java)
-          at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1552)
-          at android.os.Handler.dispatchMessage(Handler.java:102)
-          at android.os.Looper.loop(Looper.java:154)
-          at android.app.ActivityThread.main(ActivityThread.java:6324)
-          at java.lang.reflect.Method.invoke(Native Method)
-          at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
-          at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
-       Caused by: android.view.InflateException: Binary XML file line #25: Binary XML file line #1: Error inflating class x
-       Caused by: android.view.InflateException: Binary XML file line #1: Error inflating class x
-       Caused by: java.lang.ClassNotFoundException: Didn&#39;t find class &quot;android.view.x&quot; on path: DexPathList[[zip file &quot;/data/app/com.perqin.copyshare-1/base.apk&quot;],nativeLibraryDirectories=[/data/app/com.perqin.copyshare-1/lib/arm64, /system/lib64, /vendor/lib64]]
-          at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:56)
-          at java.lang.ClassLoader.loadClass(ClassLoader.java:380)
-          at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
-          at android.view.LayoutInflater.createView(LayoutInflater.java:609)
-          at android.view.LayoutInflater.onCreateView(LayoutInflater.java:700)
-          at com.android.internal.policy.PhoneLayoutInflater.onCreateView(PhoneLayoutInflater.java:68)
-          at android.view.LayoutInflater.onCreateView(LayoutInflater.java:717)
-          at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:785)
-          at android.view.LayoutInflater.parseInclude(LayoutInflater.java:964)
-          at android.view.LayoutInflater.rInflate(LayoutInflater.java:854)
-          at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:821)
-          at android.view.LayoutInflater.inflate(LayoutInflater.java:518)
-          at android.view.LayoutInflater.inflate(LayoutInflater.java:426)
-          at android.view.LayoutInflater.inflate(LayoutInflater.java:377)
-          at android.support.v7.app.AppCompatDelegateImplV9.createSubDecor(Unknown Source)
-          at android.support.v7.app.AppCompatDelegateImplV9.ensureSubDecor(Unknown Source)
-          at android.support.v7.app.AppCompatDelegateImplV9.onCreate(Unknown Source)
-                                                            findViewById
-                                                            onConfigurationChanged
-                                                            setContentView
-                                                            setContentView
-                                                            onSubDecorInstalled
-                                                            onPanelClosed
-                                                            onMenuItemSelected
-                                                            onMenuModeChange
-                                                            startSupportActionModeFromWindow
-                                                            onKeyShortcut
-                                                            dispatchKeyEvent
-                                                            shouldInheritContext
-                                                            callActivityOnCreateView
-                                                            openPanel
-                                                            initializePanelDecor
-                                                            reopenMenu
-                                                            closePanel
-                                                            callOnPanelClosed
-                                                            findMenuPanel
-                                                            getPanelState
-                                                            performPanelShortcut
-          at android.support.v7.app.AppCompatActivity.findViewById(Unknown Source)
-          at android.app.Activity$HostCallbacks.onFindViewById(Activity.java:7273)
-          at android.app.BackStackRecord.configureTransitions(BackStackRecord.java:1303)
-          at android.app.BackStackRecord.beginTransition(BackStackRecord.java:1024)
-          at android.app.BackStackRecord.run(BackStackRecord.java:729)
-          at android.app.FragmentManagerImpl.execPendingActions(FragmentManager.java:1578)
-          at android.app.FragmentController.execPendingActions(FragmentController.java:371)
-          at android.app.Activity.performStart(Activity.java:6776)
-          at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2725)
-          at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2848)
-          at android.app.ActivityThread.-wrap12(ActivityThread.java)
-          at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1552)
-          at android.os.Handler.dispatchMessage(Handler.java:102)
-          at android.os.Looper.loop(Looper.java:154)
-          at android.app.ActivityThread.main(ActivityThread.java:6324)
-          at java.lang.reflect.Method.invoke(Native Method)
-          at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
-          at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
-06-18 00:50:12.547 18537-18537/com.perqin.copyshare D/AppTracker: App Event: crash
-06-18 00:50:12.558 18537-18537/com.perqin.copyshare I/Process: Sending signal. PID: 18537 SIG: 9
-</code></pre>
+<figure class="highlight reasonml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs reasonml"><span class="hljs-number">06</span>-<span class="hljs-number">18</span> <span class="hljs-number">00</span>:<span class="hljs-number">50</span>:<span class="hljs-number">12.547</span> <span class="hljs-number">18537</span>-<span class="hljs-number">18537</span>/com.perqin.copyshare E/AndroidRuntime: FATAL EXCEPTION: main<br>      Process: com.perqin.copyshare, PID: <span class="hljs-number">18537</span><br>      java.lang.RuntimeException: Unable <span class="hljs-keyword">to</span> start activity ComponentInfo&#123;com.perqin.copyshare/com.perqin.copyshare.SettingsActivity&#125;: android.view.InflateException: Binary XML file line #<span class="hljs-number">25</span>: Binary XML file line #<span class="hljs-number">1</span>: Error inflating <span class="hljs-keyword">class</span> x<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2762)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2848)</span><br>          at android.app.ActivityThread.-wrap12(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1552)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:102)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">154</span>)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6324</span>)<br>          at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">886</span>)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">776</span>)<br>       Caused by: android.view.InflateException: Binary XML file line #<span class="hljs-number">25</span>: Binary XML file line #<span class="hljs-number">1</span>: Error inflating <span class="hljs-keyword">class</span> x<br>       Caused by: android.view.InflateException: Binary XML file line #<span class="hljs-number">1</span>: Error inflating <span class="hljs-keyword">class</span> x<br>       Caused by: java.lang.ClassNotFoundException: Didn&#x27;t find <span class="hljs-keyword">class</span> <span class="hljs-string">&quot;android.view.x&quot;</span> on path: DexPathList<span class="hljs-literal">[[<span class="hljs-identifier">zip</span> <span class="hljs-identifier">file</span> &quot;<span class="hljs-operator">/</span><span class="hljs-identifier">data</span><span class="hljs-operator">/</span><span class="hljs-identifier">app</span><span class="hljs-operator">/</span><span class="hljs-identifier">com</span>.<span class="hljs-identifier">perqin</span>.<span class="hljs-identifier">copyshare</span>-<span class="hljs-number">1</span><span class="hljs-operator">/</span><span class="hljs-identifier">base</span>.<span class="hljs-identifier">apk</span>&quot;]</span>,nativeLibraryDirectories=<span class="hljs-literal">[<span class="hljs-operator">/</span><span class="hljs-identifier">data</span><span class="hljs-operator">/</span><span class="hljs-identifier">app</span><span class="hljs-operator">/</span><span class="hljs-identifier">com</span>.<span class="hljs-identifier">perqin</span>.<span class="hljs-identifier">copyshare</span>-<span class="hljs-number">1</span><span class="hljs-operator">/</span><span class="hljs-identifier">lib</span><span class="hljs-operator">/</span><span class="hljs-identifier">arm64</span>, <span class="hljs-operator">/</span><span class="hljs-identifier">system</span><span class="hljs-operator">/</span><span class="hljs-identifier">lib64</span>, <span class="hljs-operator">/</span><span class="hljs-identifier">vendor</span><span class="hljs-operator">/</span><span class="hljs-identifier">lib64</span>]</span>]<br>          at dalvik.system.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BaseDexClassLoader</span>.</span></span>find<span class="hljs-constructor">Class(BaseDexClassLoader.<span class="hljs-params">java</span>:56)</span><br>          at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ClassLoader</span>.</span></span>load<span class="hljs-constructor">Class(ClassLoader.<span class="hljs-params">java</span>:380)</span><br>          at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ClassLoader</span>.</span></span>load<span class="hljs-constructor">Class(ClassLoader.<span class="hljs-params">java</span>:312)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>create<span class="hljs-constructor">View(LayoutInflater.<span class="hljs-params">java</span>:609)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>on<span class="hljs-constructor">CreateView(LayoutInflater.<span class="hljs-params">java</span>:700)</span><br>          at com.android.internal.policy.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">PhoneLayoutInflater</span>.</span></span>on<span class="hljs-constructor">CreateView(PhoneLayoutInflater.<span class="hljs-params">java</span>:68)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>on<span class="hljs-constructor">CreateView(LayoutInflater.<span class="hljs-params">java</span>:717)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>create<span class="hljs-constructor">ViewFromTag(LayoutInflater.<span class="hljs-params">java</span>:785)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>parse<span class="hljs-constructor">Include(LayoutInflater.<span class="hljs-params">java</span>:964)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>r<span class="hljs-constructor">Inflate(LayoutInflater.<span class="hljs-params">java</span>:854)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>r<span class="hljs-constructor">InflateChildren(LayoutInflater.<span class="hljs-params">java</span>:821)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>inflate(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>java:<span class="hljs-number">518</span>)<br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>inflate(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>java:<span class="hljs-number">426</span>)<br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>inflate(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>java:<span class="hljs-number">377</span>)<br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatDelegateImplV9</span>.</span></span>create<span class="hljs-constructor">SubDecor(Unknown Source)</span><br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatDelegateImplV9</span>.</span></span>ensure<span class="hljs-constructor">SubDecor(Unknown Source)</span><br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatDelegateImplV9</span>.</span></span>on<span class="hljs-constructor">Create(Unknown Source)</span><br>                                                            findViewById<br>                                                            onConfigurationChanged<br>                                                            setContentView<br>                                                            setContentView<br>                                                            onSubDecorInstalled<br>                                                            onPanelClosed<br>                                                            onMenuItemSelected<br>                                                            onMenuModeChange<br>                                                            startSupportActionModeFromWindow<br>                                                            onKeyShortcut<br>                                                            dispatchKeyEvent<br>                                                            shouldInheritContext<br>                                                            callActivityOnCreateView<br>                                                            openPanel<br>                                                            initializePanelDecor<br>                                                            reopenMenu<br>                                                            closePanel<br>                                                            callOnPanelClosed<br>                                                            findMenuPanel<br>                                                            getPanelState<br>                                                            performPanelShortcut<br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatActivity</span>.</span></span>find<span class="hljs-constructor">ViewById(Unknown Source)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Activity$HostCallbacks</span>.</span></span>on<span class="hljs-constructor">FindViewById(Activity.<span class="hljs-params">java</span>:7273)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span>configure<span class="hljs-constructor">Transitions(BackStackRecord.<span class="hljs-params">java</span>:1303)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span><span class="hljs-keyword">begin</span><span class="hljs-constructor">Transition(BackStackRecord.<span class="hljs-params">java</span>:1024)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span>java:<span class="hljs-number">729</span>)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FragmentManagerImpl</span>.</span></span>exec<span class="hljs-constructor">PendingActions(FragmentManager.<span class="hljs-params">java</span>:1578)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FragmentController</span>.</span></span>exec<span class="hljs-constructor">PendingActions(FragmentController.<span class="hljs-params">java</span>:371)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Activity</span>.</span></span>perform<span class="hljs-constructor">Start(Activity.<span class="hljs-params">java</span>:6776)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2725)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2848)</span><br>          at android.app.ActivityThread.-wrap12(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1552)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:102)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">154</span>)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6324</span>)<br>          at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">886</span>)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">776</span>)<br><span class="hljs-number">06</span>-<span class="hljs-number">18</span> <span class="hljs-number">00</span>:<span class="hljs-number">50</span>:<span class="hljs-number">12.547</span> <span class="hljs-number">18537</span>-<span class="hljs-number">18537</span>/com.perqin.copyshare D/AppTracker: App Event: crash<br><span class="hljs-number">06</span>-<span class="hljs-number">18</span> <span class="hljs-number">00</span>:<span class="hljs-number">50</span>:<span class="hljs-number">12.558</span> <span class="hljs-number">18537</span>-<span class="hljs-number">18537</span>/com.perqin.copyshare I/Process: Sending signal. PID: <span class="hljs-number">18537</span> SIG: <span class="hljs-number">9</span><br><br></code></pre></div></td></tr></table></figure>
 <p>根据上述日志，我发现，崩溃原因是在<code>android.support.v7.app.AppCompatDelegateImplV9</code>这个类的<code>createSubDecor</code>方法里面调用了<code>LayoutInflater.inflate</code>方法，结果找不到一个叫x的View。我们来看看这个<code>createSubDecor</code>方法（在Android Studio中按Ctrl键可以一路追踪每个类的实现）：</p>
-<pre><code class="java">    private ViewGroup createSubDecor() &#123;
-        TypedArray a = mContext.obtainStyledAttributes(R.styleable.AppCompatTheme);
-
-        if (!a.hasValue(R.styleable.AppCompatTheme_windowActionBar)) &#123;
-            a.recycle();
-            throw new IllegalStateException(
-                    &quot;You need to use a Theme.AppCompat theme (or descendant) with this activity.&quot;);
-        &#125;
-
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowNoTitle, false)) &#123;
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-        &#125; else if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBar, false)) &#123;
-            // Don&#39;t allow an action bar if there is no title.
-            requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR);
-        &#125;
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBarOverlay, false)) &#123;
-            requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);
-        &#125;
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionModeOverlay, false)) &#123;
-            requestWindowFeature(FEATURE_ACTION_MODE_OVERLAY);
-        &#125;
-        mIsFloating = a.getBoolean(R.styleable.AppCompatTheme_android_windowIsFloating, false);
-        a.recycle();
-
-        // Now let&#39;s make sure that the Window has installed its decor by retrieving it
-        mWindow.getDecorView();
-
-        final LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup subDecor = null;
-
-
-        if (!mWindowNoTitle) &#123;
-            if (mIsFloating) &#123;
-                // If we&#39;re floating, inflate the dialog title decor
-                subDecor = (ViewGroup) inflater.inflate(
-                        R.layout.abc_dialog_title_material, null);
-
-                // Floating windows can never have an action bar, reset the flags
-                mHasActionBar = mOverlayActionBar = false;
-            &#125; else if (mHasActionBar) &#123;
-                /**
-                 * This needs some explanation. As we can not use the android:theme attribute
-                 * pre-L, we emulate it by manually creating a LayoutInflater using a
-                 * ContextThemeWrapper pointing to actionBarTheme.
-                 */
-                TypedValue outValue = new TypedValue();
-                mContext.getTheme().resolveAttribute(R.attr.actionBarTheme, outValue, true);
-
-                Context themedContext;
-                if (outValue.resourceId != 0) &#123;
-                    themedContext = new ContextThemeWrapper(mContext, outValue.resourceId);
-                &#125; else &#123;
-                    themedContext = mContext;
-                &#125;
-
-                // Now inflate the view using the themed context and set it as the content view
-                subDecor = (ViewGroup) LayoutInflater.from(themedContext)
-                        .inflate(R.layout.abc_screen_toolbar, null);
-
-                mDecorContentParent = (DecorContentParent) subDecor
-                        .findViewById(R.id.decor_content_parent);
-                mDecorContentParent.setWindowCallback(getWindowCallback());
-
-                /**
-                 * Propagate features to DecorContentParent
-                 */
-                if (mOverlayActionBar) &#123;
-                    mDecorContentParent.initFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);
-                &#125;
-                if (mFeatureProgress) &#123;
-                    mDecorContentParent.initFeature(Window.FEATURE_PROGRESS);
-                &#125;
-                if (mFeatureIndeterminateProgress) &#123;
-                    mDecorContentParent.initFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-                &#125;
-            &#125;
-        &#125; else &#123;
-            if (mOverlayActionMode) &#123;
-                subDecor = (ViewGroup) inflater.inflate(
-                        R.layout.abc_screen_simple_overlay_action_mode, null);
-            &#125; else &#123;
-                subDecor = (ViewGroup) inflater.inflate(R.layout.abc_screen_simple, null);
-            &#125;
-
-            if (Build.VERSION.SDK_INT &gt;= 21) &#123;
-                // If we&#39;re running on L or above, we can rely on ViewCompat&#39;s
-                // setOnApplyWindowInsetsListener
-                ViewCompat.setOnApplyWindowInsetsListener(subDecor,
-                        new OnApplyWindowInsetsListener() &#123;
-                            @Override
-                            public WindowInsetsCompat onApplyWindowInsets(View v,
-                                    WindowInsetsCompat insets) &#123;
-                                final int top = insets.getSystemWindowInsetTop();
-                                final int newTop = updateStatusGuard(top);
-
-                                if (top != newTop) &#123;
-                                    insets = insets.replaceSystemWindowInsets(
-                                            insets.getSystemWindowInsetLeft(),
-                                            newTop,
-                                            insets.getSystemWindowInsetRight(),
-                                            insets.getSystemWindowInsetBottom());
-                                &#125;
-
-                                // Now apply the insets on our view
-                                return ViewCompat.onApplyWindowInsets(v, insets);
-                            &#125;
-                        &#125;);
-            &#125; else &#123;
-                // Else, we need to use our own FitWindowsViewGroup handling
-                ((FitWindowsViewGroup) subDecor).setOnFitSystemWindowsListener(
-                        new FitWindowsViewGroup.OnFitSystemWindowsListener() &#123;
-                            @Override
-                            public void onFitSystemWindows(Rect insets) &#123;
-                                insets.top = updateStatusGuard(insets.top);
-                            &#125;
-                        &#125;);
-            &#125;
-        &#125;
-
-        if (subDecor == null) &#123;
-            throw new IllegalArgumentException(
-                    &quot;AppCompat does not support the current theme features: &#123; &quot;
-                            + &quot;windowActionBar: &quot; + mHasActionBar
-                            + &quot;, windowActionBarOverlay: &quot;+ mOverlayActionBar
-                            + &quot;, android:windowIsFloating: &quot; + mIsFloating
-                            + &quot;, windowActionModeOverlay: &quot; + mOverlayActionMode
-                            + &quot;, windowNoTitle: &quot; + mWindowNoTitle
-                            + &quot; &#125;&quot;);
-        &#125;
-
-        if (mDecorContentParent == null) &#123;
-            mTitleView = (TextView) subDecor.findViewById(R.id.title);
-        &#125;
-
-        // Make the decor optionally fit system windows, like the window&#39;s decor
-        ViewUtils.makeOptionalFitsSystemWindows(subDecor);
-
-        final ContentFrameLayout contentView = (ContentFrameLayout) subDecor.findViewById(
-                R.id.action_bar_activity_content);
-
-        final ViewGroup windowContentView = (ViewGroup) mWindow.findViewById(android.R.id.content);
-        if (windowContentView != null) &#123;
-            // There might be Views already added to the Window&#39;s content view so we need to
-            // migrate them to our content view
-            while (windowContentView.getChildCount() &gt; 0) &#123;
-                final View child = windowContentView.getChildAt(0);
-                windowContentView.removeViewAt(0);
-                contentView.addView(child);
-            &#125;
-
-            // Change our content FrameLayout to use the android.R.id.content id.
-            // Useful for fragments.
-            windowContentView.setId(View.NO_ID);
-            contentView.setId(android.R.id.content);
-
-            // The decorContent may have a foreground drawable set (windowContentOverlay).
-            // Remove this as we handle it ourselves
-            if (windowContentView instanceof FrameLayout) &#123;
-                ((FrameLayout) windowContentView).setForeground(null);
-            &#125;
-        &#125;
-
-        // Now set the Window&#39;s content view with the decor
-        mWindow.setContentView(subDecor);
-
-        contentView.setAttachListener(new ContentFrameLayout.OnAttachListener() &#123;
-            @Override
-            public void onAttachedFromWindow() &#123;&#125;
-
-            @Override
-            public void onDetachedFromWindow() &#123;
-                dismissPopups();
-            &#125;
-        &#125;);
-
-        return subDecor;
-    &#125;
-</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> ViewGroup <span class="hljs-title">createSubDecor</span><span class="hljs-params">()</span> </span>&#123;<br>    TypedArray a = mContext.obtainStyledAttributes(R.styleable.AppCompatTheme);<br><br>    <span class="hljs-keyword">if</span> (!a.hasValue(R.styleable.AppCompatTheme_windowActionBar)) &#123;<br>        a.recycle();<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<br>                <span class="hljs-string">&quot;You need to use a Theme.AppCompat theme (or descendant) with this activity.&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowNoTitle, <span class="hljs-keyword">false</span>)) &#123;<br>        requestWindowFeature(Window.FEATURE_NO_TITLE);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowActionBar, <span class="hljs-keyword">false</span>)) &#123;<br>        <span class="hljs-comment">// Don&#x27;t allow an action bar if there is no title.</span><br>        requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowActionBarOverlay, <span class="hljs-keyword">false</span>)) &#123;<br>        requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowActionModeOverlay, <span class="hljs-keyword">false</span>)) &#123;<br>        requestWindowFeature(FEATURE_ACTION_MODE_OVERLAY);<br>    &#125;<br>    mIsFloating = a.getBoolean(R.styleable.AppCompatTheme_android_windowIsFloating, <span class="hljs-keyword">false</span>);<br>    a.recycle();<br><br>    <span class="hljs-comment">// Now let&#x27;s make sure that the Window has installed its decor by retrieving it</span><br>    mWindow.getDecorView();<br><br>    <span class="hljs-keyword">final</span> LayoutInflater inflater = LayoutInflater.from(mContext);<br>    ViewGroup subDecor = <span class="hljs-keyword">null</span>;<br><br><br>    <span class="hljs-keyword">if</span> (!mWindowNoTitle) &#123;<br>        <span class="hljs-keyword">if</span> (mIsFloating) &#123;<br>            <span class="hljs-comment">// If we&#x27;re floating, inflate the dialog title decor</span><br>            subDecor = (ViewGroup) inflater.inflate(<br>                    R.layout.abc_dialog_title_material, <span class="hljs-keyword">null</span>);<br><br>            <span class="hljs-comment">// Floating windows can never have an action bar, reset the flags</span><br>            mHasActionBar = mOverlayActionBar = <span class="hljs-keyword">false</span>;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (mHasActionBar) &#123;<br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * This needs some explanation. As we can not use the android:theme attribute</span><br><span class="hljs-comment">             * pre-L, we emulate it by manually creating a LayoutInflater using a</span><br><span class="hljs-comment">             * ContextThemeWrapper pointing to actionBarTheme.</span><br><span class="hljs-comment">             */</span><br>            TypedValue outValue = <span class="hljs-keyword">new</span> TypedValue();<br>            mContext.getTheme().resolveAttribute(R.attr.actionBarTheme, outValue, <span class="hljs-keyword">true</span>);<br><br>            Context themedContext;<br>            <span class="hljs-keyword">if</span> (outValue.resourceId != <span class="hljs-number">0</span>) &#123;<br>                themedContext = <span class="hljs-keyword">new</span> ContextThemeWrapper(mContext, outValue.resourceId);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                themedContext = mContext;<br>            &#125;<br><br>            <span class="hljs-comment">// Now inflate the view using the themed context and set it as the content view</span><br>            subDecor = (ViewGroup) LayoutInflater.from(themedContext)<br>                    .inflate(R.layout.abc_screen_toolbar, <span class="hljs-keyword">null</span>);<br><br>            mDecorContentParent = (DecorContentParent) subDecor<br>                    .findViewById(R.id.decor_content_parent);<br>            mDecorContentParent.setWindowCallback(getWindowCallback());<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * Propagate features to DecorContentParent</span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-keyword">if</span> (mOverlayActionBar) &#123;<br>                mDecorContentParent.initFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (mFeatureProgress) &#123;<br>                mDecorContentParent.initFeature(Window.FEATURE_PROGRESS);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (mFeatureIndeterminateProgress) &#123;<br>                mDecorContentParent.initFeature(Window.FEATURE_INDETERMINATE_PROGRESS);<br>            &#125;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">if</span> (mOverlayActionMode) &#123;<br>            subDecor = (ViewGroup) inflater.inflate(<br>                    R.layout.abc_screen_simple_overlay_action_mode, <span class="hljs-keyword">null</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            subDecor = (ViewGroup) inflater.inflate(R.layout.abc_screen_simple, <span class="hljs-keyword">null</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="hljs-number">21</span>) &#123;<br>            <span class="hljs-comment">// If we&#x27;re running on L or above, we can rely on ViewCompat&#x27;s</span><br>            <span class="hljs-comment">// setOnApplyWindowInsetsListener</span><br>            ViewCompat.setOnApplyWindowInsetsListener(subDecor,<br>                    <span class="hljs-keyword">new</span> OnApplyWindowInsetsListener() &#123;<br>                        <span class="hljs-meta">@Override</span><br>                        <span class="hljs-function"><span class="hljs-keyword">public</span> WindowInsetsCompat <span class="hljs-title">onApplyWindowInsets</span><span class="hljs-params">(View v,</span></span><br><span class="hljs-function"><span class="hljs-params">                                WindowInsetsCompat insets)</span> </span>&#123;<br>                            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> top = insets.getSystemWindowInsetTop();<br>                            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> newTop = updateStatusGuard(top);<br><br>                            <span class="hljs-keyword">if</span> (top != newTop) &#123;<br>                                insets = insets.replaceSystemWindowInsets(<br>                                        insets.getSystemWindowInsetLeft(),<br>                                        newTop,<br>                                        insets.getSystemWindowInsetRight(),<br>                                        insets.getSystemWindowInsetBottom());<br>                            &#125;<br><br>                            <span class="hljs-comment">// Now apply the insets on our view</span><br>                            <span class="hljs-keyword">return</span> ViewCompat.onApplyWindowInsets(v, insets);<br>                        &#125;<br>                    &#125;);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// Else, we need to use our own FitWindowsViewGroup handling</span><br>            ((FitWindowsViewGroup) subDecor).setOnFitSystemWindowsListener(<br>                    <span class="hljs-keyword">new</span> FitWindowsViewGroup.OnFitSystemWindowsListener() &#123;<br>                        <span class="hljs-meta">@Override</span><br>                        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onFitSystemWindows</span><span class="hljs-params">(Rect insets)</span> </span>&#123;<br>                            insets.top = updateStatusGuard(insets.top);<br>                        &#125;<br>                    &#125;);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (subDecor == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<br>                <span class="hljs-string">&quot;AppCompat does not support the current theme features: &#123; &quot;</span><br>                        + <span class="hljs-string">&quot;windowActionBar: &quot;</span> + mHasActionBar<br>                        + <span class="hljs-string">&quot;, windowActionBarOverlay: &quot;</span>+ mOverlayActionBar<br>                        + <span class="hljs-string">&quot;, android:windowIsFloating: &quot;</span> + mIsFloating<br>                        + <span class="hljs-string">&quot;, windowActionModeOverlay: &quot;</span> + mOverlayActionMode<br>                        + <span class="hljs-string">&quot;, windowNoTitle: &quot;</span> + mWindowNoTitle<br>                        + <span class="hljs-string">&quot; &#125;&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (mDecorContentParent == <span class="hljs-keyword">null</span>) &#123;<br>        mTitleView = (TextView) subDecor.findViewById(R.id.title);<br>    &#125;<br><br>    <span class="hljs-comment">// Make the decor optionally fit system windows, like the window&#x27;s decor</span><br>    ViewUtils.makeOptionalFitsSystemWindows(subDecor);<br><br>    <span class="hljs-keyword">final</span> ContentFrameLayout contentView = (ContentFrameLayout) subDecor.findViewById(<br>            R.id.action_bar_activity_content);<br><br>    <span class="hljs-keyword">final</span> ViewGroup windowContentView = (ViewGroup) mWindow.findViewById(android.R.id.content);<br>    <span class="hljs-keyword">if</span> (windowContentView != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">// There might be Views already added to the Window&#x27;s content view so we need to</span><br>        <span class="hljs-comment">// migrate them to our content view</span><br>        <span class="hljs-keyword">while</span> (windowContentView.getChildCount() &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">final</span> View child = windowContentView.getChildAt(<span class="hljs-number">0</span>);<br>            windowContentView.removeViewAt(<span class="hljs-number">0</span>);<br>            contentView.addView(child);<br>        &#125;<br><br>        <span class="hljs-comment">// Change our content FrameLayout to use the android.R.id.content id.</span><br>        <span class="hljs-comment">// Useful for fragments.</span><br>        windowContentView.setId(View.NO_ID);<br>        contentView.setId(android.R.id.content);<br><br>        <span class="hljs-comment">// The decorContent may have a foreground drawable set (windowContentOverlay).</span><br>        <span class="hljs-comment">// Remove this as we handle it ourselves</span><br>        <span class="hljs-keyword">if</span> (windowContentView <span class="hljs-keyword">instanceof</span> FrameLayout) &#123;<br>            ((FrameLayout) windowContentView).setForeground(<span class="hljs-keyword">null</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// Now set the Window&#x27;s content view with the decor</span><br>    mWindow.setContentView(subDecor);<br><br>    contentView.setAttachListener(<span class="hljs-keyword">new</span> ContentFrameLayout.OnAttachListener() &#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onAttachedFromWindow</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDetachedFromWindow</span><span class="hljs-params">()</span> </span>&#123;<br>            dismissPopups();<br>        &#125;<br>    &#125;);<br><br>    <span class="hljs-keyword">return</span> subDecor;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>上面的代码一共引用到了以下layout资源：</p>
 <ul>
 <li> R.layout.abc_dialog_title_material</li>
@@ -805,620 +241,275 @@
 <li> R.layout.abc_screen_simple</li>
 </ul>
 <p>解包aar文件之后查看这些xml文件，会发现他们有一个共同的特点：</p>
-<pre><code class="xml">        &lt;include
-            layout=&quot;@layout/abc_screen_content_include&quot;
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:layout_weight=&quot;1&quot;/&gt;
-</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml">&lt;include<br>    layout=&quot;@layout/abc_screen_content_include&quot;<br>    android:layout_width=&quot;match_parent&quot;<br>    android:layout_height=&quot;wrap_content&quot;<br>    android:layout_weight=&quot;1&quot;/&gt;<br></code></pre></div></td></tr></table></figure>
 <p>好的，这个时候我们将构建的会崩溃的apk拖进Android Studio查看其内容，我们找到<code>res/layout/abc_screen_content_include.xml</code>：</p>
-<p><img src="apk-analyze.png"></p>
+<p><img src="apk-analyze.png" srcset="/img/loading.gif" lazyload></p>
 <p>至此，真相大白！可以看到，<code>shrinkResources</code>这个特性似乎还是有一点bug（总不能是feature吧？？！），没有正确识别<code>include</code>标签的引用，导致这个资源被认为是无用的，内容也被</p>
-<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;x /&gt;
-</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">x</span> /&gt;</span><br></code></pre></div></td></tr></table></figure>
 <p>所代替，所以运行的时候，当渲染这个资源的时候就会报找不到android.view.x类的错误。</p>
 <p>比较不幸的是，即使按照官方说明将这个资源手动加入到keep列表中：</p>
-<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;resources
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
-    tools:keep=&quot;@layout/abc_screen_content_include&quot;
-    tools:ignore=&quot;PrivateResource&quot; /&gt;
-</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br>&lt;resources<br>    xmlns:tools=&quot;http://schemas.android.com/tools&quot;<br>    tools:keep=&quot;@layout/abc_screen_content_include&quot;<br>    tools:ignore=&quot;PrivateResource&quot; /&gt;<br></code></pre></div></td></tr></table></figure>
 <p>但构建出来的apk仍然删除了这个资源，所以我只能提了一个issue：<a target="_blank" rel="noopener" href="https://issuetracker.google.com/issues/62744324">AppCompat V7 crash when shrinkResources is enabled [62744324] - Visible to Public - Issue Tracker</a>，不过目前还没有任何回应……</p>
 <p>第一次尝试代码混淆，没想到就遇到了这么个坑，真是刺激！</p>
 
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//perqin-github-io.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-                
             </div>
-
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
-    
-        <a href="/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
-
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
-    
-        <a href="/showcases/gan-dear/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
-
-        </div>
-    </div>
-
-
-
-                    
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="Perqin's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        perqinxie@gmail.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="mailto:perqinxie@gmail.com" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
-                    </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2021/05/">五月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/03/">三月 2021<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/12/">十二月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/04/">四月 2016<span class="sidebar_archives-count">2</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-        <li>
-            <a href="/showcases" title="Showcase">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Showcase
-            </a>
-        </li>
-        
-            <li class="divider"></li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://birdzhang.xyz/" title="BirdZhang&#39;s Blog">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                BirdZhang&#39;s Blog
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://weibo.com/435312561" title="Dospy-梦影决幻">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                Dospy-梦影决幻
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://blog.qshen.cc/" title="浮游大陆">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                浮游大陆
-            </a>
-        </li>
-        
-    
-        <li>
-            <a target="_blank" rel="noopener" href="https://www.frodoluo.ink/blog" title="FrodoLuo">
-                
-                    <i class="material-icons sidebar-material-icons">public</i>
-                
-                FrodoLuo
-            </a>
-        </li>
-        
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
-                    
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/perqinxie" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-
-    <!-- Google + -->
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-        <a href="https://github.com/perqin" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
-                <span class="visuallyhidden">Github</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;Perqin's Blog
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
+            <hr>
             <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/android/">android</a>
+                    
+                      <a class="hover-with-bg" href="/tags/proguard/">proguard</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Kotlin将只读lambda表达式作为监听器使用的坑</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/06/11/jenkins-ci-setup-notes/">
+                        <span class="hidden-mobile">Jenkins持续集成搭建笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
     
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/';
+          this.page.identifier = '/2017/06/18/shrink-resources-bug-or-feature/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
 </footer>
 
 
-                    <!-- Import JS File -->
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
-    <script>lsloader.load("js_js","/js/js.min.js?Bn9UzEm8RrBSxqyZB0zPjA==", true)</script>
+<!-- Plugins -->
 
 
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#FF4081'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #FF4081, 0 0 15px #FF4081'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#FF4081',
-        'border-left-color': '#FF4081'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
+  
 
 
-    <!-- Leancloud -->
-    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-    <script>
-        AV.initialize('9NO51bS4lAdFLWmeHw6hqsme-gzGzoHsz', 'cJv00rbPJMACwRzdikPu599T');
-    </script>
-    <script type="text/ls-javascript" id="leancloud-views-script">
-    function showTime(Counter) {
-        var query = new AV.Query(Counter);
-        $('.leancloud-views_num').each(function() {
-            var url = $(this).attr('id').trim();
-            query.equalTo('url', url);
-            query.find({
-                success: function(results) {
-                    if (results.length === 0) {
-                        var content = '0 ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                        return;
-                    }
-                    for (var i = 0; i < results.length; i++) {
-                        var object = results[i];
-                        var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    }
-                },
-                error: function(object, error) {
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                }
-            });
-        });
-    }
 
-    function addCount(Counter) {
-      var Counter = AV.Object.extend('Counter');
-      url = $('.leancloud-views_num').attr('id').trim();
-      title = $('.leancloud-views_num').attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-      query.equalTo('url', url);
-      query.find({
-          success: function(results) {
-            if (results.length > 0) {
-                var counter = results[0];
-                counter.fetchWhenSave(true);
-                counter.increment('time');
-                counter.save(null, {
-                    success: function(counter) {
-                        var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
-                        $(document.getElementById(url)).text(content);
-                    },
-                    error: function(counter, error) {
-                        console.log('Failed to save Visitor num, with error message: ' + error.message);
-                    }
-                });
-            } else {
-              var newcounter = new Counter();
-              newcounter.set('title', title);
-              newcounter.set('url', url);
-              newcounter.set('time', 1);
-              newcounter.save(null, {
-                  success: function(newcounter) {
-                      console.log('newcounter.get(\'time\')='+newcounter.get('time'));
-                      var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
-                      $(document.getElementById(url)).text(content);
-                  },
-                  error: function(newcounter, error) {
-                      console.log('Failed to create');
-                  }
-              });
-            }
-        },
-        error: function(error) {
-            console.log('Error:' + error.code + ' ' + error.message);
-        }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
       });
-    }
-    $(function() {
-        var Counter = AV.Object.extend('Counter');
-        if ($('.leancloud-views_num').length === 1) {
-            addCount(Counter);
-        } else if ($('.post-title-link').length > 1) {
-            showTime(Counter);
-        }
-    });
-</script>
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//perqin-github-io.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-    
-        
-            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
-        
-    
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-        
-            $(function() {
-                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
-                prettyPrint();
-                })
-        
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
-        });
-    });
-
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
-</script>
-
-<!-- Custom Footer -->
-
-
-
-<script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 2016;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
-        }
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
     })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
-</script>
+  </script>
 
-                </main>
-            </div>
-        </body>
-    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

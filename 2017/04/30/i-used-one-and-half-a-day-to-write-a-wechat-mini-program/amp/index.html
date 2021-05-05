@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/"
 			},
 			"datePublished": "2017-04-30T18:07:49.000Z",
-			"dateModified": "2021-05-04T17:04:54.380Z",
+			"dateModified": "2021-05-05T16:18:30.333Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1841,371 +1841,66 @@ h6.categories {
 <p>然后还需要在小程序开发工具的项目页面刷新：</p>
 <div class="amp-img-wrapper"><amp-img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains-refresh.png" width="1084" height="888" layout="responsive"></amp-img></div>
 <h2 id="LeanCloud-REST-API"><a href="#LeanCloud-REST-API" class="headerlink" title="LeanCloud REST API"></a>LeanCloud REST API</h2><p>接下来，我就可以愉快的在小程序里发请求了。一开始，我觉得LeanCloud的API挺强大的，比如我想要获取指定OpenID的用户：</p>
-<pre><code class="js">function getUserByOpenId(openId, cb) {
-  r(
-    '/classes/WeChatUser',
-    'GET',
-    'where={"OpenId":"' + openId + '"}',
-    (res) =&gt; {
-      cb(null, res.data.results.length === 0 ? null : res.data.results[0]);
-    },
-    () =&gt; {
-      typeof cb == 'function' &amp;&amp; cb(new Error('Fail to get user by OpenID: Network error'));
-    }
-  );
-}
-</code></pre>
+<figure class="highlight js"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUserByOpenId</span>(<span class="hljs-params">openId, cb</span>) </span>{<br>  r(<br>    <span class="hljs-string">'/classes/WeChatUser'</span>,<br>    <span class="hljs-string">'GET'</span>,<br>    <span class="hljs-string">'where={"OpenId":"'</span> + openId + <span class="hljs-string">'"}'</span>,<br>    (res) =&gt; {<br>      cb(<span class="hljs-literal">null</span>, res.data.results.length === <span class="hljs-number">0</span> ? <span class="hljs-literal">null</span> : res.data.results[<span class="hljs-number">0</span>]);<br>    },<br>    () =&gt; {<br>      <span class="hljs-keyword">typeof</span> cb == <span class="hljs-string">'function'</span> &amp;&amp; cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Fail to get user by OpenID: Network error'</span>));<br>    }<br>  );<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>其中<code>r</code>是我对微信里的HTTP请求接口的额外封装。可见，直接在body里按照语法写Query就行了，爽！</p>
 <p>可是接下来问题来了：我需要获取一个用户参与的活动。这是一个多对多的关系，但是，为了简单起见，我并没有搞一个中间的关系表，而是直接在FreePeriod类里指定了Owner和Activity，也就是说，如果一个用户是某个FreePeriod的Owner，那么这个FreePeriod的Activity就是这个用户参与的活动，这在SQL里很简单（虽然我忘了），但是LeanCloud强调了，他们实现上用的是非关系型数据库……所以，我研究了半个小时也没研究出用他的语法怎样一个请求就拿到……最后，我做了两次请求（捂脸）：</p>
-<pre><code class="javascript">function getUserParticipatedActivities(openId, cb) {
-  r(
-    '/classes/FreePeriod',
-    'GET',
-    'where={"Owner":{"$inQuery":{"where":{"OpenId":"' + openId + '"},"className":"WeChatUser"}}}',
-    (fpRes) =&gt; {
-      let as = fpRes.data.results.map((v) =&gt; {
-        return v.Activity.objectId;
-      });
-
-      // Find
-      r(
-        '/classes/Activity',
-        'GET',
-        'where={"objectId":{"$in":[' + as.map(v =&gt; { return '"' + v + '"'; }).join(',') + ']}}',
-        (aRes) =&gt; {
-          cb(null, aRes.data.results);
-        },
-        () =&gt; {
-          cb(new Error('Fail to fetch launched activities #2'));
-        }
-      );
-    },
-    () =&gt; {
-      cb(new Error('Fail to fetch launched activities #1'));
-    }
-  );
-}
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUserParticipatedActivities</span>(<span class="hljs-params">openId, cb</span>) </span>{<br>  r(<br>    <span class="hljs-string">'/classes/FreePeriod'</span>,<br>    <span class="hljs-string">'GET'</span>,<br>    <span class="hljs-string">'where={"Owner":{"$inQuery":{"where":{"OpenId":"'</span> + openId + <span class="hljs-string">'"},"className":"WeChatUser"}}}'</span>,<br>    (fpRes) =&gt; {<br>      <span class="hljs-keyword">let</span> <span class="hljs-keyword">as</span> = fpRes.data.results.map(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> {<br>        <span class="hljs-keyword">return</span> v.Activity.objectId;<br>      });<br><br>      <span class="hljs-comment">// Find</span><br>      r(<br>        <span class="hljs-string">'/classes/Activity'</span>,<br>        <span class="hljs-string">'GET'</span>,<br>        <span class="hljs-string">'where={"objectId":{"$in":['</span> + <span class="hljs-keyword">as</span>.map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-string">'"'</span> + v + <span class="hljs-string">'"'</span>; }).join(<span class="hljs-string">','</span>) + <span class="hljs-string">']}}'</span>,<br>        (aRes) =&gt; {<br>          cb(<span class="hljs-literal">null</span>, aRes.data.results);<br>        },<br>        () =&gt; {<br>          cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Fail to fetch launched activities #2'</span>));<br>        }<br>      );<br>    },<br>    () =&gt; {<br>      cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Fail to fetch launched activities #1'</span>));<br>    }<br>  );<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>如上，找出用户参与的所有FreePeriod，拿到Activity的id列表，然后通过<code>$in</code>操作符拿。</p>
 <p>顺便吐个槽：如果返回的是对象（比如创建、查询指定ID的对象）的时候，返回的JSON就是这个对象本身；而如果请求的是一个数组，那么返回的是一个对象，对象的<code>results</code>属性是一个数组。可以，这很RESTful……</p>
 <h2 id="自己启动的活动列表页面实现"><a href="#自己启动的活动列表页面实现" class="headerlink" title="自己启动的活动列表页面实现"></a>自己启动的活动列表页面实现</h2><p>接下来可以正式写Page了。小程序里，每个Page实例都有一系列生命周期：Load - Ready - Show - Hide - Unload。在Page对应的js里，可以定义每个生命周期里对应的回调来决定做什么，这个和Android里的那几个生命周期也是挺像的，当然如果你也这么认为那你就错了，嘿嘿。</p>
 <p>首先，写界面，听说和vue很像，但是我没学过vue，初看之下有点当年写Angular的感觉：</p>
-<pre><code class="xml">&lt;view class="launched-container"&gt;
-  &lt;scroll-view class="activities-list"&gt;
-    &lt;view wx:for="{{launchedActivities}}" bindtap="activityTap" data-objectid="{{item.objectId}}"&gt;
-      &lt;text&gt;{{item.Title}}&lt;/text&gt;
-    &lt;/view&gt;
-  &lt;/scroll-view&gt;
-  &lt;button class="launch-new-button" bindtap="ntNewActivity"&gt;Launch New&lt;/button&gt;
-&lt;/view&gt;
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"launched-container"</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">scroll-view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"activities-list"</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">wx:for</span>=<span class="hljs-string">"{{launchedActivities}}"</span> <span class="hljs-attr">bindtap</span>=<span class="hljs-string">"activityTap"</span> <span class="hljs-attr">data-objectid</span>=<span class="hljs-string">"{{item.objectId}}"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>{{item.Title}}<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">scroll-view</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"launch-new-button"</span> <span class="hljs-attr">bindtap</span>=<span class="hljs-string">"ntNewActivity"</span>&gt;</span>Launch New<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>在小程序里，每个标签都必须是预设的组件。我需要页面里有一个列表，列表里显示每个活动的标题，然后页面底部有个按钮添加新的活动。上面的代码还是非常好懂的，就是绑定一个数组来渲染列表，然后给每一项绑定点击回调。</p>
 <p>为了让列表填充整个页面，把按钮顶到底部，我查了一下，发现用flex比较简单，但是按照SO上的代码却并没有什么用，一度让我认为小程序是不是对flex的支持不够。后来发现，把page标签（这个标签不在<code>wxml</code>里，但是用开发工具审查元素就能看到，等价于body）的高度设置为满就行了……</p>
-<pre><code class="css">/*app.wxss*/
-page {
-    height: 100%;
-}
-
-/*launched.wxss*/
-.launched-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.activities-list {
-    flex-grow: 1;
-}
-
-.launch-new-button {
-    flex-shrink: 1;
-    width: 100%;
-}
-</code></pre>
+<figure class="highlight css"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs css"><span class="hljs-comment">/*app.wxss*/</span><br>page {<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>}<br><br><span class="hljs-comment">/*launched.wxss*/</span><br><span class="hljs-selector-class">.launched-container</span> {<br>	<span class="hljs-attribute">display</span>: flex;<br>	<span class="hljs-attribute">flex-direction</span>: column;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>}<br><br><span class="hljs-selector-class">.activities-list</span> {<br>	<span class="hljs-attribute">flex-grow</span>: <span class="hljs-number">1</span>;<br>}<br><br><span class="hljs-selector-class">.launch-new-button</span> {<br>	<span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">1</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>很好，这波很稳。最后的效果如下：</p>
 <div class="amp-img-wrapper"><amp-img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched.png" width="1080" height="1920" layout="responsive"></amp-img></div>
 <p>因为列表是空的，所以上面只有一个按钮。那个，图标什么的，不存在的。</p>
 <h2 id="新活动创建页面"><a href="#新活动创建页面" class="headerlink" title="新活动创建页面"></a>新活动创建页面</h2><p>接下来，开始编写新活动创建界面。查了一下小程序文档，发现了可以通过<code>picker</code>组件实现时间和日期选择器，excited！很棒，这是界面代码：</p>
-<pre><code class="xml">&lt;view class="new-activity-container"&gt;
-  &lt;form bindsubmit="fmSubmit"&gt;
-    &lt;input name="title" value="{{title}}" bindinput="fmTitleInput" type="text" placeholder="Title" confirm-type="next" confirm-hold="true" /&gt;
-    &lt;input name="description" value="{{description}}" bindinput="fmDescriptionInput" type="text" placeholder="Description" confirm-type="done" /&gt;
-    &lt;picker name="startDate" value="{{startDate}}" bindchange="fmStartDateChange" mode="date"&gt;
-      &lt;view class="picker"&gt;Start date: {{startDate}}&lt;/view&gt;
-    &lt;/picker&gt;
-    &lt;picker name="endDate" value="{{endDate}}" bindchange="fmEndDateChange" mode="date"&gt;
-      &lt;view class="picker"&gt;End date: {{endDate}}&lt;/view&gt;
-    &lt;/picker&gt;
-    &lt;picker name="startTime" value="{{startTime}}" bindchange="fmStartTimeChange" mode="time"&gt;
-      &lt;view class="picker"&gt;Start time: {{startTime}}&lt;/view&gt;
-    &lt;/picker&gt;
-    &lt;picker name="endTime" value="{{endTime}}" bindchange="fmEndTimeChange" mode="time"&gt;
-      &lt;view class="picker"&gt;End time: {{endTime}}&lt;/view&gt;
-    &lt;/picker&gt;
-    &lt;button formType="submit"&gt;Done&lt;/button&gt;
-  &lt;/form&gt;
-&lt;/view&gt;
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"new-activity-container"</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">bindsubmit</span>=<span class="hljs-string">"fmSubmit"</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"{{title}}"</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">"fmTitleInput"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Title"</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">"next"</span> <span class="hljs-attr">confirm-hold</span>=<span class="hljs-string">"true"</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"description"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"{{description}}"</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">"fmDescriptionInput"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Description"</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">"done"</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"startDate"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"{{startDate}}"</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">"fmStartDateChange"</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">"date"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"picker"</span>&gt;</span>Start date: {{startDate}}<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"endDate"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"{{endDate}}"</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">"fmEndDateChange"</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">"date"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"picker"</span>&gt;</span>End date: {{endDate}}<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"startTime"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"{{startTime}}"</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">"fmStartTimeChange"</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">"time"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"picker"</span>&gt;</span>Start time: {{startTime}}<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"endTime"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"{{endTime}}"</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">"fmEndTimeChange"</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">"time"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"picker"</span>&gt;</span>End time: {{endTime}}<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">formType</span>=<span class="hljs-string">"submit"</span>&gt;</span>Done<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>这里，我也被坑了。我以为把<code>value</code>属性做一下绑定，就能双向绑定了，结果发现改变了日期、时间之后，界面上的时间和日期并没有改变！最后问了一下室友才知道，这样只是单向绑定，需要通过上面的一大堆事件把picker、input的值被改变之后更新到js里的数据对象去，所以你们大概能猜到这个js文件有多长了……看看上面的那些bind……</p>
 <p>另外，要改变被绑定的数据并使绑定了这些数据的UI元素跟着改变，需要使用<code>setData</code>来更改，贴代码如下：</p>
-<pre><code class="javascript">Page({
-  data: {
-    userInfo: {},
-    title: '',
-    description: '',
-    startDate: '2017-01-01',
-    endDate: '2017-01-07',
-    startTime: '00:00',
-    endTime: '23:59'
-  },
-  fmTitleInput: function (e) {
-    this.setData({
-      title: e.detail.value
-    });
-  },
-  // ...
-});
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">Page({<br>  data: {<br>    userInfo: {},<br>    title: <span class="hljs-string">''</span>,<br>    description: <span class="hljs-string">''</span>,<br>    startDate: <span class="hljs-string">'2017-01-01'</span>,<br>    endDate: <span class="hljs-string">'2017-01-07'</span>,<br>    startTime: <span class="hljs-string">'00:00'</span>,<br>    endTime: <span class="hljs-string">'23:59'</span><br>  },<br>  fmTitleInput: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{<br>    <span class="hljs-built_in">this</span>.setData({<br>      title: e.detail.value<br>    });<br>  },<br>  <span class="hljs-comment">// ...</span><br>});<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="页面路由"><a href="#页面路由" class="headerlink" title="页面路由"></a>页面路由</h2><p>前面我总是把小程序的东西和Android的东西做对比，但是实际上，还是要带着前端的思维去写。在小程序中，每个页面都有一个对应的url，比如查看Activity的url就是<code>/pages/activity/activity?objectId=123</code>，可见，url还可以带有参数，在对应的Page被加载的时候就能取到这些参数。</p>
 <p>在主页，我需要点击添加按钮之后跳转到创建新活动的界面，可以这样写：</p>
-<pre><code class="javascript">wx.navigateTo({
-  url: '/pages/new-activity/new-activity'
-});
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">wx.navigateTo({<br>  url: <span class="hljs-string">'/pages/new-activity/new-activity'</span><br>});<br></code></pre></div></td></tr></tbody></table></figure>
 <p>在新活动创建成功之后，我想直接关掉当前页面并调到新的页面，可以这样写：</p>
-<pre><code class="javascript">wx.redirectTo({
-  url: '/pages/activity/activity?objectId=' + data.objectId
-});
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">wx.redirectTo({<br>  url: <span class="hljs-string">'/pages/activity/activity?objectId='</span> + data.objectId<br>});<br></code></pre></div></td></tr></tbody></table></figure>
 <p>在activity页面里，我可以这样获得这个参数：</p>
-<pre><code class="javascript">Page({
-  data:{
-    activityObjectId: '',
-    activity: {},
-    periods: [],
-    userInfo: {}
-  },
-  customData: {
-    periodsView: null,
-    headerViewHeight: 74
-  },
-  onLoad: function (options) {
-    this.data.activityObjectId = options.objectId;
-  },
-  // ...
-}
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">Page({<br>  data:{<br>    activityObjectId: <span class="hljs-string">''</span>,<br>    activity: {},<br>    periods: [],<br>    userInfo: {}<br>  },<br>  customData: {<br>    periodsView: <span class="hljs-literal">null</span>,<br>    headerViewHeight: <span class="hljs-number">74</span><br>  },<br>  onLoad: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>{<br>    <span class="hljs-built_in">this</span>.data.activityObjectId = options.objectId;<br>  },<br>  <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这里我没有用<code>setData</code>，原因后面会说。</p>
 <h2 id="Activity界面实现"><a href="#Activity界面实现" class="headerlink" title="Activity界面实现"></a>Activity界面实现</h2><p><strong>前方高能！！！非战斗人员迅速撤离！！！</strong></p>
 <p>在我的想象中，用户打开一个活动的详情页面之后，应该有一个类似Excel表的表格视图，其中列是日期，行是小时，用户点击单元格就可以标识自己在这一天的这一个小时有空或者没空，有空会高亮。而对于活动创建者，在这个页面则会把所有人的有空时间都显示出来，其中一个时间点如果越多人有空，颜色越深。</p>
 <p>好的，那么我们的逻辑就很明确：打开页面的时候先拿到Activity的ID，然后从API拿到Activity的详细信息（标题等），包括Activity的启动者。然后，根据启动者和当前用户是否同一人，获取对应的FreePeriod列表，然后，渲染到页面上。</p>
 <p>好的，我要开始吐槽了。</p>
 <p><strong>首先，是生命周期和异步调用的冲突问题。</strong>我们有一个很明显的需求：如果我把这个页面后台了，中途另一个用户添上了自己的空闲时间，然后我回到这个页面，讲道理的话页面应该更新，获取这个活动的新的FreePeriod列表。于是，这个更新过程肯定是放在Show生命周期的。而当前用户的信息（主要是ID），一般是不会改变的，只要调用一次就好了，所以我一开始丢到了Load周期。那么现在问题来了：怎样保证Show周期到达的时候，Load周期里的异步搞定了呢？答案当然是不可能保证。所以，最后我就把获取用户信息也一并丢到了Show生命周期里，来，给你看个入门的回调地狱：</p>
-<pre><code class="javascript">  onShow: function() {
-    let self = this;
-    // Get data and update
-    app.getUserInfo((err, info) =&gt; {
-      if (err) return wx.showToast({title: 'Fail to get user info'});
-
-      self.setData({
-        userInfo: info
-      });
-
-      // We can get data now
-      // Activity data
-      lcapi.getActivity(self.data.activityObjectId, (err, activityData) =&gt; {
-        if (err) return wx.showToast({title: 'Fail to load activity'});
-
-        self.setData({
-          activity: activityData
-        });
-        self.customData.periodsView &amp;&amp; self.customData.periodsView.setData({
-          activity: activityData
-        });
-
-        // Now we can get periods data
-        // Period data
-        if (activityData.Launcher.objectId == info.objectId) {
-          // Launcher open, show all periods
-          lcapi.getPeriodsOfActivity(activityData.objectId, (err, periodsData) =&gt; {
-            if (err) return wx.showToast({title: 'Fail to load periods'});
-
-            self.setData({
-              periods: periodsData
-            });
-            self.customData.periodsView &amp;&amp; self.customData.periodsView.setData({
-              periods: periodsData
-            });
-          });
-        } else {
-          // Show self periods
-          lcapi.getPeriodsOfActivityAndUser(activityData.objectId, info.objectId, (err, periodsData) =&gt; {
-            if (err) return wx.showToast({title: 'Fail to load periods'});
-
-            self.setData({
-              periods: periodsData
-            });
-            self.customData.periodsView &amp;&amp; self.customData.periodsView.setData({
-              periods: periodsData
-            });
-          })
-        }
-      });
-    });
-  },
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">onShow: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{<br>  <span class="hljs-keyword">let</span> self = <span class="hljs-built_in">this</span>;<br>  <span class="hljs-comment">// Get data and update</span><br>  app.getUserInfo(<span class="hljs-function">(<span class="hljs-params">err, info</span>) =&gt;</span> {<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast({<span class="hljs-attr">title</span>: <span class="hljs-string">'Fail to get user info'</span>});<br><br>    self.setData({<br>      userInfo: info<br>    });<br><br>    <span class="hljs-comment">// We can get data now</span><br>    <span class="hljs-comment">// Activity data</span><br>    lcapi.getActivity(self.data.activityObjectId, <span class="hljs-function">(<span class="hljs-params">err, activityData</span>) =&gt;</span> {<br>      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast({<span class="hljs-attr">title</span>: <span class="hljs-string">'Fail to load activity'</span>});<br><br>      self.setData({<br>        activity: activityData<br>      });<br>      self.customData.periodsView &amp;&amp; self.customData.periodsView.setData({<br>        activity: activityData<br>      });<br><br>      <span class="hljs-comment">// Now we can get periods data</span><br>      <span class="hljs-comment">// Period data</span><br>      <span class="hljs-keyword">if</span> (activityData.Launcher.objectId == info.objectId) {<br>        <span class="hljs-comment">// Launcher open, show all periods</span><br>        lcapi.getPeriodsOfActivity(activityData.objectId, <span class="hljs-function">(<span class="hljs-params">err, periodsData</span>) =&gt;</span> {<br>          <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast({<span class="hljs-attr">title</span>: <span class="hljs-string">'Fail to load periods'</span>});<br><br>          self.setData({<br>            periods: periodsData<br>          });<br>          self.customData.periodsView &amp;&amp; self.customData.periodsView.setData({<br>            periods: periodsData<br>          });<br>        });<br>      } <span class="hljs-keyword">else</span> {<br>        <span class="hljs-comment">// Show self periods</span><br>        lcapi.getPeriodsOfActivityAndUser(activityData.objectId, info.objectId, <span class="hljs-function">(<span class="hljs-params">err, periodsData</span>) =&gt;</span> {<br>          <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast({<span class="hljs-attr">title</span>: <span class="hljs-string">'Fail to load periods'</span>});<br><br>          self.setData({<br>            periods: periodsData<br>          });<br>          self.customData.periodsView &amp;&amp; self.customData.periodsView.setData({<br>            periods: periodsData<br>          });<br>        })<br>      }<br>    });<br>  });<br>},<br></code></pre></div></td></tr></tbody></table></figure>
 <p>同样的，我在调用<code>setData</code>之后，仍然不敢立刻从<code>this.data</code>里拿数据，也是因为还不确定这个是不是异步的（虽然现在想来，应该不至于这也坑）。</p>
 <p><strong>第二个坑在于小程序对DOM树是没有任何权限的。</strong>你也许留意到了我在Activity里的<code>customData</code>里保存了一个叫做<code>headerHeight</code>的东西，这是因为像Excel表一样的组件是不存在的，我得在画布上自己画，所以画之前我需要拿到<code>canvas</code>的大小。然而，没有任何接口可以拿到DOM树的信息，所以，我无奈之下只能把顶部的标题和描述的高度写死，然后写到<code>customData</code>里。这一点还是不太方便的，希望小程序后面能够增加一点基本的支持。</p>
 <p><strong>第三个天坑就是自己绘制自定义组件。</strong>说实话，自己画了一天的类电子表格界面之后我觉得我的Android自定义View的姿势水平都有所提高了。在小程序里，要自定义的界面怎么办？自己画！画布拿来！定好颜色！抄起js就是干！</p>
 <p>好在，这只是一个非常简单的二维表格，所以，我先自定义了一个PeriodView，持有canvas的绘制上下文，并包含必要的数据：</p>
-<pre><code class="javascript">function PeriodsView(context) {
-  this.context = context;
-  this.viewport = {
-    x: 0,
-    y: 0,
-    w: 0,
-    h: 0
-  };
-  this.cellSize = {
-    w: 60,
-    h: 48
-  };
-  this.data = {
-    activity: null,
-    periods: [],
-    row: 24,
-    col: 5,
-    maxDepth: 0,
-    depth: []
-  };
-  this.indicatorSize = {
-    dateHeight: 40,
-    timeWidth: 60
-  };
-  this.gestures = {
-    lastX: 0,
-    lastY: 0
-  };
-  this.style = {
-    depthCellColors: {
-      min: { r: 0xE8, g: 0xF5, b: 0xE9 },
-      max: { r: 0x1B, g: 0x5E, b: 0x20 }
-    }
-  }
-  this.onCellTap = null;
-}
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PeriodsView</span>(<span class="hljs-params">context</span>) </span>{<br>  <span class="hljs-built_in">this</span>.context = context;<br>  <span class="hljs-built_in">this</span>.viewport = {<br>    x: <span class="hljs-number">0</span>,<br>    y: <span class="hljs-number">0</span>,<br>    w: <span class="hljs-number">0</span>,<br>    h: <span class="hljs-number">0</span><br>  };<br>  <span class="hljs-built_in">this</span>.cellSize = {<br>    w: <span class="hljs-number">60</span>,<br>    h: <span class="hljs-number">48</span><br>  };<br>  <span class="hljs-built_in">this</span>.data = {<br>    activity: <span class="hljs-literal">null</span>,<br>    periods: [],<br>    row: <span class="hljs-number">24</span>,<br>    col: <span class="hljs-number">5</span>,<br>    maxDepth: <span class="hljs-number">0</span>,<br>    depth: []<br>  };<br>  <span class="hljs-built_in">this</span>.indicatorSize = {<br>    dateHeight: <span class="hljs-number">40</span>,<br>    timeWidth: <span class="hljs-number">60</span><br>  };<br>  <span class="hljs-built_in">this</span>.gestures = {<br>    lastX: <span class="hljs-number">0</span>,<br>    lastY: <span class="hljs-number">0</span><br>  };<br>  <span class="hljs-built_in">this</span>.style = {<br>    depthCellColors: {<br>      min: { <span class="hljs-attr">r</span>: <span class="hljs-number">0xE8</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0xF5</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0xE9</span> },<br>      max: { <span class="hljs-attr">r</span>: <span class="hljs-number">0x1B</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0x5E</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0x20</span> }<br>    }<br>  }<br>  <span class="hljs-built_in">this</span>.onCellTap = <span class="hljs-literal">null</span>;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>我的思路非常简单：画布除去左边和顶部的表头，剩下的矩形大小就是viewport，我们拖动这个表格的时候，其实就是移动viewport，可以想象在一张报纸上盖上一张白纸，白纸中间挖了个矩形的窟窿。</p>
 <p>所以，可以看到，上面的数据里，我包含了viewport的当前位置（相对于整张表格的左上角而言）和尺寸、一个格子的尺寸、数据（当前Activity、FreePeriods列表、表格的行列数、深度（后面讲）信息等）、表头的尺寸、手势信息（和触摸事件有关），以及表格颜色范围（最浅和最深）。</p>
 <p>然后，我们就可以写个<code>redraw</code>函数了，这里面根据上面的信息把所有viewport能看到的格子都绘制出来。一切都是非常顺利，下面是绘制日期表头的代码：</p>
-<pre><code class="javascript">  this.context.setFillStyle('#dfdfdf');
-  this.context.setStrokeStyle('#000000');
-  for (let c = cl; c &lt;= cr; ++c) {
-    // Date boxes
-    this.context.strokeRect(this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x, 0, this.cellSize.w, this.indicatorSize.dateHeight);
-    this.context.fillRect(this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x, 0, this.cellSize.w, this.indicatorSize.dateHeight);
-  }
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">'#dfdfdf'</span>);<br><span class="hljs-built_in">this</span>.context.setStrokeStyle(<span class="hljs-string">'#000000'</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) {<br>  <span class="hljs-comment">// Date boxes</span><br>  <span class="hljs-built_in">this</span>.context.strokeRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.fillRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来，我们需要在表头显示文字，本来，我的代码是类似这样的：</p>
-<pre><code class="javascript">  for (let c = cl; c &lt;= cr; ++c) {
-    // Box
-    this.context.setFillStyle('#dfdfdf');
-    this.context.setStrokeStyle('#000000');
-    this.context.strokeRect(this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x, 0, this.cellSize.w, this.indicatorSize.dateHeight);
-    this.context.fillRect(this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x, 0, this.cellSize.w, this.indicatorSize.dateHeight);
-    this.context.setFillStyle('#000000');
-    this.context.setFontSize(10);
-    this.context.setTextAlign('center');
-    this.context.fillText(getDateString(this.data.activity.StartDate, c), this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x + this.cellSize.w / 2, 16);
-  }
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) {<br>  <span class="hljs-comment">// Box</span><br>  <span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">'#dfdfdf'</span>);<br>  <span class="hljs-built_in">this</span>.context.setStrokeStyle(<span class="hljs-string">'#000000'</span>);<br>  <span class="hljs-built_in">this</span>.context.strokeRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.fillRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">'#000000'</span>);<br>  <span class="hljs-built_in">this</span>.context.setFontSize(<span class="hljs-number">10</span>);<br>  <span class="hljs-built_in">this</span>.context.setTextAlign(<span class="hljs-string">'center'</span>);<br>  <span class="hljs-built_in">this</span>.context.fillText(getDateString(<span class="hljs-built_in">this</span>.data.activity.StartDate, c), <span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x + <span class="hljs-built_in">this</span>.cellSize.w / <span class="hljs-number">2</span>, <span class="hljs-number">16</span>);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>但是实际运行之后就发现，拖动表格之后非常卡，根本不跟手！我一开始在想，难道是绘制文字非常卡？没道理啊，美团外卖的列表也是带有文字的啊。后来，可能是我天赋异禀，我突然意识到了原因：把绘制的style放到外面去：</p>
-<pre><code class="javascript">  this.context.setFillStyle('#dfdfdf');
-  this.context.setStrokeStyle('#000000');
-  for (let c = cl; c &lt;= cr; ++c) {
-    // Date boxes
-    this.context.strokeRect(this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x, 0, this.cellSize.w, this.indicatorSize.dateHeight);
-    this.context.fillRect(this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x, 0, this.cellSize.w, this.indicatorSize.dateHeight);
-  }
-  this.context.setFillStyle('#000000');
-  this.context.setFontSize(10);
-  this.context.setTextAlign('center');
-  for (let c = cl; c &lt;= cr; ++c) {
-    // Date labels
-    this.context.fillText(getDateString(this.data.activity.StartDate, c), this.indicatorSize.timeWidth + c * this.cellSize.w - this.viewport.x + this.cellSize.w / 2, 16);
-  }
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">'#dfdfdf'</span>);<br><span class="hljs-built_in">this</span>.context.setStrokeStyle(<span class="hljs-string">'#000000'</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) {<br>  <span class="hljs-comment">// Date boxes</span><br>  <span class="hljs-built_in">this</span>.context.strokeRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.fillRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>}<br><span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">'#000000'</span>);<br><span class="hljs-built_in">this</span>.context.setFontSize(<span class="hljs-number">10</span>);<br><span class="hljs-built_in">this</span>.context.setTextAlign(<span class="hljs-string">'center'</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) {<br>  <span class="hljs-comment">// Date labels</span><br>  <span class="hljs-built_in">this</span>.context.fillText(getDateString(<span class="hljs-built_in">this</span>.data.activity.StartDate, c), <span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x + <span class="hljs-built_in">this</span>.cellSize.w / <span class="hljs-number">2</span>, <span class="hljs-number">16</span>);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这个小小的改动，带来的结果是完全不卡了！细想一下，也很好理解，如果每一个单元格我都重新设置一下画笔风格，就会导致频繁改变绘制的像素颜色，这里面的性能损耗很大。</p>
 <p>到这里，我终于能够画出表头、单元格，其中大大小小其他的bug和debug我就按下不表。接下来是下一个坑：触摸事件。</p>
 <p>其实逻辑上来说，非常简单：按下的时候，记录下初始坐标，手指滑动的时候，记录新的坐标，和之前的作一下差，然后修改viewport的位置，然后调用一下redraw就行了。</p>
 <p>事实证明我的想法没错，成功的实现了拖动：</p>
-<pre><code class="javascript">PeriodsView.prototype.onTouchStart = function(e) {
-  this.gestures.lastX = e.touches[0].x;
-  this.gestures.lastY = e.touches[0].y;
-  this.gestures.initialX = this.gestures.lastX;
-  this.gestures.initialY = this.gestures.lastY;
-  this.gestures.initialTime = Date.now().valueOf();
-};
-
-PeriodsView.prototype.onTouchMove = function(e) {
-  let nx = this.viewport.x - (e.touches[0].x - this.gestures.lastX);
-  let ny = this.viewport.y - (e.touches[0].y - this.gestures.lastY);
-  let invalid = false;
-  if (nx &gt;= 0 &amp;&amp; nx + this.viewport.w &lt;= this.data.col * this.cellSize.w) {
-    this.viewport.x = nx;
-    invalid = true;
-  }
-  if (ny &gt;= 0 &amp;&amp; ny + this.viewport.h &lt;= this.data.row * this.cellSize.h) {
-    this.viewport.y = ny;
-    invalid = true;
-  }
-  if (invalid) {
-    this.redraw();
-  }
-  this.gestures.lastX = e.touches[0].x;
-  this.gestures.lastY = e.touches[0].y;
-};
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">PeriodsView.prototype.onTouchStart = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{<br>  <span class="hljs-built_in">this</span>.gestures.lastX = e.touches[<span class="hljs-number">0</span>].x;<br>  <span class="hljs-built_in">this</span>.gestures.lastY = e.touches[<span class="hljs-number">0</span>].y;<br>  <span class="hljs-built_in">this</span>.gestures.initialX = <span class="hljs-built_in">this</span>.gestures.lastX;<br>  <span class="hljs-built_in">this</span>.gestures.initialY = <span class="hljs-built_in">this</span>.gestures.lastY;<br>  <span class="hljs-built_in">this</span>.gestures.initialTime = <span class="hljs-built_in">Date</span>.now().valueOf();<br>};<br><br>PeriodsView.prototype.onTouchMove = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{<br>  <span class="hljs-keyword">let</span> nx = <span class="hljs-built_in">this</span>.viewport.x - (e.touches[<span class="hljs-number">0</span>].x - <span class="hljs-built_in">this</span>.gestures.lastX);<br>  <span class="hljs-keyword">let</span> ny = <span class="hljs-built_in">this</span>.viewport.y - (e.touches[<span class="hljs-number">0</span>].y - <span class="hljs-built_in">this</span>.gestures.lastY);<br>  <span class="hljs-keyword">let</span> invalid = <span class="hljs-literal">false</span>;<br>  <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx + <span class="hljs-built_in">this</span>.viewport.w &lt;= <span class="hljs-built_in">this</span>.data.col * <span class="hljs-built_in">this</span>.cellSize.w) {<br>    <span class="hljs-built_in">this</span>.viewport.x = nx;<br>    invalid = <span class="hljs-literal">true</span>;<br>  }<br>  <span class="hljs-keyword">if</span> (ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny + <span class="hljs-built_in">this</span>.viewport.h &lt;= <span class="hljs-built_in">this</span>.data.row * <span class="hljs-built_in">this</span>.cellSize.h) {<br>    <span class="hljs-built_in">this</span>.viewport.y = ny;<br>    invalid = <span class="hljs-literal">true</span>;<br>  }<br>  <span class="hljs-keyword">if</span> (invalid) {<br>    <span class="hljs-built_in">this</span>.redraw();<br>  }<br>  <span class="hljs-built_in">this</span>.gestures.lastX = e.touches[<span class="hljs-number">0</span>].x;<br>  <span class="hljs-built_in">this</span>.gestures.lastY = e.touches[<span class="hljs-number">0</span>].y;<br>};<br></code></pre></div></td></tr></tbody></table></figure>
 <p>为了避免拖动到边界以外，我检查了是否出界，出界的情况下仅更新触摸点坐标，但是不调用重绘。</p>
 <p>接下来就是点击事件，我又一次无师自通（手动斜眼），认为只要松开手指和按下手指的坐标差距够小，而时间间隔也够小，那就构成一次点击，根据坐标就能拿到被点击的单元格的行数和列数，然后触发回调：</p>
-<pre><code class="javascript">PeriodsView.prototype.onTouchEnd = function(e) {
-  if (Math.abs(e.changedTouches[0].x - this.gestures.initialX) &lt;= 4 &amp;&amp; Math.abs(e.changedTouches[0].y - this.gestures.initialY) &lt;= 4
-      &amp;&amp; Date.now().valueOf() - this.gestures.initialTime &lt;= 100) {
-    let absX = e.changedTouches[0].x - this.indicatorSize.timeWidth + this.viewport.x;
-    let absY = e.changedTouches[0].y - this.indicatorSize.dateHeight + this.viewport.y;
-    if (absX &lt; 0 || absX &gt;= this.data.col * this.cellSize.w || absY &lt; 0 || absY &gt;= this.data.row * this.cellSize.h) return;
-    let x = Math.floor(absX / this.cellSize.w);
-    let y = Math.floor(absY / this.cellSize.h);
-    if (typeof this.onCellTap == 'function') {
-      let ps = [];
-      this.data.periods.forEach(period =&gt; {
-        if (period.c == x &amp;&amp; period.r == y) {
-          ps.push(period);
-        }
-      });
-      this.onCellTap(x, y, ps);
-    }
-  }
-};
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">PeriodsView.prototype.onTouchEnd = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{<br>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Math</span>.abs(e.changedTouches[<span class="hljs-number">0</span>].x - <span class="hljs-built_in">this</span>.gestures.initialX) &lt;= <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-built_in">Math</span>.abs(e.changedTouches[<span class="hljs-number">0</span>].y - <span class="hljs-built_in">this</span>.gestures.initialY) &lt;= <span class="hljs-number">4</span><br>      &amp;&amp; <span class="hljs-built_in">Date</span>.now().valueOf() - <span class="hljs-built_in">this</span>.gestures.initialTime &lt;= <span class="hljs-number">100</span>) {<br>    <span class="hljs-keyword">let</span> absX = e.changedTouches[<span class="hljs-number">0</span>].x - <span class="hljs-built_in">this</span>.indicatorSize.timeWidth + <span class="hljs-built_in">this</span>.viewport.x;<br>    <span class="hljs-keyword">let</span> absY = e.changedTouches[<span class="hljs-number">0</span>].y - <span class="hljs-built_in">this</span>.indicatorSize.dateHeight + <span class="hljs-built_in">this</span>.viewport.y;<br>    <span class="hljs-keyword">if</span> (absX &lt; <span class="hljs-number">0</span> || absX &gt;= <span class="hljs-built_in">this</span>.data.col * <span class="hljs-built_in">this</span>.cellSize.w || absY &lt; <span class="hljs-number">0</span> || absY &gt;= <span class="hljs-built_in">this</span>.data.row * <span class="hljs-built_in">this</span>.cellSize.h) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">Math</span>.floor(absX / <span class="hljs-built_in">this</span>.cellSize.w);<br>    <span class="hljs-keyword">let</span> y = <span class="hljs-built_in">Math</span>.floor(absY / <span class="hljs-built_in">this</span>.cellSize.h);<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">this</span>.onCellTap == <span class="hljs-string">'function'</span>) {<br>      <span class="hljs-keyword">let</span> ps = [];<br>      <span class="hljs-built_in">this</span>.data.periods.forEach(<span class="hljs-function"><span class="hljs-params">period</span> =&gt;</span> {<br>        <span class="hljs-keyword">if</span> (period.c == x &amp;&amp; period.r == y) {<br>          ps.push(period);<br>        }<br>      });<br>      <span class="hljs-built_in">this</span>.onCellTap(x, y, ps);<br>    }<br>  }<br>};<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这里要注意判断坐标换算之后位于整个表格之内，避免点击表头触发事件（好吧，我写这篇文章的时候才意识到的，所以上面的代码也是有bug的= =）</p>
 <p>很完美！最后解释一下深度：对于同一个单元格，如果是活动创建者查看，那么会显示所有用户的FreePeriod，这意味着一个单元格可能会有很多个FreePeriod对象，于是我用深度来表示这个单元格的FreePeriod个数，从而得出单元格需要的颜色。</p>
 <p>最后，只要在点击一个单元格的时候根据这个单元格是否有该用户的FreePeriod来添加或删除就行了。</p>
 <h2 id="分享"><a href="#分享" class="headerlink" title="分享"></a>分享</h2><p>最后的任务就是分享某个活动，非常简单，只要定义一个Page的回调：</p>
-<pre><code class="javascript">  onShareAppMessage: function () {
-    return {
-      title: '几时得闲：' + this.data.activity.Title,
-      path: '/pages/activity/activity?objectId=' + this.data.activity.objectId,
-      success: () =&gt; {
-        wx.showToast({title: 'Share succeed!'});
-      },
-      fail: (res) =&gt; {
-        wx.showToast({title: 'Share fail!'});
-        console.error(res);
-      }
-    }
-  },
-</code></pre>
+<figure class="highlight javascript"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">onShareAppMessage: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{<br>  <span class="hljs-keyword">return</span> {<br>    title: <span class="hljs-string">'几时得闲：'</span> + <span class="hljs-built_in">this</span>.data.activity.Title,<br>    path: <span class="hljs-string">'/pages/activity/activity?objectId='</span> + <span class="hljs-built_in">this</span>.data.activity.objectId,<br>    success: <span class="hljs-function">() =&gt;</span> {<br>      wx.showToast({<span class="hljs-attr">title</span>: <span class="hljs-string">'Share succeed!'</span>});<br>    },<br>    fail: <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {<br>      wx.showToast({<span class="hljs-attr">title</span>: <span class="hljs-string">'Share fail!'</span>});<br>      <span class="hljs-built_in">console</span>.error(res);<br>    }<br>  }<br>},<br></code></pre></div></td></tr></tbody></table></figure>
 <h2 id="完工"><a href="#完工" class="headerlink" title="完工"></a>完工</h2><p>到这里，终于完成了绝大部分逻辑，剩下的就是修bug和修bug和修bug和修bug和修bug和修bug和修bug和美化UI和美化UI和美化UI和美化UI和美化UI和美化UI。下面是一些小程序的截图：</p>
 <div class="amp-img-wrapper"><amp-img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/new-activity.png" width="1080" height="1920" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity.png" width="1080" height="1920" layout="responsive"></amp-img></div>

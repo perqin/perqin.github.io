@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/"
 			},
 			"datePublished": "2017-06-18T03:52:23.000Z",
-			"dateModified": "2021-05-04T17:04:54.416Z",
+			"dateModified": "2021-05-05T16:18:30.365Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1816,292 +1816,21 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>前两天在酷安上架了一个很简单的应用（<a href="http://www.coolapk.com/apk/com.perqin.copyshare">复制分享(com.perqin.copyshare)_0.0.2_Android应用_酷安网</a>），感觉酷安对个人开发者还是非常友好的，活跃用户多、评论区一片祥和。后来有评论说安装包体积太大了，于是就打算处理一下这个问题了。</p>
 <p>根据官方文档<a href="https://developer.android.com/studio/build/shrink-code.html">Shrink Your Code and Resources | Android Studio</a>，我启用了ProGuard代码混淆：</p>
-<pre><code class="groovy">android {
-    ...
-    buildTypes {
-        release {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
-</code></pre>
+<figure class="highlight groovy"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy">android {<br>    ...<br>    buildTypes {<br>        release {<br>            shrinkResources <span class="hljs-literal">true</span><br>            minifyEnabled <span class="hljs-literal">true</span><br>            proguardFiles getDefaultProguardFile(<span class="hljs-string">'proguard-android.txt'</span>), <span class="hljs-string">'proguard-rules.pro'</span><br>        }<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>但是构建之后立刻就挂掉了！而如果将<code>shrinkResources</code>设置为<code>false</code>则可以正常启动。</p>
 <p>于是，我开始找出元凶。</p>
 <p>首先，我得拿到release构建运行时崩溃的log。编辑AndroidManifest.xml，在application标签加入如下属性：</p>
-<pre><code class="xml">  &lt;application
-    android:debuggable="true"
-    ... /&gt;
-  ...
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml">&lt;application<br>  android:debuggable="true"<br>  ... /&gt;<br>...<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后编辑应用的build.gradle文件，在<code>android</code>标签禁用检查，否则会无法通过编译：</p>
-<pre><code class="groovy">  android {
-    lintOptions {
-      checkReleaseBuilds false
-    }
-  }
-</code></pre>
+<figure class="highlight groovy"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy">android {<br>  lintOptions {<br>    checkReleaseBuilds <span class="hljs-literal">false</span><br>  }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后再编译运行release版的应用，就能看到崩溃的日志。</p>
 <p>但是由于启用了代码混淆，你会看到一大堆abcd，因此需要反混淆。根据官方文档，ProGuard会生成一个mapping.txt，里面包含了所有混淆的对应表，Android SDK提供了反混淆工具，因此我执行如下命令：</p>
-<pre><code class="shell">~/.local/lib/android_sdk/tools/proguard/bin/retrace.sh ~/workspaces/CopyShare/CopyShare/app/build/outputs/mapping/release/mapping.txt ~/trace.txt &gt; ~/deob_trace.txt
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">~/.local/lib/android_sdk/tools/proguard/bin/retrace.sh ~/workspaces/CopyShare/CopyShare/app/build/outputs/mapping/release/mapping.txt ~/trace.txt &gt; ~/deob_trace.txt<br></code></pre></div></td></tr></tbody></table></figure>
 <p>上述命令将保存在<code>~/trace.txt</code>中的崩溃日志反混淆之后输出到<code>~/debo_trace.txt</code>。</p>
 <p>接下来我们打开输出的日志：</p>
-<pre><code>06-18 00:50:12.547 18537-18537/com.perqin.copyshare E/AndroidRuntime: FATAL EXCEPTION: main
-      Process: com.perqin.copyshare, PID: 18537
-      java.lang.RuntimeException: Unable to start activity ComponentInfo{com.perqin.copyshare/com.perqin.copyshare.SettingsActivity}: android.view.InflateException: Binary XML file line #25: Binary XML file line #1: Error inflating class x
-          at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2762)
-          at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2848)
-          at android.app.ActivityThread.-wrap12(ActivityThread.java)
-          at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1552)
-          at android.os.Handler.dispatchMessage(Handler.java:102)
-          at android.os.Looper.loop(Looper.java:154)
-          at android.app.ActivityThread.main(ActivityThread.java:6324)
-          at java.lang.reflect.Method.invoke(Native Method)
-          at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
-          at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
-       Caused by: android.view.InflateException: Binary XML file line #25: Binary XML file line #1: Error inflating class x
-       Caused by: android.view.InflateException: Binary XML file line #1: Error inflating class x
-       Caused by: java.lang.ClassNotFoundException: Didn't find class "android.view.x" on path: DexPathList[[zip file "/data/app/com.perqin.copyshare-1/base.apk"],nativeLibraryDirectories=[/data/app/com.perqin.copyshare-1/lib/arm64, /system/lib64, /vendor/lib64]]
-          at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:56)
-          at java.lang.ClassLoader.loadClass(ClassLoader.java:380)
-          at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
-          at android.view.LayoutInflater.createView(LayoutInflater.java:609)
-          at android.view.LayoutInflater.onCreateView(LayoutInflater.java:700)
-          at com.android.internal.policy.PhoneLayoutInflater.onCreateView(PhoneLayoutInflater.java:68)
-          at android.view.LayoutInflater.onCreateView(LayoutInflater.java:717)
-          at android.view.LayoutInflater.createViewFromTag(LayoutInflater.java:785)
-          at android.view.LayoutInflater.parseInclude(LayoutInflater.java:964)
-          at android.view.LayoutInflater.rInflate(LayoutInflater.java:854)
-          at android.view.LayoutInflater.rInflateChildren(LayoutInflater.java:821)
-          at android.view.LayoutInflater.inflate(LayoutInflater.java:518)
-          at android.view.LayoutInflater.inflate(LayoutInflater.java:426)
-          at android.view.LayoutInflater.inflate(LayoutInflater.java:377)
-          at android.support.v7.app.AppCompatDelegateImplV9.createSubDecor(Unknown Source)
-          at android.support.v7.app.AppCompatDelegateImplV9.ensureSubDecor(Unknown Source)
-          at android.support.v7.app.AppCompatDelegateImplV9.onCreate(Unknown Source)
-                                                            findViewById
-                                                            onConfigurationChanged
-                                                            setContentView
-                                                            setContentView
-                                                            onSubDecorInstalled
-                                                            onPanelClosed
-                                                            onMenuItemSelected
-                                                            onMenuModeChange
-                                                            startSupportActionModeFromWindow
-                                                            onKeyShortcut
-                                                            dispatchKeyEvent
-                                                            shouldInheritContext
-                                                            callActivityOnCreateView
-                                                            openPanel
-                                                            initializePanelDecor
-                                                            reopenMenu
-                                                            closePanel
-                                                            callOnPanelClosed
-                                                            findMenuPanel
-                                                            getPanelState
-                                                            performPanelShortcut
-          at android.support.v7.app.AppCompatActivity.findViewById(Unknown Source)
-          at android.app.Activity$HostCallbacks.onFindViewById(Activity.java:7273)
-          at android.app.BackStackRecord.configureTransitions(BackStackRecord.java:1303)
-          at android.app.BackStackRecord.beginTransition(BackStackRecord.java:1024)
-          at android.app.BackStackRecord.run(BackStackRecord.java:729)
-          at android.app.FragmentManagerImpl.execPendingActions(FragmentManager.java:1578)
-          at android.app.FragmentController.execPendingActions(FragmentController.java:371)
-          at android.app.Activity.performStart(Activity.java:6776)
-          at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2725)
-          at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2848)
-          at android.app.ActivityThread.-wrap12(ActivityThread.java)
-          at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1552)
-          at android.os.Handler.dispatchMessage(Handler.java:102)
-          at android.os.Looper.loop(Looper.java:154)
-          at android.app.ActivityThread.main(ActivityThread.java:6324)
-          at java.lang.reflect.Method.invoke(Native Method)
-          at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
-          at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
-06-18 00:50:12.547 18537-18537/com.perqin.copyshare D/AppTracker: App Event: crash
-06-18 00:50:12.558 18537-18537/com.perqin.copyshare I/Process: Sending signal. PID: 18537 SIG: 9
-</code></pre>
+<figure class="highlight reasonml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs reasonml"><span class="hljs-number">06</span>-<span class="hljs-number">18</span> <span class="hljs-number">00</span>:<span class="hljs-number">50</span>:<span class="hljs-number">12.547</span> <span class="hljs-number">18537</span>-<span class="hljs-number">18537</span>/com.perqin.copyshare E/AndroidRuntime: FATAL EXCEPTION: main<br>      Process: com.perqin.copyshare, PID: <span class="hljs-number">18537</span><br>      java.lang.RuntimeException: Unable <span class="hljs-keyword">to</span> start activity ComponentInfo{com.perqin.copyshare/com.perqin.copyshare.SettingsActivity}: android.view.InflateException: Binary XML file line #<span class="hljs-number">25</span>: Binary XML file line #<span class="hljs-number">1</span>: Error inflating <span class="hljs-keyword">class</span> x<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2762)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2848)</span><br>          at android.app.ActivityThread.-wrap12(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1552)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:102)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">154</span>)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6324</span>)<br>          at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">886</span>)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">776</span>)<br>       Caused by: android.view.InflateException: Binary XML file line #<span class="hljs-number">25</span>: Binary XML file line #<span class="hljs-number">1</span>: Error inflating <span class="hljs-keyword">class</span> x<br>       Caused by: android.view.InflateException: Binary XML file line #<span class="hljs-number">1</span>: Error inflating <span class="hljs-keyword">class</span> x<br>       Caused by: java.lang.ClassNotFoundException: Didn't find <span class="hljs-keyword">class</span> <span class="hljs-string">"android.view.x"</span> on path: DexPathList<span class="hljs-literal">[[<span class="hljs-identifier">zip</span> <span class="hljs-identifier">file</span> "<span class="hljs-operator">/</span><span class="hljs-identifier">data</span><span class="hljs-operator">/</span><span class="hljs-identifier">app</span><span class="hljs-operator">/</span><span class="hljs-identifier">com</span>.<span class="hljs-identifier">perqin</span>.<span class="hljs-identifier">copyshare</span>-<span class="hljs-number">1</span><span class="hljs-operator">/</span><span class="hljs-identifier">base</span>.<span class="hljs-identifier">apk</span>"]</span>,nativeLibraryDirectories=<span class="hljs-literal">[<span class="hljs-operator">/</span><span class="hljs-identifier">data</span><span class="hljs-operator">/</span><span class="hljs-identifier">app</span><span class="hljs-operator">/</span><span class="hljs-identifier">com</span>.<span class="hljs-identifier">perqin</span>.<span class="hljs-identifier">copyshare</span>-<span class="hljs-number">1</span><span class="hljs-operator">/</span><span class="hljs-identifier">lib</span><span class="hljs-operator">/</span><span class="hljs-identifier">arm64</span>, <span class="hljs-operator">/</span><span class="hljs-identifier">system</span><span class="hljs-operator">/</span><span class="hljs-identifier">lib64</span>, <span class="hljs-operator">/</span><span class="hljs-identifier">vendor</span><span class="hljs-operator">/</span><span class="hljs-identifier">lib64</span>]</span>]<br>          at dalvik.system.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BaseDexClassLoader</span>.</span></span>find<span class="hljs-constructor">Class(BaseDexClassLoader.<span class="hljs-params">java</span>:56)</span><br>          at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ClassLoader</span>.</span></span>load<span class="hljs-constructor">Class(ClassLoader.<span class="hljs-params">java</span>:380)</span><br>          at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ClassLoader</span>.</span></span>load<span class="hljs-constructor">Class(ClassLoader.<span class="hljs-params">java</span>:312)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>create<span class="hljs-constructor">View(LayoutInflater.<span class="hljs-params">java</span>:609)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>on<span class="hljs-constructor">CreateView(LayoutInflater.<span class="hljs-params">java</span>:700)</span><br>          at com.android.internal.policy.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">PhoneLayoutInflater</span>.</span></span>on<span class="hljs-constructor">CreateView(PhoneLayoutInflater.<span class="hljs-params">java</span>:68)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>on<span class="hljs-constructor">CreateView(LayoutInflater.<span class="hljs-params">java</span>:717)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>create<span class="hljs-constructor">ViewFromTag(LayoutInflater.<span class="hljs-params">java</span>:785)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>parse<span class="hljs-constructor">Include(LayoutInflater.<span class="hljs-params">java</span>:964)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>r<span class="hljs-constructor">Inflate(LayoutInflater.<span class="hljs-params">java</span>:854)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>r<span class="hljs-constructor">InflateChildren(LayoutInflater.<span class="hljs-params">java</span>:821)</span><br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>inflate(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>java:<span class="hljs-number">518</span>)<br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>inflate(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>java:<span class="hljs-number">426</span>)<br>          at android.view.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>inflate(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LayoutInflater</span>.</span></span>java:<span class="hljs-number">377</span>)<br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatDelegateImplV9</span>.</span></span>create<span class="hljs-constructor">SubDecor(Unknown Source)</span><br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatDelegateImplV9</span>.</span></span>ensure<span class="hljs-constructor">SubDecor(Unknown Source)</span><br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatDelegateImplV9</span>.</span></span>on<span class="hljs-constructor">Create(Unknown Source)</span><br>                                                            findViewById<br>                                                            onConfigurationChanged<br>                                                            setContentView<br>                                                            setContentView<br>                                                            onSubDecorInstalled<br>                                                            onPanelClosed<br>                                                            onMenuItemSelected<br>                                                            onMenuModeChange<br>                                                            startSupportActionModeFromWindow<br>                                                            onKeyShortcut<br>                                                            dispatchKeyEvent<br>                                                            shouldInheritContext<br>                                                            callActivityOnCreateView<br>                                                            openPanel<br>                                                            initializePanelDecor<br>                                                            reopenMenu<br>                                                            closePanel<br>                                                            callOnPanelClosed<br>                                                            findMenuPanel<br>                                                            getPanelState<br>                                                            performPanelShortcut<br>          at android.support.v7.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">AppCompatActivity</span>.</span></span>find<span class="hljs-constructor">ViewById(Unknown Source)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Activity$HostCallbacks</span>.</span></span>on<span class="hljs-constructor">FindViewById(Activity.<span class="hljs-params">java</span>:7273)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span>configure<span class="hljs-constructor">Transitions(BackStackRecord.<span class="hljs-params">java</span>:1303)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span><span class="hljs-keyword">begin</span><span class="hljs-constructor">Transition(BackStackRecord.<span class="hljs-params">java</span>:1024)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BackStackRecord</span>.</span></span>java:<span class="hljs-number">729</span>)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FragmentManagerImpl</span>.</span></span>exec<span class="hljs-constructor">PendingActions(FragmentManager.<span class="hljs-params">java</span>:1578)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FragmentController</span>.</span></span>exec<span class="hljs-constructor">PendingActions(FragmentController.<span class="hljs-params">java</span>:371)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Activity</span>.</span></span>perform<span class="hljs-constructor">Start(Activity.<span class="hljs-params">java</span>:6776)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2725)</span><br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2848)</span><br>          at android.app.ActivityThread.-wrap12(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1552)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:102)</span><br>          at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">154</span>)<br>          at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6324</span>)<br>          at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">886</span>)<br>          at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">776</span>)<br><span class="hljs-number">06</span>-<span class="hljs-number">18</span> <span class="hljs-number">00</span>:<span class="hljs-number">50</span>:<span class="hljs-number">12.547</span> <span class="hljs-number">18537</span>-<span class="hljs-number">18537</span>/com.perqin.copyshare D/AppTracker: App Event: crash<br><span class="hljs-number">06</span>-<span class="hljs-number">18</span> <span class="hljs-number">00</span>:<span class="hljs-number">50</span>:<span class="hljs-number">12.558</span> <span class="hljs-number">18537</span>-<span class="hljs-number">18537</span>/com.perqin.copyshare I/Process: Sending signal. PID: <span class="hljs-number">18537</span> SIG: <span class="hljs-number">9</span><br><br></code></pre></div></td></tr></tbody></table></figure>
 <p>根据上述日志，我发现，崩溃原因是在<code>android.support.v7.app.AppCompatDelegateImplV9</code>这个类的<code>createSubDecor</code>方法里面调用了<code>LayoutInflater.inflate</code>方法，结果找不到一个叫x的View。我们来看看这个<code>createSubDecor</code>方法（在Android Studio中按Ctrl键可以一路追踪每个类的实现）：</p>
-<pre><code class="java">    private ViewGroup createSubDecor() {
-        TypedArray a = mContext.obtainStyledAttributes(R.styleable.AppCompatTheme);
-
-        if (!a.hasValue(R.styleable.AppCompatTheme_windowActionBar)) {
-            a.recycle();
-            throw new IllegalStateException(
-                    "You need to use a Theme.AppCompat theme (or descendant) with this activity.");
-        }
-
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowNoTitle, false)) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-        } else if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBar, false)) {
-            // Don't allow an action bar if there is no title.
-            requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR);
-        }
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionBarOverlay, false)) {
-            requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);
-        }
-        if (a.getBoolean(R.styleable.AppCompatTheme_windowActionModeOverlay, false)) {
-            requestWindowFeature(FEATURE_ACTION_MODE_OVERLAY);
-        }
-        mIsFloating = a.getBoolean(R.styleable.AppCompatTheme_android_windowIsFloating, false);
-        a.recycle();
-
-        // Now let's make sure that the Window has installed its decor by retrieving it
-        mWindow.getDecorView();
-
-        final LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup subDecor = null;
-
-
-        if (!mWindowNoTitle) {
-            if (mIsFloating) {
-                // If we're floating, inflate the dialog title decor
-                subDecor = (ViewGroup) inflater.inflate(
-                        R.layout.abc_dialog_title_material, null);
-
-                // Floating windows can never have an action bar, reset the flags
-                mHasActionBar = mOverlayActionBar = false;
-            } else if (mHasActionBar) {
-                /**
-                 * This needs some explanation. As we can not use the android:theme attribute
-                 * pre-L, we emulate it by manually creating a LayoutInflater using a
-                 * ContextThemeWrapper pointing to actionBarTheme.
-                 */
-                TypedValue outValue = new TypedValue();
-                mContext.getTheme().resolveAttribute(R.attr.actionBarTheme, outValue, true);
-
-                Context themedContext;
-                if (outValue.resourceId != 0) {
-                    themedContext = new ContextThemeWrapper(mContext, outValue.resourceId);
-                } else {
-                    themedContext = mContext;
-                }
-
-                // Now inflate the view using the themed context and set it as the content view
-                subDecor = (ViewGroup) LayoutInflater.from(themedContext)
-                        .inflate(R.layout.abc_screen_toolbar, null);
-
-                mDecorContentParent = (DecorContentParent) subDecor
-                        .findViewById(R.id.decor_content_parent);
-                mDecorContentParent.setWindowCallback(getWindowCallback());
-
-                /**
-                 * Propagate features to DecorContentParent
-                 */
-                if (mOverlayActionBar) {
-                    mDecorContentParent.initFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);
-                }
-                if (mFeatureProgress) {
-                    mDecorContentParent.initFeature(Window.FEATURE_PROGRESS);
-                }
-                if (mFeatureIndeterminateProgress) {
-                    mDecorContentParent.initFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-                }
-            }
-        } else {
-            if (mOverlayActionMode) {
-                subDecor = (ViewGroup) inflater.inflate(
-                        R.layout.abc_screen_simple_overlay_action_mode, null);
-            } else {
-                subDecor = (ViewGroup) inflater.inflate(R.layout.abc_screen_simple, null);
-            }
-
-            if (Build.VERSION.SDK_INT &gt;= 21) {
-                // If we're running on L or above, we can rely on ViewCompat's
-                // setOnApplyWindowInsetsListener
-                ViewCompat.setOnApplyWindowInsetsListener(subDecor,
-                        new OnApplyWindowInsetsListener() {
-                            @Override
-                            public WindowInsetsCompat onApplyWindowInsets(View v,
-                                    WindowInsetsCompat insets) {
-                                final int top = insets.getSystemWindowInsetTop();
-                                final int newTop = updateStatusGuard(top);
-
-                                if (top != newTop) {
-                                    insets = insets.replaceSystemWindowInsets(
-                                            insets.getSystemWindowInsetLeft(),
-                                            newTop,
-                                            insets.getSystemWindowInsetRight(),
-                                            insets.getSystemWindowInsetBottom());
-                                }
-
-                                // Now apply the insets on our view
-                                return ViewCompat.onApplyWindowInsets(v, insets);
-                            }
-                        });
-            } else {
-                // Else, we need to use our own FitWindowsViewGroup handling
-                ((FitWindowsViewGroup) subDecor).setOnFitSystemWindowsListener(
-                        new FitWindowsViewGroup.OnFitSystemWindowsListener() {
-                            @Override
-                            public void onFitSystemWindows(Rect insets) {
-                                insets.top = updateStatusGuard(insets.top);
-                            }
-                        });
-            }
-        }
-
-        if (subDecor == null) {
-            throw new IllegalArgumentException(
-                    "AppCompat does not support the current theme features: { "
-                            + "windowActionBar: " + mHasActionBar
-                            + ", windowActionBarOverlay: "+ mOverlayActionBar
-                            + ", android:windowIsFloating: " + mIsFloating
-                            + ", windowActionModeOverlay: " + mOverlayActionMode
-                            + ", windowNoTitle: " + mWindowNoTitle
-                            + " }");
-        }
-
-        if (mDecorContentParent == null) {
-            mTitleView = (TextView) subDecor.findViewById(R.id.title);
-        }
-
-        // Make the decor optionally fit system windows, like the window's decor
-        ViewUtils.makeOptionalFitsSystemWindows(subDecor);
-
-        final ContentFrameLayout contentView = (ContentFrameLayout) subDecor.findViewById(
-                R.id.action_bar_activity_content);
-
-        final ViewGroup windowContentView = (ViewGroup) mWindow.findViewById(android.R.id.content);
-        if (windowContentView != null) {
-            // There might be Views already added to the Window's content view so we need to
-            // migrate them to our content view
-            while (windowContentView.getChildCount() &gt; 0) {
-                final View child = windowContentView.getChildAt(0);
-                windowContentView.removeViewAt(0);
-                contentView.addView(child);
-            }
-
-            // Change our content FrameLayout to use the android.R.id.content id.
-            // Useful for fragments.
-            windowContentView.setId(View.NO_ID);
-            contentView.setId(android.R.id.content);
-
-            // The decorContent may have a foreground drawable set (windowContentOverlay).
-            // Remove this as we handle it ourselves
-            if (windowContentView instanceof FrameLayout) {
-                ((FrameLayout) windowContentView).setForeground(null);
-            }
-        }
-
-        // Now set the Window's content view with the decor
-        mWindow.setContentView(subDecor);
-
-        contentView.setAttachListener(new ContentFrameLayout.OnAttachListener() {
-            @Override
-            public void onAttachedFromWindow() {}
-
-            @Override
-            public void onDetachedFromWindow() {
-                dismissPopups();
-            }
-        });
-
-        return subDecor;
-    }
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> ViewGroup <span class="hljs-title">createSubDecor</span><span class="hljs-params">()</span> </span>{<br>    TypedArray a = mContext.obtainStyledAttributes(R.styleable.AppCompatTheme);<br><br>    <span class="hljs-keyword">if</span> (!a.hasValue(R.styleable.AppCompatTheme_windowActionBar)) {<br>        a.recycle();<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<br>                <span class="hljs-string">"You need to use a Theme.AppCompat theme (or descendant) with this activity."</span>);<br>    }<br><br>    <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowNoTitle, <span class="hljs-keyword">false</span>)) {<br>        requestWindowFeature(Window.FEATURE_NO_TITLE);<br>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowActionBar, <span class="hljs-keyword">false</span>)) {<br>        <span class="hljs-comment">// Don't allow an action bar if there is no title.</span><br>        requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR);<br>    }<br>    <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowActionBarOverlay, <span class="hljs-keyword">false</span>)) {<br>        requestWindowFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);<br>    }<br>    <span class="hljs-keyword">if</span> (a.getBoolean(R.styleable.AppCompatTheme_windowActionModeOverlay, <span class="hljs-keyword">false</span>)) {<br>        requestWindowFeature(FEATURE_ACTION_MODE_OVERLAY);<br>    }<br>    mIsFloating = a.getBoolean(R.styleable.AppCompatTheme_android_windowIsFloating, <span class="hljs-keyword">false</span>);<br>    a.recycle();<br><br>    <span class="hljs-comment">// Now let's make sure that the Window has installed its decor by retrieving it</span><br>    mWindow.getDecorView();<br><br>    <span class="hljs-keyword">final</span> LayoutInflater inflater = LayoutInflater.from(mContext);<br>    ViewGroup subDecor = <span class="hljs-keyword">null</span>;<br><br><br>    <span class="hljs-keyword">if</span> (!mWindowNoTitle) {<br>        <span class="hljs-keyword">if</span> (mIsFloating) {<br>            <span class="hljs-comment">// If we're floating, inflate the dialog title decor</span><br>            subDecor = (ViewGroup) inflater.inflate(<br>                    R.layout.abc_dialog_title_material, <span class="hljs-keyword">null</span>);<br><br>            <span class="hljs-comment">// Floating windows can never have an action bar, reset the flags</span><br>            mHasActionBar = mOverlayActionBar = <span class="hljs-keyword">false</span>;<br>        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (mHasActionBar) {<br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * This needs some explanation. As we can not use the android:theme attribute</span><br><span class="hljs-comment">             * pre-L, we emulate it by manually creating a LayoutInflater using a</span><br><span class="hljs-comment">             * ContextThemeWrapper pointing to actionBarTheme.</span><br><span class="hljs-comment">             */</span><br>            TypedValue outValue = <span class="hljs-keyword">new</span> TypedValue();<br>            mContext.getTheme().resolveAttribute(R.attr.actionBarTheme, outValue, <span class="hljs-keyword">true</span>);<br><br>            Context themedContext;<br>            <span class="hljs-keyword">if</span> (outValue.resourceId != <span class="hljs-number">0</span>) {<br>                themedContext = <span class="hljs-keyword">new</span> ContextThemeWrapper(mContext, outValue.resourceId);<br>            } <span class="hljs-keyword">else</span> {<br>                themedContext = mContext;<br>            }<br><br>            <span class="hljs-comment">// Now inflate the view using the themed context and set it as the content view</span><br>            subDecor = (ViewGroup) LayoutInflater.from(themedContext)<br>                    .inflate(R.layout.abc_screen_toolbar, <span class="hljs-keyword">null</span>);<br><br>            mDecorContentParent = (DecorContentParent) subDecor<br>                    .findViewById(R.id.decor_content_parent);<br>            mDecorContentParent.setWindowCallback(getWindowCallback());<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * Propagate features to DecorContentParent</span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-keyword">if</span> (mOverlayActionBar) {<br>                mDecorContentParent.initFeature(FEATURE_SUPPORT_ACTION_BAR_OVERLAY);<br>            }<br>            <span class="hljs-keyword">if</span> (mFeatureProgress) {<br>                mDecorContentParent.initFeature(Window.FEATURE_PROGRESS);<br>            }<br>            <span class="hljs-keyword">if</span> (mFeatureIndeterminateProgress) {<br>                mDecorContentParent.initFeature(Window.FEATURE_INDETERMINATE_PROGRESS);<br>            }<br>        }<br>    } <span class="hljs-keyword">else</span> {<br>        <span class="hljs-keyword">if</span> (mOverlayActionMode) {<br>            subDecor = (ViewGroup) inflater.inflate(<br>                    R.layout.abc_screen_simple_overlay_action_mode, <span class="hljs-keyword">null</span>);<br>        } <span class="hljs-keyword">else</span> {<br>            subDecor = (ViewGroup) inflater.inflate(R.layout.abc_screen_simple, <span class="hljs-keyword">null</span>);<br>        }<br><br>        <span class="hljs-keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="hljs-number">21</span>) {<br>            <span class="hljs-comment">// If we're running on L or above, we can rely on ViewCompat's</span><br>            <span class="hljs-comment">// setOnApplyWindowInsetsListener</span><br>            ViewCompat.setOnApplyWindowInsetsListener(subDecor,<br>                    <span class="hljs-keyword">new</span> OnApplyWindowInsetsListener() {<br>                        <span class="hljs-meta">@Override</span><br>                        <span class="hljs-function"><span class="hljs-keyword">public</span> WindowInsetsCompat <span class="hljs-title">onApplyWindowInsets</span><span class="hljs-params">(View v,</span></span><br><span class="hljs-function"><span class="hljs-params">                                WindowInsetsCompat insets)</span> </span>{<br>                            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> top = insets.getSystemWindowInsetTop();<br>                            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> newTop = updateStatusGuard(top);<br><br>                            <span class="hljs-keyword">if</span> (top != newTop) {<br>                                insets = insets.replaceSystemWindowInsets(<br>                                        insets.getSystemWindowInsetLeft(),<br>                                        newTop,<br>                                        insets.getSystemWindowInsetRight(),<br>                                        insets.getSystemWindowInsetBottom());<br>                            }<br><br>                            <span class="hljs-comment">// Now apply the insets on our view</span><br>                            <span class="hljs-keyword">return</span> ViewCompat.onApplyWindowInsets(v, insets);<br>                        }<br>                    });<br>        } <span class="hljs-keyword">else</span> {<br>            <span class="hljs-comment">// Else, we need to use our own FitWindowsViewGroup handling</span><br>            ((FitWindowsViewGroup) subDecor).setOnFitSystemWindowsListener(<br>                    <span class="hljs-keyword">new</span> FitWindowsViewGroup.OnFitSystemWindowsListener() {<br>                        <span class="hljs-meta">@Override</span><br>                        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onFitSystemWindows</span><span class="hljs-params">(Rect insets)</span> </span>{<br>                            insets.top = updateStatusGuard(insets.top);<br>                        }<br>                    });<br>        }<br>    }<br><br>    <span class="hljs-keyword">if</span> (subDecor == <span class="hljs-keyword">null</span>) {<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<br>                <span class="hljs-string">"AppCompat does not support the current theme features: { "</span><br>                        + <span class="hljs-string">"windowActionBar: "</span> + mHasActionBar<br>                        + <span class="hljs-string">", windowActionBarOverlay: "</span>+ mOverlayActionBar<br>                        + <span class="hljs-string">", android:windowIsFloating: "</span> + mIsFloating<br>                        + <span class="hljs-string">", windowActionModeOverlay: "</span> + mOverlayActionMode<br>                        + <span class="hljs-string">", windowNoTitle: "</span> + mWindowNoTitle<br>                        + <span class="hljs-string">" }"</span>);<br>    }<br><br>    <span class="hljs-keyword">if</span> (mDecorContentParent == <span class="hljs-keyword">null</span>) {<br>        mTitleView = (TextView) subDecor.findViewById(R.id.title);<br>    }<br><br>    <span class="hljs-comment">// Make the decor optionally fit system windows, like the window's decor</span><br>    ViewUtils.makeOptionalFitsSystemWindows(subDecor);<br><br>    <span class="hljs-keyword">final</span> ContentFrameLayout contentView = (ContentFrameLayout) subDecor.findViewById(<br>            R.id.action_bar_activity_content);<br><br>    <span class="hljs-keyword">final</span> ViewGroup windowContentView = (ViewGroup) mWindow.findViewById(android.R.id.content);<br>    <span class="hljs-keyword">if</span> (windowContentView != <span class="hljs-keyword">null</span>) {<br>        <span class="hljs-comment">// There might be Views already added to the Window's content view so we need to</span><br>        <span class="hljs-comment">// migrate them to our content view</span><br>        <span class="hljs-keyword">while</span> (windowContentView.getChildCount() &gt; <span class="hljs-number">0</span>) {<br>            <span class="hljs-keyword">final</span> View child = windowContentView.getChildAt(<span class="hljs-number">0</span>);<br>            windowContentView.removeViewAt(<span class="hljs-number">0</span>);<br>            contentView.addView(child);<br>        }<br><br>        <span class="hljs-comment">// Change our content FrameLayout to use the android.R.id.content id.</span><br>        <span class="hljs-comment">// Useful for fragments.</span><br>        windowContentView.setId(View.NO_ID);<br>        contentView.setId(android.R.id.content);<br><br>        <span class="hljs-comment">// The decorContent may have a foreground drawable set (windowContentOverlay).</span><br>        <span class="hljs-comment">// Remove this as we handle it ourselves</span><br>        <span class="hljs-keyword">if</span> (windowContentView <span class="hljs-keyword">instanceof</span> FrameLayout) {<br>            ((FrameLayout) windowContentView).setForeground(<span class="hljs-keyword">null</span>);<br>        }<br>    }<br><br>    <span class="hljs-comment">// Now set the Window's content view with the decor</span><br>    mWindow.setContentView(subDecor);<br><br>    contentView.setAttachListener(<span class="hljs-keyword">new</span> ContentFrameLayout.OnAttachListener() {<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onAttachedFromWindow</span><span class="hljs-params">()</span> </span>{}<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDetachedFromWindow</span><span class="hljs-params">()</span> </span>{<br>            dismissPopups();<br>        }<br>    });<br><br>    <span class="hljs-keyword">return</span> subDecor;<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>上面的代码一共引用到了以下layout资源：</p>
 <ul>
 <li> R.layout.abc_dialog_title_material</li>
@@ -2110,26 +1839,14 @@ h6.categories {
 <li> R.layout.abc_screen_simple</li>
 </ul>
 <p>解包aar文件之后查看这些xml文件，会发现他们有一个共同的特点：</p>
-<pre><code class="xml">        &lt;include
-            layout="@layout/abc_screen_content_include"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/&gt;
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml">&lt;include<br>    layout="@layout/abc_screen_content_include"<br>    android:layout_width="match_parent"<br>    android:layout_height="wrap_content"<br>    android:layout_weight="1"/&gt;<br></code></pre></div></td></tr></tbody></table></figure>
 <p>好的，这个时候我们将构建的会崩溃的apk拖进Android Studio查看其内容，我们找到<code>res/layout/abc_screen_content_include.xml</code>：</p>
 <div class="amp-img-wrapper"><amp-img src="/2017/06/18/shrink-resources-bug-or-feature/apk-analyze.png" width="1407" height="663" layout="responsive"></amp-img></div>
 <p>至此，真相大白！可以看到，<code>shrinkResources</code>这个特性似乎还是有一点bug（总不能是feature吧？？！），没有正确识别<code>include</code>标签的引用，导致这个资源被认为是无用的，内容也被</p>
-<pre><code class="xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;x /&gt;
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">x</span> /&gt;</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>所代替，所以运行的时候，当渲染这个资源的时候就会报找不到android.view.x类的错误。</p>
 <p>比较不幸的是，即使按照官方说明将这个资源手动加入到keep列表中：</p>
-<pre><code class="xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;resources
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@layout/abc_screen_content_include"
-    tools:ignore="PrivateResource" /&gt;
-</code></pre>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br>&lt;resources<br>    xmlns:tools="http://schemas.android.com/tools"<br>    tools:keep="@layout/abc_screen_content_include"<br>    tools:ignore="PrivateResource" /&gt;<br></code></pre></div></td></tr></tbody></table></figure>
 <p>但构建出来的apk仍然删除了这个资源，所以我只能提了一个issue：<a href="https://issuetracker.google.com/issues/62744324">AppCompat V7 crash when shrinkResources is enabled [62744324] - Visible to Public - Issue Tracker</a>，不过目前还没有任何回应……</p>
 <p>第一次尝试代码混淆，没想到就遇到了这么个坑，真是刺激！</p>
 

@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/"
 			},
 			"datePublished": "2016-08-21T15:43:05.000Z",
-			"dateModified": "2021-05-04T17:04:54.416Z",
+			"dateModified": "2021-05-05T16:18:30.365Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1822,50 +1822,26 @@ h6.categories {
 <h2 id="获取Windows中保存的蓝牙密钥"><a href="#获取Windows中保存的蓝牙密钥" class="headerlink" title="获取Windows中保存的蓝牙密钥"></a>获取Windows中保存的蓝牙密钥</h2><p>Windows将密钥保存在了注册表中，而即时使用系统管理员打开，也无法查看，因此需要使用特殊的工具PsExec，放心，这是微软官方提供的工具。</p>
 <p>到这里下载：<a href="http://technet.microsoft.com/en-us/sysinternals/bb897553.aspx"></a>，然后解压，里面有一个PsExec.exe程序。</p>
 <p>接下来，在开始按钮点击右键，选择“命令控制台（管理员）”，然后进入到PsExec.exe所在目录，输入：</p>
-<pre><code class="shell">PsExec.exe -s -i regedit
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">PsExec.exe -s -i regedit<br></code></pre></div></td></tr></tbody></table></figure>
 <p>此时会打开一个注册表窗口，导航到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys</code>，然后你就会看到你的PC的蓝牙适配器MAC：</p>
 <div class="amp-img-wrapper"><amp-img src="/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/regedit.png" width="964" height="548" layout="responsive"></amp-img></div>
 <p>如上图，<code>00********bc</code>就是我的蓝牙适配器MAC，而我的蓝牙鼠标的MAC则是<code>c03*******60</code>，后面的就是密钥！复制出来备用。</p>
 <h2 id="修改Ubuntu中的密钥"><a href="#修改Ubuntu中的密钥" class="headerlink" title="修改Ubuntu中的密钥"></a>修改Ubuntu中的密钥</h2><p>接下来，我们回到Ubuntu，通过以下命令更改密钥：</p>
-<pre><code class="shell"># 进入root用户模式
-sudo su
-cd /var/lib/bluetooth
-# 进入对应的PC蓝牙适配器MAC目录
-cd 00:**:**:**:**:BC
-# 进入对应的蓝牙鼠标MAC目录
-cd C0:3*:**:**:**:60
-# 修改info文件
-vi info
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 进入root用户模式</span><br>sudo su<br>cd /var/lib/bluetooth<br><span class="hljs-meta">#</span><span class="bash"> 进入对应的PC蓝牙适配器MAC目录</span><br>cd 00:**:**:**:**:BC<br><span class="hljs-meta">#</span><span class="bash"> 进入对应的蓝牙鼠标MAC目录</span><br>cd C0:3*:**:**:**:60<br><span class="hljs-meta">#</span><span class="bash"> 修改info文件</span><br>vi info<br></code></pre></div></td></tr></tbody></table></figure>
 <p>在info文件中，可以看到<code>[LinkKey]</code>字段，其中的<code>Key</code>键保存的正是密钥，我们把它修改为Windows下的密钥，如果不放心可以先把这个文件备份。</p>
-<pre><code>Key=77F9************************3450
-</code></pre>
+<figure class="highlight markdown"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs markdown">Key=77F9<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>3450<br></code></pre></div></td></tr></tbody></table></figure>
 <p>保存文件，重启，大功告成！</p>
 <h2 id="Bonus-Ubuntu让蓝牙鼠标配对的时候关闭触摸板"><a href="#Bonus-Ubuntu让蓝牙鼠标配对的时候关闭触摸板" class="headerlink" title="Bonus - Ubuntu让蓝牙鼠标配对的时候关闭触摸板"></a>Bonus - Ubuntu让蓝牙鼠标配对的时候关闭触摸板</h2><p>这个功能Windows 10已经自带，而我非常不习惯触摸板，用久了手指疼- -于是再谷歌了一番。大概方法是添加一条udev规则，让鼠标是否插入的变动会触发一个脚本。</p>
 <p>我们首先需要获取触摸板的设备ID，由于不同的系统对触摸板的命名不同，所以没有办法写通用脚本。打开终端输入：</p>
-<pre><code class="shell">xinput
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">xinput<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后我们从中找到带有Touchpad字样的设备，记下它的ID：</p>
-<pre><code>⎜   ↳ SYN1B7E:01 06CB:2970 Touchpad               id=14    [slave  pointer  (2)]
-</code></pre>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">⎜   ↳ SYN1B7E:01 06CB:2970 Touchpad           	<span class="hljs-attribute">id</span>=14	[slave  pointer  (2)]<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然后准备一个脚本<code>touchpad_switcher.sh</code>：</p>
-<pre><code class="shell">#!/bin/sh
-enabled=$1
-if $enabled
-then
-  xinput set-prop &lt;touchpad_id&gt; "Device Enabled" 1 | notify-send "The touchpad is now enabled." ""
-else
-  xinput set-prop &lt;touchpad_id&gt; "Device Enabled" 0 | notify-send "Disabling the touchpad..." ""
-fi
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/sh</span><br>enabled=$1<br>if $enabled<br>then<br>  xinput set-prop &lt;touchpad_id&gt; "Device Enabled" 1 | notify-send "The touchpad is now enabled." ""<br>else<br>  xinput set-prop &lt;touchpad_id&gt; "Device Enabled" 0 | notify-send "Disabling the touchpad..." ""<br>fi<br></code></pre></div></td></tr></tbody></table></figure>
 <p>注意，<code>&lt;touchpad_id&gt;</code>需要替换为你获取到的ID。别忘了提供可执行权限：</p>
-<pre><code class="shell">chmod a+x touchpad_switcher.sh
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">chmod a+x touchpad_switcher.sh<br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来，创建文件<code>/etc/udev/rules.d/10-local.rules</code>，输入：</p>
-<pre><code>ACTION=="add", SUBSYSTEM=="input", KERNEL=="mouse[0-9]", ENV{DISPLAY}=":0",ENV{XAUTHORITY}="/home/$USER/.Xauthority", ENV{ID_CLASS}="mouse", RUN+="/home/$USER/scripts/touchpad_switcher.sh false"
-ACTION=="remove", SUBSYSTEM=="input", KERNEL=="mouse[0-9]", ENV{DISPLAY}=":0",ENV{XAUTHORITY}="/home/$USER/.Xauthority", ENV{ID_CLASS}="mouse", RUN+="/home/$USER/scripts/touchpad_switcher.sh true"
-</code></pre>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dockerfile">ACTION==<span class="hljs-string">"add"</span>, SUBSYSTEM==<span class="hljs-string">"input"</span>, KERNEL==<span class="hljs-string">"mouse[0-9]"</span>, <span class="hljs-keyword">ENV</span>{DISPLAY}=<span class="hljs-string">":0"</span>,<span class="hljs-keyword">ENV</span>{XAUTHORITY}=<span class="hljs-string">"/home/$USER/.Xauthority"</span>, <span class="hljs-keyword">ENV</span>{ID_CLASS}=<span class="hljs-string">"mouse"</span>, <span class="hljs-keyword">RUN</span><span class="bash">+=<span class="hljs-string">"/home/<span class="hljs-variable">$USER</span>/scripts/touchpad_switcher.sh false"</span></span><br>ACTION==<span class="hljs-string">"remove"</span>, SUBSYSTEM==<span class="hljs-string">"input"</span>, KERNEL==<span class="hljs-string">"mouse[0-9]"</span>, <span class="hljs-keyword">ENV</span>{DISPLAY}=<span class="hljs-string">":0"</span>,<span class="hljs-keyword">ENV</span>{XAUTHORITY}=<span class="hljs-string">"/home/$USER/.Xauthority"</span>, <span class="hljs-keyword">ENV</span>{ID_CLASS}=<span class="hljs-string">"mouse"</span>, <span class="hljs-keyword">RUN</span><span class="bash">+=<span class="hljs-string">"/home/<span class="hljs-variable">$USER</span>/scripts/touchpad_switcher.sh true"</span></span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>注意<code>$USER</code>替换成你的用户名，对应的脚本路径要修改。</p>
 <p>重启电脑，大功告成！</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>

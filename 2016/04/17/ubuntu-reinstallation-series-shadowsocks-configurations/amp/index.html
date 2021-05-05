@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/"
 			},
 			"datePublished": "2016-04-17T17:52:00.000Z",
-			"dateModified": "2021-05-04T17:04:54.420Z",
+			"dateModified": "2021-05-05T16:18:30.369Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1822,53 +1822,29 @@ h6.categories {
 <li><a href="http://askubuntu.com/questions/18802/how-to-correctly-add-a-custom-daemon-to-init-d">10.04 - How to correctly add a custom daemon to init.d? - Ask Ubuntu</a></li>
 </ul>
 <h1 id="安装Shadowsocks-python客户端"><a href="#安装Shadowsocks-python客户端" class="headerlink" title="安装Shadowsocks-python客户端"></a>安装Shadowsocks-python客户端</h1><p>事实上编译<code>libev</code>版本的也是可行的，但是实在麻烦，这里图方便就用了python版本的实现。<br>在终端输入以下命令：</p>
-<pre><code>sudo apt-get update
-sudo apt-get install python-gevent python-pip python-m2crypto
-sudo pip install shadowsocks
-</code></pre>
+<figure class="highlight vim"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">sudo apt-<span class="hljs-built_in">get</span> <span class="hljs-keyword">update</span><br>sudo apt-<span class="hljs-built_in">get</span> install <span class="hljs-keyword">python</span>-gevent <span class="hljs-keyword">python</span>-pip <span class="hljs-keyword">python</span>-m2crypto<br>sudo pip install shadowsocks<br></code></pre></div></td></tr></tbody></table></figure>
 <p>至此Shadowsocks就安装好了。</p>
 <h1 id="配置客户端"><a href="#配置客户端" class="headerlink" title="配置客户端"></a>配置客户端</h1><p>Shadowsocks的python版本同时安装了客户端和服务器端，分别是<code>sslocal</code>和<code>ssserver</code>。<br>在<code>/etc/shadowsocks/</code>新建一个文件<code>sslocal.json</code>（其实放哪里无所谓，但是配置文件一般放在<code>/etc</code>里面），输入以下内容：</p>
-<pre><code>{
-  "server":"1.2.3.4",
-  "server_port":5678,
-  "local_port":1080,
-  "password":"passfoobar",
-  "timeout":600,
-  "method": "aes-256-cfb"
-}
-</code></pre>
+<figure class="highlight json"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">{<br>  <span class="hljs-attr">"server"</span>:<span class="hljs-string">"1.2.3.4"</span>,<br>  <span class="hljs-attr">"server_port"</span>:<span class="hljs-number">5678</span>,<br>  <span class="hljs-attr">"local_port"</span>:<span class="hljs-number">1080</span>,<br>  <span class="hljs-attr">"password"</span>:<span class="hljs-string">"passfoobar"</span>,<br>  <span class="hljs-attr">"timeout"</span>:<span class="hljs-number">600</span>,<br>  <span class="hljs-attr">"method"</span>: <span class="hljs-string">"aes-256-cfb"</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>其中<code>server</code>是服务器地址，<code>server_port</code>是服务器端口，<code>local_port</code>是本地端口，一般默认就是<code>1080</code>，<code>password</code>是密码，<code>timeout</code>是超时时间（并不知道有什么用- -），<code>method</code>是加密方式，默认就是<code>aes-256-cfb</code>。</p>
 <h1 id="运行Shadowsocks"><a href="#运行Shadowsocks" class="headerlink" title="运行Shadowsocks"></a>运行Shadowsocks</h1><p>在命令行输入</p>
-<pre><code>sudo sslocal -c /etc/shadowsocks/sslocal.json -d start
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo sslocal -c <span class="hljs-regexp">/etc/</span>shadowsocks/sslocal.json -d start<br></code></pre></div></td></tr></tbody></table></figure>
 <p>之后Shadowsocks就作为守护进程在后台运行了，参数c指定了配置文件，d参数要求运行守护（后台）进程。这里需要注意的是必须用sudo运行，否则会无法读取配置文件。</p>
 <h1 id="安装与配置Privoxy"><a href="#安装与配置Privoxy" class="headerlink" title="安装与配置Privoxy"></a>安装与配置Privoxy</h1><p>运行了Shadowsocks之后你会发现即使给浏览器设置了代理端口，依然无法翻墙，这是因为Ubuntu 14.04本身不支持<code>socks5</code>协议，而python实现的Shadowsocks本身只有这个协议，因此在看了Windows上C#版本的Shadowsocks实现的源码之后想到了解决方法：使用Privoxy在<code>localhost:8123</code>运行一个HTTP代理，然后转发到1080端口上去，然后将浏览器的代理设置到8123端口就行啦！<br>事实上使用Privoxy还有一个好处，那就是可以依托Privoxy强大的action文件进行局部代理，Windows上是通过pac文件实现的，但是Privoxy不支持pac文件，怎么办呢？<br>庆幸的是，GitHub上有一个项目<code>gfwlist2privoxy</code>可以把GFWList文件转换成Privoxy的action文件，而GFWList是一个开源项目，收集更新被墙的域名列表。于是解决方法也出来了：从gfwlist下载最新的gfwlist文件，然后用gfwlist2privoxy转换成action文件即可！<br>废话说完，开始配置，首先下载Privoxy：</p>
-<pre><code>sudo apt-get install privoxy
-</code></pre>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">sudo apt-<span class="hljs-builtin-name">get</span> install privoxy<br></code></pre></div></td></tr></tbody></table></figure>
 <p>完成之后在这里下载<a href="https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt">最新的gfwlist.txt</a>，放到个人目录里，然后安装<code>gfwlist2privoxy</code>并生成action文件：</p>
-<pre><code>sudo pip install gfwlist2privoxy
-sudo gfwlist2privoxy -i ~/gfwlist.txt -f /etc/privoxy/gfwlist.action -p "127.0.0.1:1080" -t socks5
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo pip install gfwlist2privoxy<br>sudo gfwlist2privoxy -i ~<span class="hljs-regexp">/gfwlist.txt -f /</span>etc<span class="hljs-regexp">/privoxy/g</span>fwlist.action -p <span class="hljs-string">"127.0.0.1:1080"</span> -t socks5<br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来修改Privoxy的配置文件：</p>
-<pre><code>sudo vi /etc/privoxy/config
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo vi <span class="hljs-regexp">/etc/</span>privoxy/config<br></code></pre></div></td></tr></tbody></table></figure>
 <p>首先指定监听地址：<br></p><div class="amp-img-wrapper"><amp-img src="/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-privoxy-listen-address.png" width="642" height="510" layout="responsive"></amp-img></div><br>然后增加action文件：<br><div class="amp-img-wrapper"><amp-img src="/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/add-privoxy-action-file.png" width="642" height="510" layout="responsive"></amp-img></div><br>最后重启Privoxy服务，只要没有报错就大功告成！
-<pre><code>sudo service privoxy restart
-</code></pre>
+<figure class="highlight ebnf"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo service privoxy restart</span><br></code></pre></div></td></tr></tbody></table></figure>
 <h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br></p><div class="amp-img-wrapper"><amp-img src="/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-proxy-for-firefox.png" width="493" height="603" layout="responsive"></amp-img></div><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><div class="amp-img-wrapper"><amp-img src="/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-system-proxy.png" width="850" height="483" layout="responsive"></amp-img></div><br>另一种方法是在.bashrc文件末尾加上
-<pre><code>export http_proxy=http://localhost:8123
-export https_proxy=http://localhost:8123
-</code></pre>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros"><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">http_proxy</span>=http://localhost:8123<br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">https_proxy</span>=http://localhost:8123<br></code></pre></div></td></tr></tbody></table></figure>
 <p>之后输入</p>
-<pre><code>. ~/.bashrc
-</code></pre>
+<figure class="highlight asciidoc"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs asciidoc"><span class="hljs-bullet">. </span>~/.bashrc<br></code></pre></div></td></tr></tbody></table></figure>
 <p>更新环境即可。</p>
 <h1 id="让Shadowsocks开机自启动"><a href="#让Shadowsocks开机自启动" class="headerlink" title="让Shadowsocks开机自启动"></a>让Shadowsocks开机自启动</h1><p>这里一切都接近完美，但是仍然有个问题：每次开机需要手动启动Shadowsocks，能不能把Shadowsocks也变成service呢？当然可以，只需要在<code>/etc/init.d/</code>里面增加一个脚本即可。这个目录里有个<code>skeleton</code>文件，是模板文件，我已经进行了修改，虽然没有输出，但是能够正常启动，从<a href="https://gist.github.com/perqin/2867f8fac6dbbf2514b7471095233668/raw/84207cb3a4fbf702df828504b643c5b65a77c7ab/sslocal">这里</a>下载这个文件到个人目录，然后更新服务列表启动服务：</p>
-<pre><code>sudo cp ~/sslocal /etc/init.d/sslocal
-sudo chmod a+x /etc/init.d/sslocal
-sudo update-rc.d sslocal defaults 97 03
-sudo service sslocal start
-</code></pre>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">sudo cp ~<span class="hljs-regexp">/sslocal /</span>etc<span class="hljs-regexp">/init.d/</span>sslocal<br>sudo chmod a+x <span class="hljs-regexp">/etc/i</span>nit.d/sslocal<br>sudo update-rc.d sslocal defaults <span class="hljs-number">97</span> <span class="hljs-number">03</span><br>sudo service sslocal start<br></code></pre></div></td></tr></tbody></table></figure>
 <h1 id="还不够完美"><a href="#还不够完美" class="headerlink" title="还不够完美"></a>还不够完美</h1><p>到这里我们已经能够无痛翻墙，但是还有两个问题：</p>
 <ul>
 <li>服务自启动脚本没有输出，不能确定运行状态；</li>

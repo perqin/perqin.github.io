@@ -53,7 +53,7 @@
 			    "@id":"https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/"
 			},
 			"datePublished": "2021-05-04T13:50:02.000Z",
-			"dateModified": "2021-05-04T17:04:54.356Z",
+			"dateModified": "2021-05-05T16:18:30.313Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1818,16 +1818,13 @@ h6.categories {
 <h2 id="在Windows上交叉编译Leaf"><a href="#在Windows上交叉编译Leaf" class="headerlink" title="在Windows上交叉编译Leaf"></a>在Windows上交叉编译Leaf</h2><h3 id="bindgen编译时libclang缺失：其一"><a href="#bindgen编译时libclang缺失：其一" class="headerlink" title="bindgen编译时libclang缺失：其一"></a>bindgen编译时libclang缺失：其一</h3><p>Leaf作者推荐在Linux机器上编译Leaf，而我平时用Windows笔记本多一些，因此尝试并最终摸索出了在Windows上编译的方法。</p>
 <p>首先，安装Rust工具链、Android SDK和Android NDK，添加<code>aarch64-linux-android</code>和<code>x86_64-linux-android</code>target，这里不赘述。</p>
 <p>安装完毕之后，参考作者提供的<code>build.sh</code>，我们首先需要设置交叉编译的target对应的linker和ar工具的路径。这些工具都来自于NDK，注意虽然作者给出的来自Mozilla的教程中提到这些工具需要使用NDK中的<code>make_standalone_toolchain.py</code>工具来生成，但2021年的我们可以安装r19或更高版本的NDK，这些版本的NDK中已经有了针对每个API预编译的工具链，以API 23为例，我需要指定以下环境变量：</p>
-<pre><code class="powershell">$Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_AR = 'C:\Users\Perqin\AppData\Local\Android\Sdk\ndk\21.1.6352462\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe'
-$Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER = 'C:\Users\Perqin\AppData\Local\Android\Sdk\ndk\21.1.6352462\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android23-clang.cmd'
-</code></pre>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-variable">$Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_AR</span> = <span class="hljs-string">'C:\Users\Perqin\AppData\Local\Android\Sdk\ndk\21.1.6352462\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe'</span><br><span class="hljs-variable">$Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER</span> = <span class="hljs-string">'C:\Users\Perqin\AppData\Local\Android\Sdk\ndk\21.1.6352462\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android23-clang.cmd'</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>需要注意工具的后缀（exe和cmd），谷歌在Windows版本的NDK中同时放了Windows和Linux的clang可执行程序。</p>
 <blockquote>
 <p>关于API级别的选择，这里应该选择你的Android项目的minSdkVersion，也就是最低支持版本的NDK，这样才能保证不会链接到高版本Android上才有定义的函数和变量。</p>
 </blockquote>
 <p>接下来运行编译命令：</p>
-<pre><code>cargo build --target aarch64-linux-android --no-default-features --features "leaf/default-ring" --release
-</code></pre>
+<figure class="highlight jboss-cli"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jboss-cli">cargo build <span class="hljs-params">--target</span> aarch64-linux-android <span class="hljs-params">--no-default-features</span> <span class="hljs-params">--features</span> <span class="hljs-string">"leaf/default-ring"</span> <span class="hljs-params">--release</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>不出意外的话此时编译会失败，报找不到libclang的错误。</p>
 <p>这是因为Leaf使用了<a href="https://github.com/rust-lang/rust-bindgen">bindgen</a>来生成bindings，而bindgen依赖clang提供的libclang动态链接库来解析c/cpp文件里的内容。</p>
 <p>在Linux中打开NDK的LLVM工具链，会发现libclang是存在的：</p>
@@ -1837,8 +1834,7 @@ $Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER = 'C:\Users\Perqin\AppData\Local\
 <p>我在NDK的仓库里提了<a href="https://github.com/android/ndk/issues/1491">issue</a>，得到的答复是：Linux上的libclang是送你的，我们本来就不准备提供这些玩意儿。</p>
 <p><strong>如果你只是需要顺利编译的话，不需要跟着我踩下面的坑，你可以直接跳过下面的配置部分，阅读《bindgen编译时libclang缺失：其二》章节。</strong></p>
 <p>好在Clang本身就是支持交叉编译的，因此我们只需要自己安装一套就行了。我一开始安装的是Visual Studio里的版本，安装后将其lib路径指定到<code>LIBCLANG_PATH</code>中即可：</p>
-<pre><code class="powershell">$Env:LIBCLANG_PATH = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\Llvm\x64\lib'
-</code></pre>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-variable">$Env:LIBCLANG_PATH</span> = <span class="hljs-string">'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\Llvm\x64\lib'</span><br></code></pre></div></td></tr></tbody></table></figure>
 <blockquote>
 <p>注意选择x64目录下的。</p>
 </blockquote>
@@ -1846,8 +1842,7 @@ $Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER = 'C:\Users\Perqin\AppData\Local\
 <p>我们可以先运行NDK中的clang，随便编译一个文件，带上<code>-v</code>参数看看它带了什么路径：</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/05/04/build-leaf-android-on-windows/image-20210504224300456.png" width="1920" height="1080" layout="responsive"></amp-img></div>
 <p>然后我们就可以通过<code>BINDGEN_EXTRA_CLANG_ARGS</code>这个环境变量将需要额外指定给Clang的参数带进去。在编译Leaf的时候实际上只用到了<code>&lt;android/log.h&gt;</code>，所以不需要那么多路径，我这里是这样指定的（其中<code>ndkLlvmRoot</code>变量的值是NDK中LLVM工具链的路径）：</p>
-<pre><code class="powershell">$Env:BINDGEN_EXTRA_CLANG_ARGS = "--target=aarch64-linux-android23 -isystem '$ndkLlvmRoot\sysroot\usr\include' -isystem '$ndkLlvmRoot\lib64\clang\11.0.5\include'"
-</code></pre>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-variable">$Env:BINDGEN_EXTRA_CLANG_ARGS</span> = <span class="hljs-string">"--target=aarch64-linux-android23 -isystem '<span class="hljs-variable">$ndkLlvmRoot</span>\sysroot\usr\include' -isystem '<span class="hljs-variable">$ndkLlvmRoot</span>\lib64\clang\11.0.5\include'"</span><br></code></pre></div></td></tr></tbody></table></figure>
 <p>到这里就可以在Windows上顺利编译出libleafandroid.so了。</p>
 <h3 id="修复Leaf在Windows下不构建lwip"><a href="#修复Leaf在Windows下不构建lwip" class="headerlink" title="修复Leaf在Windows下不构建lwip"></a>修复Leaf在Windows下不构建lwip</h3><p>在编译成功拿到libleafandroid.so之后，我放进Android项目里跑起来，结果发现一运行就崩溃了，报找不到符号<code>ip_addr_any_type</code>。</p>
 <p>在Leaf的代码中搜索之后，发现这个符号是在lwip项目的代码中声明的。</p>
@@ -1858,120 +1853,26 @@ $Env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER = 'C:\Users\Perqin\AppData\Local\
 <div class="amp-img-wrapper"><amp-img src="/2021/05/04/build-leaf-android-on-windows/rust-build.png" width="822" height="222" layout="responsive"></amp-img></div>
 <p>如图所示，某些Rust库会有一个build.rs文件，这个文件是用于构建这个库的，里面的代码会以开发者的<strong>本地机器</strong>为目标平台编译，并运行编译后的可执行文件来提前构建一些外部依赖。例如Leaf需要在编译它自身的Rust源码之前先编译好lwip等其他语言写的库，就需要在build.rs中进行编译。</p>
 <p>而我遇到的文件就在于此，在旧的build.rs中使用了cfg选项来条件编译，作者应该是希望仅Android目标编译lwip：</p>
-<pre><code class="rust">    #[cfg(all(
-        feature = "inbound-tun",
-        any(
-            target_os = "ios",
-            target_os = "android",
-            target_os = "macos",
-            target_os = "linux"
-        )
-    ))]
-    {
-        let os = env::var("CARGO_CFG_TARGET_OS").unwrap();
-        if os == "ios" || os == "android" || os == "linux" || os == "macos" {
-            compile_lwip();
-        }
-
-        if env::var("BINDINGS_GEN").is_ok()
-            &amp;&amp; (os == "ios" || os == "android" || os == "linux" || os == "macos")
-        {
-            generate_lwip_bindings();
-        }
-    }
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-meta">#[cfg(all(</span><br><span class="hljs-meta">    feature = <span class="hljs-meta-string">"inbound-tun"</span>,</span><br><span class="hljs-meta">    any(</span><br><span class="hljs-meta">        target_os = <span class="hljs-meta-string">"ios"</span>,</span><br><span class="hljs-meta">        target_os = <span class="hljs-meta-string">"android"</span>,</span><br><span class="hljs-meta">        target_os = <span class="hljs-meta-string">"macos"</span>,</span><br><span class="hljs-meta">        target_os = <span class="hljs-meta-string">"linux"</span></span><br><span class="hljs-meta">    )</span><br><span class="hljs-meta">))]</span><br>{<br>    <span class="hljs-keyword">let</span> os = env::var(<span class="hljs-string">"CARGO_CFG_TARGET_OS"</span>).unwrap();<br>    <span class="hljs-keyword">if</span> os == <span class="hljs-string">"ios"</span> || os == <span class="hljs-string">"android"</span> || os == <span class="hljs-string">"linux"</span> || os == <span class="hljs-string">"macos"</span> {<br>        compile_lwip();<br>    }<br><br>    <span class="hljs-keyword">if</span> env::var(<span class="hljs-string">"BINDINGS_GEN"</span>).is_ok()<br>        &amp;&amp; (os == <span class="hljs-string">"ios"</span> || os == <span class="hljs-string">"android"</span> || os == <span class="hljs-string">"linux"</span> || os == <span class="hljs-string">"macos"</span>)<br>    {<br>        generate_lwip_bindings();<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>然而如前所述，build.rs是在我的Windows上运行的，并不是目标平台的代码，因此在其中使用cfg的target_os来条件编译就会出错了。在Linux平台上能成功的原因嘛，则是上面的判断条件歪打正着地匹配上了Linux……</p>
 <p>于是我给作者提了一个PR（关联<a href="https://github.com/eycorsican/leaf/issues/169">issue</a>），解决了这个问题之后再编译得到的so终于可以正常运行了。</p>
 <h2 id="在Gradle项目中集成Rust构建"><a href="#在Gradle项目中集成Rust构建" class="headerlink" title="在Gradle项目中集成Rust构建"></a>在Gradle项目中集成Rust构建</h2><h3 id="接入rust-android-gradle插件"><a href="#接入rust-android-gradle插件" class="headerlink" title="接入rust-android-gradle插件"></a>接入rust-android-gradle插件</h3><p>到此为止，我们只是手动完成了so的编译，但这意味着每次我们将代码修改之后都需要手动编译一次so，然后再启动Android编译。自然而然地，我希望能够把Cargo构建任务放进Gradle项目中。而我们也已经有了这样的插件：<a href="https://github.com/mozilla/rust-android-gradle">rust-android-gradle</a>。</p>
 <p>然而不幸的是，这个插件已经停止更新很久了，无法支持我项目中使用的AGP 4.1.3。</p>
 <p>幸运的是，作者收到了<a href="https://github.com/mozilla/rust-android-gradle/issues/53">群众的呼声</a>，又回坑了，并且已经在他的fork上完成了一版修改。于是，我拉取了它<a href="https://github.com/ncalexan/rust-android-gradle/tree/citest">修改后的插件代码</a>，在IDEA中打开并构建出jar，放进了我的项目中，配置如下：</p>
-<pre><code class="groovy">// build.gradle
-buildscript {
-    dependencies {
-        classpath files('./gradle-plugins/org.mozilla.rust-android-gradle-plugin-0.8.6.jar')
-    }
-}
-
-// app/build.gradle
-plugins {
-    // ...
-    id 'org.mozilla.rust-android-gradle.rust-android'
-}
-
-android {
-    // ...
-}
-
-// Rust build configuration!
-cargo {
-    module  = "../leaf-android"
-    libname = "leafandroid"
-    targets = ["arm64", "x86_64"]
-    prebuiltToolchains = true
-    profile = 'release'
-    features {
-        noDefaultBut("leaf/default-ring")
-    }
-}
-
-// Build leaf during building app
-tasks.whenTaskAdded { task -&gt;
-    if ((task.name == 'javaPreCompileDebug' || task.name == 'javaPreCompileRelease')) {
-        task.dependsOn 'cargoBuild'
-    }
-}
-</code></pre>
+<figure class="highlight groovy"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy"><span class="hljs-comment">// build.gradle</span><br>buildscript {<br>    dependencies {<br>        classpath files(<span class="hljs-string">'./gradle-plugins/org.mozilla.rust-android-gradle-plugin-0.8.6.jar'</span>)<br>    }<br>}<br><br><span class="hljs-comment">// app/build.gradle</span><br>plugins {<br>    <span class="hljs-comment">// ...</span><br>    id <span class="hljs-string">'org.mozilla.rust-android-gradle.rust-android'</span><br>}<br><br>android {<br>    <span class="hljs-comment">// ...</span><br>}<br><br><span class="hljs-comment">// Rust build configuration!</span><br>cargo {<br>    module  = <span class="hljs-string">"../leaf-android"</span><br>    libname = <span class="hljs-string">"leafandroid"</span><br>    targets = [<span class="hljs-string">"arm64"</span>, <span class="hljs-string">"x86_64"</span>]<br>    prebuiltToolchains = <span class="hljs-literal">true</span><br>    profile = <span class="hljs-string">'release'</span><br>    features {<br>        noDefaultBut(<span class="hljs-string">"leaf/default-ring"</span>)<br>    }<br>}<br><br><span class="hljs-comment">// Build leaf during building app</span><br>tasks.whenTaskAdded { task -&gt;<br>    <span class="hljs-keyword">if</span> ((task.name == <span class="hljs-string">'javaPreCompileDebug'</span> || task.name == <span class="hljs-string">'javaPreCompileRelease'</span>)) {<br>        task.dependsOn <span class="hljs-string">'cargoBuild'</span><br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>各参数的使用可以直接查阅插件文档，同时需要注意安装正确版本的NDK，因为rust-android-gradle插件会读取你所使用的<a href="https://developer.android.com/studio/projects/install-ndk#default-ndk-per-agp">AGP版本对应的默认NDK版本</a>，如果你没有强制指定的话，就需要按照这个版本对应关系下载好对应的NDK。</p>
 <p>这回可以顺利编译了，我启动了Gradle任务，并开始翻阅插件文档，因为前面提到的libclang问题在这里肯定也得再解决一下才行。</p>
 <p>可谁知使用插件之后，编译顺利完成了？！</p>
 <h3 id="bindgen编译时libclang缺失：其二"><a href="#bindgen编译时libclang缺失：其二" class="headerlink" title="bindgen编译时libclang缺失：其二"></a>bindgen编译时libclang缺失：其二</h3><p>如前所述，Windows上构建的时候是找不到libclang.dll的，为什么编译成功了呢？</p>
 <h4 id="Q1：bindgen怎么找到了libclang-dll"><a href="#Q1：bindgen怎么找到了libclang-dll" class="headerlink" title="Q1：bindgen怎么找到了libclang.dll"></a>Q1：bindgen怎么找到了libclang.dll</h4><p>bindgen依赖<a href="https://github.com/KyleMayes/clang-sys">clang-sys</a>这个库来查找和链接libclang动态库，回顾一下前面的Rust构建流程，leaf在编译Rust源码之前，会运行leaf-build-script.exe，这里面会调用bindgen，因此会把bindgen编译成libbindgen.dll，而bindgen运行时又依赖clang-sys，因此clang-sys源码中的<code>build/*.rs</code>也会被编译为libclang-sys.dll后在我的Windows机器上运行。</p>
 <p>捋清楚前面的逻辑之后，我们看clang-sys中<a href="https://github.com/KyleMayes/clang-sys/blob/master/build/common.rs">查找libclang的代码</a>（省略了部分逻辑）：</p>
-<pre><code class="rust">/// Returns the paths to and the filenames of the `libclang` static or dynamic
-/// libraries matching the supplied filename patterns.
-pub fn search_libclang_directories(files: &amp;[String], variable: &amp;str) -&gt; Vec&lt;(PathBuf, String)&gt; {
-    // ...
-
-    // Search the `bin` and `lib` directories in directory provided by
-    // `llvm-config --prefix`.
-    if let Some(output) = run_llvm_config(&amp;["--prefix"]) {
-        let directory = Path::new(output.lines().next().unwrap()).to_path_buf();
-        found.extend(search_directories(&amp;directory.join("bin"), files));
-        found.extend(search_directories(&amp;directory.join("lib"), files));
-        found.extend(search_directories(&amp;directory.join("lib64"), files));
-    }
-
-    // ...
-
-    // Determine the `libclang` directory patterns.
-    let directories = if cfg!(any(target_os = "freebsd", target_os = "linux")) {
-        DIRECTORIES_LINUX
-    } else if cfg!(target_os = "macos") {
-        DIRECTORIES_MACOS
-    } else if cfg!(target_os = "windows") {
-        DIRECTORIES_WINDOWS
-    } else {
-        &amp;[]
-    };
-    // ...
-}
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">/// Returns the paths to and the filenames of the `libclang` static or dynamic</span><br><span class="hljs-comment">/// libraries matching the supplied filename patterns.</span><br><span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">search_libclang_directories</span></span>(files: &amp;[<span class="hljs-built_in">String</span>], variable: &amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-built_in">Vec</span>&lt;(PathBuf, <span class="hljs-built_in">String</span>)&gt; {<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-comment">// Search the `bin` and `lib` directories in directory provided by</span><br>    <span class="hljs-comment">// `llvm-config --prefix`.</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-literal">Some</span>(output) = run_llvm_config(&amp;[<span class="hljs-string">"--prefix"</span>]) {<br>        <span class="hljs-keyword">let</span> directory = Path::new(output.lines().next().unwrap()).to_path_buf();<br>        found.extend(search_directories(&amp;directory.join(<span class="hljs-string">"bin"</span>), files));<br>        found.extend(search_directories(&amp;directory.join(<span class="hljs-string">"lib"</span>), files));<br>        found.extend(search_directories(&amp;directory.join(<span class="hljs-string">"lib64"</span>), files));<br>    }<br><br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-comment">// Determine the `libclang` directory patterns.</span><br>    <span class="hljs-keyword">let</span> directories = <span class="hljs-keyword">if</span> <span class="hljs-built_in">cfg!</span>(any(target_os = <span class="hljs-string">"freebsd"</span>, target_os = <span class="hljs-string">"linux"</span>)) {<br>        DIRECTORIES_LINUX<br>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-built_in">cfg!</span>(target_os = <span class="hljs-string">"macos"</span>) {<br>        DIRECTORIES_MACOS<br>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-built_in">cfg!</span>(target_os = <span class="hljs-string">"windows"</span>) {<br>        DIRECTORIES_WINDOWS<br>    } <span class="hljs-keyword">else</span> {<br>        &amp;[]<br>    };<br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>上述代码有两个重要的逻辑：运行llvm-config和检查target_os。</p>
 <p>前面提到过Leaf在Linux上是可以顺利编译的，查看作者提供的<a href="https://github.com/eycorsican/aleaf/blob/master/app/src/main/rust/leaf-android/build.sh">编译脚本</a>可以发现：</p>
-<pre><code class="shell">export PATH="$NDK_HOME/toolchains/llvm/prebuilt/$HOST_OS-$HOST_ARCH/bin/":$PATH
-</code></pre>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">export PATH="$NDK_HOME/toolchains/llvm/prebuilt/$HOST_OS-$HOST_ARCH/bin/":$PATH<br></code></pre></div></td></tr></tbody></table></figure>
 <p>作者将NDK中的LLVM工具链放进了环境变量里。这使clang-sys查找过程中可以顺利运行<code>llvm-config --prefix</code>命令，打印出NDK中LLVM的安装路径，并顺着这个路径找到谷歌白给的libclang.so加以使用，这就是Linux可以正常编译的原因。</p>
 <p>然而这对Windows来说没有意义，因为Windows上NDK里的LLVM缺胳膊少腿。于是我们需要后面的逻辑。如前所述，这里的<code>target_os</code>自然是<code>windows</code>，因此我们会在<code>DIRECTORIES_WINDOWS</code>里找：</p>
-<pre><code class="rust">/// `libclang` directory patterns for Windows.
-const DIRECTORIES_WINDOWS: &amp;[&amp;str] = &amp;[
-    "C:\\LLVM\\lib",
-    "C:\\Program Files*\\LLVM\\lib",
-    "C:\\MSYS*\\MinGW*\\lib",
-    // LLVM + Clang can be installed as a component of Visual Studio.
-    // https://github.com/KyleMayes/clang-sys/issues/121
-    "C:\\Program Files*\\Microsoft Visual Studio\\*\\BuildTools\\VC\\Tools\\Llvm\\**\\bin",
-];
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">/// `libclang` directory patterns for Windows.</span><br><span class="hljs-keyword">const</span> DIRECTORIES_WINDOWS: &amp;[&amp;<span class="hljs-built_in">str</span>] = &amp;[<br>    <span class="hljs-string">"C:\\LLVM\\lib"</span>,<br>    <span class="hljs-string">"C:\\Program Files*\\LLVM\\lib"</span>,<br>    <span class="hljs-string">"C:\\MSYS*\\MinGW*\\lib"</span>,<br>    <span class="hljs-comment">// LLVM + Clang can be installed as a component of Visual Studio.</span><br>    <span class="hljs-comment">// https://github.com/KyleMayes/clang-sys/issues/121</span><br>    <span class="hljs-string">"C:\\Program Files*\\Microsoft Visual Studio\\*\\BuildTools\\VC\\Tools\\Llvm\\**\\bin"</span>,<br>];<br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来就是本篇最大乌龙……</p>
 <p>事情是这样子的：</p>
 <ol>
@@ -1984,223 +1885,34 @@ const DIRECTORIES_WINDOWS: &amp;[&amp;str] = &amp;[
 <p>好家伙，当初为了这个问题我还特地拉AOSP里的NDK源码尝试编译，折腾大半个月白折腾了……</p>
 <h4 id="Q2：isystem参数如何被指定的？"><a href="#Q2：isystem参数如何被指定的？" class="headerlink" title="Q2：isystem参数如何被指定的？"></a>Q2：<code>isystem</code>参数如何被指定的？</h4><p>如前所说，指定<code>LIBCLANG_PATH</code>环境变量还不够，还需要指定一些额外的Clang参数，否则Windows版本的LLVM是不知道去NDK目录里找头文件的。但是为什么rust-gradle-plugin里编译的时候成功了呢？</p>
 <p>首先，<a href="https://github.com/mozilla/rust-android-gradle/blob/master/plugin/src/main/kotlin/com/nishtahir/CargoBuildTask.kt#L207">插件</a>中为我们指定了CLANG_PATH环境变量，指向了我们NDK中的CLANG可执行程序：</p>
-<pre><code class="kotlin">// CargoBuildTask.kt
-// Set CLANG_PATH in the environment, so that bindgen (or anything
-// else using clang-sys in a build.rs) works properly, and doesn't
-// use host headers and such.
-val shouldConfigure = cargoExtension.getFlagProperty(
-    "rust.autoConfigureClangSys",
-    "RUST_ANDROID_GRADLE_AUTO_CONFIGURE_CLANG_SYS",
-    // By default, only do this for non-desktop platforms. If we're
-    // building for desktop, things should work out of the box.
-    toolchain.type != ToolchainType.DESKTOP
-)
-if (shouldConfigure) {
-    environment("CLANG_PATH", cc)
-}
-</code></pre>
+<figure class="highlight kotlin"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs kotlin"><span class="hljs-comment">// CargoBuildTask.kt</span><br><span class="hljs-comment">// Set CLANG_PATH in the environment, so that bindgen (or anything</span><br><span class="hljs-comment">// else using clang-sys in a build.rs) works properly, and doesn't</span><br><span class="hljs-comment">// use host headers and such.</span><br><span class="hljs-keyword">val</span> shouldConfigure = cargoExtension.getFlagProperty(<br>    <span class="hljs-string">"rust.autoConfigureClangSys"</span>,<br>    <span class="hljs-string">"RUST_ANDROID_GRADLE_AUTO_CONFIGURE_CLANG_SYS"</span>,<br>    <span class="hljs-comment">// By default, only do this for non-desktop platforms. If we're</span><br>    <span class="hljs-comment">// building for desktop, things should work out of the box.</span><br>    toolchain.type != ToolchainType.DESKTOP<br>)<br><span class="hljs-keyword">if</span> (shouldConfigure) {<br>    environment(<span class="hljs-string">"CLANG_PATH"</span>, cc)<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>接下来，bindgen<a href="https://github.com/rust-lang/rust-bindgen/blob/master/src/lib.rs#L2193">有一段逻辑</a>会尝试解析需要include的路径：</p>
-<pre><code class="rust">fn detect_include_paths(options: &amp;mut BindgenOptions) {
-    // ...
-
-    let clang = match clang_sys::support::Clang::find(
-        None,
-        &amp;clang_args_for_clang_sys,
-    ) {
-        None =&gt; return,
-        Some(clang) =&gt; clang,
-    };
-
-    debug!("Found clang: {:?}", clang);
-
-    // Whether we are working with C or C++ inputs.
-    let is_cpp = args_are_cpp(&amp;options.clang_args) ||
-    options
-    .input_header
-    .as_ref()
-    .map_or(false, |i| file_is_cpp(&amp;i));
-
-    let search_paths = if is_cpp {
-        clang.cpp_search_paths
-    } else {
-        clang.c_search_paths
-    };
-
-    if let Some(search_paths) = search_paths {
-        for path in search_paths.into_iter() {
-            if let Ok(path) = path.into_os_string().into_string() {
-                options.clang_args.push("-isystem".to_owned());
-                options.clang_args.push(path);
-            }
-        }
-    }
-}
-
-detect_include_paths(&amp;mut options);
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">detect_include_paths</span></span>(options: &amp;<span class="hljs-keyword">mut</span> BindgenOptions) {<br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-keyword">let</span> clang = <span class="hljs-keyword">match</span> clang_sys::support::Clang::find(<br>        <span class="hljs-literal">None</span>,<br>        &amp;clang_args_for_clang_sys,<br>    ) {<br>        <span class="hljs-literal">None</span> =&gt; <span class="hljs-keyword">return</span>,<br>        <span class="hljs-literal">Some</span>(clang) =&gt; clang,<br>    };<br><br>    debug!(<span class="hljs-string">"Found clang: {:?}"</span>, clang);<br><br>    <span class="hljs-comment">// Whether we are working with C or C++ inputs.</span><br>    <span class="hljs-keyword">let</span> is_cpp = args_are_cpp(&amp;options.clang_args) ||<br>    options<br>    .input_header<br>    .as_ref()<br>    .map_or(<span class="hljs-literal">false</span>, |i| file_is_cpp(&amp;i));<br><br>    <span class="hljs-keyword">let</span> search_paths = <span class="hljs-keyword">if</span> is_cpp {<br>        clang.cpp_search_paths<br>    } <span class="hljs-keyword">else</span> {<br>        clang.c_search_paths<br>    };<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-literal">Some</span>(search_paths) = search_paths {<br>        <span class="hljs-keyword">for</span> path <span class="hljs-keyword">in</span> search_paths.into_iter() {<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-literal">Ok</span>(path) = path.into_os_string().into_string() {<br>                options.clang_args.push(<span class="hljs-string">"-isystem"</span>.to_owned());<br>                options.clang_args.push(path);<br>            }<br>        }<br>    }<br>}<br><br>detect_include_paths(&amp;<span class="hljs-keyword">mut</span> options);<br></code></pre></div></td></tr></tbody></table></figure>
 <p>如上所示，bindgen会查找clang可执行程序，并运行它，得到c、cpp的头文件搜索路径，并追加到参数里。而这个<code>clang_sys::support::Clang::find</code>里的实现，正是使用到了<code>CLANG_PATH</code>这个插件注入的环境变量，取到了NDK里的clang可执行程序，解析到了需要的头文件目录！</p>
 <p>因为以上的原因，我们不再需要手动指定环境变量，插件就能为我们完成构建了。</p>
 <h2 id="解决stopLeaf崩溃"><a href="#解决stopLeaf崩溃" class="headerlink" title="解决stopLeaf崩溃"></a>解决stopLeaf崩溃</h2><p>在完成编译顺利运行之后，我又遇到了新的问题：调用<code>stopLeaf</code>之后，应用会崩溃，而日志中就只有两行：</p>
-<pre><code>--------- beginning of crash
-2021-05-04 17:34:35.688 29209-29279/com.perqin.bamboo A/libc: fdsan: attempted to close file descriptor 111, expected to be unowned, actually owned by ParcelFileDescriptor 0xec55a51
-2021-05-04 17:34:35.689 29209-29279/com.perqin.bamboo A/libc: Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 29279 (Thread-4), pid 29209 (m.perqin.bamboo)
-</code></pre>
+<figure class="highlight dns"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dns">--------- beginning of crash<br><span class="hljs-number">2021-05-04</span> <span class="hljs-number">17</span>:<span class="hljs-number">34:35.688</span> <span class="hljs-number">29209-29279</span>/com.perqin.bamboo <span class="hljs-keyword">A</span>/libc: fdsan: attempted to close file descriptor <span class="hljs-number">111</span>, expected to be unowned, actually owned by ParcelFileDescriptor <span class="hljs-number">0</span>xec55a51<br><span class="hljs-number">2021-05-04</span> <span class="hljs-number">17</span>:<span class="hljs-number">34:35.689</span> <span class="hljs-number">29209-29279</span>/com.perqin.bamboo <span class="hljs-keyword">A</span>/libc: Fatal signal <span class="hljs-number">6</span> (SIGABRT), code -<span class="hljs-number">1</span> (SI_QUEUE) in tid <span class="hljs-number">29279</span> (Thread-<span class="hljs-number">4</span>), pid <span class="hljs-number">29209</span> (m.perqin.bamboo)<br></code></pre></div></td></tr></tbody></table></figure>
 <p>这个111文件描述符的确是我从Java层传递给Leaf的，但是Leaf在哪里关闭了它呢？我摸索了一天才找到答案。</p>
 <p>从Java层传入的配置文件，被解析之后放入了这个结构体中，而这个文件描述符也被放到了fd成员里：</p>
-<pre><code class="rust">// leaf:src/config/internal/config.rs
-pub struct TunInboundSettings {
-    // message fields
-    pub fd: i32,
-    pub auto: bool,
-    pub name: ::std::string::String,
-    pub address: ::std::string::String,
-    pub gateway: ::std::string::String,
-    pub netmask: ::std::string::String,
-    pub mtu: i32,
-    pub fake_dns_exclude: ::protobuf::RepeatedField&lt;::std::string::String&gt;,
-    pub fake_dns_include: ::protobuf::RepeatedField&lt;::std::string::String&gt;,
-    // special fields
-    pub unknown_fields: ::protobuf::UnknownFields,
-    pub cached_size: ::protobuf::CachedSize,
-}
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// leaf:src/config/internal/config.rs</span><br><span class="hljs-keyword">pub</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">TunInboundSettings</span></span> {<br>    <span class="hljs-comment">// message fields</span><br>    <span class="hljs-keyword">pub</span> fd: <span class="hljs-built_in">i32</span>,<br>    <span class="hljs-keyword">pub</span> auto: <span class="hljs-built_in">bool</span>,<br>    <span class="hljs-keyword">pub</span> name: ::std::string::<span class="hljs-built_in">String</span>,<br>    <span class="hljs-keyword">pub</span> address: ::std::string::<span class="hljs-built_in">String</span>,<br>    <span class="hljs-keyword">pub</span> gateway: ::std::string::<span class="hljs-built_in">String</span>,<br>    <span class="hljs-keyword">pub</span> netmask: ::std::string::<span class="hljs-built_in">String</span>,<br>    <span class="hljs-keyword">pub</span> mtu: <span class="hljs-built_in">i32</span>,<br>    <span class="hljs-keyword">pub</span> fake_dns_exclude: ::protobuf::RepeatedField&lt;::std::string::<span class="hljs-built_in">String</span>&gt;,<br>    <span class="hljs-keyword">pub</span> fake_dns_include: ::protobuf::RepeatedField&lt;::std::string::<span class="hljs-built_in">String</span>&gt;,<br>    <span class="hljs-comment">// special fields</span><br>    <span class="hljs-keyword">pub</span> unknown_fields: ::protobuf::UnknownFields,<br>    <span class="hljs-keyword">pub</span> cached_size: ::protobuf::CachedSize,<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>而后被放入了Configuration对象中，用于构造AsyncDevice：</p>
-<pre><code class="rust">// leaf:src/proxy/tun/inbound.rs
-pub fn new(
-    inbound: Inbound,
-    dispatcher: Arc&lt;Dispatcher&gt;,
-    nat_manager: Arc&lt;NatManager&gt;,
-) -&gt; Result&lt;Runner&gt; {
-    let settings = TunInboundSettings::parse_from_bytes(&amp;inbound.settings)?;
-
-    let cfg = if settings.fd &gt;= 0 {
-        let mut cfg = tun::Configuration::default();
-        cfg.raw_fd(settings.fd);
-        cfg
-    } else if settings.auto {
-        // ...
-    } else {
-        // ...
-    };
-
-    // ...
-
-    let tun = tun::create_as_async(&amp;cfg).unwrap();
-
-    // ...
-}
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// leaf:src/proxy/tun/inbound.rs</span><br><span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(<br>    inbound: Inbound,<br>    dispatcher: Arc&lt;Dispatcher&gt;,<br>    nat_manager: Arc&lt;NatManager&gt;,<br>) -&gt; <span class="hljs-built_in">Result</span>&lt;Runner&gt; {<br>    <span class="hljs-keyword">let</span> settings = TunInboundSettings::parse_from_bytes(&amp;inbound.settings)?;<br><br>    <span class="hljs-keyword">let</span> cfg = <span class="hljs-keyword">if</span> settings.fd &gt;= <span class="hljs-number">0</span> {<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> cfg = tun::Configuration::default();<br>        cfg.raw_fd(settings.fd);<br>        cfg<br>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> settings.auto {<br>        <span class="hljs-comment">// ...</span><br>    } <span class="hljs-keyword">else</span> {<br>        <span class="hljs-comment">// ...</span><br>    };<br><br>    <span class="hljs-comment">// ...</span><br><br>    <span class="hljs-keyword">let</span> tun = tun::create_as_async(&amp;cfg).unwrap();<br><br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>在构造中，这个fd也被通过<code>Fd::new</code>包装到了<code>platform::posix::Fd</code>对象里：</p>
-<pre><code class="rust">// rust-tun:src/platform/android/device.rs
-use crate::platform::posix::{self, Fd};
-
-impl Device {
-    /// Create a new `Device` for the given `Configuration`.
-    pub fn new(config: &amp;Configuration) -&gt; Result&lt;Self&gt; {
-        let fd = match config.raw_fd {
-            Some(raw_fd) =&gt; raw_fd,
-            _ =&gt; return Err(Error::InvalidConfig),
-        };
-        let device = {
-            let tun = Fd::new(fd).map_err(|_| io::Error::last_os_error())?;
-
-            Device {
-                queue: Queue { tun: tun },
-            }
-        };
-        Ok(device)
-    }
-
-    // ...
-}
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// rust-tun:src/platform/android/device.rs</span><br><span class="hljs-keyword">use</span> crate::platform::posix::{<span class="hljs-keyword">self</span>, Fd};<br><br><span class="hljs-keyword">impl</span> Device {<br>    <span class="hljs-comment">/// Create a new `Device` for the given `Configuration`.</span><br>    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(config: &amp;Configuration) -&gt; <span class="hljs-built_in">Result</span>&lt;<span class="hljs-keyword">Self</span>&gt; {<br>        <span class="hljs-keyword">let</span> fd = <span class="hljs-keyword">match</span> config.raw_fd {<br>            <span class="hljs-literal">Some</span>(raw_fd) =&gt; raw_fd,<br>            _ =&gt; <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(Error::InvalidConfig),<br>        };<br>        <span class="hljs-keyword">let</span> device = {<br>            <span class="hljs-keyword">let</span> tun = Fd::new(fd).map_err(|_| io::Error::last_os_error())?;<br><br>            Device {<br>                queue: Queue { tun: tun },<br>            }<br>        };<br>        <span class="hljs-literal">Ok</span>(device)<br>    }<br><br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>而Fd这个对象实现了Drop这个trait，并且会调用libc关闭这个文件描述符：</p>
-<pre><code class="rust">// rust-tun:src/platform/posix/fd.rs
-impl Drop for Fd {
-    fn drop(&amp;mut self) {
-        unsafe {
-            if self.0 &gt;= 0 {
-                libc::close(self.0);
-            }
-        }
-    }
-}
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// rust-tun:src/platform/posix/fd.rs</span><br><span class="hljs-keyword">impl</span> <span class="hljs-built_in">Drop</span> <span class="hljs-keyword">for</span> Fd {<br>    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">drop</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>) {<br>        <span class="hljs-keyword">unsafe</span> {<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.<span class="hljs-number">0</span> &gt;= <span class="hljs-number">0</span> {<br>                libc::close(<span class="hljs-keyword">self</span>.<span class="hljs-number">0</span>);<br>            }<br>        }<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>而在leaf代码中，通过<code>select_all</code>并行执行了多个Future，当我们调用stopLeaf的时候，其中用于监听shutdown信号的Future就是完成，并导致<code>select_all</code>完成：</p>
-<pre><code class="rust">pub fn start(rt_id: RuntimeId, opts: StartOptions) -&gt; Result&lt;(), Error&gt; {
-    // ...
-    let mut tasks: Vec&lt;Runner&gt; = Vec::new();
-    let mut runners = Vec::new();
-    // ...
-    tasks.push(Box::pin(async move {
-        futures::future::join_all(runners).await;
-    }));
-
-    // Monitor shutdown signal.
-    tasks.push(Box::pin(async move {
-        let _ = shutdown_rx.recv().await;
-    }));
-
-    RUNTIME_MANAGER
-        .lock()
-        .map_err(|_| Error::RuntimeManager)?
-        .insert(rt_id, runtime_manager);
-
-    rt.block_on(futures::future::select_all(tasks));
-    // ...
-}
-</code></pre>
+<figure class="highlight rust"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">start</span></span>(rt_id: RuntimeId, opts: StartOptions) -&gt; <span class="hljs-built_in">Result</span>&lt;(), Error&gt; {<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> tasks: <span class="hljs-built_in">Vec</span>&lt;Runner&gt; = <span class="hljs-built_in">Vec</span>::new();<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> runners = <span class="hljs-built_in">Vec</span>::new();<br>    <span class="hljs-comment">// ...</span><br>    tasks.push(<span class="hljs-built_in">Box</span>::pin(<span class="hljs-keyword">async</span> <span class="hljs-keyword">move</span> {<br>        futures::future::join_all(runners).<span class="hljs-keyword">await</span>;<br>    }));<br><br>    <span class="hljs-comment">// Monitor shutdown signal.</span><br>    tasks.push(<span class="hljs-built_in">Box</span>::pin(<span class="hljs-keyword">async</span> <span class="hljs-keyword">move</span> {<br>        <span class="hljs-keyword">let</span> _ = shutdown_rx.recv().<span class="hljs-keyword">await</span>;<br>    }));<br><br>    RUNTIME_MANAGER<br>        .lock()<br>        .map_err(|_| Error::RuntimeManager)?<br>        .insert(rt_id, runtime_manager);<br><br>    rt.block_on(futures::future::select_all(tasks));<br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>于是可以推测，在<code>select_all</code>完成之后，除了shutdown这个Future完成了，其他Future（包括正在持有fd的Future，在runners中）以及关联的变量就都离开了作用域，Rust判断他们可以被Drop了，于是就drop了。这也是为什么我打日志后发现在<code>rt.block_on(futures::future::select_all(tasks));</code>这行发生了crash。</p>
 <p>这个文件描述符在Java层是通过<code>VpnService.Builder.establish</code>方法返回的ParcelFileDescriptor对象中获得的。我们会看到他的注释中明确说明需要app主动关闭这个文件描述符：</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/05/04/build-leaf-android-on-windows/index.png" width="1139" height="797" layout="responsive"></amp-img></div>
 <p>而要让native来负责关闭的话，就需要调用<code>detachFd</code>，在Java层主动释放对文件描述符的拥有权。调用这个方法之后，stopLeaf果然不会奔溃了。</p>
 <p>稍微深究一下ParcelFileDescriptor的实现就会发现，在构造对象的时候我们就声明了拥有权（<code>IoUtils.setFdOwner(mFd, this)</code>）：</p>
-<pre><code class="java">public ParcelFileDescriptor(FileDescriptor fd, FileDescriptor commChannel) {
-    if (fd == null) {
-        throw new NullPointerException("FileDescriptor must not be null");
-    }
-    mWrapped = null;
-    mFd = fd;
-    IoUtils.setFdOwner(mFd, this);
-
-    mCommFd = commChannel;
-    if (mCommFd != null) {
-        IoUtils.setFdOwner(mCommFd, this);
-    }
-
-    mGuard.open("close");
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ParcelFileDescriptor</span><span class="hljs-params">(FileDescriptor fd, FileDescriptor commChannel)</span> </span>{<br>    <span class="hljs-keyword">if</span> (fd == <span class="hljs-keyword">null</span>) {<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException(<span class="hljs-string">"FileDescriptor must not be null"</span>);<br>    }<br>    mWrapped = <span class="hljs-keyword">null</span>;<br>    mFd = fd;<br>    IoUtils.setFdOwner(mFd, <span class="hljs-keyword">this</span>);<br><br>    mCommFd = commChannel;<br>    <span class="hljs-keyword">if</span> (mCommFd != <span class="hljs-keyword">null</span>) {<br>        IoUtils.setFdOwner(mCommFd, <span class="hljs-keyword">this</span>);<br>    }<br><br>    mGuard.open(<span class="hljs-string">"close"</span>);<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>而常规情况下，在Java层关闭时调用的<code>close</code>会关闭这个fd（<code>IoUtils.closeQuietly(mFd)</code>）：</p>
-<pre><code class="java">private void closeWithStatus(int status, String msg) {
-    if (mClosed) return;
-    mClosed = true;
-    if (mGuard != null) {
-        mGuard.close();
-    }
-    // Status MUST be sent before closing actual descriptor
-    writeCommStatusAndClose(status, msg);
-    IoUtils.closeQuietly(mFd);
-    releaseResources();
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">closeWithStatus</span><span class="hljs-params">(<span class="hljs-keyword">int</span> status, String msg)</span> </span>{<br>    <span class="hljs-keyword">if</span> (mClosed) <span class="hljs-keyword">return</span>;<br>    mClosed = <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">if</span> (mGuard != <span class="hljs-keyword">null</span>) {<br>        mGuard.close();<br>    }<br>    <span class="hljs-comment">// Status MUST be sent before closing actual descriptor</span><br>    writeCommStatusAndClose(status, msg);<br>    IoUtils.closeQuietly(mFd);<br>    releaseResources();<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>但如果我们调用<code>detachFd</code>呢？</p>
-<pre><code class="java">public int detachFd() {
-    if (mWrapped != null) {
-        return mWrapped.detachFd();
-    } else {
-        if (mClosed) {
-            throw new IllegalStateException("Already closed");
-        }
-        int fd = IoUtils.acquireRawFd(mFd);
-        writeCommStatusAndClose(Status.DETACHED, null);
-        mClosed = true;
-        mGuard.close();
-        releaseResources();
-        return fd;
-    }
-}
-</code></pre>
+<figure class="highlight java"><table><tbody><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">detachFd</span><span class="hljs-params">()</span> </span>{<br>    <span class="hljs-keyword">if</span> (mWrapped != <span class="hljs-keyword">null</span>) {<br>        <span class="hljs-keyword">return</span> mWrapped.detachFd();<br>    } <span class="hljs-keyword">else</span> {<br>        <span class="hljs-keyword">if</span> (mClosed) {<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">"Already closed"</span>);<br>        }<br>        <span class="hljs-keyword">int</span> fd = IoUtils.acquireRawFd(mFd);<br>        writeCommStatusAndClose(Status.DETACHED, <span class="hljs-keyword">null</span>);<br>        mClosed = <span class="hljs-keyword">true</span>;<br>        mGuard.close();<br>        releaseResources();<br>        <span class="hljs-keyword">return</span> fd;<br>    }<br>}<br></code></pre></div></td></tr></tbody></table></figure>
 <p>可见我们仅仅是把这个ParcelFileDescriptor关闭了，但并没有真正关闭fd。</p>
 <p>我们再去cs.android.com搜索<code>IoUtils.setFdOwner</code>的实现：</p>
 <div class="amp-img-wrapper"><amp-img src="/2021/05/04/build-leaf-android-on-windows/image-20210505004002025.png" width="1111" height="754" layout="responsive"></amp-img></div>
