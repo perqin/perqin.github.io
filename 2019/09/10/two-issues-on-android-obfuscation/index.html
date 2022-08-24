@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
@@ -9,40 +9,49 @@
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#7108B2">
-  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
   <meta name="author" content="Perqin">
   <meta name="keywords" content="">
+  
+    <meta name="description" content="代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。 然而代码混淆之路并非一帆风顺，而且往往在运行到目标代码之前，无法确定混淆是否出了问题。本文记载两则代码混淆中遇到的问题和处理方案。 本文提及的代码可以在https:&#x2F;&#x2F;github.com&#x2F;perqin&#x2F;ProGuardBugTest找到。 ProGuard处理可选依赖错">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android代码混淆问题处理两则">
+<meta property="og:url" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/index.html">
+<meta property="og:site_name" content="Perqin&#39;s Blog">
+<meta property="og:description" content="代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。 然而代码混淆之路并非一帆风顺，而且往往在运行到目标代码之前，无法确定混淆是否出了问题。本文记载两则代码混淆中遇到的问题和处理方案。 本文提及的代码可以在https:&#x2F;&#x2F;github.com&#x2F;perqin&#x2F;ProGuardBugTest找到。 ProGuard处理可选依赖错">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/fields-with-the-same-name.png">
+<meta property="article:published_time" content="2019-09-10T13:33:28.000Z">
+<meta property="article:modified_time" content="2022-08-24T07:30:03.651Z">
+<meta property="article:author" content="Perqin">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="ProGuard">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/fields-with-the-same-name.png">
+  
+  
   
   <title>Android代码混淆问题处理两则 - Perqin&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
+
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -51,7 +60,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
@@ -60,19 +75,57 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279692316&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
+    <a class="navbar-brand" href="/">
+      <strong>Perqin&#39;s Blog</strong>
+    </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -134,13 +187,15 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -149,60 +204,71 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Android代码混淆问题处理两则">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2019-09-10 21:33" pubdate>
-        2019年9月10日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      3.6k 字
-    </span>
   
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      54
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Android代码混淆问题处理两则"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-09-10 21:33" pubdate>
+          2019年9月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          15k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          128 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
@@ -211,38 +277,52 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
+        <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Android代码混淆问题处理两则</h1>
             
-            <div class="markdown-body">
-              <p>代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。</p>
+            
+              <div class="markdown-body">
+                
+                <p>代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。</p>
 <p>然而代码混淆之路并非一帆风顺，而且往往在运行到目标代码之前，无法确定混淆是否出了问题。本文记载两则代码混淆中遇到的问题和处理方案。</p>
 <p>本文提及的代码可以在<a target="_blank" rel="noopener" href="https://github.com/perqin/ProGuardBugTest">https://github.com/perqin/ProGuardBugTest</a>找到。</p>
 <h2 id="ProGuard处理可选依赖错误"><a href="#ProGuard处理可选依赖错误" class="headerlink" title="ProGuard处理可选依赖错误"></a>ProGuard处理可选依赖错误</h2><p>在我维护的SDK项目中的一个版本中，我需要支持多个SDK之间不强制依赖。Base模块为基础库；Core和GUI模块均依赖Base库，但GUI模块对Core的依赖是可选的。</p>
 <p>在实现上，我让Web对Core的依赖为<code>compileOnly</code>：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs groovy"><span class="hljs-comment">// gui/build.gradle</span><br>apply <span class="hljs-attr">plugin:</span> <span class="hljs-string">&#x27;java-library&#x27;</span><br><br>dependencies &#123;<br>    implementation project(<span class="hljs-string">&#x27;:base&#x27;</span>)<br>    compileOnly project(<span class="hljs-string">&#x27;:core&#x27;</span>)<br>&#125;<br><br>sourceCompatibility = <span class="hljs-string">&quot;7&quot;</span><br>targetCompatibility = <span class="hljs-string">&quot;7&quot;</span><br><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs groovy"><span class="hljs-comment">// gui/build.gradle</span><br>apply <span class="hljs-attr">plugin:</span> <span class="hljs-string">&#x27;java-library&#x27;</span><br><br>dependencies &#123;<br>    implementation project(<span class="hljs-string">&#x27;:base&#x27;</span>)<br>    compileOnly project(<span class="hljs-string">&#x27;:core&#x27;</span>)<br>&#125;<br><br>sourceCompatibility = <span class="hljs-string">&quot;7&quot;</span><br>targetCompatibility = <span class="hljs-string">&quot;7&quot;</span><br><br></code></pre></td></tr></table></figure>
+
 <p>在Base模块中有<code>Account</code>类，在Core模块中则有一个接口使用了该类：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.core;<br><br><span class="hljs-keyword">import</span> com.example.base.Account;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AccountStore</span> </span>&#123;<br>    <span class="hljs-function">Account <span class="hljs-title">getAccount</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.core;<br><br><span class="hljs-keyword">import</span> com.example.base.Account;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">AccountStore</span> &#123;<br>    Account <span class="hljs-title function_">getAccount</span><span class="hljs-params">()</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
 <p>接下来，GUI模块中有一段对Core模块的选择性调用逻辑：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.gui;<br><br><span class="hljs-keyword">import</span> com.example.core.AccountStore;<br><span class="hljs-keyword">import</span> com.example.core.CoreMain;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GuiMain</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> HAS_CORE;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">boolean</span> hasCore;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">new</span> CoreMain();<br>            hasCore = <span class="hljs-keyword">true</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (NoClassDefFoundError e) &#123;<br>            hasCore = <span class="hljs-keyword">false</span>;<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;hasCore: &quot;</span> + hasCore);<br>        HAS_CORE = hasCore;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> AccountStore accountStore = <span class="hljs-keyword">null</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAccountStore</span><span class="hljs-params">(AccountStore accountStore)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.accountStore = accountStore;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">tryGetAccountName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (HAS_CORE) &#123;<br>            <span class="hljs-keyword">if</span> (accountStore != <span class="hljs-keyword">null</span>) &#123;<br>                <span class="hljs-keyword">return</span> accountStore.getAccount().name;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.gui;<br><br><span class="hljs-keyword">import</span> com.example.core.AccountStore;<br><span class="hljs-keyword">import</span> com.example.core.CoreMain;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GuiMain</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> HAS_CORE;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-type">boolean</span> hasCore;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">CoreMain</span>();<br>            hasCore = <span class="hljs-literal">true</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (NoClassDefFoundError e) &#123;<br>            hasCore = <span class="hljs-literal">false</span>;<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;hasCore: &quot;</span> + hasCore);<br>        HAS_CORE = hasCore;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">AccountStore</span> <span class="hljs-variable">accountStore</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAccountStore</span><span class="hljs-params">(AccountStore accountStore)</span> &#123;<br>        <span class="hljs-built_in">this</span>.accountStore = accountStore;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">tryGetAccountName</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span> (HAS_CORE) &#123;<br>            <span class="hljs-keyword">if</span> (accountStore != <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">return</span> accountStore.getAccount().name;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>该类通过Core中才有的<code>CoreMain</code>类来判断可选依赖的类是否存在，<code>tryGetAccountName</code>中进行了判断，如果Core模块不存在，必定不会引用到<code>AccountStore</code>接口，也不应该会出现任何问题。</p>
 <p>接下来，我们将Base和Gui分别打包为jar并给app模块引用，注意Core未被引用。</p>
 <p>然后我们<strong>启用代码混淆</strong>，注意添加以下规则避免混淆失败：</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs avrasm"><span class="hljs-meta"># ProGuard rule file</span><br>-dontwarn <span class="hljs-keyword">com</span>.example.**<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-meta"># ProGuard rule file</span><br>-dontwarn <span class="hljs-keyword">com</span>.example.**<br></code></pre></td></tr></table></figure>
+
 <p>随后在<code>gradle.properties</code>中禁用R8（原因后面会提到）：</p>
-<figure class="highlight properties"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs properties"><span class="hljs-meta">android.enableR8</span>=<span class="hljs-string">false</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">android.enableR8</span>=<span class="hljs-string">false</span><br></code></pre></td></tr></table></figure>
+
 <p>最后我们进行简单的调用：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br>        System.out.println(<span class="hljs-string">&quot;account: &quot;</span> + <span class="hljs-keyword">new</span> Account());<br>        System.out.println(<span class="hljs-string">&quot;account name: &quot;</span> + <span class="hljs-keyword">new</span> GuiMain().tryGetAccountName());<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AppCompatActivity</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> &#123;<br>        <span class="hljs-built_in">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br>        System.out.println(<span class="hljs-string">&quot;account: &quot;</span> + <span class="hljs-keyword">new</span> <span class="hljs-title class_">Account</span>());<br>        System.out.println(<span class="hljs-string">&quot;account name: &quot;</span> + <span class="hljs-keyword">new</span> <span class="hljs-title class_">GuiMain</span>().tryGetAccountName());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>不出意外的话，上面这段人畜无害的代码在Android 8.0会翻车：</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs reasonml"><span class="hljs-number">2019</span>-<span class="hljs-number">09</span>-<span class="hljs-number">10</span> <span class="hljs-number">21</span>:<span class="hljs-number">56</span>:<span class="hljs-number">10.327</span> <span class="hljs-number">3667</span>-<span class="hljs-number">3667</span>/? E/AndroidRuntime: FATAL EXCEPTION: main<br>    Process: com.example.proguardbugtest, PID: <span class="hljs-number">3667</span><br>    java.lang.VerifyError: Verifier rejected <span class="hljs-keyword">class</span> com.example.proguardbugtest.MainActivity: void com.example.proguardbugtest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MainActivity</span>.</span></span>on<span class="hljs-constructor">Create(<span class="hljs-params">android</span>.<span class="hljs-params">os</span>.Bundle)</span> failed <span class="hljs-keyword">to</span> verify: void com.example.proguardbugtest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MainActivity</span>.</span></span>on<span class="hljs-constructor">Create(<span class="hljs-params">android</span>.<span class="hljs-params">os</span>.Bundle)</span>: <span class="hljs-literal">[<span class="hljs-number">0x3D</span>]</span> cannot access instance field java.lang.String com.example.a.a.a from <span class="hljs-keyword">object</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">type</span> Unresolved Reference: com.example.base.Account (declaration <span class="hljs-keyword">of</span> &#x27;com.example.proguardbugtest.MainActivity&#x27; appears <span class="hljs-keyword">in</span> /data/app/com.example.proguardbugtest-<span class="hljs-number">5</span>HQbNJwMRzeKoIg1ZzDmjA==/base.apk)<br>        at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Instance(Native Method)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Instrumentation</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Activity(Instrumentation.<span class="hljs-params">java</span>:1173)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2708)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2892)</span><br>        at android.app.ActivityThread.-wrap11(Unknown Source:<span class="hljs-number">0</span>)<br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1593)</span><br>        at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:105)</span><br>        at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">164</span>)<br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6541</span>)<br>        at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>        at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Zygote$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Zygote</span>.</span></span>java:<span class="hljs-number">240</span>)<br>        at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">767</span>)<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-number">2019</span>-<span class="hljs-number">09</span>-<span class="hljs-number">10</span> <span class="hljs-number">21</span>:<span class="hljs-number">56</span>:<span class="hljs-number">10.327</span> <span class="hljs-number">3667</span>-<span class="hljs-number">3667</span>/? E/AndroidRuntime: FATAL EXCEPTION: main<br>    Process: com.example.proguardbugtest, PID: <span class="hljs-number">3667</span><br>    java.lang.VerifyError: Verifier rejected <span class="hljs-keyword">class</span> com.example.proguardbugtest.MainActivity: void com.example.proguardbugtest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MainActivity</span>.</span></span>on<span class="hljs-constructor">Create(<span class="hljs-params">android</span>.<span class="hljs-params">os</span>.Bundle)</span> failed <span class="hljs-keyword">to</span> verify: void com.example.proguardbugtest.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">MainActivity</span>.</span></span>on<span class="hljs-constructor">Create(<span class="hljs-params">android</span>.<span class="hljs-params">os</span>.Bundle)</span>: <span class="hljs-literal">[<span class="hljs-number">0x3D</span>]</span> cannot access instance field java.lang.String com.example.a.a.a from <span class="hljs-keyword">object</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">type</span> Unresolved Reference: com.example.base.Account (declaration <span class="hljs-keyword">of</span> &#x27;com.example.proguardbugtest.MainActivity&#x27; appears <span class="hljs-keyword">in</span> /data/app/com.example.proguardbugtest-<span class="hljs-number">5</span>HQbNJwMRzeKoIg1ZzDmjA==/base.apk)<br>        at java.lang.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Instance(Native Method)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Instrumentation</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">Activity(Instrumentation.<span class="hljs-params">java</span>:1173)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>perform<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2708)</span><br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>handle<span class="hljs-constructor">LaunchActivity(ActivityThread.<span class="hljs-params">java</span>:2892)</span><br>        at android.app.ActivityThread.-wrap11(Unknown Source:<span class="hljs-number">0</span>)<br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread$H</span>.</span></span>handle<span class="hljs-constructor">Message(ActivityThread.<span class="hljs-params">java</span>:1593)</span><br>        at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Handler</span>.</span></span>dispatch<span class="hljs-constructor">Message(Handler.<span class="hljs-params">java</span>:105)</span><br>        at android.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>loop(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Looper</span>.</span></span>java:<span class="hljs-number">164</span>)<br>        at android.app.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ActivityThread</span>.</span></span>java:<span class="hljs-number">6541</span>)<br>        at java.lang.reflect.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Method</span>.</span></span>invoke(Native Method)<br>        at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Zygote$MethodAndArgsCaller</span>.</span></span>run(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Zygote</span>.</span></span>java:<span class="hljs-number">240</span>)<br>        at com.android.internal.os.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>main(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ZygoteInit</span>.</span></span>java:<span class="hljs-number">767</span>)<br></code></pre></td></tr></table></figure>
+
 <p>在谷歌搜索了很久，对于<code>VerifyError</code>这个简单的错误很难找到明确的答案，只能拔出Android Studio大宝剑，分析apk字节码一探究竟。</p>
 <p>我将<code>MainActivity</code>的<code>onCreate</code>的完整字节码粘贴到下面，其中<code>########</code>开头的是我补充的注释：</p>
-<figure class="highlight smali"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs smali"><span class="hljs-keyword">.method</span><span class="hljs-keyword"> public</span> onCreate(<span class="hljs-class">Landroid/os/Bundle;</span>)V<br><span class="hljs-keyword">    .registers</span> 5<br><br>   <span class="hljs-built_in"> invoke-super </span>&#123;p0, p1&#125;, <span class="hljs-class">Landroidx/appcompat/app/c;</span>-&gt;onCreate(<span class="hljs-class">Landroid/os/Bundle;</span>)V<br><br>   <span class="hljs-built_in"> const </span>p1, 0x7f0a001c<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p0, p1&#125;, <span class="hljs-class">Lcom/example/proguardbugtest/MainActivity;</span>-&gt;setContentView(I)V<br><br>   <span class="hljs-built_in"> sget-object </span>p1, <span class="hljs-class">Ljava/lang/System;</span>-&gt;out:<span class="hljs-class">Ljava/io/PrintStream;</span><br><br>   <span class="hljs-built_in"> new-instance </span>v0, <span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;account: &quot;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;&lt;init&gt;(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>    <span class="hljs-comment">######## 1</span><br>   <span class="hljs-built_in"> new-instance </span>v1, <span class="hljs-class">Lcom/example/a/a;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/a/a;</span>-&gt;&lt;init&gt;()V<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;append(<span class="hljs-class">Ljava/lang/Object;</span>)<span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;toString()<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v0<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p1, v0&#125;, <span class="hljs-class">Ljava/io/PrintStream;</span>-&gt;println(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> sget-object </span>p1, <span class="hljs-class">Ljava/lang/System;</span>-&gt;out:<span class="hljs-class">Ljava/io/PrintStream;</span><br><br>   <span class="hljs-built_in"> new-instance </span>v0, <span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;account name: &quot;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;&lt;init&gt;(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> new-instance </span>v1, <span class="hljs-class">Lcom/example/b/a;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;&lt;init&gt;()V<br><br>   <span class="hljs-built_in"> sget-boolean </span>v2, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;a:Z<br><br>   <span class="hljs-built_in"> if-eqz </span>v2,<span class="hljs-keyword"> :cond_40</span><br><br>   <span class="hljs-built_in"> iget-object </span>v2, v1, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;b:<span class="hljs-class">Lcom/example/core/AccountStore;</span><br><br>   <span class="hljs-built_in"> if-eqz </span>v2,<span class="hljs-keyword"> :cond_40</span><br><br>   <span class="hljs-built_in"> iget-object </span>v1, v1, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;b:<span class="hljs-class">Lcom/example/core/AccountStore;</span><br><br>    <span class="hljs-comment">######## 2</span><br>   <span class="hljs-built_in"> invoke-interface </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/core/AccountStore;</span>-&gt;getAccount()<span class="hljs-class">Lcom/example/base/Account;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v1<br><br>   <span class="hljs-built_in"> iget-object </span>v1, v1, <span class="hljs-class">Lcom/example/a/a;</span>-&gt;a:<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> goto </span>:goto_42<br><br>   <span class="hljs-keyword"> :cond_40</span><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;&quot;</span><br><br>   <span class="hljs-keyword"> :goto_42</span><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;append(<span class="hljs-class">Ljava/lang/String;</span>)<span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;toString()<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v0<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p1, v0&#125;, <span class="hljs-class">Ljava/io/PrintStream;</span>-&gt;println(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>    return-void<br><span class="hljs-keyword">.end method</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs smali"><span class="hljs-keyword">.method</span><span class="hljs-keyword"> public</span> onCreate(<span class="hljs-class">Landroid/os/Bundle;</span>)V<br><span class="hljs-keyword">    .registers</span> 5<br><br>   <span class="hljs-built_in"> invoke-super </span>&#123;p0, p1&#125;, <span class="hljs-class">Landroidx/appcompat/app/c;</span>-&gt;onCreate(<span class="hljs-class">Landroid/os/Bundle;</span>)V<br><br>   <span class="hljs-built_in"> const </span>p1, 0x7f0a001c<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p0, p1&#125;, <span class="hljs-class">Lcom/example/proguardbugtest/MainActivity;</span>-&gt;setContentView(I)V<br><br>   <span class="hljs-built_in"> sget-object </span>p1, <span class="hljs-class">Ljava/lang/System;</span>-&gt;out:<span class="hljs-class">Ljava/io/PrintStream;</span><br><br>   <span class="hljs-built_in"> new-instance </span>v0, <span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;account: &quot;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;&lt;init&gt;(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>    <span class="hljs-comment">######## 1</span><br>   <span class="hljs-built_in"> new-instance </span>v1, <span class="hljs-class">Lcom/example/a/a;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/a/a;</span>-&gt;&lt;init&gt;()V<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;append(<span class="hljs-class">Ljava/lang/Object;</span>)<span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;toString()<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v0<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p1, v0&#125;, <span class="hljs-class">Ljava/io/PrintStream;</span>-&gt;println(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> sget-object </span>p1, <span class="hljs-class">Ljava/lang/System;</span>-&gt;out:<span class="hljs-class">Ljava/io/PrintStream;</span><br><br>   <span class="hljs-built_in"> new-instance </span>v0, <span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;account name: &quot;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;&lt;init&gt;(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> new-instance </span>v1, <span class="hljs-class">Lcom/example/b/a;</span><br><br>   <span class="hljs-built_in"> invoke-direct </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;&lt;init&gt;()V<br><br>   <span class="hljs-built_in"> sget-boolean </span>v2, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;a:Z<br><br>   <span class="hljs-built_in"> if-eqz </span>v2,<span class="hljs-keyword"> :cond_40</span><br><br>   <span class="hljs-built_in"> iget-object </span>v2, v1, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;b:<span class="hljs-class">Lcom/example/core/AccountStore;</span><br><br>   <span class="hljs-built_in"> if-eqz </span>v2,<span class="hljs-keyword"> :cond_40</span><br><br>   <span class="hljs-built_in"> iget-object </span>v1, v1, <span class="hljs-class">Lcom/example/b/a;</span>-&gt;b:<span class="hljs-class">Lcom/example/core/AccountStore;</span><br><br>    <span class="hljs-comment">######## 2</span><br>   <span class="hljs-built_in"> invoke-interface </span>&#123;v1&#125;, <span class="hljs-class">Lcom/example/core/AccountStore;</span>-&gt;getAccount()<span class="hljs-class">Lcom/example/base/Account;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v1<br><br>   <span class="hljs-built_in"> iget-object </span>v1, v1, <span class="hljs-class">Lcom/example/a/a;</span>-&gt;a:<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> goto </span>:goto_42<br><br>   <span class="hljs-keyword"> :cond_40</span><br>   <span class="hljs-built_in"> const-string </span>v1, <span class="hljs-string">&quot;&quot;</span><br><br>   <span class="hljs-keyword"> :goto_42</span><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0, v1&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;append(<span class="hljs-class">Ljava/lang/String;</span>)<span class="hljs-class">Ljava/lang/StringBuilder;</span><br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;v0&#125;, <span class="hljs-class">Ljava/lang/StringBuilder;</span>-&gt;toString()<span class="hljs-class">Ljava/lang/String;</span><br><br>   <span class="hljs-built_in"> move-result-object </span>v0<br><br>   <span class="hljs-built_in"> invoke-virtual </span>&#123;p1, v0&#125;, <span class="hljs-class">Ljava/io/PrintStream;</span>-&gt;println(<span class="hljs-class">Ljava/lang/String;</span>)V<br><br>   <span class="hljs-built_in"> return-void</span><br><span class="hljs-built_in"></span><span class="hljs-keyword">.end method</span><br></code></pre></td></tr></table></figure>
+
 <p>可以看到，「1」处注释的<code>new-instance</code>指令显然是要构造<code>Account</code>对象，从这里我们也可以得知<code>com.example.base.Account</code>被混淆成了<code>com.example.a.a</code>，这个也可以在ProGuard生成的mapping文件中中得到证实。</p>
 <p>然而，「2」处注释的<code>invoke-interface</code>却出现了<code>com/example/base/Account</code>！之所以这段代码出现在了MainActivity中，是因为ProGuard进行了优化，但已经被混淆的类却以原名的形式出现在这里，这不科学。</p>
 <p>好吧，就算这样，但我们的Core包并不存在，也不会执行到这里，不应该出现崩溃才对，而这也是为什么我前面特别提到Android 8.0了。经过验证，这段代码在Android 8.0上必定崩溃，但在我的Android Q上却稳如老狗，可以认为不同版本的Android对类的校验逻辑不同，Android 8.0的校验显然过分严格。</p>
@@ -253,62 +333,110 @@
 <p>在开发中，我们有一个数据结构需要在两个Activity之间传递，于是我们直接让它实现了<code>Serializable</code>接口，简单粗暴地丢进了Intent里，谁知后来测试同学就反馈SDK在启动该Activity时在魅族手机上闪退了。</p>
 <p>由于<del>贫穷的</del>测试组同学只反馈了这部魅族手机有问题，其他手机正常，所以我一开始以为魅族又魔改系统用力过猛，好在后来自己新建了一个Android 7.0的模拟器，竟然复现了这个问题，才有机会找到问题的真正原因。</p>
 <p>首先，我们有这样一段简单的数据结构的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.proguardbugtest;<br><br><span class="hljs-keyword">import</span> java.io.Serializable;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SerializableMeta</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = -<span class="hljs-number">7822771794489130246L</span>;<br><br>    <span class="hljs-keyword">private</span> String nickname;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;<br><br>    SerializableMeta(String nickname, <span class="hljs-keyword">int</span> age) &#123;<br>        <span class="hljs-keyword">this</span>.nickname = nickname;<br>        <span class="hljs-keyword">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getNickname</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> nickname;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.proguardbugtest;<br><br><span class="hljs-keyword">import</span> java.io.Serializable;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SerializableMeta</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> <span class="hljs-variable">serialVersionUID</span> <span class="hljs-operator">=</span> -<span class="hljs-number">7822771794489130246L</span>;<br><br>    <span class="hljs-keyword">private</span> String nickname;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br><br>    SerializableMeta(String nickname, <span class="hljs-type">int</span> age) &#123;<br>        <span class="hljs-built_in">this</span>.nickname = nickname;<br>        <span class="hljs-built_in">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getNickname</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> nickname;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getAge</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>以及这样一段启动Activity的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Activity</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br><br>        findViewById(R.id.startButton).setOnClickListener(<span class="hljs-keyword">new</span> View.OnClickListener() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onClick</span><span class="hljs-params">(View view)</span> </span>&#123;<br>                Intent intent = <span class="hljs-keyword">new</span> Intent(MainActivity.<span class="hljs-keyword">this</span>, MainActivity.class);<br>                intent.putExtra(<span class="hljs-string">&quot;meta&quot;</span>, <span class="hljs-keyword">new</span> SerializableMeta(<span class="hljs-string">&quot;Perqin&quot;</span>, <span class="hljs-number">233</span>));<br>                startActivity(intent);<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Activity</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> &#123;<br>        <span class="hljs-built_in">super</span>.onCreate(savedInstanceState);<br>        setContentView(R.layout.activity_main);<br><br>        findViewById(R.id.startButton).setOnClickListener(<span class="hljs-keyword">new</span> <span class="hljs-title class_">View</span>.OnClickListener() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClick</span><span class="hljs-params">(View view)</span> &#123;<br>                <span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>(MainActivity.<span class="hljs-built_in">this</span>, MainActivity.class);<br>                intent.putExtra(<span class="hljs-string">&quot;meta&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">SerializableMeta</span>(<span class="hljs-string">&quot;Perqin&quot;</span>, <span class="hljs-number">233</span>));<br>                startActivity(intent);<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
 
 <p>然后，我们再简单地配置代码混淆规则：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">-keepclassmembers <span class="hljs-class"><span class="hljs-keyword">class</span> * <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> java.io.ObjectStreamField[] serialPersistentFields;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">writeObject</span><span class="hljs-params">(java.io.ObjectOutputStream)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">readObject</span><span class="hljs-params">(java.io.ObjectInputStream)</span></span>;<br>    java.lang.<span class="hljs-function">Object <span class="hljs-title">writeReplace</span><span class="hljs-params">()</span></span>;<br>    java.lang.<span class="hljs-function">Object <span class="hljs-title">readResolve</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs aspectj">-keepclassmembers <span class="hljs-class"><span class="hljs-keyword">class</span> * <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> java.io.ObjectStreamField[] serialPersistentFields;<br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">writeObject</span><span class="hljs-params">(java.io.ObjectOutputStream)</span></span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">readObject</span><span class="hljs-params">(java.io.ObjectInputStream)</span></span>;<br>    java.lang.<span class="hljs-function">Object <span class="hljs-title">writeReplace</span><span class="hljs-params">()</span></span>;<br>    java.lang.<span class="hljs-function">Object <span class="hljs-title">readResolve</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>以上规则来自ProGuard的官方文档，但<strong>后面就会发现这里是有问题的</strong>。</p>
 <p>最后，我们简单地启动，简单地点击按钮，然后：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stylus"><span class="hljs-number">2019</span>-<span class="hljs-number">09</span>-<span class="hljs-number">10</span> <span class="hljs-number">22</span>:<span class="hljs-number">56</span>:<span class="hljs-number">02.456</span> <span class="hljs-number">6516</span>-<span class="hljs-number">6516</span>/com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span> E/AndroidRuntime: FATAL EXCEPTION: main<br>    Process: com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span>, PID: <span class="hljs-number">6516</span><br>    java<span class="hljs-selector-class">.lang</span>.InternalError<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectStreamClass</span>.&lt;init&gt;(ObjectStreamClass<span class="hljs-selector-class">.java</span>:<span class="hljs-number">509</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectStreamClass</span><span class="hljs-selector-class">.lookup</span>(ObjectStreamClass<span class="hljs-selector-class">.java</span>:<span class="hljs-number">354</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectOutputStream</span><span class="hljs-selector-class">.writeObject0</span>(ObjectOutputStream<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1165</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectOutputStream</span><span class="hljs-selector-class">.writeObject</span>(ObjectOutputStream<span class="hljs-selector-class">.java</span>:<span class="hljs-number">346</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeSerializable</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1521</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeValue</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1474</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeArrayMapInternal</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">723</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.BaseBundle</span><span class="hljs-selector-class">.writeToParcelInner</span>(BaseBundle<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1408</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Bundle</span><span class="hljs-selector-class">.writeToParcel</span>(Bundle<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1133</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeBundle</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">763</span>)<br>        at android<span class="hljs-selector-class">.content</span><span class="hljs-selector-class">.Intent</span><span class="hljs-selector-class">.writeToParcel</span>(Intent<span class="hljs-selector-class">.java</span>:<span class="hljs-number">8655</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.ActivityManagerProxy</span><span class="hljs-selector-class">.startActivity</span>(ActivityManagerNative<span class="hljs-selector-class">.java</span>:<span class="hljs-number">3052</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Instrumentation</span><span class="hljs-selector-class">.execStartActivity</span>(Instrumentation<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1518</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivityForResult</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4224</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivityForResult</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4183</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivity</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4507</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivity</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4475</span>)<br>        at com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span>.MainActivity$<span class="hljs-number">1</span><span class="hljs-selector-class">.onClick</span>(Unknown Source)<br>        at android<span class="hljs-selector-class">.view</span><span class="hljs-selector-class">.View</span><span class="hljs-selector-class">.performClick</span>(View<span class="hljs-selector-class">.java</span>:<span class="hljs-number">5610</span>)<br>        at android<span class="hljs-selector-class">.view</span>.View<span class="hljs-variable">$PerformClick</span><span class="hljs-selector-class">.run</span>(View<span class="hljs-selector-class">.java</span>:<span class="hljs-number">22265</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Handler</span><span class="hljs-selector-class">.handleCallback</span>(Handler<span class="hljs-selector-class">.java</span>:<span class="hljs-number">751</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Handler</span><span class="hljs-selector-class">.dispatchMessage</span>(Handler<span class="hljs-selector-class">.java</span>:<span class="hljs-number">95</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Looper</span><span class="hljs-selector-class">.loop</span>(Looper<span class="hljs-selector-class">.java</span>:<span class="hljs-number">154</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.ActivityThread</span><span class="hljs-selector-class">.main</span>(ActivityThread<span class="hljs-selector-class">.java</span>:<span class="hljs-number">6077</span>)<br>        at java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.Method</span><span class="hljs-selector-class">.invoke</span>(Native Method)<br>        at com<span class="hljs-selector-class">.android</span><span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.os</span>.ZygoteInit<span class="hljs-variable">$MethodAndArgsCaller</span><span class="hljs-selector-class">.run</span>(ZygoteInit<span class="hljs-selector-class">.java</span>:<span class="hljs-number">866</span>)<br>        at com<span class="hljs-selector-class">.android</span><span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.ZygoteInit</span><span class="hljs-selector-class">.main</span>(ZygoteInit<span class="hljs-selector-class">.java</span>:<span class="hljs-number">756</span>)<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-number">2019</span>-<span class="hljs-number">09</span>-<span class="hljs-number">10</span> <span class="hljs-number">22</span>:<span class="hljs-number">56</span>:<span class="hljs-number">02.456</span> <span class="hljs-number">6516</span>-<span class="hljs-number">6516</span>/com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span> E/AndroidRuntime: FATAL EXCEPTION: <span class="hljs-selector-tag">main</span><br>    Process: com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span>, PID: <span class="hljs-number">6516</span><br>    java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.InternalError</span><br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectStreamClass</span>.&lt;init&gt;(ObjectStreamClass<span class="hljs-selector-class">.java</span>:<span class="hljs-number">509</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectStreamClass</span><span class="hljs-selector-class">.lookup</span>(ObjectStreamClass<span class="hljs-selector-class">.java</span>:<span class="hljs-number">354</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectOutputStream</span><span class="hljs-selector-class">.writeObject0</span>(ObjectOutputStream<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1165</span>)<br>        at java<span class="hljs-selector-class">.io</span><span class="hljs-selector-class">.ObjectOutputStream</span><span class="hljs-selector-class">.writeObject</span>(ObjectOutputStream<span class="hljs-selector-class">.java</span>:<span class="hljs-number">346</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeSerializable</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1521</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeValue</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1474</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeArrayMapInternal</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">723</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.BaseBundle</span><span class="hljs-selector-class">.writeToParcelInner</span>(BaseBundle<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1408</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Bundle</span><span class="hljs-selector-class">.writeToParcel</span>(Bundle<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1133</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Parcel</span><span class="hljs-selector-class">.writeBundle</span>(Parcel<span class="hljs-selector-class">.java</span>:<span class="hljs-number">763</span>)<br>        at android<span class="hljs-selector-class">.content</span><span class="hljs-selector-class">.Intent</span><span class="hljs-selector-class">.writeToParcel</span>(Intent<span class="hljs-selector-class">.java</span>:<span class="hljs-number">8655</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.ActivityManagerProxy</span><span class="hljs-selector-class">.startActivity</span>(ActivityManagerNative<span class="hljs-selector-class">.java</span>:<span class="hljs-number">3052</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Instrumentation</span><span class="hljs-selector-class">.execStartActivity</span>(Instrumentation<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1518</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivityForResult</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4224</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivityForResult</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4183</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivity</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4507</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.Activity</span><span class="hljs-selector-class">.startActivity</span>(Activity<span class="hljs-selector-class">.java</span>:<span class="hljs-number">4475</span>)<br>        at com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.proguardbugtest</span>.MainActivity$<span class="hljs-number">1</span><span class="hljs-selector-class">.onClick</span>(Unknown Source)<br>        at android<span class="hljs-selector-class">.view</span><span class="hljs-selector-class">.View</span><span class="hljs-selector-class">.performClick</span>(View<span class="hljs-selector-class">.java</span>:<span class="hljs-number">5610</span>)<br>        at android<span class="hljs-selector-class">.view</span>.View<span class="hljs-variable">$PerformClick</span><span class="hljs-selector-class">.run</span>(View<span class="hljs-selector-class">.java</span>:<span class="hljs-number">22265</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Handler</span><span class="hljs-selector-class">.handleCallback</span>(Handler<span class="hljs-selector-class">.java</span>:<span class="hljs-number">751</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Handler</span><span class="hljs-selector-class">.dispatchMessage</span>(Handler<span class="hljs-selector-class">.java</span>:<span class="hljs-number">95</span>)<br>        at android<span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.Looper</span><span class="hljs-selector-class">.loop</span>(Looper<span class="hljs-selector-class">.java</span>:<span class="hljs-number">154</span>)<br>        at android<span class="hljs-selector-class">.app</span><span class="hljs-selector-class">.ActivityThread</span><span class="hljs-selector-class">.main</span>(ActivityThread<span class="hljs-selector-class">.java</span>:<span class="hljs-number">6077</span>)<br>        at java<span class="hljs-selector-class">.lang</span><span class="hljs-selector-class">.reflect</span><span class="hljs-selector-class">.Method</span><span class="hljs-selector-class">.invoke</span>(Native Method)<br>        at com<span class="hljs-selector-class">.android</span><span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.os</span>.ZygoteInit<span class="hljs-variable">$MethodAndArgsCaller</span><span class="hljs-selector-class">.run</span>(ZygoteInit<span class="hljs-selector-class">.java</span>:<span class="hljs-number">866</span>)<br>        at com<span class="hljs-selector-class">.android</span><span class="hljs-selector-class">.internal</span><span class="hljs-selector-class">.os</span><span class="hljs-selector-class">.ZygoteInit</span><span class="hljs-selector-class">.main</span>(ZygoteInit<span class="hljs-selector-class">.java</span>:<span class="hljs-number">756</span>)<br></code></pre></td></tr></table></figure>
+
 <p>这个崩溃甚至只有类名，连异常消息都不给了。如果此时去分析字节码，是不会发现什么异常的。</p>
 <p>于是，我根据错误去读源码，以下是抛出异常的代码（地址：<a target="_blank" rel="noopener" href="http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509">http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java#509</a>）：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">ObjectStreamClass</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Class&lt;?&gt; cl)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.cl = cl;<br>    name = cl.getName();<br>    isProxy = Proxy.isProxyClass(cl);<br>    isEnum = Enum.class.isAssignableFrom(cl);<br>    serializable = Serializable.class.isAssignableFrom(cl);<br>    externalizable = Externalizable.class.isAssignableFrom(cl);<br><br>    Class&lt;?&gt; superCl = cl.getSuperclass();<br>    superDesc = (superCl != <span class="hljs-keyword">null</span>) ? lookup(superCl, <span class="hljs-keyword">false</span>) : <span class="hljs-keyword">null</span>;<br>    localDesc = <span class="hljs-keyword">this</span>;<br><br>    <span class="hljs-keyword">if</span> (serializable) &#123;<br>        AccessController.doPrivileged(<span class="hljs-keyword">new</span> PrivilegedAction&lt;Void&gt;() &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>                <span class="hljs-keyword">if</span> (isEnum) &#123;<br>                    suid = Long.valueOf(<span class="hljs-number">0</span>);<br>                    fields = NO_FIELDS;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>                &#125;<br>                <span class="hljs-keyword">if</span> (cl.isArray()) &#123;<br>                    fields = NO_FIELDS;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>                &#125;<br><br>                suid = getDeclaredSUID(cl);<br>                <span class="hljs-keyword">try</span> &#123;<br>                    fields = getSerialFields(cl);<br>                    computeFieldOffsets();<br>                &#125; <span class="hljs-keyword">catch</span> (InvalidClassException e) &#123;<br>                    serializeEx = deserializeEx =<br>                        <span class="hljs-keyword">new</span> ExceptionInfo(e.classname, e.getMessage());<br>                    fields = NO_FIELDS;<br>                &#125;<br><br>                <span class="hljs-keyword">if</span> (externalizable) &#123;<br>                    cons = getExternalizableConstructor(cl);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    cons = getSerializableConstructor(cl);<br>                    writeObjectMethod = getPrivateMethod(cl, <span class="hljs-string">&quot;writeObject&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123; ObjectOutputStream.class &#125;,<br>                        Void.TYPE);<br>                    readObjectMethod = getPrivateMethod(cl, <span class="hljs-string">&quot;readObject&quot;</span>,<br>                        <span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123; ObjectInputStream.class &#125;,<br>                        Void.TYPE);<br>                    readObjectNoDataMethod = getPrivateMethod(<br>                        cl, <span class="hljs-string">&quot;readObjectNoData&quot;</span>, <span class="hljs-keyword">null</span>, Void.TYPE);<br>                    hasWriteObjectData = (writeObjectMethod != <span class="hljs-keyword">null</span>);<br>                &#125;<br>                writeReplaceMethod = getInheritableMethod(<br>                    cl, <span class="hljs-string">&quot;writeReplace&quot;</span>, <span class="hljs-keyword">null</span>, Object.class);<br>                readResolveMethod = getInheritableMethod(<br>                    cl, <span class="hljs-string">&quot;readResolve&quot;</span>, <span class="hljs-keyword">null</span>, Object.class);<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>            &#125;<br>        &#125;);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        suid = Long.valueOf(<span class="hljs-number">0</span>);<br>        fields = NO_FIELDS;<br>    &#125;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        fieldRefl = getReflector(fields, <span class="hljs-keyword">this</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InvalidClassException ex) &#123;<br>        <span class="hljs-comment">// field mismatches impossible when matching local fields vs. self</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InternalError();<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (deserializeEx == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (isEnum) &#123;<br>            deserializeEx = <span class="hljs-keyword">new</span> ExceptionInfo(name, <span class="hljs-string">&quot;enum type&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cons == <span class="hljs-keyword">null</span>) &#123;<br>            deserializeEx = <span class="hljs-keyword">new</span> ExceptionInfo(name, <span class="hljs-string">&quot;no valid constructor&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; fields.length; i++) &#123;<br>        <span class="hljs-keyword">if</span> (fields[i].getField() == <span class="hljs-keyword">null</span>) &#123;<br>            defaultSerializeEx = <span class="hljs-keyword">new</span> ExceptionInfo(<br>                name, <span class="hljs-string">&quot;unmatched serializable field(s) declared&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-title function_">ObjectStreamClass</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Class&lt;?&gt; cl)</span> &#123;<br>    <span class="hljs-built_in">this</span>.cl = cl;<br>    name = cl.getName();<br>    isProxy = Proxy.isProxyClass(cl);<br>    isEnum = Enum.class.isAssignableFrom(cl);<br>    serializable = Serializable.class.isAssignableFrom(cl);<br>    externalizable = Externalizable.class.isAssignableFrom(cl);<br><br>    Class&lt;?&gt; superCl = cl.getSuperclass();<br>    superDesc = (superCl != <span class="hljs-literal">null</span>) ? lookup(superCl, <span class="hljs-literal">false</span>) : <span class="hljs-literal">null</span>;<br>    localDesc = <span class="hljs-built_in">this</span>;<br><br>    <span class="hljs-keyword">if</span> (serializable) &#123;<br>        AccessController.doPrivileged(<span class="hljs-keyword">new</span> <span class="hljs-title class_">PrivilegedAction</span>&lt;Void&gt;() &#123;<br>            <span class="hljs-keyword">public</span> Void <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>                <span class="hljs-keyword">if</span> (isEnum) &#123;<br>                    suid = Long.valueOf(<span class="hljs-number">0</span>);<br>                    fields = NO_FIELDS;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>                &#125;<br>                <span class="hljs-keyword">if</span> (cl.isArray()) &#123;<br>                    fields = NO_FIELDS;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>                &#125;<br><br>                suid = getDeclaredSUID(cl);<br>                <span class="hljs-keyword">try</span> &#123;<br>                    fields = getSerialFields(cl);<br>                    computeFieldOffsets();<br>                &#125; <span class="hljs-keyword">catch</span> (InvalidClassException e) &#123;<br>                    serializeEx = deserializeEx =<br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExceptionInfo</span>(e.classname, e.getMessage());<br>                    fields = NO_FIELDS;<br>                &#125;<br><br>                <span class="hljs-keyword">if</span> (externalizable) &#123;<br>                    cons = getExternalizableConstructor(cl);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    cons = getSerializableConstructor(cl);<br>                    writeObjectMethod = getPrivateMethod(cl, <span class="hljs-string">&quot;writeObject&quot;</span>,<br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>&lt;?&gt;[] &#123; ObjectOutputStream.class &#125;,<br>                        Void.TYPE);<br>                    readObjectMethod = getPrivateMethod(cl, <span class="hljs-string">&quot;readObject&quot;</span>,<br>                        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>&lt;?&gt;[] &#123; ObjectInputStream.class &#125;,<br>                        Void.TYPE);<br>                    readObjectNoDataMethod = getPrivateMethod(<br>                        cl, <span class="hljs-string">&quot;readObjectNoData&quot;</span>, <span class="hljs-literal">null</span>, Void.TYPE);<br>                    hasWriteObjectData = (writeObjectMethod != <span class="hljs-literal">null</span>);<br>                &#125;<br>                writeReplaceMethod = getInheritableMethod(<br>                    cl, <span class="hljs-string">&quot;writeReplace&quot;</span>, <span class="hljs-literal">null</span>, Object.class);<br>                readResolveMethod = getInheritableMethod(<br>                    cl, <span class="hljs-string">&quot;readResolve&quot;</span>, <span class="hljs-literal">null</span>, Object.class);<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>            &#125;<br>        &#125;);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        suid = Long.valueOf(<span class="hljs-number">0</span>);<br>        fields = NO_FIELDS;<br>    &#125;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        fieldRefl = getReflector(fields, <span class="hljs-built_in">this</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InvalidClassException ex) &#123;<br>        <span class="hljs-comment">// field mismatches impossible when matching local fields vs. self</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InternalError</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (deserializeEx == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (isEnum) &#123;<br>            deserializeEx = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExceptionInfo</span>(name, <span class="hljs-string">&quot;enum type&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cons == <span class="hljs-literal">null</span>) &#123;<br>            deserializeEx = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExceptionInfo</span>(name, <span class="hljs-string">&quot;no valid constructor&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; fields.length; i++) &#123;<br>        <span class="hljs-keyword">if</span> (fields[i].getField() == <span class="hljs-literal">null</span>) &#123;<br>            defaultSerializeEx = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExceptionInfo</span>(<br>                name, <span class="hljs-string">&quot;unmatched serializable field(s) declared&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>追溯<code>getReflector</code>下去，最终我们定位到抛出异常的地方：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ObjectStreamField[] matchFields(ObjectStreamField[] fields,<br>                                                   ObjectStreamClass localDesc)<br>        <span class="hljs-keyword">throws</span> InvalidClassException<br>    &#123;<br>        ObjectStreamField[] localFields = (localDesc != <span class="hljs-keyword">null</span>) ?<br>            localDesc.fields : NO_FIELDS;<br><br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">         * Even if fields == localFields, we cannot simply return localFields</span><br><span class="hljs-comment">         * here.  In previous implementations of serialization,</span><br><span class="hljs-comment">         * ObjectStreamField.getType() returned Object.class if the</span><br><span class="hljs-comment">         * ObjectStreamField represented a non-primitive field and belonged to</span><br><span class="hljs-comment">         * a non-local class descriptor.  To preserve this (questionable)</span><br><span class="hljs-comment">         * behavior, the ObjectStreamField instances returned by matchFields</span><br><span class="hljs-comment">         * cannot report non-primitive types other than Object.class; hence</span><br><span class="hljs-comment">         * localFields cannot be returned directly.</span><br><span class="hljs-comment">         */</span><br><br>        ObjectStreamField[] matches = <span class="hljs-keyword">new</span> ObjectStreamField[fields.length];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; fields.length; i++) &#123;<br>            ObjectStreamField f = fields[i], m = <span class="hljs-keyword">null</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; localFields.length; j++) &#123;<br>                ObjectStreamField lf = localFields[j];<br>                <span class="hljs-keyword">if</span> (f.getName().equals(lf.getName())) &#123;<br>                    <span class="hljs-keyword">if</span> ((f.isPrimitive() || lf.isPrimitive()) &amp;&amp;<br>                        f.getTypeCode() != lf.getTypeCode())<br>                    &#123;<br>                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidClassException(localDesc.name,<br>                            <span class="hljs-string">&quot;incompatible types for field &quot;</span> + f.getName());<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-keyword">null</span>) &#123;<br>                        m = <span class="hljs-keyword">new</span> ObjectStreamField(<br>                            lf.getField(), lf.isUnshared(), <span class="hljs-keyword">false</span>);<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        m = <span class="hljs-keyword">new</span> ObjectStreamField(<br>                            lf.getName(), lf.getSignature(), lf.isUnshared());<br>                    &#125;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (m == <span class="hljs-keyword">null</span>) &#123;<br>                m = <span class="hljs-keyword">new</span> ObjectStreamField(<br>                    f.getName(), f.getSignature(), <span class="hljs-keyword">false</span>);<br>            &#125;<br>            m.setOffset(f.getOffset());<br>            matches[i] = m;<br>        &#125;<br>        <span class="hljs-keyword">return</span> matches;<br>    &#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ObjectStreamField[] matchFields(ObjectStreamField[] fields,<br>                                                   ObjectStreamClass localDesc)<br>        <span class="hljs-keyword">throws</span> InvalidClassException<br>    &#123;<br>        ObjectStreamField[] localFields = (localDesc != <span class="hljs-literal">null</span>) ?<br>            localDesc.fields : NO_FIELDS;<br><br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">         * Even if fields == localFields, we cannot simply return localFields</span><br><span class="hljs-comment">         * here.  In previous implementations of serialization,</span><br><span class="hljs-comment">         * ObjectStreamField.getType() returned Object.class if the</span><br><span class="hljs-comment">         * ObjectStreamField represented a non-primitive field and belonged to</span><br><span class="hljs-comment">         * a non-local class descriptor.  To preserve this (questionable)</span><br><span class="hljs-comment">         * behavior, the ObjectStreamField instances returned by matchFields</span><br><span class="hljs-comment">         * cannot report non-primitive types other than Object.class; hence</span><br><span class="hljs-comment">         * localFields cannot be returned directly.</span><br><span class="hljs-comment">         */</span><br><br>        ObjectStreamField[] matches = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectStreamField</span>[fields.length];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; fields.length; i++) &#123;<br>            <span class="hljs-type">ObjectStreamField</span> <span class="hljs-variable">f</span> <span class="hljs-operator">=</span> fields[i], m = <span class="hljs-literal">null</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; localFields.length; j++) &#123;<br>                <span class="hljs-type">ObjectStreamField</span> <span class="hljs-variable">lf</span> <span class="hljs-operator">=</span> localFields[j];<br>                <span class="hljs-keyword">if</span> (f.getName().equals(lf.getName())) &#123;<br>                    <span class="hljs-keyword">if</span> ((f.isPrimitive() || lf.isPrimitive()) &amp;&amp;<br>                        f.getTypeCode() != lf.getTypeCode())<br>                    &#123;<br>                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvalidClassException</span>(localDesc.name,<br>                            <span class="hljs-string">&quot;incompatible types for field &quot;</span> + f.getName());<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-literal">null</span>) &#123;<br>                        m = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectStreamField</span>(<br>                            lf.getField(), lf.isUnshared(), <span class="hljs-literal">false</span>);<br>                    &#125; <span class="hljs-keyword">else</span> &#123;<br>                        m = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectStreamField</span>(<br>                            lf.getName(), lf.getSignature(), lf.isUnshared());<br>                    &#125;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (m == <span class="hljs-literal">null</span>) &#123;<br>                m = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectStreamField</span>(<br>                    f.getName(), f.getSignature(), <span class="hljs-literal">false</span>);<br>            &#125;<br>            m.setOffset(f.getOffset());<br>            matches[i] = m;<br>        &#125;<br>        <span class="hljs-keyword">return</span> matches;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
 <p>可以看到，对<code>fields</code>和<code>localFields</code>进行比较的时候，当两个成员变量中至少有一个是基本类型，并且他们的变量名相同但类型不同的时候，就会抛出异常。</p>
 <p>此时，我们再次拔出大宝剑，会看到<code>SerializableMeta</code>的两个成员变量名字是相同的：</p>
 <p><img src="fields-with-the-same-name.png" srcset="/img/loading.gif" lazyload></p>
 <p>查阅这个类在Android 6.0的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java</a>）后发现，这个类在旧版本中甚至没有<code>matchFields</code>方法，应该是进行了较大的重构或更新；而查阅Android 7.1的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java</a>），会发现谷歌爸爸很快就修复了这个问题：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// ...</span><br><span class="hljs-comment">// Android-changed: We can have fields with a same name and a different type.</span><br><span class="hljs-keyword">if</span> (f.getName().equals(lf.getName()) &amp;&amp;<br>  f.getSignature().equals(lf.getSignature())) &#123;<br>  <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-keyword">null</span>) &#123;<br><span class="hljs-comment">// ...</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// ...</span><br><span class="hljs-comment">// Android-changed: We can have fields with a same name and a different type.</span><br><span class="hljs-keyword">if</span> (f.getName().equals(lf.getName()) &amp;&amp;<br>  f.getSignature().equals(lf.getSignature())) &#123;<br>  <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-literal">null</span>) &#123;<br><span class="hljs-comment">// ...</span><br></code></pre></td></tr></table></figure>
+
 <p>实际上，Android和JVM都允许成员变量名称相同，混淆为尽可能相同的名字可以减小体积并增大阅读难度。</p>
 <p>但<strong>实际上ProGuard默认并不会启用如此激进的混淆方式</strong>（写这篇文章的时候我艰难地尝试复现而不断失败……）。在我的GitHub代码上会看到我在混淆的规则中藏了一条：</p>
-<figure class="highlight diff"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs diff"><span class="hljs-deletion">-overloadaggressively</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-overloadaggressively</span><br></code></pre></td></tr></table></figure>
+
 <p>查阅文档之后就会知道，启用这个选项后，才会导致成员变量被混淆为同样的名字。</p>
 <p>继续搜索，发现<a target="_blank" rel="noopener" href="https://sourceforge.net/p/proguard/bugs/274/">这篇帖子</a>，有人反馈了这个问题，作者表示：我并不太想给JRE的错误实现擦屁股，在代码里硬编码绕过这个问题（I’m not really eager to hard-code a workaround for what looks like a bug in the JRE implementation of serialization, but I’ll consider it.）。</p>
 <p>最后是对于该问题的解决，移除<code>-overloadaggressively</code>当然有效，但如果这个规则来自某个依赖库的Consumer ProGuard规则的话，就不那么好用了。而另一个方法是使用<code>-useuniqueclassmembernames</code>，这个选项会避免生成同名成员，但带来的副作用就是增大体积，另外，<a target="_blank" rel="noopener" href="https://sourceforge.net/p/proguard/bugs/413/">这篇帖子</a>也提到这个选项不只是刚好关掉了<code>-overloadaggressively</code>，还有其他副作用。</p>
 <p>因此，最后我选择了RTFM：重新看了一下ProGuard官方文档中<a target="_blank" rel="noopener" href="https://www.guardsquare.com/en/products/proguard/manual/examples#serializable">关于Serializable的规则建议</a>。使用它提供的完整规则后，会发现Serializable中的变量都被保留并不再导致问题出现了。</p>
 
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/android/">Android</a>
-                    
-                      <a class="hover-with-bg" href="/tags/proguard/">ProGuard</a>
-                    
-                  </div>
                 
               </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/android/">#Android</a>
+      
+        <a href="/tags/proguard/">#ProGuard</a>
+      
+    </div>
+  
+</div>
+
+
               
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Android代码混淆问题处理两则</div>
+      <div>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Perqin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年9月10日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
               
-              
-                <div class="post-prevnext">
+                <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/21/from-flutter-build-failure-to-pr/">
+                      <a href="/2021/03/21/from-flutter-build-failure-to-pr/" title="从Flutter编译错误到给Flutter贡献代码">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">从Flutter编译错误到给Flutter贡献代码</span>
                         <span class="visible-mobile">上一篇</span>
@@ -318,7 +446,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/">
+                      <a href="/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/" title="Kotlin将只读lambda表达式作为监听器使用的坑">
                         <span class="hidden-mobile">Kotlin将只读lambda表达式作为监听器使用的坑</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -330,12 +458,8 @@
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
+  <article id="comments" lazyload>
+    
   <div class="disqus" style="width:100%">
     <div id="disqus_thread"></div>
     
@@ -356,31 +480,63 @@
   </div>
 
 
-              </article>
-            
+  </article>
+
+
           </article>
         </div>
       </div>
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
-    
+
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
-<!-- Custom -->
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
 
 
     
 
     
-      <a id="scroll-top-button" href="#" role="button">
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
     
@@ -399,35 +555,37 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
-
+  
+  
   
     <!-- cnzz Analytics Icon -->
     <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
   
-</footer>
+</div>
 
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
@@ -446,7 +604,23 @@
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
 
 
   
@@ -455,81 +629,74 @@
 
 
 
+
   
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
 
 
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
 
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
 
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      $('#local-search-input').on('click', function() {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      });
-      $('#modalSearch').on('shown.bs.modal', function() {
-        $('#local-search-input').focus();
-      });
-    })()
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <!-- cnzz Analytics -->
-    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
-            type="text/javascript"></script>
-  
 
 
 
@@ -543,9 +710,15 @@
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

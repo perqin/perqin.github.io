@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
@@ -9,40 +9,62 @@
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#7108B2">
-  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
   <meta name="author" content="Perqin">
   <meta name="keywords" content="">
+  
+    <meta name="description" content="读者司机们，五一好哇！ 这两天突然意识到放假了，作业可以先缓一缓，又想起之前的一个想法，于是打开了微信小程序的官方文档，打算随手撸一个小程序玩一玩。想看成果的，请向下拖动看图。 想法有一次，我需要组织一次实训迭代会议，于是我需要临时确认所有人下周什么时候有空，当时我突然发现，这就是为小程序量身定做的场景啊，于是，趁这两天道路车辆少，我，上了小程序的黑车。 启动与构思小程序的名字随便取了个：《几时得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我用一天半写了个小程序">
+<meta property="og:url" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/index.html">
+<meta property="og:site_name" content="Perqin&#39;s Blog">
+<meta property="og:description" content="读者司机们，五一好哇！ 这两天突然意识到放假了，作业可以先缓一缓，又想起之前的一个想法，于是打开了微信小程序的官方文档，打算随手撸一个小程序玩一玩。想看成果的，请向下拖动看图。 想法有一次，我需要组织一次实训迭代会议，于是我需要临时确认所有人下周什么时候有空，当时我突然发现，这就是为小程序量身定做的场景啊，于是，趁这两天道路车辆少，我，上了小程序的黑车。 启动与构思小程序的名字随便取了个：《几时得">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/domain.jpg">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/wireframe.jpg">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/devtool.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/leancloud-period.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains-refresh.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/new-activity.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity-with-periods.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched-with-new.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/share.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/hell.png">
+<meta property="article:published_time" content="2017-04-30T18:07:49.000Z">
+<meta property="article:modified_time" content="2022-08-24T07:30:03.615Z">
+<meta property="article:author" content="Perqin">
+<meta property="article:tag" content="wechat">
+<meta property="article:tag" content="mini-programs">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/domain.jpg">
+  
+  
   
   <title>我用一天半写了个小程序 - Perqin&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
+
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -51,7 +73,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
@@ -60,19 +88,57 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279692316&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
+    <a class="navbar-brand" href="/">
+      <strong>Perqin&#39;s Blog</strong>
+    </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -134,13 +200,15 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -149,60 +217,71 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="我用一天半写了个小程序">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2017-05-01 02:07" pubdate>
-        2017年5月1日 凌晨
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      6.3k 字
-    </span>
   
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      80
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="我用一天半写了个小程序"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-05-01 02:07" pubdate>
+          2017年5月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          17k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          138 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
@@ -211,16 +290,22 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
+        <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">我用一天半写了个小程序</h1>
             
-            <div class="markdown-body">
-              <p>读者司机们，五一好哇！</p>
+            
+              <div class="markdown-body">
+                
+                <p>读者司机们，五一好哇！</p>
 <p>这两天突然意识到放假了，作业可以先缓一缓，又想起之前的一个想法，于是打开了微信小程序的官方文档，打算随手撸一个小程序玩一玩。想看成果的，请向下拖动看图。</p>
 <h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>有一次，我需要组织一次实训迭代会议，于是我需要临时确认所有人下周什么时候有空，当时我突然发现，这就是为小程序量身定做的场景啊，于是，趁这两天道路车辆少，我，上了小程序的黑车。</p>
 <h2 id="启动与构思"><a href="#启动与构思" class="headerlink" title="启动与构思"></a>启动与构思</h2><p>小程序的名字随便取了个：《几时得闲》，识得唔识得啊？</p>
@@ -247,66 +332,83 @@
 <p>然后还需要在小程序开发工具的项目页面刷新：</p>
 <p><img src="request-domains-refresh.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="LeanCloud-REST-API"><a href="#LeanCloud-REST-API" class="headerlink" title="LeanCloud REST API"></a>LeanCloud REST API</h2><p>接下来，我就可以愉快的在小程序里发请求了。一开始，我觉得LeanCloud的API挺强大的，比如我想要获取指定OpenID的用户：</p>
-<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUserByOpenId</span>(<span class="hljs-params">openId, cb</span>) </span>&#123;<br>  r(<br>    <span class="hljs-string">&#x27;/classes/WeChatUser&#x27;</span>,<br>    <span class="hljs-string">&#x27;GET&#x27;</span>,<br>    <span class="hljs-string">&#x27;where=&#123;&quot;OpenId&quot;:&quot;&#x27;</span> + openId + <span class="hljs-string">&#x27;&quot;&#125;&#x27;</span>,<br>    (res) =&gt; &#123;<br>      cb(<span class="hljs-literal">null</span>, res.data.results.length === <span class="hljs-number">0</span> ? <span class="hljs-literal">null</span> : res.data.results[<span class="hljs-number">0</span>]);<br>    &#125;,<br>    () =&gt; &#123;<br>      <span class="hljs-keyword">typeof</span> cb == <span class="hljs-string">&#x27;function&#x27;</span> &amp;&amp; cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Fail to get user by OpenID: Network error&#x27;</span>));<br>    &#125;<br>  );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getUserByOpenId</span>(<span class="hljs-params">openId, cb</span>) &#123;<br>  <span class="hljs-title function_">r</span>(<br>    <span class="hljs-string">&#x27;/classes/WeChatUser&#x27;</span>,<br>    <span class="hljs-string">&#x27;GET&#x27;</span>,<br>    <span class="hljs-string">&#x27;where=&#123;&quot;OpenId&quot;:&quot;&#x27;</span> + openId + <span class="hljs-string">&#x27;&quot;&#125;&#x27;</span>,<br>    <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>      <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, res.<span class="hljs-property">data</span>.<span class="hljs-property">results</span>.<span class="hljs-property">length</span> === <span class="hljs-number">0</span> ? <span class="hljs-literal">null</span> : res.<span class="hljs-property">data</span>.<span class="hljs-property">results</span>[<span class="hljs-number">0</span>]);<br>    &#125;,<br>    <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-keyword">typeof</span> cb == <span class="hljs-string">&#x27;function&#x27;</span> &amp;&amp; <span class="hljs-title function_">cb</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Fail to get user by OpenID: Network error&#x27;</span>));<br>    &#125;<br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>其中<code>r</code>是我对微信里的HTTP请求接口的额外封装。可见，直接在body里按照语法写Query就行了，爽！</p>
 <p>可是接下来问题来了：我需要获取一个用户参与的活动。这是一个多对多的关系，但是，为了简单起见，我并没有搞一个中间的关系表，而是直接在FreePeriod类里指定了Owner和Activity，也就是说，如果一个用户是某个FreePeriod的Owner，那么这个FreePeriod的Activity就是这个用户参与的活动，这在SQL里很简单（虽然我忘了），但是LeanCloud强调了，他们实现上用的是非关系型数据库……所以，我研究了半个小时也没研究出用他的语法怎样一个请求就拿到……最后，我做了两次请求（捂脸）：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUserParticipatedActivities</span>(<span class="hljs-params">openId, cb</span>) </span>&#123;<br>  r(<br>    <span class="hljs-string">&#x27;/classes/FreePeriod&#x27;</span>,<br>    <span class="hljs-string">&#x27;GET&#x27;</span>,<br>    <span class="hljs-string">&#x27;where=&#123;&quot;Owner&quot;:&#123;&quot;$inQuery&quot;:&#123;&quot;where&quot;:&#123;&quot;OpenId&quot;:&quot;&#x27;</span> + openId + <span class="hljs-string">&#x27;&quot;&#125;,&quot;className&quot;:&quot;WeChatUser&quot;&#125;&#125;&#125;&#x27;</span>,<br>    (fpRes) =&gt; &#123;<br>      <span class="hljs-keyword">let</span> <span class="hljs-keyword">as</span> = fpRes.data.results.map(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> v.Activity.objectId;<br>      &#125;);<br><br>      <span class="hljs-comment">// Find</span><br>      r(<br>        <span class="hljs-string">&#x27;/classes/Activity&#x27;</span>,<br>        <span class="hljs-string">&#x27;GET&#x27;</span>,<br>        <span class="hljs-string">&#x27;where=&#123;&quot;objectId&quot;:&#123;&quot;$in&quot;:[&#x27;</span> + <span class="hljs-keyword">as</span>.map(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> &#123; <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&quot;&#x27;</span> + v + <span class="hljs-string">&#x27;&quot;&#x27;</span>; &#125;).join(<span class="hljs-string">&#x27;,&#x27;</span>) + <span class="hljs-string">&#x27;]&#125;&#125;&#x27;</span>,<br>        (aRes) =&gt; &#123;<br>          cb(<span class="hljs-literal">null</span>, aRes.data.results);<br>        &#125;,<br>        () =&gt; &#123;<br>          cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Fail to fetch launched activities #2&#x27;</span>));<br>        &#125;<br>      );<br>    &#125;,<br>    () =&gt; &#123;<br>      cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;Fail to fetch launched activities #1&#x27;</span>));<br>    &#125;<br>  );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getUserParticipatedActivities</span>(<span class="hljs-params">openId, cb</span>) &#123;<br>  <span class="hljs-title function_">r</span>(<br>    <span class="hljs-string">&#x27;/classes/FreePeriod&#x27;</span>,<br>    <span class="hljs-string">&#x27;GET&#x27;</span>,<br>    <span class="hljs-string">&#x27;where=&#123;&quot;Owner&quot;:&#123;&quot;$inQuery&quot;:&#123;&quot;where&quot;:&#123;&quot;OpenId&quot;:&quot;&#x27;</span> + openId + <span class="hljs-string">&#x27;&quot;&#125;,&quot;className&quot;:&quot;WeChatUser&quot;&#125;&#125;&#125;&#x27;</span>,<br>    <span class="hljs-function">(<span class="hljs-params">fpRes</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">let</span> <span class="hljs-keyword">as</span> = fpRes.<span class="hljs-property">data</span>.<span class="hljs-property">results</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> v.<span class="hljs-property">Activity</span>.<span class="hljs-property">objectId</span>;<br>      &#125;);<br><br>      <span class="hljs-comment">// Find</span><br>      <span class="hljs-title function_">r</span>(<br>        <span class="hljs-string">&#x27;/classes/Activity&#x27;</span>,<br>        <span class="hljs-string">&#x27;GET&#x27;</span>,<br>        <span class="hljs-string">&#x27;where=&#123;&quot;objectId&quot;:&#123;&quot;$in&quot;:[&#x27;</span> + <span class="hljs-keyword">as</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> &#123; <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&quot;&#x27;</span> + v + <span class="hljs-string">&#x27;&quot;&#x27;</span>; &#125;).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;,&#x27;</span>) + <span class="hljs-string">&#x27;]&#125;&#125;&#x27;</span>,<br>        <span class="hljs-function">(<span class="hljs-params">aRes</span>) =&gt;</span> &#123;<br>          <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, aRes.<span class="hljs-property">data</span>.<span class="hljs-property">results</span>);<br>        &#125;,<br>        <span class="hljs-function">() =&gt;</span> &#123;<br>          <span class="hljs-title function_">cb</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Fail to fetch launched activities #2&#x27;</span>));<br>        &#125;<br>      );<br>    &#125;,<br>    <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-title function_">cb</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Fail to fetch launched activities #1&#x27;</span>));<br>    &#125;<br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>如上，找出用户参与的所有FreePeriod，拿到Activity的id列表，然后通过<code>$in</code>操作符拿。</p>
 <p>顺便吐个槽：如果返回的是对象（比如创建、查询指定ID的对象）的时候，返回的JSON就是这个对象本身；而如果请求的是一个数组，那么返回的是一个对象，对象的<code>results</code>属性是一个数组。可以，这很RESTful……</p>
 <h2 id="自己启动的活动列表页面实现"><a href="#自己启动的活动列表页面实现" class="headerlink" title="自己启动的活动列表页面实现"></a>自己启动的活动列表页面实现</h2><p>接下来可以正式写Page了。小程序里，每个Page实例都有一系列生命周期：Load - Ready - Show - Hide - Unload。在Page对应的js里，可以定义每个生命周期里对应的回调来决定做什么，这个和Android里的那几个生命周期也是挺像的，当然如果你也这么认为那你就错了，嘿嘿。</p>
 <p>首先，写界面，听说和vue很像，但是我没学过vue，初看之下有点当年写Angular的感觉：</p>
-<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;launched-container&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">scroll-view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;activities-list&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">wx:for</span>=<span class="hljs-string">&quot;&#123;&#123;launchedActivities&#125;&#125;&quot;</span> <span class="hljs-attr">bindtap</span>=<span class="hljs-string">&quot;activityTap&quot;</span> <span class="hljs-attr">data-objectid</span>=<span class="hljs-string">&quot;&#123;&#123;item.objectId&#125;&#125;&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>&#123;&#123;item.Title&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">scroll-view</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;launch-new-button&quot;</span> <span class="hljs-attr">bindtap</span>=<span class="hljs-string">&quot;ntNewActivity&quot;</span>&gt;</span>Launch New<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;launched-container&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">scroll-view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;activities-list&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">wx:for</span>=<span class="hljs-string">&quot;&#123;&#123;launchedActivities&#125;&#125;&quot;</span> <span class="hljs-attr">bindtap</span>=<span class="hljs-string">&quot;activityTap&quot;</span> <span class="hljs-attr">data-objectid</span>=<span class="hljs-string">&quot;&#123;&#123;item.objectId&#125;&#125;&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>&#123;&#123;item.Title&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">scroll-view</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;launch-new-button&quot;</span> <span class="hljs-attr">bindtap</span>=<span class="hljs-string">&quot;ntNewActivity&quot;</span>&gt;</span>Launch New<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <p>在小程序里，每个标签都必须是预设的组件。我需要页面里有一个列表，列表里显示每个活动的标题，然后页面底部有个按钮添加新的活动。上面的代码还是非常好懂的，就是绑定一个数组来渲染列表，然后给每一项绑定点击回调。</p>
 <p>为了让列表填充整个页面，把按钮顶到底部，我查了一下，发现用flex比较简单，但是按照SO上的代码却并没有什么用，一度让我认为小程序是不是对flex的支持不够。后来发现，把page标签（这个标签不在<code>wxml</code>里，但是用开发工具审查元素就能看到，等价于body）的高度设置为满就行了……</p>
-<figure class="highlight css"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs css"><span class="hljs-comment">/*app.wxss*/</span><br>page &#123;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><br><span class="hljs-comment">/*launched.wxss*/</span><br><span class="hljs-selector-class">.launched-container</span> &#123;<br>	<span class="hljs-attribute">display</span>: flex;<br>	<span class="hljs-attribute">flex-direction</span>: column;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><br><span class="hljs-selector-class">.activities-list</span> &#123;<br>	<span class="hljs-attribute">flex-grow</span>: <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-selector-class">.launch-new-button</span> &#123;<br>	<span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">1</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-comment">/*app.wxss*/</span><br>page &#123;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><br><span class="hljs-comment">/*launched.wxss*/</span><br><span class="hljs-selector-class">.launched-container</span> &#123;<br>	<span class="hljs-attribute">display</span>: flex;<br>	<span class="hljs-attribute">flex-direction</span>: column;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><br><span class="hljs-selector-class">.activities-list</span> &#123;<br>	<span class="hljs-attribute">flex-grow</span>: <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-selector-class">.launch-new-button</span> &#123;<br>	<span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">1</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>很好，这波很稳。最后的效果如下：</p>
 <p><img src="launched.png" srcset="/img/loading.gif" lazyload></p>
 <p>因为列表是空的，所以上面只有一个按钮。那个，图标什么的，不存在的。</p>
 <h2 id="新活动创建页面"><a href="#新活动创建页面" class="headerlink" title="新活动创建页面"></a>新活动创建页面</h2><p>接下来，开始编写新活动创建界面。查了一下小程序文档，发现了可以通过<code>picker</code>组件实现时间和日期选择器，excited！很棒，这是界面代码：</p>
-<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;new-activity-container&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">bindsubmit</span>=<span class="hljs-string">&quot;fmSubmit&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;title&#125;&#125;&quot;</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">&quot;fmTitleInput&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Title&quot;</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">&quot;next&quot;</span> <span class="hljs-attr">confirm-hold</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;description&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;description&#125;&#125;&quot;</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">&quot;fmDescriptionInput&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Description&quot;</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">&quot;done&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startDate&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;startDate&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmStartDateChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;date&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>Start date: &#123;&#123;startDate&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endDate&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;endDate&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmEndDateChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;date&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>End date: &#123;&#123;endDate&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startTime&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;startTime&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmStartTimeChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>Start time: &#123;&#123;startTime&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endTime&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;endTime&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmEndTimeChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>End time: &#123;&#123;endTime&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">formType</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Done<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;new-activity-container&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">bindsubmit</span>=<span class="hljs-string">&quot;fmSubmit&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;title&#125;&#125;&quot;</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">&quot;fmTitleInput&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Title&quot;</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">&quot;next&quot;</span> <span class="hljs-attr">confirm-hold</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;description&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;description&#125;&#125;&quot;</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">&quot;fmDescriptionInput&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Description&quot;</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">&quot;done&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startDate&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;startDate&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmStartDateChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;date&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>Start date: &#123;&#123;startDate&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endDate&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;endDate&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmEndDateChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;date&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>End date: &#123;&#123;endDate&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startTime&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;startTime&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmStartTimeChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>Start time: &#123;&#123;startTime&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endTime&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;endTime&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmEndTimeChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>End time: &#123;&#123;endTime&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">formType</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Done<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <p>这里，我也被坑了。我以为把<code>value</code>属性做一下绑定，就能双向绑定了，结果发现改变了日期、时间之后，界面上的时间和日期并没有改变！最后问了一下室友才知道，这样只是单向绑定，需要通过上面的一大堆事件把picker、input的值被改变之后更新到js里的数据对象去，所以你们大概能猜到这个js文件有多长了……看看上面的那些bind……</p>
 <p>另外，要改变被绑定的数据并使绑定了这些数据的UI元素跟着改变，需要使用<code>setData</code>来更改，贴代码如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">Page(&#123;<br>  data: &#123;<br>    userInfo: &#123;&#125;,<br>    title: <span class="hljs-string">&#x27;&#x27;</span>,<br>    description: <span class="hljs-string">&#x27;&#x27;</span>,<br>    startDate: <span class="hljs-string">&#x27;2017-01-01&#x27;</span>,<br>    endDate: <span class="hljs-string">&#x27;2017-01-07&#x27;</span>,<br>    startTime: <span class="hljs-string">&#x27;00:00&#x27;</span>,<br>    endTime: <span class="hljs-string">&#x27;23:59&#x27;</span><br>  &#125;,<br>  fmTitleInput: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.setData(&#123;<br>      title: e.detail.value<br>    &#125;);<br>  &#125;,<br>  <span class="hljs-comment">// ...</span><br>&#125;);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Page</span>(&#123;<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">userInfo</span>: &#123;&#125;,<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    <span class="hljs-attr">description</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    <span class="hljs-attr">startDate</span>: <span class="hljs-string">&#x27;2017-01-01&#x27;</span>,<br>    <span class="hljs-attr">endDate</span>: <span class="hljs-string">&#x27;2017-01-07&#x27;</span>,<br>    <span class="hljs-attr">startTime</span>: <span class="hljs-string">&#x27;00:00&#x27;</span>,<br>    <span class="hljs-attr">endTime</span>: <span class="hljs-string">&#x27;23:59&#x27;</span><br>  &#125;,<br>  <span class="hljs-attr">fmTitleInput</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setData</span>(&#123;<br>      <span class="hljs-attr">title</span>: e.<span class="hljs-property">detail</span>.<span class="hljs-property">value</span><br>    &#125;);<br>  &#125;,<br>  <span class="hljs-comment">// ...</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
 <h2 id="页面路由"><a href="#页面路由" class="headerlink" title="页面路由"></a>页面路由</h2><p>前面我总是把小程序的东西和Android的东西做对比，但是实际上，还是要带着前端的思维去写。在小程序中，每个页面都有一个对应的url，比如查看Activity的url就是<code>/pages/activity/activity?objectId=123</code>，可见，url还可以带有参数，在对应的Page被加载的时候就能取到这些参数。</p>
 <p>在主页，我需要点击添加按钮之后跳转到创建新活动的界面，可以这样写：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">wx.navigateTo(&#123;<br>  url: <span class="hljs-string">&#x27;/pages/new-activity/new-activity&#x27;</span><br>&#125;);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">wx.<span class="hljs-title function_">navigateTo</span>(&#123;<br>  <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;/pages/new-activity/new-activity&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
 <p>在新活动创建成功之后，我想直接关掉当前页面并调到新的页面，可以这样写：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">wx.redirectTo(&#123;<br>  url: <span class="hljs-string">&#x27;/pages/activity/activity?objectId=&#x27;</span> + data.objectId<br>&#125;);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">wx.<span class="hljs-title function_">redirectTo</span>(&#123;<br>  <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;/pages/activity/activity?objectId=&#x27;</span> + data.<span class="hljs-property">objectId</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
 <p>在activity页面里，我可以这样获得这个参数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">Page(&#123;<br>  data:&#123;<br>    activityObjectId: <span class="hljs-string">&#x27;&#x27;</span>,<br>    activity: &#123;&#125;,<br>    periods: [],<br>    userInfo: &#123;&#125;<br>  &#125;,<br>  customData: &#123;<br>    periodsView: <span class="hljs-literal">null</span>,<br>    headerViewHeight: <span class="hljs-number">74</span><br>  &#125;,<br>  onLoad: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>&#123;<br>    <span class="hljs-built_in">this</span>.data.activityObjectId = options.objectId;<br>  &#125;,<br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Page</span>(&#123;<br>  <span class="hljs-attr">data</span>:&#123;<br>    <span class="hljs-attr">activityObjectId</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>    <span class="hljs-attr">activity</span>: &#123;&#125;,<br>    <span class="hljs-attr">periods</span>: [],<br>    <span class="hljs-attr">userInfo</span>: &#123;&#125;<br>  &#125;,<br>  <span class="hljs-attr">customData</span>: &#123;<br>    <span class="hljs-attr">periodsView</span>: <span class="hljs-literal">null</span>,<br>    <span class="hljs-attr">headerViewHeight</span>: <span class="hljs-number">74</span><br>  &#125;,<br>  <span class="hljs-attr">onLoad</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activityObjectId</span> = options.<span class="hljs-property">objectId</span>;<br>  &#125;,<br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>这里我没有用<code>setData</code>，原因后面会说。</p>
 <h2 id="Activity界面实现"><a href="#Activity界面实现" class="headerlink" title="Activity界面实现"></a>Activity界面实现</h2><p><strong>前方高能！！！非战斗人员迅速撤离！！！</strong></p>
 <p>在我的想象中，用户打开一个活动的详情页面之后，应该有一个类似Excel表的表格视图，其中列是日期，行是小时，用户点击单元格就可以标识自己在这一天的这一个小时有空或者没空，有空会高亮。而对于活动创建者，在这个页面则会把所有人的有空时间都显示出来，其中一个时间点如果越多人有空，颜色越深。</p>
 <p>好的，那么我们的逻辑就很明确：打开页面的时候先拿到Activity的ID，然后从API拿到Activity的详细信息（标题等），包括Activity的启动者。然后，根据启动者和当前用户是否同一人，获取对应的FreePeriod列表，然后，渲染到页面上。</p>
 <p>好的，我要开始吐槽了。</p>
 <p><strong>首先，是生命周期和异步调用的冲突问题。</strong>我们有一个很明显的需求：如果我把这个页面后台了，中途另一个用户添上了自己的空闲时间，然后我回到这个页面，讲道理的话页面应该更新，获取这个活动的新的FreePeriod列表。于是，这个更新过程肯定是放在Show生命周期的。而当前用户的信息（主要是ID），一般是不会改变的，只要调用一次就好了，所以我一开始丢到了Load周期。那么现在问题来了：怎样保证Show周期到达的时候，Load周期里的异步搞定了呢？答案当然是不可能保证。所以，最后我就把获取用户信息也一并丢到了Show生命周期里，来，给你看个入门的回调地狱：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">onShow: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> self = <span class="hljs-built_in">this</span>;<br>  <span class="hljs-comment">// Get data and update</span><br>  app.getUserInfo(<span class="hljs-function">(<span class="hljs-params">err, info</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to get user info&#x27;</span>&#125;);<br><br>    self.setData(&#123;<br>      userInfo: info<br>    &#125;);<br><br>    <span class="hljs-comment">// We can get data now</span><br>    <span class="hljs-comment">// Activity data</span><br>    lcapi.getActivity(self.data.activityObjectId, <span class="hljs-function">(<span class="hljs-params">err, activityData</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to load activity&#x27;</span>&#125;);<br><br>      self.setData(&#123;<br>        activity: activityData<br>      &#125;);<br>      self.customData.periodsView &amp;&amp; self.customData.periodsView.setData(&#123;<br>        activity: activityData<br>      &#125;);<br><br>      <span class="hljs-comment">// Now we can get periods data</span><br>      <span class="hljs-comment">// Period data</span><br>      <span class="hljs-keyword">if</span> (activityData.Launcher.objectId == info.objectId) &#123;<br>        <span class="hljs-comment">// Launcher open, show all periods</span><br>        lcapi.getPeriodsOfActivity(activityData.objectId, <span class="hljs-function">(<span class="hljs-params">err, periodsData</span>) =&gt;</span> &#123;<br>          <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to load periods&#x27;</span>&#125;);<br><br>          self.setData(&#123;<br>            periods: periodsData<br>          &#125;);<br>          self.customData.periodsView &amp;&amp; self.customData.periodsView.setData(&#123;<br>            periods: periodsData<br>          &#125;);<br>        &#125;);<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// Show self periods</span><br>        lcapi.getPeriodsOfActivityAndUser(activityData.objectId, info.objectId, <span class="hljs-function">(<span class="hljs-params">err, periodsData</span>) =&gt;</span> &#123;<br>          <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.showToast(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to load periods&#x27;</span>&#125;);<br><br>          self.setData(&#123;<br>            periods: periodsData<br>          &#125;);<br>          self.customData.periodsView &amp;&amp; self.customData.periodsView.setData(&#123;<br>            periods: periodsData<br>          &#125;);<br>        &#125;)<br>      &#125;<br>    &#125;);<br>  &#125;);<br>&#125;,<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-attr">onShow</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> self = <span class="hljs-variable language_">this</span>;<br>  <span class="hljs-comment">// Get data and update</span><br>  app.<span class="hljs-title function_">getUserInfo</span>(<span class="hljs-function">(<span class="hljs-params">err, info</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to get user info&#x27;</span>&#125;);<br><br>    self.<span class="hljs-title function_">setData</span>(&#123;<br>      <span class="hljs-attr">userInfo</span>: info<br>    &#125;);<br><br>    <span class="hljs-comment">// We can get data now</span><br>    <span class="hljs-comment">// Activity data</span><br>    lcapi.<span class="hljs-title function_">getActivity</span>(self.<span class="hljs-property">data</span>.<span class="hljs-property">activityObjectId</span>, <span class="hljs-function">(<span class="hljs-params">err, activityData</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to load activity&#x27;</span>&#125;);<br><br>      self.<span class="hljs-title function_">setData</span>(&#123;<br>        <span class="hljs-attr">activity</span>: activityData<br>      &#125;);<br>      self.<span class="hljs-property">customData</span>.<span class="hljs-property">periodsView</span> &amp;&amp; self.<span class="hljs-property">customData</span>.<span class="hljs-property">periodsView</span>.<span class="hljs-title function_">setData</span>(&#123;<br>        <span class="hljs-attr">activity</span>: activityData<br>      &#125;);<br><br>      <span class="hljs-comment">// Now we can get periods data</span><br>      <span class="hljs-comment">// Period data</span><br>      <span class="hljs-keyword">if</span> (activityData.<span class="hljs-property">Launcher</span>.<span class="hljs-property">objectId</span> == info.<span class="hljs-property">objectId</span>) &#123;<br>        <span class="hljs-comment">// Launcher open, show all periods</span><br>        lcapi.<span class="hljs-title function_">getPeriodsOfActivity</span>(activityData.<span class="hljs-property">objectId</span>, <span class="hljs-function">(<span class="hljs-params">err, periodsData</span>) =&gt;</span> &#123;<br>          <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to load periods&#x27;</span>&#125;);<br><br>          self.<span class="hljs-title function_">setData</span>(&#123;<br>            <span class="hljs-attr">periods</span>: periodsData<br>          &#125;);<br>          self.<span class="hljs-property">customData</span>.<span class="hljs-property">periodsView</span> &amp;&amp; self.<span class="hljs-property">customData</span>.<span class="hljs-property">periodsView</span>.<span class="hljs-title function_">setData</span>(&#123;<br>            <span class="hljs-attr">periods</span>: periodsData<br>          &#125;);<br>        &#125;);<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// Show self periods</span><br>        lcapi.<span class="hljs-title function_">getPeriodsOfActivityAndUser</span>(activityData.<span class="hljs-property">objectId</span>, info.<span class="hljs-property">objectId</span>, <span class="hljs-function">(<span class="hljs-params">err, periodsData</span>) =&gt;</span> &#123;<br>          <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">return</span> wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Fail to load periods&#x27;</span>&#125;);<br><br>          self.<span class="hljs-title function_">setData</span>(&#123;<br>            <span class="hljs-attr">periods</span>: periodsData<br>          &#125;);<br>          self.<span class="hljs-property">customData</span>.<span class="hljs-property">periodsView</span> &amp;&amp; self.<span class="hljs-property">customData</span>.<span class="hljs-property">periodsView</span>.<span class="hljs-title function_">setData</span>(&#123;<br>            <span class="hljs-attr">periods</span>: periodsData<br>          &#125;);<br>        &#125;)<br>      &#125;<br>    &#125;);<br>  &#125;);<br>&#125;,<br></code></pre></td></tr></table></figure>
+
 <p>同样的，我在调用<code>setData</code>之后，仍然不敢立刻从<code>this.data</code>里拿数据，也是因为还不确定这个是不是异步的（虽然现在想来，应该不至于这也坑）。</p>
 <p><strong>第二个坑在于小程序对DOM树是没有任何权限的。</strong>你也许留意到了我在Activity里的<code>customData</code>里保存了一个叫做<code>headerHeight</code>的东西，这是因为像Excel表一样的组件是不存在的，我得在画布上自己画，所以画之前我需要拿到<code>canvas</code>的大小。然而，没有任何接口可以拿到DOM树的信息，所以，我无奈之下只能把顶部的标题和描述的高度写死，然后写到<code>customData</code>里。这一点还是不太方便的，希望小程序后面能够增加一点基本的支持。</p>
 <p><strong>第三个天坑就是自己绘制自定义组件。</strong>说实话，自己画了一天的类电子表格界面之后我觉得我的Android自定义View的姿势水平都有所提高了。在小程序里，要自定义的界面怎么办？自己画！画布拿来！定好颜色！抄起js就是干！</p>
 <p>好在，这只是一个非常简单的二维表格，所以，我先自定义了一个PeriodView，持有canvas的绘制上下文，并包含必要的数据：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PeriodsView</span>(<span class="hljs-params">context</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.context = context;<br>  <span class="hljs-built_in">this</span>.viewport = &#123;<br>    x: <span class="hljs-number">0</span>,<br>    y: <span class="hljs-number">0</span>,<br>    w: <span class="hljs-number">0</span>,<br>    h: <span class="hljs-number">0</span><br>  &#125;;<br>  <span class="hljs-built_in">this</span>.cellSize = &#123;<br>    w: <span class="hljs-number">60</span>,<br>    h: <span class="hljs-number">48</span><br>  &#125;;<br>  <span class="hljs-built_in">this</span>.data = &#123;<br>    activity: <span class="hljs-literal">null</span>,<br>    periods: [],<br>    row: <span class="hljs-number">24</span>,<br>    col: <span class="hljs-number">5</span>,<br>    maxDepth: <span class="hljs-number">0</span>,<br>    depth: []<br>  &#125;;<br>  <span class="hljs-built_in">this</span>.indicatorSize = &#123;<br>    dateHeight: <span class="hljs-number">40</span>,<br>    timeWidth: <span class="hljs-number">60</span><br>  &#125;;<br>  <span class="hljs-built_in">this</span>.gestures = &#123;<br>    lastX: <span class="hljs-number">0</span>,<br>    lastY: <span class="hljs-number">0</span><br>  &#125;;<br>  <span class="hljs-built_in">this</span>.style = &#123;<br>    depthCellColors: &#123;<br>      min: &#123; <span class="hljs-attr">r</span>: <span class="hljs-number">0xE8</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0xF5</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0xE9</span> &#125;,<br>      max: &#123; <span class="hljs-attr">r</span>: <span class="hljs-number">0x1B</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0x5E</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0x20</span> &#125;<br>    &#125;<br>  &#125;<br>  <span class="hljs-built_in">this</span>.onCellTap = <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">PeriodsView</span>(<span class="hljs-params">context</span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span> = context;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span> = &#123;<br>    <span class="hljs-attr">x</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">w</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">h</span>: <span class="hljs-number">0</span><br>  &#125;;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span> = &#123;<br>    <span class="hljs-attr">w</span>: <span class="hljs-number">60</span>,<br>    <span class="hljs-attr">h</span>: <span class="hljs-number">48</span><br>  &#125;;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = &#123;<br>    <span class="hljs-attr">activity</span>: <span class="hljs-literal">null</span>,<br>    <span class="hljs-attr">periods</span>: [],<br>    <span class="hljs-attr">row</span>: <span class="hljs-number">24</span>,<br>    <span class="hljs-attr">col</span>: <span class="hljs-number">5</span>,<br>    <span class="hljs-attr">maxDepth</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">depth</span>: []<br>  &#125;;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span> = &#123;<br>    <span class="hljs-attr">dateHeight</span>: <span class="hljs-number">40</span>,<br>    <span class="hljs-attr">timeWidth</span>: <span class="hljs-number">60</span><br>  &#125;;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span> = &#123;<br>    <span class="hljs-attr">lastX</span>: <span class="hljs-number">0</span>,<br>    <span class="hljs-attr">lastY</span>: <span class="hljs-number">0</span><br>  &#125;;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">style</span> = &#123;<br>    <span class="hljs-attr">depthCellColors</span>: &#123;<br>      <span class="hljs-attr">min</span>: &#123; <span class="hljs-attr">r</span>: <span class="hljs-number">0xE8</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0xF5</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0xE9</span> &#125;,<br>      <span class="hljs-attr">max</span>: &#123; <span class="hljs-attr">r</span>: <span class="hljs-number">0x1B</span>, <span class="hljs-attr">g</span>: <span class="hljs-number">0x5E</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">0x20</span> &#125;<br>    &#125;<br>  &#125;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">onCellTap</span> = <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>我的思路非常简单：画布除去左边和顶部的表头，剩下的矩形大小就是viewport，我们拖动这个表格的时候，其实就是移动viewport，可以想象在一张报纸上盖上一张白纸，白纸中间挖了个矩形的窟窿。</p>
 <p>所以，可以看到，上面的数据里，我包含了viewport的当前位置（相对于整张表格的左上角而言）和尺寸、一个格子的尺寸、数据（当前Activity、FreePeriods列表、表格的行列数、深度（后面讲）信息等）、表头的尺寸、手势信息（和触摸事件有关），以及表格颜色范围（最浅和最深）。</p>
 <p>然后，我们就可以写个<code>redraw</code>函数了，这里面根据上面的信息把所有viewport能看到的格子都绘制出来。一切都是非常顺利，下面是绘制日期表头的代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">&#x27;#dfdfdf&#x27;</span>);<br><span class="hljs-built_in">this</span>.context.setStrokeStyle(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Date boxes</span><br>  <span class="hljs-built_in">this</span>.context.strokeRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.fillRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFillStyle</span>(<span class="hljs-string">&#x27;#dfdfdf&#x27;</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setStrokeStyle</span>(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Date boxes</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">strokeRect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>, <span class="hljs-number">0</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">fillRect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>, <span class="hljs-number">0</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>接下来，我们需要在表头显示文字，本来，我的代码是类似这样的：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Box</span><br>  <span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">&#x27;#dfdfdf&#x27;</span>);<br>  <span class="hljs-built_in">this</span>.context.setStrokeStyle(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br>  <span class="hljs-built_in">this</span>.context.strokeRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.fillRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br>  <span class="hljs-built_in">this</span>.context.setFontSize(<span class="hljs-number">10</span>);<br>  <span class="hljs-built_in">this</span>.context.setTextAlign(<span class="hljs-string">&#x27;center&#x27;</span>);<br>  <span class="hljs-built_in">this</span>.context.fillText(getDateString(<span class="hljs-built_in">this</span>.data.activity.StartDate, c), <span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x + <span class="hljs-built_in">this</span>.cellSize.w / <span class="hljs-number">2</span>, <span class="hljs-number">16</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Box</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFillStyle</span>(<span class="hljs-string">&#x27;#dfdfdf&#x27;</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setStrokeStyle</span>(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">strokeRect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>, <span class="hljs-number">0</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">fillRect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>, <span class="hljs-number">0</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFillStyle</span>(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFontSize</span>(<span class="hljs-number">10</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setTextAlign</span>(<span class="hljs-string">&#x27;center&#x27;</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">fillText</span>(<span class="hljs-title function_">getDateString</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activity</span>.<span class="hljs-property">StartDate</span>, c), <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> / <span class="hljs-number">2</span>, <span class="hljs-number">16</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>但是实际运行之后就发现，拖动表格之后非常卡，根本不跟手！我一开始在想，难道是绘制文字非常卡？没道理啊，美团外卖的列表也是带有文字的啊。后来，可能是我天赋异禀，我突然意识到了原因：把绘制的style放到外面去：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">&#x27;#dfdfdf&#x27;</span>);<br><span class="hljs-built_in">this</span>.context.setStrokeStyle(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Date boxes</span><br>  <span class="hljs-built_in">this</span>.context.strokeRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>  <span class="hljs-built_in">this</span>.context.fillRect(<span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x, <span class="hljs-number">0</span>, <span class="hljs-built_in">this</span>.cellSize.w, <span class="hljs-built_in">this</span>.indicatorSize.dateHeight);<br>&#125;<br><span class="hljs-built_in">this</span>.context.setFillStyle(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br><span class="hljs-built_in">this</span>.context.setFontSize(<span class="hljs-number">10</span>);<br><span class="hljs-built_in">this</span>.context.setTextAlign(<span class="hljs-string">&#x27;center&#x27;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Date labels</span><br>  <span class="hljs-built_in">this</span>.context.fillText(getDateString(<span class="hljs-built_in">this</span>.data.activity.StartDate, c), <span class="hljs-built_in">this</span>.indicatorSize.timeWidth + c * <span class="hljs-built_in">this</span>.cellSize.w - <span class="hljs-built_in">this</span>.viewport.x + <span class="hljs-built_in">this</span>.cellSize.w / <span class="hljs-number">2</span>, <span class="hljs-number">16</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFillStyle</span>(<span class="hljs-string">&#x27;#dfdfdf&#x27;</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setStrokeStyle</span>(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Date boxes</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">strokeRect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>, <span class="hljs-number">0</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span>);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">fillRect</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>, <span class="hljs-number">0</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span>);<br>&#125;<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFillStyle</span>(<span class="hljs-string">&#x27;#000000&#x27;</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setFontSize</span>(<span class="hljs-number">10</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">setTextAlign</span>(<span class="hljs-string">&#x27;center&#x27;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> c = cl; c &lt;= cr; ++c) &#123;<br>  <span class="hljs-comment">// Date labels</span><br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">context</span>.<span class="hljs-title function_">fillText</span>(<span class="hljs-title function_">getDateString</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activity</span>.<span class="hljs-property">StartDate</span>, c), <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + c * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> / <span class="hljs-number">2</span>, <span class="hljs-number">16</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>这个小小的改动，带来的结果是完全不卡了！细想一下，也很好理解，如果每一个单元格我都重新设置一下画笔风格，就会导致频繁改变绘制的像素颜色，这里面的性能损耗很大。</p>
 <p>到这里，我终于能够画出表头、单元格，其中大大小小其他的bug和debug我就按下不表。接下来是下一个坑：触摸事件。</p>
 <p>其实逻辑上来说，非常简单：按下的时候，记录下初始坐标，手指滑动的时候，记录新的坐标，和之前的作一下差，然后修改viewport的位置，然后调用一下redraw就行了。</p>
 <p>事实证明我的想法没错，成功的实现了拖动：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">PeriodsView.prototype.onTouchStart = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.gestures.lastX = e.touches[<span class="hljs-number">0</span>].x;<br>  <span class="hljs-built_in">this</span>.gestures.lastY = e.touches[<span class="hljs-number">0</span>].y;<br>  <span class="hljs-built_in">this</span>.gestures.initialX = <span class="hljs-built_in">this</span>.gestures.lastX;<br>  <span class="hljs-built_in">this</span>.gestures.initialY = <span class="hljs-built_in">this</span>.gestures.lastY;<br>  <span class="hljs-built_in">this</span>.gestures.initialTime = <span class="hljs-built_in">Date</span>.now().valueOf();<br>&#125;;<br><br>PeriodsView.prototype.onTouchMove = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> nx = <span class="hljs-built_in">this</span>.viewport.x - (e.touches[<span class="hljs-number">0</span>].x - <span class="hljs-built_in">this</span>.gestures.lastX);<br>  <span class="hljs-keyword">let</span> ny = <span class="hljs-built_in">this</span>.viewport.y - (e.touches[<span class="hljs-number">0</span>].y - <span class="hljs-built_in">this</span>.gestures.lastY);<br>  <span class="hljs-keyword">let</span> invalid = <span class="hljs-literal">false</span>;<br>  <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx + <span class="hljs-built_in">this</span>.viewport.w &lt;= <span class="hljs-built_in">this</span>.data.col * <span class="hljs-built_in">this</span>.cellSize.w) &#123;<br>    <span class="hljs-built_in">this</span>.viewport.x = nx;<br>    invalid = <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">if</span> (ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny + <span class="hljs-built_in">this</span>.viewport.h &lt;= <span class="hljs-built_in">this</span>.data.row * <span class="hljs-built_in">this</span>.cellSize.h) &#123;<br>    <span class="hljs-built_in">this</span>.viewport.y = ny;<br>    invalid = <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">if</span> (invalid) &#123;<br>    <span class="hljs-built_in">this</span>.redraw();<br>  &#125;<br>  <span class="hljs-built_in">this</span>.gestures.lastX = e.touches[<span class="hljs-number">0</span>].x;<br>  <span class="hljs-built_in">this</span>.gestures.lastY = e.touches[<span class="hljs-number">0</span>].y;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">PeriodsView</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">onTouchStart</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastX</span> = e.<span class="hljs-property">touches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">x</span>;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastY</span> = e.<span class="hljs-property">touches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">y</span>;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">initialX</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastX</span>;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">initialY</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastY</span>;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">initialTime</span> = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>().<span class="hljs-title function_">valueOf</span>();<br>&#125;;<br><br><span class="hljs-title class_">PeriodsView</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">onTouchMove</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;<br>  <span class="hljs-keyword">let</span> nx = <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span> - (e.<span class="hljs-property">touches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">x</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastX</span>);<br>  <span class="hljs-keyword">let</span> ny = <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">y</span> - (e.<span class="hljs-property">touches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">y</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastY</span>);<br>  <span class="hljs-keyword">let</span> invalid = <span class="hljs-literal">false</span>;<br>  <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx + <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">w</span> &lt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">col</span> * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span> = nx;<br>    invalid = <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">if</span> (ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny + <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">h</span> &lt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">row</span> * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">h</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">y</span> = ny;<br>    invalid = <span class="hljs-literal">true</span>;<br>  &#125;<br>  <span class="hljs-keyword">if</span> (invalid) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">redraw</span>();<br>  &#125;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastX</span> = e.<span class="hljs-property">touches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">x</span>;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">lastY</span> = e.<span class="hljs-property">touches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">y</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>为了避免拖动到边界以外，我检查了是否出界，出界的情况下仅更新触摸点坐标，但是不调用重绘。</p>
 <p>接下来就是点击事件，我又一次无师自通（手动斜眼），认为只要松开手指和按下手指的坐标差距够小，而时间间隔也够小，那就构成一次点击，根据坐标就能拿到被点击的单元格的行数和列数，然后触发回调：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">PeriodsView.prototype.onTouchEnd = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>&#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Math</span>.abs(e.changedTouches[<span class="hljs-number">0</span>].x - <span class="hljs-built_in">this</span>.gestures.initialX) &lt;= <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-built_in">Math</span>.abs(e.changedTouches[<span class="hljs-number">0</span>].y - <span class="hljs-built_in">this</span>.gestures.initialY) &lt;= <span class="hljs-number">4</span><br>      &amp;&amp; <span class="hljs-built_in">Date</span>.now().valueOf() - <span class="hljs-built_in">this</span>.gestures.initialTime &lt;= <span class="hljs-number">100</span>) &#123;<br>    <span class="hljs-keyword">let</span> absX = e.changedTouches[<span class="hljs-number">0</span>].x - <span class="hljs-built_in">this</span>.indicatorSize.timeWidth + <span class="hljs-built_in">this</span>.viewport.x;<br>    <span class="hljs-keyword">let</span> absY = e.changedTouches[<span class="hljs-number">0</span>].y - <span class="hljs-built_in">this</span>.indicatorSize.dateHeight + <span class="hljs-built_in">this</span>.viewport.y;<br>    <span class="hljs-keyword">if</span> (absX &lt; <span class="hljs-number">0</span> || absX &gt;= <span class="hljs-built_in">this</span>.data.col * <span class="hljs-built_in">this</span>.cellSize.w || absY &lt; <span class="hljs-number">0</span> || absY &gt;= <span class="hljs-built_in">this</span>.data.row * <span class="hljs-built_in">this</span>.cellSize.h) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">let</span> x = <span class="hljs-built_in">Math</span>.floor(absX / <span class="hljs-built_in">this</span>.cellSize.w);<br>    <span class="hljs-keyword">let</span> y = <span class="hljs-built_in">Math</span>.floor(absY / <span class="hljs-built_in">this</span>.cellSize.h);<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">this</span>.onCellTap == <span class="hljs-string">&#x27;function&#x27;</span>) &#123;<br>      <span class="hljs-keyword">let</span> ps = [];<br>      <span class="hljs-built_in">this</span>.data.periods.forEach(<span class="hljs-function"><span class="hljs-params">period</span> =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (period.c == x &amp;&amp; period.r == y) &#123;<br>          ps.push(period);<br>        &#125;<br>      &#125;);<br>      <span class="hljs-built_in">this</span>.onCellTap(x, y, ps);<br>    &#125;<br>  &#125;<br>&#125;;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">PeriodsView</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">onTouchEnd</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">abs</span>(e.<span class="hljs-property">changedTouches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">x</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">initialX</span>) &lt;= <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">abs</span>(e.<span class="hljs-property">changedTouches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">y</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">initialY</span>) &lt;= <span class="hljs-number">4</span><br>      &amp;&amp; <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>().<span class="hljs-title function_">valueOf</span>() - <span class="hljs-variable language_">this</span>.<span class="hljs-property">gestures</span>.<span class="hljs-property">initialTime</span> &lt;= <span class="hljs-number">100</span>) &#123;<br>    <span class="hljs-keyword">let</span> absX = e.<span class="hljs-property">changedTouches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">x</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">timeWidth</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">x</span>;<br>    <span class="hljs-keyword">let</span> absY = e.<span class="hljs-property">changedTouches</span>[<span class="hljs-number">0</span>].<span class="hljs-property">y</span> - <span class="hljs-variable language_">this</span>.<span class="hljs-property">indicatorSize</span>.<span class="hljs-property">dateHeight</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">viewport</span>.<span class="hljs-property">y</span>;<br>    <span class="hljs-keyword">if</span> (absX &lt; <span class="hljs-number">0</span> || absX &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">col</span> * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span> || absY &lt; <span class="hljs-number">0</span> || absY &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">row</span> * <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">h</span>) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">let</span> x = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(absX / <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">w</span>);<br>    <span class="hljs-keyword">let</span> y = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(absY / <span class="hljs-variable language_">this</span>.<span class="hljs-property">cellSize</span>.<span class="hljs-property">h</span>);<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">onCellTap</span> == <span class="hljs-string">&#x27;function&#x27;</span>) &#123;<br>      <span class="hljs-keyword">let</span> ps = [];<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">periods</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">period</span> =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (period.<span class="hljs-property">c</span> == x &amp;&amp; period.<span class="hljs-property">r</span> == y) &#123;<br>          ps.<span class="hljs-title function_">push</span>(period);<br>        &#125;<br>      &#125;);<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">onCellTap</span>(x, y, ps);<br>    &#125;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>这里要注意判断坐标换算之后位于整个表格之内，避免点击表头触发事件（好吧，我写这篇文章的时候才意识到的，所以上面的代码也是有bug的= =）</p>
 <p>很完美！最后解释一下深度：对于同一个单元格，如果是活动创建者查看，那么会显示所有用户的FreePeriod，这意味着一个单元格可能会有很多个FreePeriod对象，于是我用深度来表示这个单元格的FreePeriod个数，从而得出单元格需要的颜色。</p>
 <p>最后，只要在点击一个单元格的时候根据这个单元格是否有该用户的FreePeriod来添加或删除就行了。</p>
 <h2 id="分享"><a href="#分享" class="headerlink" title="分享"></a>分享</h2><p>最后的任务就是分享某个活动，非常简单，只要定义一个Page的回调：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">onShareAppMessage: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    title: <span class="hljs-string">&#x27;几时得闲：&#x27;</span> + <span class="hljs-built_in">this</span>.data.activity.Title,<br>    path: <span class="hljs-string">&#x27;/pages/activity/activity?objectId=&#x27;</span> + <span class="hljs-built_in">this</span>.data.activity.objectId,<br>    success: <span class="hljs-function">() =&gt;</span> &#123;<br>      wx.showToast(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Share succeed!&#x27;</span>&#125;);<br>    &#125;,<br>    fail: <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>      wx.showToast(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Share fail!&#x27;</span>&#125;);<br>      <span class="hljs-built_in">console</span>.error(res);<br>    &#125;<br>  &#125;<br>&#125;,<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-attr">onShareAppMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;几时得闲：&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activity</span>.<span class="hljs-property">Title</span>,<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/pages/activity/activity?objectId=&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activity</span>.<span class="hljs-property">objectId</span>,<br>    <span class="hljs-attr">success</span>: <span class="hljs-function">() =&gt;</span> &#123;<br>      wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Share succeed!&#x27;</span>&#125;);<br>    &#125;,<br>    <span class="hljs-attr">fail</span>: <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>      wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Share fail!&#x27;</span>&#125;);<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(res);<br>    &#125;<br>  &#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
+
 <h2 id="完工"><a href="#完工" class="headerlink" title="完工"></a>完工</h2><p>到这里，终于完成了绝大部分逻辑，剩下的就是修bug和修bug和修bug和修bug和修bug和修bug和修bug和美化UI和美化UI和美化UI和美化UI和美化UI和美化UI。下面是一些小程序的截图：</p>
 <p><img src="new-activity.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="activity.png" srcset="/img/loading.gif" lazyload></p>
@@ -328,37 +430,77 @@
 <p>最后关于这个小程序，由于官方提示不要发布demo或测试版本，所以我只能说，无可奉告！等我再有两天闲着，再来完善和优化，然后发布吧，近期找个机会把代码丢到GitHub上。</p>
 <p>好了，明早我要继续赶多周期流水线无冲突16位超精简指令集很TM超级无敌棒的CPU了Orz</p>
 
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/wechat/">wechat</a>
-                    
-                      <a class="hover-with-bg" href="/tags/mini-programs/">mini-programs</a>
-                    
-                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
-                    
-                  </div>
                 
               </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/wechat/">#wechat</a>
+      
+        <a href="/tags/mini-programs/">#mini-programs</a>
+      
+        <a href="/tags/javascript/">#javascript</a>
+      
+    </div>
+  
+</div>
+
+
               
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>我用一天半写了个小程序</div>
+      <div>https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Perqin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2017年5月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
               
-              
-                <div class="post-prevnext">
+                <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2017/05/13/fcanr-me-stop-favorite/">
+                      <a href="/2017/05/13/fcanr-me-stop-favorite/" title="FCANR.ME：别再收藏了">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">FCANR.ME：别再收藏了</span>
                         <span class="visible-mobile">上一篇</span>
@@ -368,7 +510,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2017/04/10/the-activity-is-moved-and-refuses-to-finish/">
+                      <a href="/2017/04/10/the-activity-is-moved-and-refuses-to-finish/" title="Activity 十分感动，然后拒绝了 finish 的请求">
                         <span class="hidden-mobile">Activity 十分感动，然后拒绝了 finish 的请求</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -380,12 +522,8 @@
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
+  <article id="comments" lazyload>
+    
   <div class="disqus" style="width:100%">
     <div id="disqus_thread"></div>
     
@@ -406,31 +544,63 @@
   </div>
 
 
-              </article>
-            
+  </article>
+
+
           </article>
         </div>
       </div>
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
-    
+
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
-<!-- Custom -->
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
 
 
     
 
     
-      <a id="scroll-top-button" href="#" role="button">
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
     
@@ -449,35 +619,37 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
-
+  
+  
   
     <!-- cnzz Analytics Icon -->
     <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
   
-</footer>
+</div>
 
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
@@ -496,7 +668,23 @@
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
 
 
   
@@ -505,81 +693,74 @@
 
 
 
+
   
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
 
 
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
 
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
 
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      $('#local-search-input').on('click', function() {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      });
-      $('#modalSearch').on('shown.bs.modal', function() {
-        $('#local-search-input').focus();
-      });
-    })()
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <!-- cnzz Analytics -->
-    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
-            type="text/javascript"></script>
-  
 
 
 
@@ -593,9 +774,15 @@
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

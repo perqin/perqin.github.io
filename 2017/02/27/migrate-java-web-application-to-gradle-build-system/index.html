@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
@@ -9,40 +9,47 @@
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
   <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#7108B2">
-  <meta name="description" content="Perqin&#39;s GitHub pages powered by Hexo.io and hexo-theme-material.">
   <meta name="author" content="Perqin">
   <meta name="keywords" content="">
+  
+    <meta name="description" content="最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移植Java Web应用到Gradle构建系统">
+<meta property="og:url" content="https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/index.html">
+<meta property="og:site_name" content="Perqin&#39;s Blog">
+<meta property="og:description" content="最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-02-27T10:07:33.000Z">
+<meta property="article:modified_time" content="2022-08-24T07:30:03.647Z">
+<meta property="article:author" content="Perqin">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="gradle">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
   
   <title>移植Java Web应用到Gradle构建系统 - Perqin&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
+
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/solarized-dark.min.css" />
-    
-  
-
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -51,7 +58,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
@@ -60,19 +73,57 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279692316&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>Perqin's Blog</strong>&nbsp;</a>
+    <a class="navbar-brand" href="/">
+      <strong>Perqin&#39;s Blog</strong>
+    </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -134,13 +185,15 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self">&nbsp;<i
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -149,60 +202,71 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="移植Java Web应用到Gradle构建系统">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2017-02-27 18:07" pubdate>
-        2017年2月27日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      1.9k 字
-    </span>
   
 
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      24
-       分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="移植Java Web应用到Gradle构建系统"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-02-27 18:07" pubdate>
+          2017年2月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          5.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          45 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
@@ -211,82 +275,139 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
+        <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">移植Java Web应用到Gradle构建系统</h1>
             
-            <div class="markdown-body">
-              <p>最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对Gradle的兴趣，我尝试将项目结构改为了Gradle构建系统的Java Web应用。</p>
+            
+              <div class="markdown-body">
+                
+                <p>最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对Gradle的兴趣，我尝试将项目结构改为了Gradle构建系统的Java Web应用。</p>
 <h2 id="Gradle准备"><a href="#Gradle准备" class="headerlink" title="Gradle准备"></a>Gradle准备</h2><p>Gradle是一种构建工具。在一个Gradle项目中，可以编写构建脚本<code>build.gradle</code>，在其中指定各个开发生命周期中涉及的任务，包括但不仅限于编译、打包成WAR、部署到容器和单元测试。</p>
 <p>Gradle的运行需要Java环境，这里不再赘述，JDK环境的配置读者可以直接通过搜索引擎找到。</p>
 <p>Gradle的运行方式有两种：Gradle和Gradle Wrapper，其中前者就是直接下载Gradle到本地机器并配置好环境变量，方法也很简单，前往Gradle的官方下载地址<a target="_blank" rel="noopener" href="http://services.gradle.org/distributions">http://services.gradle.org/distributions</a>下载即可。目前（2017/02/27）最新的版本是3.4，其中<code>gradle-3.4-bin.zip</code>是可执行包，一般下载这个就可以了，后缀src是源码，后缀all的则是最全的压缩包。</p>
 <p>下载解压到自己选择的目录之后，将其中的<code>bin</code>目录放入环境变量中即可，比如我的<code>bin</code>路径为：</p>
-<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/g</span>radle<span class="hljs-regexp">/gradle-3.4/</span>bin<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/g</span>radle<span class="hljs-regexp">/gradle-3.4/</span>bin<br></code></pre></td></tr></table></figure>
+
 <p>验证安装成功：</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs asciidoc">perqin@PQNACRUBT:~$ gradle -v<br><br>------------------------------------------------------------<br>Gradle 3.4<br>------------------------------------------------------------<br><br>Build time:   2017-02-20 14:49:26 UTC<br>Revision:     73f32d68824582945f5ac1810600e8d87794c3d4<br><br>Groovy:       2.4.7<br>Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015<br>JVM:          1.8.0_121 (Oracle Corporation 25.121-b13)<br>OS:           Linux 4.4.0-64-generic amd64<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">perqin@PQNACRUBT:~$ gradle -v<br><br><span class="hljs-code">------------------------------------------------------------</span><br><span class="hljs-code">Gradle 3.4</span><br><span class="hljs-code">------------------------------------------------------------</span><br><br>Build time:   2017-02-20 14:49:26 UTC<br>Revision:     73f32d68824582945f5ac1810600e8d87794c3d4<br><br>Groovy:       2.4.7<br>Ant:          Apache Ant(TM) version 1.9.6 compiled on June 29 2015<br>JVM:          1.8.0_121 (Oracle Corporation 25.121-b13)<br>OS:           Linux 4.4.0-64-generic amd64<br></code></pre></td></tr></table></figure>
+
 <p>然而，有时候我们的项目所需要的可能是其他指定版本的Gradle，甚至有时候让所有开发者都事先安装好指定的Gradle版本十分困难，因此Gradle提供了另一种叫做Gradle Wrapper的小脚本。把<code>gradle</code>替换成项目根目录里的<code>gradlew</code>（Windows平台下对应的是<code>gradlew.bat</code>），该脚本会判断项目需要的Gradle是否已经安装到了本机，如果没有则会自动从官方网站下载对应版本到本地的缓存目录，并将命令传递给缓存的对应版本的Gradle。</p>
 <p>获取Wrapper的方式这里不讲，因为一般在Gradle项目中都会有，也可以通过<code>gradle init -type &lt;type&gt;</code>初始化Gradle项目环境的时候生成。</p>
 <h2 id="调整目录结构"><a href="#调整目录结构" class="headerlink" title="调整目录结构"></a>调整目录结构</h2><p>因为时间紧迫，我也是现学现用，因此以下的内容也许不是业界最佳实践，但是我认为比原来更好的方案。</p>
 <p>在迁移到Gradle之前，项目的目录结构如下：</p>
-<figure class="highlight lasso"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs lasso">project<br>+ doc<br>+ resources<br>+ src                                   <span class="hljs-comment">// 源代码</span><br>  + <span class="hljs-literal">cn</span>                                  <span class="hljs-comment">// cn包，其中包含.java文件，亦包含一些xml文件</span><br>  + com<br>  + <span class="hljs-params">...</span><br>  + res                                 <span class="hljs-comment">// 部分非.java文件</span><br>    application<span class="hljs-params">-context.xml</span>             <span class="hljs-comment">// 相关上下文xml文件</span><br>    applicationContext<span class="hljs-params">-webservice.xml</span><br>    applicatoinContext-<span class="hljs-params">...</span>.<span class="hljs-built_in">xml</span><br>    jdbc.properties                     <span class="hljs-comment">// 相关java配置文件</span><br>    <span class="hljs-params">...</span>.properties<br>    <span class="hljs-params">...</span>.<span class="hljs-built_in">xml</span>                             <span class="hljs-comment">// 其他相关xml文件</span><br>+ src_jar<br>+ test                                  <span class="hljs-comment">// 测试类代码</span><br>  + <span class="hljs-literal">cn</span><br>  + com<br>  + <span class="hljs-params">...</span><br>+ WebContent                            <span class="hljs-comment">// 网站内容根目录</span><br>  .gitignore<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs lasso">project<br>+ doc<br>+ resources<br>+ src                                   <span class="hljs-comment">// 源代码</span><br>  + <span class="hljs-literal">cn</span>                                  <span class="hljs-comment">// cn包，其中包含.java文件，亦包含一些xml文件</span><br>  + com<br>  + <span class="hljs-params">...</span><br>  + res                                 <span class="hljs-comment">// 部分非.java文件</span><br>    application<span class="hljs-params">-context.xml</span>             <span class="hljs-comment">// 相关上下文xml文件</span><br>    applicationContext<span class="hljs-params">-webservice.xml</span><br>    applicatoinContext-<span class="hljs-params">...</span>.<span class="hljs-built_in">xml</span><br>    jdbc.properties                     <span class="hljs-comment">// 相关java配置文件</span><br>    <span class="hljs-params">...</span>.properties<br>    <span class="hljs-params">...</span>.<span class="hljs-built_in">xml</span>                             <span class="hljs-comment">// 其他相关xml文件</span><br>+ src_jar<br>+ test                                  <span class="hljs-comment">// 测试类代码</span><br>  + <span class="hljs-literal">cn</span><br>  + com<br>  + <span class="hljs-params">...</span><br>+ WebContent                            <span class="hljs-comment">// 网站内容根目录</span><br>  .gitignore<br></code></pre></td></tr></table></figure>
+
 <p>上面的目录虽然比较规整但并不算十分规范，比如Mybatis里的很多mapper的xml文件就被放到了对应的java文件的同一个目录。</p>
 <p>首先进入项目根目录，将Gradle环境集成好：</p>
-<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> project</span><br><span class="hljs-meta">$</span><span class="bash"> gradle init -<span class="hljs-built_in">type</span> java-application</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> project</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">gradle init -<span class="hljs-built_in">type</span> java-application</span><br></code></pre></td></tr></table></figure>
+
 <p>这时，你会发现目录中多了以下内容：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs pgsql">+ gradle<br>  + <span class="hljs-keyword">wrapper</span><br>      gradle-<span class="hljs-keyword">wrapper</span>.jar<br>      gradle-<span class="hljs-keyword">wrapper</span>.properties<br>  build.gradle<br>  gradlew<br>  gradlew.bat<br>  settings.gradle<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">+ gradle<br>  + <span class="hljs-keyword">wrapper</span><br>      gradle-<span class="hljs-keyword">wrapper</span>.jar<br>      gradle-<span class="hljs-keyword">wrapper</span>.properties<br>  build.gradle<br>  gradlew<br>  gradlew.bat<br>  settings.gradle<br></code></pre></td></tr></table></figure>
+
 <p>其中gradle目录里就是Gradle Wrapper了，而build.gradle是构建脚本，settings.gradle包含构建设置。除此以外，构建过程中还会生成<code>.gradle</code>目录和<code>build</code>目录，需要把它们加入到<code>.gitignore</code>中。</p>
 <p>接下来，我对项目的目录进行了调整，新的结构如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stylus">project<br>+ <span class="hljs-selector-class">.gradle</span>                           <span class="hljs-comment">// 使用Gradle产生的临时目录</span><br>+ build                             <span class="hljs-comment">// 构建过程中生成的临时目录</span><br>+ doc<br>+ gradle<br>+ libs                              <span class="hljs-comment">// jar包</span><br>+ resources<br>+ <span class="hljs-attribute">src</span><br>  + main<br>    + java                          <span class="hljs-comment">// 仅包含java文件，原来的包结构不变</span><br>      + cn<br>      + com<br>      + ...<br>    + resources                     <span class="hljs-comment">// 所有在打包之后需要和java文件放在一起，但非.java的文件</span><br>      + META-INF<br>          MANIFEST.MF<br>      + cn<br>        + persistence<br>          + mapper<br>              ..<span class="hljs-selector-class">.Mapper</span><span class="hljs-selector-class">.xml</span>         <span class="hljs-comment">// 即原来在cn.persistence.mapper包里的xml文件</span><br>        application-context<span class="hljs-selector-class">.xml</span>     <span class="hljs-comment">// 即原来的application-context.xml</span><br>        ....xml<br>    + webapp                        <span class="hljs-comment">// 即原来的WebContent</span><br>  + test                            <span class="hljs-comment">// 测试目录</span><br>+ src_jar<br>  .gitignore<br>  build<span class="hljs-selector-class">.gradle</span>                      <span class="hljs-comment">// 构建脚本</span><br>  gradlew<br>  gradlew.bat<br>  settings<span class="hljs-selector-class">.gradle</span>                   <span class="hljs-comment">// 配置脚本</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs stylus">project<br>+ <span class="hljs-selector-class">.gradle</span>                           <span class="hljs-comment">// 使用Gradle产生的临时目录</span><br>+ build                             <span class="hljs-comment">// 构建过程中生成的临时目录</span><br>+ doc<br>+ gradle<br>+ libs                              <span class="hljs-comment">// jar包</span><br>+ resources<br>+ <span class="hljs-attribute">src</span><br>  + <span class="hljs-selector-tag">main</span><br>    + java                          <span class="hljs-comment">// 仅包含java文件，原来的包结构不变</span><br>      + cn<br>      + com<br>      + ...<br>    + resources                     <span class="hljs-comment">// 所有在打包之后需要和java文件放在一起，但非.java的文件</span><br>      + META-INF<br>          MANIFEST<span class="hljs-selector-class">.MF</span><br>      + cn<br>        + persistence<br>          + mapper<br>              ..<span class="hljs-selector-class">.Mapper</span><span class="hljs-selector-class">.xml</span>         <span class="hljs-comment">// 即原来在cn.persistence.mapper包里的xml文件</span><br>        application-context<span class="hljs-selector-class">.xml</span>     <span class="hljs-comment">// 即原来的application-context.xml</span><br>        ...<span class="hljs-selector-class">.xml</span><br>    + webapp                        <span class="hljs-comment">// 即原来的WebContent</span><br>  + test                            <span class="hljs-comment">// 测试目录</span><br>+ src_jar<br>  <span class="hljs-selector-class">.gitignore</span><br>  build<span class="hljs-selector-class">.gradle</span>                      <span class="hljs-comment">// 构建脚本</span><br>  gradlew<br>  gradlew<span class="hljs-selector-class">.bat</span><br>  settings<span class="hljs-selector-class">.gradle</span>                   <span class="hljs-comment">// 配置脚本</span><br></code></pre></td></tr></table></figure>
+
 <p>需要注意的是，所有和java文件放在一起的非java文件都需要根据原有目录结构放到<code>src/main/resources/</code>中，否则无法被Gradle正确打包。</p>
 <p>上面的目录结构将java文件和其他文件分开，并且把主代码和测试代码分了源码集（source set），这对大部分的构建工具和IDE都更加友好。后面读者会看到Gradle构建大大减少了项目对IDE的依赖。</p>
 <h2 id="配置构建脚本"><a href="#配置构建脚本" class="headerlink" title="配置构建脚本"></a>配置构建脚本</h2><p>在<code>build.gradle</code>中，给出了整个项目的构建任务。经过修改的最终版本如下：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gradle"><span class="hljs-keyword">buildscript</span> &#123;<br>    <span class="hljs-keyword">repositories</span> &#123;<br>        jcenter()<br>    &#125;<br><br>    <span class="hljs-keyword">dependencies</span> &#123;<br>        <span class="hljs-comment">// Add Gradle Cargo plugin for deployment</span><br>    	<span class="hljs-keyword">classpath</span> <span class="hljs-string">&#x27;com.bmuschko:gradle-cargo-plugin:2.2.3&#x27;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// This is a WAR project!</span><br>apply plugin: <span class="hljs-string">&#x27;war&#x27;</span><br><br>apply plugin: <span class="hljs-string">&#x27;com.bmuschko.cargo&#x27;</span><br><br><span class="hljs-keyword">sourceCompatibility</span> = <span class="hljs-number">1.7</span><br><br><span class="hljs-comment">// In this section you declare where to find the dependencies of your project</span><br><span class="hljs-keyword">repositories</span> &#123;<br>    <span class="hljs-comment">// We use Mavel Central instead of jcenter</span><br>    mavenCentral()<br>&#125;<br><br>tasks.withType(JavaCompile) &#123;<br>	<span class="hljs-keyword">options</span>.warnings = <span class="hljs-keyword">false</span><br>&#125;<br><br><span class="hljs-keyword">dependencies</span> &#123;<br>    <span class="hljs-comment">// Add jar files in libs/ into dependencies</span><br>	<span class="hljs-keyword">compile</span> <span class="hljs-keyword">fileTree</span>(dir: <span class="hljs-string">&#x27;libs&#x27;</span>, <span class="hljs-keyword">include</span>: [<span class="hljs-string">&#x27;*.jar&#x27;</span>])<br>	<span class="hljs-comment">// List your dependencies here</span><br>	<span class="hljs-comment">// compile &#x27;group-id:artifact-id:version&#x27;</span><br>	<span class="hljs-keyword">compile</span> <span class="hljs-string">&#x27;javax.activation:activation:1.1&#x27;</span><br>	<span class="hljs-comment">// ......</span><br>	<span class="hljs-comment">// Use JUnit test framework</span><br>    testCompile <span class="hljs-string">&#x27;junit:junit:4.11&#x27;</span><br>&#125;<br><br>cargo &#123;<br>    <span class="hljs-comment">// Deploy to Tomcat 7</span><br>    containerId = <span class="hljs-string">&#x27;tomcat7x&#x27;</span><br><br>    deployable &#123;<br>        context = <span class="hljs-string">&#x27;/&#x27;</span><br>    &#125;<br><br>    local &#123;<br>        <span class="hljs-comment">// JVM args to speed up container performance!</span><br>    	jvmArgs = <span class="hljs-string">&#x27;-XX:PermSize=256M -XX:MaxPermSize=512m -Xms256m -Xmx1024m&#x27;</span><br>    	<span class="hljs-comment">// Set environment variable TOMCAT_HOME to the home of your local tomcat</span><br>        homeDir = <span class="hljs-keyword">file</span>(System.env.TOMCAT_HOME)<br>        <span class="hljs-comment">// Log and output files</span><br>        outputFile = <span class="hljs-keyword">file</span>(<span class="hljs-string">&#x27;build/output.txt&#x27;</span>)<br>        logFile = <span class="hljs-keyword">file</span>(<span class="hljs-string">&#x27;build/log.txt&#x27;</span>)<br>        logLevel = <span class="hljs-string">&#x27;high&#x27;</span><br><br>        containerProperties &#123;<br>            property <span class="hljs-string">&#x27;cargo.tomcat.ajp.port&#x27;</span>, <span class="hljs-number">9099</span><br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Ensure that the WAR is up-to-date before deployment</span><br>cargoRunLocal.dependsOn assemble<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">buildscript</span> &#123;<br>    <span class="hljs-keyword">repositories</span> &#123;<br>        jcenter()<br>    &#125;<br><br>    <span class="hljs-keyword">dependencies</span> &#123;<br>        <span class="hljs-comment">// Add Gradle Cargo plugin for deployment</span><br>    	<span class="hljs-keyword">classpath</span> <span class="hljs-string">&#x27;com.bmuschko:gradle-cargo-plugin:2.2.3&#x27;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// This is a WAR project!</span><br>apply plugin: <span class="hljs-string">&#x27;war&#x27;</span><br><br>apply plugin: <span class="hljs-string">&#x27;com.bmuschko.cargo&#x27;</span><br><br><span class="hljs-keyword">sourceCompatibility</span> = <span class="hljs-number">1.7</span><br><br><span class="hljs-comment">// In this section you declare where to find the dependencies of your project</span><br><span class="hljs-keyword">repositories</span> &#123;<br>    <span class="hljs-comment">// We use Mavel Central instead of jcenter</span><br>    mavenCentral()<br>&#125;<br><br>tasks.withType(JavaCompile) &#123;<br>	<span class="hljs-keyword">options</span>.warnings = <span class="hljs-keyword">false</span><br>&#125;<br><br><span class="hljs-keyword">dependencies</span> &#123;<br>    <span class="hljs-comment">// Add jar files in libs/ into dependencies</span><br>	<span class="hljs-keyword">compile</span> <span class="hljs-keyword">fileTree</span>(dir: <span class="hljs-string">&#x27;libs&#x27;</span>, <span class="hljs-keyword">include</span>: [<span class="hljs-string">&#x27;*.jar&#x27;</span>])<br>	<span class="hljs-comment">// List your dependencies here</span><br>	<span class="hljs-comment">// compile &#x27;group-id:artifact-id:version&#x27;</span><br>	<span class="hljs-keyword">compile</span> <span class="hljs-string">&#x27;javax.activation:activation:1.1&#x27;</span><br>	<span class="hljs-comment">// ......</span><br>	<span class="hljs-comment">// Use JUnit test framework</span><br>    testCompile <span class="hljs-string">&#x27;junit:junit:4.11&#x27;</span><br>&#125;<br><br>cargo &#123;<br>    <span class="hljs-comment">// Deploy to Tomcat 7</span><br>    containerId = <span class="hljs-string">&#x27;tomcat7x&#x27;</span><br><br>    deployable &#123;<br>        context = <span class="hljs-string">&#x27;/&#x27;</span><br>    &#125;<br><br>    local &#123;<br>        <span class="hljs-comment">// JVM args to speed up container performance!</span><br>    	jvmArgs = <span class="hljs-string">&#x27;-XX:PermSize=256M -XX:MaxPermSize=512m -Xms256m -Xmx1024m&#x27;</span><br>    	<span class="hljs-comment">// Set environment variable TOMCAT_HOME to the home of your local tomcat</span><br>        homeDir = <span class="hljs-keyword">file</span>(System.env.TOMCAT_HOME)<br>        <span class="hljs-comment">// Log and output files</span><br>        outputFile = <span class="hljs-keyword">file</span>(<span class="hljs-string">&#x27;build/output.txt&#x27;</span>)<br>        logFile = <span class="hljs-keyword">file</span>(<span class="hljs-string">&#x27;build/log.txt&#x27;</span>)<br>        logLevel = <span class="hljs-string">&#x27;high&#x27;</span><br><br>        containerProperties &#123;<br>            property <span class="hljs-string">&#x27;cargo.tomcat.ajp.port&#x27;</span>, <span class="hljs-number">9099</span><br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Ensure that the WAR is up-to-date before deployment</span><br>cargoRunLocal.dependsOn assemble<br></code></pre></td></tr></table></figure>
+
 <p>可以看到，Gradle的依赖管理比添加jar包更加轻松，只需要一行代码，就可以自动从仓库下载对应版本的依赖，这很方便管理项目的依赖，也不需要把一大堆jar包也加入VCS里了。当然，Maven Central中没有的jar包也可以直接放入<code>libs/</code>目录。</p>
 <p>现在，只要运行：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>gradle assemble<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-variable">$ </span>gradle assemble<br></code></pre></td></tr></table></figure>
+
 <p>或</p>
-<figure class="highlight elixir"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>./gradlew assemble<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">./gradlew assemble</span><br></code></pre></td></tr></table></figure>
+
 <p>，就会自动下载依赖、编译、打包了。接下来，我们通过cargo插件，增加部署到本地Tomcat的任务。参照上面的脚本，在cargo域里面可以配置很多东西，而这些东西在其他开发者刚用IDE打开项目之后，都不需要对着IDE专门配置一遍！</p>
 <p>不过必须注意的是，<strong>必须配置环境变量TOMCAT_HOME，指向本地Tomcat的安装路径。</strong></p>
 <p>接下来，运行任务<code>cargoRunLocal</code>就可以启动容器：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir">perqin<span class="hljs-variable">@PQNACRUBT</span><span class="hljs-symbol">:~/Workspace/project</span><span class="hljs-variable">$ </span>./gradlew cargoRunLocal<br>Starting a Gradle Daemon (subsequent builds will be faster)<br><span class="hljs-symbol">:compileJava</span> UP-TO-DATE<br><span class="hljs-symbol">:processResources</span> UP-TO-DATE<br><span class="hljs-symbol">:classes</span> UP-TO-DATE<br><span class="hljs-symbol">:war</span> UP-TO-DATE<br><span class="hljs-symbol">:assemble</span> UP-TO-DATE<br><span class="hljs-symbol">:cargoRunLocal</span><br>Press Ctrl-C to stop the container...<br>&gt; Building <span class="hljs-number">83</span>% &gt; <span class="hljs-symbol">:cargoRunLocal</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs elixir">perqin<span class="hljs-variable">@PQNACRUBT</span><span class="hljs-symbol">:~/Workspace/project</span><span class="hljs-variable">$ </span>./gradlew cargoRunLocal<br><span class="hljs-title class_">Starting</span> a <span class="hljs-title class_">Gradle</span> <span class="hljs-title class_">Daemon</span> (subsequent builds will be faster)<br><span class="hljs-symbol">:compileJava</span> <span class="hljs-title class_">UP</span>-<span class="hljs-title class_">TO</span>-<span class="hljs-title class_">DATE</span><br><span class="hljs-symbol">:processResources</span> <span class="hljs-title class_">UP</span>-<span class="hljs-title class_">TO</span>-<span class="hljs-title class_">DATE</span><br><span class="hljs-symbol">:classes</span> <span class="hljs-title class_">UP</span>-<span class="hljs-title class_">TO</span>-<span class="hljs-title class_">DATE</span><br><span class="hljs-symbol">:war</span> <span class="hljs-title class_">UP</span>-<span class="hljs-title class_">TO</span>-<span class="hljs-title class_">DATE</span><br><span class="hljs-symbol">:assemble</span> <span class="hljs-title class_">UP</span>-<span class="hljs-title class_">TO</span>-<span class="hljs-title class_">DATE</span><br><span class="hljs-symbol">:cargoRunLocal</span><br><span class="hljs-title class_">Press</span> <span class="hljs-title class_">Ctrl</span>-C to stop the container...<br>&gt; <span class="hljs-title class_">Building</span> <span class="hljs-number">83</span>% &gt; <span class="hljs-symbol">:cargoRunLocal</span><br></code></pre></td></tr></table></figure>
+
 <p>可以看到日志也被输出到目录了：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs elixir">perqin<span class="hljs-variable">@PQNACRUBT</span><span class="hljs-symbol">:~/Workspace/project/build</span><span class="hljs-variable">$ </span>ls -l | grep txt<br>-rw-rw-r-- <span class="hljs-number">1</span> perqin perqin     <span class="hljs-number">6509</span> <span class="hljs-number">2</span>月  <span class="hljs-number">27</span> <span class="hljs-number">22</span><span class="hljs-symbol">:</span><span class="hljs-number">10</span> log.txt<br>-rw-rw-r-- <span class="hljs-number">1</span> perqin perqin <span class="hljs-number">34139380</span> <span class="hljs-number">2</span>月  <span class="hljs-number">27</span> <span class="hljs-number">22</span><span class="hljs-symbol">:</span><span class="hljs-number">12</span> output.txt<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir">perqin<span class="hljs-variable">@PQNACRUBT</span><span class="hljs-symbol">:~/Workspace/project/build</span><span class="hljs-variable">$ </span>ls -l | grep txt<br>-rw-rw-r-- <span class="hljs-number">1</span> perqin perqin     <span class="hljs-number">6509</span> <span class="hljs-number">2</span>月  <span class="hljs-number">27</span> <span class="hljs-number">22</span><span class="hljs-symbol">:</span><span class="hljs-number">10</span> log.txt<br>-rw-rw-r-- <span class="hljs-number">1</span> perqin perqin <span class="hljs-number">34139380</span> <span class="hljs-number">2</span>月  <span class="hljs-number">27</span> <span class="hljs-number">22</span><span class="hljs-symbol">:</span><span class="hljs-number">12</span> output.txt<br></code></pre></td></tr></table></figure>
+
 <p>至此，一个项目的Gradle构建就配置好了，即使是命令行，也只需要一两条语句就能完成构建到部署。在IDE中，也能通过简单的双击完成Gradle任务，比如构建、测试等。</p>
 
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/java/">java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/gradle/">gradle</a>
-                    
-                  </div>
                 
               </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/">#java</a>
+      
+        <a href="/tags/gradle/">#gradle</a>
+      
+    </div>
+  
+</div>
+
+
               
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>移植Java Web应用到Gradle构建系统</div>
+      <div>https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Perqin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2017年2月27日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
               
-              
-                <div class="post-prevnext">
+                <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2017/03/21/explore-event-dispatching-from-source-1/">
+                      <a href="/2017/03/21/explore-event-dispatching-from-source-1/" title="从源码探索事件分发 1">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">从源码探索事件分发 1</span>
                         <span class="visible-mobile">上一篇</span>
@@ -296,7 +417,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2017/02/15/https-quick-deployment-guide/">
+                      <a href="/2017/02/15/https-quick-deployment-guide/" title="HTTPS快速部署上车指南">
                         <span class="hidden-mobile">HTTPS快速部署上车指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -308,12 +429,8 @@
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
+  <article id="comments" lazyload>
+    
   <div class="disqus" style="width:100%">
     <div id="disqus_thread"></div>
     
@@ -334,31 +451,63 @@
   </div>
 
 
-              </article>
-            
+  </article>
+
+
           </article>
         </div>
       </div>
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
-    
+
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
-<!-- Custom -->
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
 
 
     
 
     
-      <a id="scroll-top-button" href="#" role="button">
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
     
@@ -377,35 +526,37 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
-
+  
+  
   
     <!-- cnzz Analytics Icon -->
     <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
   
-</footer>
+</div>
 
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
@@ -424,7 +575,23 @@
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
 
 
   
@@ -433,81 +600,74 @@
 
 
 
+
   
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
 
 
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
 
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+  <script>Fluid.plugins.codeWidget();</script>
 
 
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
 
-  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
 
 
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      $('#local-search-input').on('click', function() {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      });
-      $('#modalSearch').on('shown.bs.modal', function() {
-        $('#local-search-input').focus();
-      });
-    })()
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <!-- cnzz Analytics -->
-    <script defer src="//s4.cnzz.com/z_stat.php?id=1279692316&show=pic"
-            type="text/javascript"></script>
-  
 
 
 
@@ -521,9 +681,15 @@
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#7108B2">
+  <meta name="author" content="Perqin">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在应用了qiankun的微应用架构项目中，路由的处理有时候会出问题。我们部门的项目使用了qiankun框架，父应用使用的是Vue 2 + Vue Router，子应用使用的是React + React Router。 路由跳转拦截在父应用中，一个非常常见的场景是路由拦截，也就是在用户有未保存的内容的时候跳转到其他路由，需要阻止用户并弹出提示。 在Vue项目中，我们直接使用Vue Router提供的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qiankun微应用项目中的路由拦截">
+<meta property="og:url" content="https://perqin.github.io/2022/08/23/intercept-route-in-qiankun-project/index.html">
+<meta property="og:site_name" content="Perqin&#39;s Blog">
+<meta property="og:description" content="在应用了qiankun的微应用架构项目中，路由的处理有时候会出问题。我们部门的项目使用了qiankun框架，父应用使用的是Vue 2 + Vue Router，子应用使用的是React + React Router。 路由跳转拦截在父应用中，一个非常常见的场景是路由拦截，也就是在用户有未保存的内容的时候跳转到其他路由，需要阻止用户并弹出提示。 在Vue项目中，我们直接使用Vue Router提供的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-23T07:17:34.000Z">
+<meta property="article:modified_time" content="2022-08-24T07:30:03.647Z">
+<meta property="article:author" content="Perqin">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>qiankun微应用项目中的路由拦截 - Perqin&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"perqin.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#9575CD","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":"1279692316","leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279692316&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Perqin&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="qiankun微应用项目中的路由拦截"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-23 15:17" pubdate>
+          2022年8月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          7.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          62 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">qiankun微应用项目中的路由拦截</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在应用了qiankun的微应用架构项目中，路由的处理有时候会出问题。我们部门的项目使用了qiankun框架，父应用使用的是Vue 2 + Vue Router，子应用使用的是React + React Router。</p>
+<h2 id="路由跳转拦截"><a href="#路由跳转拦截" class="headerlink" title="路由跳转拦截"></a>路由跳转拦截</h2><p>在父应用中，一个非常常见的场景是路由拦截，也就是在用户有未保存的内容的时候跳转到其他路由，需要阻止用户并弹出提示。</p>
+<p>在Vue项目中，我们直接使用Vue Router提供的<code>beforeRouteLeave</code>钩子，在其中拦截即可。然而如果是子应用需要拦截，那么就没那么容易了，毕竟子应用里无法干预父应用里的路由组件。因此，我们在子应用中通过props传入的回调通知父应用自己的拦截请求，在父应用中拦截。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// Main app (Vue)</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">Vue</span>.<span class="hljs-title function_">extend</span>(&#123;<br>  <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">shouldConfirmBeforeNavigate</span>: <span class="hljs-literal">false</span>,<br>    &#125;;<br>  &#125;,<br>  <span class="hljs-title function_">beforeRouteLeave</span>(<span class="hljs-params">to, <span class="hljs-keyword">from</span>, next</span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">shouldConfirmBeforeNavigate</span>) &#123;<br>      <span class="hljs-comment">// Show confirm dialog...</span><br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-title function_">next</span>();<br>  &#125;,<br>  <span class="hljs-title function_">mounted</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-title function_">registerMicroApps</span>([<br>      &#123;<br>        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;child-app&#x27;</span>,<br>        <span class="hljs-attr">props</span>: &#123;<br>          <span class="hljs-attr">onEditStateChange</span>: <span class="hljs-function">(<span class="hljs-params">unsaved: <span class="hljs-built_in">boolean</span></span>) =&gt;</span> &#123;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">shouldConfirmBeforeNavigate</span> = unsaved;<br>          &#125;,<br>        &#125;,<br>        <span class="hljs-comment">// Other config...</span><br>      &#125;,<br>    ]);<br>  &#125;,<br>  <span class="hljs-comment">// ...</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="子应用白屏问题"><a href="#子应用白屏问题" class="headerlink" title="子应用白屏问题"></a>子应用白屏问题</h2><p>考虑如下场景：应用使用hash模式路由，路由A对应子应用中的某个页面，路由B对应非子应用的父应用某个页面，用户当前进入A并进入了编辑态，然后点击父应用中的某个<code>&lt;a&gt;</code>标签跳转到了路由B。此时父应用的Vue Router会监听<code>hashchange</code>事件，阻止页面跳转，并弹出确认弹窗。然而此时我们会发现容器内的子应用区域变成了白屏。</p>
+<p>出现这个问题的原因在于，子应用中的React Router也监听了<code>hashchange</code>事件，在用户点击<code>&lt;a&gt;</code>标签的时候，虽然父应用中的Vue Router进行了拦截，但浏览器的地址栏仍然已经变成了路由B的路径，对应的<code>hashchange</code>事件也已经被发出并被子应用监听了。子应用中没有路由B对应的页面，因此会渲染成白屏。</p>
+<h2 id="解决路由拦截-lt-router-link-gt"><a href="#解决路由拦截-lt-router-link-gt" class="headerlink" title="解决路由拦截(&lt;router-link&gt;)"></a>解决路由拦截(<code>&lt;router-link&gt;</code>)</h2><p>要解决上述问题，就需要在拦截路由的时候不要发出<code>hashchange</code>事件，而最快的办法就是使用Vue Router提供的<code>&lt;router-link&gt;</code>组件。使用该组件后，用户点击时如果需要拦截路由，Vue Router会阻止URL中hash的变更和<code>hashchange</code>事件的触发。那么Vue Router是怎么实现的呢？我们来看看<code>&lt;router-link&gt;</code>组件的源码（以3.4.3版本为例，代码摘录有省略）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// src/components/link.js</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;RouterLink&#x27;</span>,<br>  <span class="hljs-attr">props</span>: &#123;<br>    <span class="hljs-attr">to</span>: &#123;<br>      <span class="hljs-attr">type</span>: toTypes,<br>      <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span><br>    &#125;,<br>    <span class="hljs-attr">tag</span>: &#123;<br>      <span class="hljs-attr">type</span>: <span class="hljs-title class_">String</span>,<br>      <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;a&#x27;</span><br>    &#125;,<br>    <span class="hljs-comment">// Omitted...</span><br>  &#125;,<br>  render (<span class="hljs-attr">h</span>: <span class="hljs-title class_">Function</span>) &#123;<br>    <span class="hljs-keyword">const</span> router = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$router</span><br>    <span class="hljs-keyword">const</span> current = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$route</span><br>    <span class="hljs-keyword">const</span> &#123; location, route, href &#125; = router.<span class="hljs-title function_">resolve</span>(<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">to</span>,<br>      current,<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">append</span><br>    )<br><br>    <span class="hljs-comment">// Omitted</span><br><br>    <span class="hljs-keyword">const</span> <span class="hljs-title function_">handler</span> = e =&gt; &#123;<br>      <span class="hljs-keyword">if</span> (<span class="hljs-title function_">guardEvent</span>(e)) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">replace</span>) &#123;<br>          router.<span class="hljs-title function_">replace</span>(location, noop)<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          router.<span class="hljs-title function_">push</span>(location, noop)<br>        &#125;<br>      &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> on = &#123; <span class="hljs-attr">click</span>: guardEvent &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">event</span>)) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">event</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>        on[e] = handler<br>      &#125;)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      on[<span class="hljs-variable language_">this</span>.<span class="hljs-property">event</span>] = handler<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> <span class="hljs-attr">data</span>: any = &#123; <span class="hljs-attr">class</span>: classes &#125;<br><br>    <span class="hljs-comment">// Omitted...</span><br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">tag</span> === <span class="hljs-string">&#x27;a&#x27;</span>) &#123;<br>      data.<span class="hljs-property">on</span> = on<br>      data.<span class="hljs-property">attrs</span> = &#123; href, <span class="hljs-string">&#x27;aria-current&#x27;</span>: ariaCurrentValue &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-comment">// Omitted...</span><br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">h</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">tag</span>, data, <span class="hljs-variable language_">this</span>.<span class="hljs-property">$slots</span>.<span class="hljs-property">default</span>)<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">guardEvent</span> (e) &#123;<br>  <span class="hljs-comment">// don&#x27;t redirect with control keys</span><br>  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">metaKey</span> || e.<span class="hljs-property">altKey</span> || e.<span class="hljs-property">ctrlKey</span> || e.<span class="hljs-property">shiftKey</span>) <span class="hljs-keyword">return</span><br>  <span class="hljs-comment">// don&#x27;t redirect when preventDefault called</span><br>  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">defaultPrevented</span>) <span class="hljs-keyword">return</span><br>  <span class="hljs-comment">// don&#x27;t redirect on right click</span><br>  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">button</span> !== <span class="hljs-literal">undefined</span> &amp;&amp; e.<span class="hljs-property">button</span> !== <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span><br>  <span class="hljs-comment">// don&#x27;t redirect if `target=&quot;_blank&quot;`</span><br>  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">currentTarget</span> &amp;&amp; e.<span class="hljs-property">currentTarget</span>.<span class="hljs-property">getAttribute</span>) &#123;<br>    <span class="hljs-keyword">const</span> target = e.<span class="hljs-property">currentTarget</span>.<span class="hljs-title function_">getAttribute</span>(<span class="hljs-string">&#x27;target&#x27;</span>)<br>    <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/\b_blank\b/i</span>.<span class="hljs-title function_">test</span>(target)) <span class="hljs-keyword">return</span><br>  &#125;<br>  <span class="hljs-comment">// this may be a Weex event which doesn&#x27;t have this method</span><br>  <span class="hljs-keyword">if</span> (e.<span class="hljs-property">preventDefault</span>) &#123;<br>    e.<span class="hljs-title function_">preventDefault</span>()<br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可见默认情况下<code>&lt;router-link&gt;</code>渲染出来的也是一个<code>&lt;a&gt;</code>标签，但是这个<code>&lt;a&gt;</code>标签被点击时，触发的默认行为在<code>guardEvent</code>中被<code>preventDefault</code>了，正是这个调用阻止了URL的改变和<code>hashchange</code>事件的触发。后续的逻辑就是调用<code>VueRouter</code>实例的<code>replace</code>或<code>push</code>函数手动跳转了。</p>
+<h2 id="子应用内路由跳转问题"><a href="#子应用内路由跳转问题" class="headerlink" title="子应用内路由跳转问题"></a>子应用内路由跳转问题</h2><p>上述方法带来了一个新的问题：在子应用内无法跳转路由了。</p>
+<p>考虑这样的场景：父应用上有两个<code>&lt;router-link&gt;</code>，分别对应子应用内的路由A和B。当前用户在路由A，用户点击<code>&lt;router-link&gt;</code>跳转到了路由B。此时我们会发现，子应用内仍然是路由A的页面！</p>
+<p>这个问题在qiankun已经有对应的<a target="_blank" rel="noopener" href="https://github.com/umijs/qiankun/issues/1199">issue</a>，其原因为：当使用Vue Router提供的API来跳转路由时（这也是<code>&lt;router-link&gt;</code>内的实现方式），Vue Router会判断当前浏览器是否支持HTML5 Browser History API，如果支持，那么就不会通过修改Location href的方式修改hash，而是直接调用对应的<code>pushState</code>、<code>replaceState</code>函数来跳转路由，而这种跳转方式虽然会修改地址栏URL，但是不会触发<code>hashchange</code>事件！</p>
+<p>原issue中也有人给出了<a target="_blank" rel="noopener" href="https://github.com/umijs/qiankun/issues/1199#issuecomment-818740774">解决方案</a>：</p>
+<blockquote>
+<p>目前可用的解决方案：</p>
+<ol>
+<li>将 vue 主应用中的 Link 超链方式替换成原生的 a 标签，从而触发浏览器的 hashchange</li>
+<li>主应用手动监听路由变更，同时手动触发 hashchange 事件</li>
+<li>主应用跟子应用都改用 browser history 模式</li>
+</ol>
+</blockquote>
+<p>显然，根据前面的描述，我们不可能再用回原生的<code>&lt;a&gt;</code>标签；而我们的项目目前也无法突然迁移到Browser History API，因此只有第二条路可以走，实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// SiderMenu.vue</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-attr">watch</span>: &#123;<br>    $route(route, oldRoute) &#123;<br>      <span class="hljs-keyword">if</span> (route.<span class="hljs-property">fullPath</span> !== oldRoute?.<span class="hljs-property">fullPath</span>) &#123;<br>        <span class="hljs-keyword">const</span> &#123; href &#125; = <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>;<br>        <span class="hljs-keyword">const</span> baseUrl = href.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;#&#x27;</span>) !== -<span class="hljs-number">1</span> ? href.<span class="hljs-title function_">substring</span>(<span class="hljs-number">0</span>, href.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;#&#x27;</span>)) : href;<br>        <span class="hljs-keyword">const</span> oldURL = <span class="hljs-string">`<span class="hljs-subst">$&#123;baseUrl&#125;</span>#<span class="hljs-subst">$&#123;oldRoute?.fullPath || <span class="hljs-string">&#x27;&#x27;</span>&#125;</span>`</span>;<br>        <span class="hljs-keyword">const</span> newURL = <span class="hljs-string">`<span class="hljs-subst">$&#123;baseUrl&#125;</span>#<span class="hljs-subst">$&#123;route.fullPath || <span class="hljs-string">&#x27;&#x27;</span>&#125;</span>`</span>;<br>        <span class="hljs-variable language_">window</span>.<span class="hljs-title function_">dispatchEvent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashChangeEvent</span>(<span class="hljs-string">&#x27;hashchange&#x27;</span>, &#123; oldURL, newURL &#125;));<br>      &#125;<br>    &#125;,<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="EXTRA：使用slot的场景"><a href="#EXTRA：使用slot的场景" class="headerlink" title="EXTRA：使用slot的场景"></a>EXTRA：使用slot的场景</h2><p>到这里，qiankun场景下的路由拦截问题已经解决完毕，但对我手里这个项目来说，到上面这一步还没有结束。</p>
+<p>我们有一个路由页面，<code>&lt;router-link&gt;</code>上使用的路由是这样的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">router-link</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;&#123;</span></span><br><span class="hljs-string"><span class="hljs-tag">    name: &#x27;route-books&#x27;,</span></span><br><span class="hljs-string"><span class="hljs-tag">    params: &#123; shelfId: &#x27;0&#x27; &#125;,</span></span><br><span class="hljs-string"><span class="hljs-tag">  &#125;&quot;</span></span><br><span class="hljs-tag">&gt;</span>Books<span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看到点击时<code>shelfId</code>参数会设置为<code>0</code>，而实际上，该路由对应的页面组件在<code>created</code>的时候就会执行初始化逻辑，获取到当前用户的shelfId，然后修改当前路由的<code>shelfId</code>参数。如果用户停留在这个页面的时候再点击一次链接会怎样？会把URL里的<code>shelfId</code>参数重新修改为<code>0</code>！根据Vue Router的文档，<a target="_blank" rel="noopener" href="https://v3.router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes">路由仅有参数变化的时候，组件是不会销毁重建的</a>。这就意味着此时<code>created</code>中的初始化逻辑不会被重新执行，而该组件中又有很多其它地方的逻辑会直接从<code>$route.params.shelfId</code>中获取shelfId，这就会带来问题。</p>
+<p>其中一种解决方式当然是按照上述文档中推荐的，去监听参数变更、重新调用接口拉取用户的shelfId，但用户只是点击了一下当前路由就触发一次请求未免有些浪费，因此我们选择的是直接屏蔽重复的路由跳转。</p>
+<p>如何屏蔽重复的路由跳转呢？</p>
+<p>如果没有使用scoped slot，那么直接在<code>&lt;router-link&gt;</code>组件内部的<code>&lt;a&gt;</code>标签中增加<code>click</code>事件监听并<code>preventDefault</code>即可，<code>&lt;router-link&gt;</code>组件会自动追加他自带的<code>click</code>事件到后面。<code>&lt;router-link&gt;</code>的逻辑如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// src/components/link.js</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  render () &#123;<br>    <span class="hljs-comment">// Omitted...</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">tag</span> === <span class="hljs-string">&#x27;a&#x27;</span>) &#123;<br>      data.<span class="hljs-property">on</span> = on<br>      data.<span class="hljs-property">attrs</span> = &#123; href, <span class="hljs-string">&#x27;aria-current&#x27;</span>: ariaCurrentValue &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-comment">// find the first &lt;a&gt; child and apply listener and href</span><br>      <span class="hljs-keyword">const</span> a = <span class="hljs-title function_">findAnchor</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">$slots</span>.<span class="hljs-property">default</span>)<br>      <span class="hljs-keyword">if</span> (a) &#123;<br>        <span class="hljs-comment">// in case the &lt;a&gt; is a static node</span><br>        a.<span class="hljs-property">isStatic</span> = <span class="hljs-literal">false</span><br>        <span class="hljs-keyword">const</span> aData = (a.<span class="hljs-property">data</span> = <span class="hljs-title function_">extend</span>(&#123;&#125;, a.<span class="hljs-property">data</span>))<br>        aData.<span class="hljs-property">on</span> = aData.<span class="hljs-property">on</span> || &#123;&#125;<br>        <span class="hljs-comment">// transform existing events in both objects into arrays so we can push later</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> event <span class="hljs-keyword">in</span> aData.<span class="hljs-property">on</span>) &#123;<br>          <span class="hljs-keyword">const</span> handler = aData.<span class="hljs-property">on</span>[event]<br>          <span class="hljs-keyword">if</span> (event <span class="hljs-keyword">in</span> on) &#123;<br>            aData.<span class="hljs-property">on</span>[event] = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(handler) ? handler : [handler]<br>          &#125;<br>        &#125;<br>        <span class="hljs-comment">// append new listeners for router-link</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> event <span class="hljs-keyword">in</span> on) &#123;<br>          <span class="hljs-keyword">if</span> (event <span class="hljs-keyword">in</span> aData.<span class="hljs-property">on</span>) &#123;<br>            <span class="hljs-comment">// on[event] is always a function</span><br>            aData.<span class="hljs-property">on</span>[event].<span class="hljs-title function_">push</span>(on[event])<br>          &#125; <span class="hljs-keyword">else</span> &#123;<br>            aData.<span class="hljs-property">on</span>[event] = handler<br>          &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">const</span> aAttrs = (a.<span class="hljs-property">data</span>.<span class="hljs-property">attrs</span> = <span class="hljs-title function_">extend</span>(&#123;&#125;, a.<span class="hljs-property">data</span>.<span class="hljs-property">attrs</span>))<br>        aAttrs.<span class="hljs-property">href</span> = href<br>        aAttrs[<span class="hljs-string">&#x27;aria-current&#x27;</span>] = ariaCurrentValue<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// doesn&#x27;t have &lt;a&gt; child, apply listener to self</span><br>        data.<span class="hljs-property">on</span> = on<br>      &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">h</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">tag</span>, data, <span class="hljs-variable language_">this</span>.<span class="hljs-property">$slots</span>.<span class="hljs-property">default</span>)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因此我们这样写就可以：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">router-link</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;&#123;</span></span><br><span class="hljs-string"><span class="hljs-tag">    name: &#x27;route-books&#x27;,</span></span><br><span class="hljs-string"><span class="hljs-tag">    params: &#123; shelfId: &#x27;0&#x27; &#125;,</span></span><br><span class="hljs-string"><span class="hljs-tag">  &#125;&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;(e) =&gt; $route.name === &#x27;route-books&#x27; &amp;&amp; e.preventDefault()&quot;</span>&gt;</span>Books<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>而如果使用了scoped slot，那么就需要手动处理点击逻辑了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">router-link</span></span><br><span class="hljs-tag">  <span class="hljs-attr">:to</span>=<span class="hljs-string">&quot;&#123;</span></span><br><span class="hljs-string"><span class="hljs-tag">    name: &#x27;route-books&#x27;,</span></span><br><span class="hljs-string"><span class="hljs-tag">    params: &#123; shelfId: &#x27;0&#x27; &#125;,</span></span><br><span class="hljs-string"><span class="hljs-tag">  &#125;&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">v-slot</span>=<span class="hljs-string">&quot;&#123; href, isActive, isExactActive, route, navigate &#125;&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">a</span></span><br><span class="hljs-tag">    <span class="hljs-attr">:href</span>=<span class="hljs-string">&quot;href&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;&#123;</span></span><br><span class="hljs-string"><span class="hljs-tag">      &#x27;router-link-active&#x27;: isActive || $route.name == &#x27;route-books&#x27;,</span></span><br><span class="hljs-string"><span class="hljs-tag">      &#x27;router-link-exact-active&#x27;: isExactActive,</span></span><br><span class="hljs-string"><span class="hljs-tag">    &#125;&quot;</span></span><br><span class="hljs-tag">    @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;(e) =&gt; &#123;</span></span><br><span class="hljs-string"><span class="hljs-tag">      if (&#x27;route-books&#x27; !== this.$route.name) &#123;</span></span><br><span class="hljs-string"><span class="hljs-tag">        navigate(e);</span></span><br><span class="hljs-string"><span class="hljs-tag">      &#125;</span></span><br><span class="hljs-string"><span class="hljs-tag">      e.preventDefault();</span></span><br><span class="hljs-string"><span class="hljs-tag">    &#125;&quot;</span></span><br><span class="hljs-tag">  &gt;</span>Books<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里需要注意，点击事件中：</p>
+<ul>
+<li>必须调用<code>e.preventDefault()</code>，因为我们的<code>click</code>事件是放在<code>&lt;a&gt;</code>标签的，如前面解释的，需要用这种方式屏蔽<code>hashchange</code>事件；</li>
+<li>调用<code>e.preventDefault()</code>必须在<code>navigate</code>调用之后，否则在<code>guardEvent</code>中会被拦截掉。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>qiankun微应用项目中的路由拦截</div>
+      <div>https://perqin.github.io/2022/08/23/intercept-route-in-qiankun-project/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Perqin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月23日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/04/build-leaf-android-on-windows/" title="在Windows上编译Leaf Android">
+                        <span class="hidden-mobile">在Windows上编译Leaf Android</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://perqin.github.io/2022/08/23/intercept-route-in-qiankun-project/';
+          this.page.identifier = '/2022/08/23/intercept-route-in-qiankun-project/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'perqin-github-io' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279692316" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d@fd9fd40/webgl/Live2D/lib/live2d.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.10/pixi.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.1/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/perqin/live2d-widget@v5+f9bc441/autoload.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
