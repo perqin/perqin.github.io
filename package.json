@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "hexo": {
-    "version": "5.3.0"
+    "version": "5.4.2"
   },
+  "packageManager": "pnpm@7.9.4",
   "dependencies": {
     "@perqin/hexo-generator-amp": "^3.2.0-patch-01",
+    "css": "^3.0.0",
     "hexo": "^5.3.0",
     "hexo-deployer-git": "^3.0.0",
     "hexo-generator-archive": "^1.0.0",
@@ -20,6 +22,7 @@
     "hexo-server": "^2.0.0",
     "hexo-showcase": "^0.0.5",
     "hexo-theme-fluid": "^1.8.10",
+    "moment": "^2.29.4",
     "nunjucks": "^3.2.3"
   },
   "PERQIN_reinstall": {
