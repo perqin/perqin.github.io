@@ -24,7 +24,7 @@
 <meta property="og:description" content="最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-02-27T10:07:33.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.647Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.232Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="gradle">
@@ -293,7 +293,7 @@
                 <p>最近我参与了一个Java Web Application项目，但由于历史遗留问题，这个项目并没有使用任何构建系统（哪怕是Ant），而是完全依赖IDE的配置，这给项目带来了很多限制，比如对于习惯使用其他IDE的开发者，比如我，就需要花费不少时间专门配置IDE。不仅如此，缺少构建系统使得整个开发流程也趋于僵化、不灵活，比如独立部署、打包、测试等流程都需要专门的人为执行而不能自动化。基于以上考虑，以及对Gradle的兴趣，我尝试将项目结构改为了Gradle构建系统的Java Web应用。</p>
 <h2 id="Gradle准备"><a href="#Gradle准备" class="headerlink" title="Gradle准备"></a>Gradle准备</h2><p>Gradle是一种构建工具。在一个Gradle项目中，可以编写构建脚本<code>build.gradle</code>，在其中指定各个开发生命周期中涉及的任务，包括但不仅限于编译、打包成WAR、部署到容器和单元测试。</p>
 <p>Gradle的运行需要Java环境，这里不再赘述，JDK环境的配置读者可以直接通过搜索引擎找到。</p>
-<p>Gradle的运行方式有两种：Gradle和Gradle Wrapper，其中前者就是直接下载Gradle到本地机器并配置好环境变量，方法也很简单，前往Gradle的官方下载地址<a target="_blank" rel="noopener" href="http://services.gradle.org/distributions">http://services.gradle.org/distributions</a>下载即可。目前（2017/02/27）最新的版本是3.4，其中<code>gradle-3.4-bin.zip</code>是可执行包，一般下载这个就可以了，后缀src是源码，后缀all的则是最全的压缩包。</p>
+<p>Gradle的运行方式有两种：Gradle和Gradle Wrapper，其中前者就是直接下载Gradle到本地机器并配置好环境变量，方法也很简单，前往Gradle的官方下载地址<a target="_blank" rel="noopener" href="http://services.gradle.org/distributions">http://services.gradle.org/distributions</a>下载即可。目前（2017&#x2F;02&#x2F;27）最新的版本是3.4，其中<code>gradle-3.4-bin.zip</code>是可执行包，一般下载这个就可以了，后缀src是源码，后缀all的则是最全的压缩包。</p>
 <p>下载解压到自己选择的目录之后，将其中的<code>bin</code>目录放入环境变量中即可，比如我的<code>bin</code>路径为：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/opt/g</span>radle<span class="hljs-regexp">/gradle-3.4/</span>bin<br></code></pre></td></tr></table></figure>
 

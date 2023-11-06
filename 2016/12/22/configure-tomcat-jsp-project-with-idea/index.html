@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://perqin.github.io/img/covers/configure-tomcat-jsp-project-with-idea.png">
 <meta property="article:published_time" content="2016-12-22T17:37:38.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.607Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.192Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="IDEA">
 <meta property="article:tag" content="Tomcat">
@@ -302,34 +302,34 @@
 
 <p>其中我们感兴趣（知道）的是：src包含服务器后端的源码，WebContent包含了JSP服务器的配置和网站根目录内容。</p>
 <p>使用IDE打开项目（而不是导入项目），如下图中的<code>Open</code>：</p>
-<p><img src="open.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/open.png" srcset="/img/loading.gif" lazyload></p>
 <p>初次打开项目之后，IDEA会检测到项目中的<code>web.xml</code>配置文件，并询问是否根据该文件配置该项目为Web应用，这里我们点击同意。也可以在<code>Event Log</code>面板找到该消息。</p>
 <h2 id="配置JDK"><a href="#配置JDK" class="headerlink" title="配置JDK"></a>配置JDK</h2><p>要运行服务器，需要配置JDK和Tomcat服务器。Tomcat的配置我会放到后面说明。</p>
 <p>在IDEA中，进入菜单<code>File - Project Structure...</code>，在左边选择<code>SDKs</code>，点击加号，选择<code>JDK</code>，选择jdk安装目录<code>jdk1.7.0_79</code>，这个目录的内容应该如下：</p>
 <figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs diff">jdk1.7.0_79<br><span class="hljs-addition">+ bin</span><br><span class="hljs-addition">+ db</span><br><span class="hljs-addition">+ include</span><br><span class="hljs-addition">+ jre</span><br><span class="hljs-addition">+ lib</span><br><span class="hljs-addition">+ man</span><br><span class="hljs-addition">+ ...</span><br></code></pre></td></tr></table></figure>
 
 <p>添加之后结果如下：</p>
-<p><img src="jdk.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/jdk.png" srcset="/img/loading.gif" lazyload></p>
 <p>接下来，切换到<code>Project</code>，在右侧选择项目SDK为刚刚设置的jdk，同时把项目语言等级改为7，把项目编译输出目录改为repo源码以外的目录，否则编译和构建生成的内容会被IDE索引而影响使用。</p>
-<p><img src="project.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/project.png" srcset="/img/loading.gif" lazyload></p>
 <p>接下来切换到<code>Modules</code>，会发现模块内已经包含了一个Web子模块，他就是IDE检测到<code>web.xml</code>之后自动生成的。如果没有，你可以选中模块，然后点击模块列表上面的加号选择<code>Web</code>，然后在右侧的<code>Deployment Descriptors</code>点击右边的加号选择你的<code>web.xml</code>文件。</p>
-<p><img src="modules-web.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/modules-web.png" srcset="/img/loading.gif" lazyload></p>
 <p>我们需要为这个module配置源码目录和依赖。在module列表中选中模块（而不是<code>Web</code>条目），然后在右边的<code>Sources</code>标签下，选中src目录，右键标记为<code>Sources</code>，此时这个目录就会变成蓝色。</p>
-<p><img src="modules-sources.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/modules-sources.png" srcset="/img/loading.gif" lazyload></p>
 <p>再切换到<code>Dependencies</code>标签，点击右边的加号把所需的jar文件和目录（如某些包含jar文件的lib目录）添加进来。</p>
-<p><img src="modules-dependencies.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/modules-dependencies.png" srcset="/img/loading.gif" lazyload></p>
 <p>最后，我们前往左边的<code>Artifacts</code>，配置最后的制品。</p>
 <p>点击制品列表顶部的加号，选择<code>Web Application: Explored - From Modules...</code>，在列表中选择刚才配置的module，会发现IDE自动帮你配置好了生成目录的内容：Web模块的网站根目录、模块的编译输出（class文件）、所需的jar依赖等。</p>
-<p><img src="artifacts.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/artifacts.png" srcset="/img/loading.gif" lazyload></p>
 <p>到此为止，我们已经配置好用于部署的项目输出了。</p>
 <h2 id="配置Tomcat自动部署"><a href="#配置Tomcat自动部署" class="headerlink" title="配置Tomcat自动部署"></a>配置Tomcat自动部署</h2><p>接下来我们配置Tomcat。我们需要保证IDEA安装了Tomcat and TomEE Integration插件并启用，前往<code>File - Settings</code>并在左侧选择Plugins，在右侧找到该插件并打勾确保被启用。如果没有找到，可以点击下面的<code>Install jetbrains plugins...</code>安装。</p>
 <p>插件启用之后，我们打开菜单<code>Run - Edit Configurations...</code>，然后点击左上角的加号：<code>Tomcat Server - Local</code>，在右侧可以进行配置。下图是我事后截取的，在你的IDE中，大部分配置可能还未完成。</p>
-<p><img src="run-tomcat-server-before-conf.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/run-tomcat-server-before-conf.png" srcset="/img/loading.gif" lazyload></p>
 <p>首先点击<code>Application server</code>选项右侧的<code>Configure...</code>按钮添加Tomcat服务器，在对话框中，同样点击左上角的加号，在又一个新的对话框中的Tomcat Home中选择Tomcat的根目录<code>apache-tomcat-7.0.73</code>，这个目录的内容应该如下所示：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs markdown">tomcat-7.0.73<br><span class="hljs-bullet">+</span> bin<br><span class="hljs-bullet">+</span> conf<br><span class="hljs-bullet">+</span> lib<br><span class="hljs-bullet">+</span> logs<br><span class="hljs-bullet">+</span> temp<br><span class="hljs-bullet">+</span> webapps<br><span class="hljs-bullet">+</span> work<br></code></pre></td></tr></table></figure>
 
 <p>选择之后，IDE会自动检测出Tomcat的版本和基目录，点击确定。</p>
-<p><img src="tomcat-home.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/tomcat-home.png" srcset="/img/loading.gif" lazyload></p>
 <p>回到刚刚的<code>Application Servers</code>对话框，此时Tomcat的服务器的路径已经配置好，直接点击确定即可。</p>
 <p>最终回到运行配置对话框，在<code>Application server</code>选项可以选择刚刚配置的Tomcat了。接下来需要做以下配置：</p>
 <ul>
@@ -338,10 +338,10 @@
 <li>JRE中选择之前配置的JDK版本</li>
 </ul>
 <p>此时，你的<code>Run/Debug Configurations</code>对话框的内容就会和我前面提供的截图相似了。最后，我们切换到<code>Deployment</code>标签，点击中间的加号，选择<code>Artifacts</code>，你之前配置的artifact会被自动添加，在右边设置上下文为<code>/</code>，这样我们就可以在<code>localhost:8080</code>中访问你的制品了。</p>
-<p><img src="run-deployment.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/run-deployment.png" srcset="/img/loading.gif" lazyload></p>
 <p>到此为止，我们已经可以让服务器启动了，我们点击确定保存。</p>
 <h2 id="运行服务器"><a href="#运行服务器" class="headerlink" title="运行服务器"></a>运行服务器</h2><p>到此为止，我们已经配置完成了，点击工具栏中运行按钮（绿色播放按钮）左边的列表选择刚刚的运行配置，然后点击右边的运行，<code>Run</code>面板会打开，等待若干分钟，随着日志不停输出，你的artifact的部署状态最终变成绿色的OK，然后就会自动打开浏览器进入主页了。</p>
-<p><img src="run.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/run.png" srcset="/img/loading.gif" lazyload></p>
 <p>当你修改了代码之后，点击<code>Run</code>面板左侧的蓝色旋转箭头，在弹出的对话框中选择<code>Restart Server</code>即可重新编译并部署。当然，你也可以只选择<code>Redeploy</code>重新部署而不重启Tomcat，此时IDE将尝试热替换classes，如果这个选项并未令你的修改生效，就使用<code>Restart Server</code>吧！</p>
 
                 

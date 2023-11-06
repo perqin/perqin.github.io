@@ -16,16 +16,16 @@
   <meta name="author" content="Perqin">
   <meta name="keywords" content="">
   
-    <meta name="description" content="修改记录   17&#x2F;01&#x2F;08：更正了RxJava的维护者。   这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。 由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么…… 本项目的客户端和服务器端">
+    <meta name="description" content="修改记录  17&#x2F;01&#x2F;08：更正了RxJava的维护者。   这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。 由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么…… 本项目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tumoji开发记录 (1)">
 <meta property="og:url" content="https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/index.html">
 <meta property="og:site_name" content="Perqin&#39;s Blog">
-<meta property="og:description" content="修改记录   17&#x2F;01&#x2F;08：更正了RxJava的维护者。   这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。 由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么…… 本项目的客户端和服务器端">
+<meta property="og:description" content="修改记录  17&#x2F;01&#x2F;08：更正了RxJava的维护者。   这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。 由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么…… 本项目">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://perqin.github.io/img/covers/tumoji-develop-blogpost-1.png">
 <meta property="article:published_time" content="2017-01-07T16:52:12.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.651Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.236Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="android">
 <meta property="article:tag" content="tumoji">
@@ -296,20 +296,20 @@
                 <blockquote>
 <p> 修改记录</p>
 <ul>
-<li> 17/01/08：更正了RxJava的维护者。</li>
+<li>17&#x2F;01&#x2F;08：更正了RxJava的维护者。</li>
 </ul>
 </blockquote>
 <p>这篇博客算是一个多月的Tumoji开发的总结报告（当然也的确被小修改之后作为了大作业的个人总结，毕竟我懒）。截止这篇博客撰写的时候，Tumoji仅仅是填上了课堂展示时挖的坑，虽然的确可以使用了，但是距离能够正式发布还有很多坑没有填上。</p>
 <p>由于开发过程中对遇到的问题没有及时记录，所以本文是想到什么写什么……</p>
 <p>本项目的客户端和服务器端源码托管在GitHub：</p>
 <ul>
-<li> 客户端：<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Android">zhengqi-big-god-take-me-fly/Tumoji-Android: Android client for Tumoji.</a></li>
-<li> 服务器：<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Server">zhengqi-big-god-take-me-fly/Tumoji-Server: Server side for Tumoji.</a></li>
+<li>客户端：<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Android">zhengqi-big-god-take-me-fly&#x2F;Tumoji-Android: Android client for Tumoji.</a></li>
+<li>服务器：<a target="_blank" rel="noopener" href="https://github.com/zhengqi-big-god-take-me-fly/Tumoji-Server">zhengqi-big-god-take-me-fly&#x2F;Tumoji-Server: Server side for Tumoji.</a></li>
 </ul>
 <h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>Tumoji是我这学期的Android开发课程的大作业，由我们这个开发组4个人，经过接近两个月的时间，共同完成。最开始的时候，我们本来想设计一个匿名聊天的应用，不过后来我对隐私性有所顾虑所以放弃了。后来突然想起来之前曾经用过一个叫<em>斗图神器</em>的app，因此萌生了这个想法。当然，发现<em>斗图神器</em>的时间已不可考，所以整个开发过程都是围绕我自己所确定的需求，应该不会有抄袭这回事吧，哈哈。</p>
 <p>总之呢，Tumoji的定位是一款表情包共享应用，大家可以从上面下载表情包，也可以上传自己的表情包。</p>
 <h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>说起来我也算是Android的老油条了，最开始接触Android开发应该是在高考毕业的暑假，不过当时对Android的开发毫无了解，所以是下载了几个G的视频，然后没日没夜地看，艰难地敲出了Hello World。我想大部分编程初学者都有过这种感觉，照着教程写出了Hello World，虽然成功运行，但是整个代码里只有<code>Hello World</code>是你知道用来干嘛的，其他部分就不知道目的了。再后来，由于没什么定力，一直没有继续认真学，导致直到现在，Android的开发水平还是渣渣……</p>
-<p>卖完情怀，开始说MVP。很久以前无意之间了解到了MVP，但是由于自己水平有限，一直看不懂网上的MVP教程。直到这学期，无意间看到一篇博客，突然看懂了一些，然后又去看了一下Google的MVP示范（<a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/">googlesamples/android-architecture at todo-mvp</a>），然后直接在某一周的Android开发每周作业上用上了MVP。很庆幸在每周的作业中有几次MVP的尝试，终于慢慢了解了MVP的基本框架，再经过创新赛的时候的运用，终于熟悉起来了，于是在这次项目的开发中，我作为组长，一开始就确立了MVP的开发模式，到现在看来，这个模式在多人开发中绝对大有裨益。</p>
+<p>卖完情怀，开始说MVP。很久以前无意之间了解到了MVP，但是由于自己水平有限，一直看不懂网上的MVP教程。直到这学期，无意间看到一篇博客，突然看懂了一些，然后又去看了一下Google的MVP示范（<a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/">googlesamples&#x2F;android-architecture at todo-mvp</a>），然后直接在某一周的Android开发每周作业上用上了MVP。很庆幸在每周的作业中有几次MVP的尝试，终于慢慢了解了MVP的基本框架，再经过创新赛的时候的运用，终于熟悉起来了，于是在这次项目的开发中，我作为组长，一开始就确立了MVP的开发模式，到现在看来，这个模式在多人开发中绝对大有裨益。</p>
 <p>在MVP之前，我们的代码往往全部堆积在Activity类中。即使打算抽离出逻辑，往往也仅仅是创建一些操作数据的类，但是UI的交互几乎全部都写在Activity中，再加上Activity本身的生命周期，这会导致Activity变成万能对象（God Object），想想在几百行代码里面找bug的感觉吧。在涉及多人写作开发的时候，问题就更加严重了。多人开发我所知道的模式大概是两种：分模块开发和分层开发，前者类似与我负责登录注册、你负责下载上传这样，而后者类似于我负责UI交互，你负责数据库存取这样。显然，在全部代码都堆积在Activity中的时候，是难以通过后面这种方式开发的，因为负责UI、数据、交互逻辑等部分的代码都混杂在一个文件里，多人同时修改的话冲突很严重。而我认为后面的开发方式是更加合理的，因为每个人的习惯、风格不同，如果按照模块开发的话，很容易出现好几个人分别各自造轮子的情况，而相对来说，每一层之间的耦合度都是比较低的，所以可以分别按照各自的习惯开发。</p>
 <p>接下来的内容是我对MVP模式的理解了。在MVP模式中，V代表视图，M是模型，P是呈现者，这就把应用进行了分层。M一般指代的是数据层，包括数据库、文件读写、网络访问等等，他们往往是多个界面共享的（比如主界面和个人资料界面都会需要展示用户的信息）。V一般指的是一个视图单位，也就是指一个能够提供模块化的UI交互的界面，比如一个Activity、一个Fragment甚至一个Dialog。P即Presenter，我一开始的时候并不明白为什么要叫“Presenter”，后来终于明白了：一个View往往对应一个Presenter，而Presenter的作用就是控制View的变化。我们可以类比为PPT演讲，View就是PPT，而演讲者就是Presenter，Model当然就是计算机里的PPT数据啦，这样一来，就很容易理解：Presenter从Model获取数据，然后根据获取到的数据决定如何更改View的内容。我简单地画了一幅画：</p>
 <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">                                User<br>                                |<span class="hljs-string"> ^</span><br><span class="hljs-string">                                v </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>|<span class="hljs-string">     Login View    </span>|<span class="hljs-string">  </span>|<span class="hljs-string">     Posts View    </span>|<span class="hljs-string">  </span>|<span class="hljs-string"> Post Content View </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>       a |<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^</span><br><span class="hljs-string">         v </span>|<span class="hljs-string"> d                  v </span>|<span class="hljs-string">                    v </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>|<span class="hljs-string">       Login       </span>|<span class="hljs-string">  </span>|<span class="hljs-string">       Post        </span>|<span class="hljs-string">  </span>|<span class="hljs-string">    Post Content   </span>|<br>|<span class="hljs-string">     Presenter     </span>|<span class="hljs-string">  </span>|<span class="hljs-string">     Presenter     </span>|<span class="hljs-string">  </span>|<span class="hljs-string">     Presenter     </span>|<br>+-------------------+  +-------------------+  +-------------------+<br>       b |<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^                    </span>|<span class="hljs-string"> ^</span><br><span class="hljs-string">         v </span>|<span class="hljs-string"> c                  v </span>|<span class="hljs-string">                    v </span>|<br>+-----------------------------------------------------------------+<br>|<span class="hljs-string">      SQLite                  File                    API        </span>|<br>|<span class="hljs-string">     Database               Storage                 Service      </span>|<br>+-----------------------------------------------------------------+<br><br>a. Dispatch user&#x27;s input<br>b. Get data from Model layer<br>c. Send data to Presenter layer<br>d. Update view content<br></code></pre></td></tr></table></figure>
@@ -321,60 +321,60 @@
 <ul>
 <li><code>com.tumoji.tumoji</code><ul>
 <li><code>account</code>: 帐号模块，包括个人资料界面、登录注册界面<ul>
-<li> <code>activity</code>: Activity类</li>
-<li> <code>adapter</code>: 各种Adapter</li>
-<li> <code>contract</code>: MVP中定义接口的契约类</li>
-<li> <code>fragment</code>: 各种Fragment</li>
-<li> <code>presenter</code>: 各种Presenter的实现</li>
-<li> <code>view</code>: 各种View的实现</li>
+<li><code>activity</code>: Activity类</li>
+<li><code>adapter</code>: 各种Adapter</li>
+<li><code>contract</code>: MVP中定义接口的契约类</li>
+<li><code>fragment</code>: 各种Fragment</li>
+<li><code>presenter</code>: 各种Presenter的实现</li>
+<li><code>view</code>: 各种View的实现</li>
 </ul>
 </li>
-<li> <code>common</code>: 通用的类、模块</li>
+<li><code>common</code>: 通用的类、模块</li>
 <li><code>data</code>: 数据层的表层实现，供Presenter使用，里面的每个子模块结构和<code>user</code>模块都是类似的<ul>
-<li> <code>auth</code>: 登录、注册、token存取</li>
-<li> <code>meme</code>: 表情</li>
-<li> <code>settings</code>: 设置项存取</li>
-<li> <code>tag</code>: 标签</li>
+<li><code>auth</code>: 登录、注册、token存取</li>
+<li><code>meme</code>: 表情</li>
+<li><code>settings</code>: 设置项存取</li>
+<li><code>tag</code>: 标签</li>
 <li><code>user</code>: 用户<ul>
 <li><code>model</code>: 存储各种数据对象的模型<ul>
-<li> <code>UserModel</code></li>
+<li><code>UserModel</code></li>
 </ul>
 </li>
 <li><code>repository</code>: 用于user数据操作的单例类<ul>
-<li> <code>IUserRepository</code>: 暴露的接口</li>
-<li> <code>MockUserRepository</code>: 用来进行Presenter测试的<code>IUserRepository</code>实现</li>
-<li> <code>UserRepository</code>: 实现user数据操作的<code>IUserRepository</code>实现</li>
+<li><code>IUserRepository</code>: 暴露的接口</li>
+<li><code>MockUserRepository</code>: 用来进行Presenter测试的<code>IUserRepository</code>实现</li>
+<li><code>UserRepository</code>: 实现user数据操作的<code>IUserRepository</code>实现</li>
 </ul>
 </li>
-<li> <code>store</code></li>
+<li><code>store</code></li>
 </ul>
 </li>
 </ul>
 </li>
-<li> <code>memes</code>: 表情模块，如表情列表、表情详细信息等，内部的结构和前面的<code>account</code>是类似的</li>
-<li> <code>network</code>: 网络模块，数据层中网络部分的定义和实现</li>
-<li> <code>storage</code>: 本地存储模块，数据层中SQLite数据库、SharedPreferences等的实现</li>
-<li> <code>utils</code>: 工具类</li>
-<li> <code>TumojiApp.java</code>: Application类</li>
+<li><code>memes</code>: 表情模块，如表情列表、表情详细信息等，内部的结构和前面的<code>account</code>是类似的</li>
+<li><code>network</code>: 网络模块，数据层中网络部分的定义和实现</li>
+<li><code>storage</code>: 本地存储模块，数据层中SQLite数据库、SharedPreferences等的实现</li>
+<li><code>utils</code>: 工具类</li>
+<li><code>TumojiApp.java</code>: Application类</li>
 </ul>
 </li>
 </ul>
 <p>接下来我说说上面的目录结构是如何一步一步搭建起来的。</p>
 <p>首先，对于某个模块里的某个界面，比如account模块的个人资料界面，我们需要分析：</p>
 <ul>
-<li> 我们会提供给用户哪些操作——Presenter的接口</li>
-<li> 每个操作会在UI上产生哪些变化——View的接口</li>
+<li>我们会提供给用户哪些操作——Presenter的接口</li>
+<li>每个操作会在UI上产生哪些变化——View的接口</li>
 </ul>
 <p>有趣的是，用户的操作却是Presenter的接口，而操作的结果却是View的接口。事实上，由于Presenter和View成对出现，每个Presenter会持有自己的View的引用，每个View也持有自己的Presenter的引用。于是，用户的操作会被View获知，然后根据操作调用Presenter的对应方法；而Presenter得到数据之后，则需要根据数据来决定View如何更新，即调用View的哪个方法。</p>
 <p>多说无益，我们以个人资料为例：</p>
 <ul>
 <li>用户的操作<ul>
-<li> 点击性别切换按钮（意图更改自己的性别……）</li>
+<li>点击性别切换按钮（意图更改自己的性别……）</li>
 </ul>
 </li>
 <li>UI的变化<ul>
-<li> 性别一栏切换至另一性别</li>
-<li> 提示切换失败（比如说没有网络连接导致）</li>
+<li>性别一栏切换至另一性别</li>
+<li>提示切换失败（比如说没有网络连接导致）</li>
 </ul>
 </li>
 </ul>
@@ -445,9 +445,9 @@
 <p>在团队开发的工程中，最大的感慨莫过于意识到扎实的基本功对架构设计的重要性。虽然学Android的时间很长，但是一直都只是皮毛，其实我个人认为我现在接触MVP还是有点早，有点霸王硬上弓了，在设计过程中就会发现，很多时候由于Android本身的机制所限，并不能单纯地划分MVP逻辑，而对Android开发的基本功不够扎实就导致框架设计中遇到了很多问题。</p>
 <p>借助Git的分支管理策略和MVP的框架，我们得以非常轻松地进行团队合作。当然，团队合作也并非易事，最大的问题在于进度，四个人都有自己的事情，而且临近期末，所以大家的开发进度不一，如前所述，进度的不一致给各自的测试也带来了一些问题，但是总体来说，我们的团队在合作上还是很顺利的。身为组长我也就不邀功了，就做了三件事：</p>
 <ul>
-<li> 把MVP的框架搭建了起来</li>
-<li> 完成了Presenter的任务</li>
-<li> 在另外几位大佬忙于复习的时候，帮忙填了一些View和Model的坑</li>
+<li>把MVP的框架搭建了起来</li>
+<li>完成了Presenter的任务</li>
+<li>在另外几位大佬忙于复习的时候，帮忙填了一些View和Model的坑</li>
 </ul>
 <p>当然，Android客户端的顺利开发离不开<a target="_blank" rel="noopener" href="https://github.com/Tidyzq">@Tidyzq</a>提供的健壮又接口丰富的服务器，虽然由于使用了Loopback而拒绝提供文档，对API使用者不太友好……不过程序员嘛……都不爱写文档的，哈哈哈。</p>
 <p>当然，也因为时间的确有些赶，项目的进度并不算乐观，目前仅仅完成了最基础的功能，而且有大量bug没有处理，还有不少坑需要填啊！</p>

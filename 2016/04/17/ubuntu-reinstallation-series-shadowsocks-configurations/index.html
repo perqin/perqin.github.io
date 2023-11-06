@@ -23,12 +23,12 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="说实话Ubuntu（版本14.04 LTS）的重装成本比Windows高太多了，一方面是自己不熟悉，另一方面也不如Windows只要exe和msi就能搞定，然而搞崩Ubuntu或者改动分区之后又不得不重装（妈蛋重装系统和重搭博客是我干得最多的事！！），往往有些配置有没有记下来，于是有了写这个系列的想法。作为本系列的第一蛋，自然要先把科学上网的问题解决，因为已经有了VPS，所以只需要搞定客户端的问题">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-privoxy-listen-address.png">
-<meta property="og:image" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/add-privoxy-action-file.png">
-<meta property="og:image" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-proxy-for-firefox.png">
-<meta property="og:image" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-system-proxy.png">
+<meta property="og:image" content="https://perqin.github.io/set-privoxy-listen-address.png">
+<meta property="og:image" content="https://perqin.github.io/add-privoxy-action-file.png">
+<meta property="og:image" content="https://perqin.github.io/set-proxy-for-firefox.png">
+<meta property="og:image" content="https://perqin.github.io/set-system-proxy.png">
 <meta property="article:published_time" content="2016-04-17T17:52:00.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.651Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.236Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="Shadowsocks">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="gfwlist">
 <meta property="article:tag" content="翻墙">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/2016/04/17/ubuntu-reinstallation-series-shadowsocks-configurations/set-privoxy-listen-address.png">
+<meta name="twitter:image" content="https://perqin.github.io/set-privoxy-listen-address.png">
   
   
   
@@ -302,8 +302,8 @@
                 <p>说实话Ubuntu（版本<code>14.04 LTS</code>）的重装成本比Windows高太多了，一方面是自己不熟悉，另一方面也不如Windows只要exe和msi就能搞定，然而搞崩Ubuntu或者改动分区之后又不得不重装（妈蛋重装系统和重搭博客是我干得最多的事！！），往往有些配置有没有记下来，于是有了写这个系列的想法。<br>作为本系列的第一蛋，自然要先把科学上网的问题解决，因为已经有了VPS，所以只需要搞定客户端的问题。</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
 <li><a target="_blank" rel="noopener" href="http://www.ihunter.me/Ubuntu%2014.04%20VPS%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEShadowsocks%E7%9A%84%E6%96%B9%E6%B3%95.html">Ubuntu 14.04 VPS安装配置Shadowsocks的方法</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/snachx/gfwlist2privoxy">snachx/gfwlist2privoxy</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gfwlist/gfwlist">gfwlist/gfwlist</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/snachx/gfwlist2privoxy">snachx&#x2F;gfwlist2privoxy</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gfwlist/gfwlist">gfwlist&#x2F;gfwlist</a></li>
 <li><a target="_blank" rel="noopener" href="http://askubuntu.com/questions/18802/how-to-correctly-add-a-custom-daemon-to-init-d">10.04 - How to correctly add a custom daemon to init.d? - Ask Ubuntu</a></li>
 </ul>
 <h1 id="安装Shadowsocks-python客户端"><a href="#安装Shadowsocks-python客户端" class="headerlink" title="安装Shadowsocks-python客户端"></a>安装Shadowsocks-python客户端</h1><p>事实上编译<code>libev</code>版本的也是可行的，但是实在麻烦，这里图方便就用了python版本的实现。<br>在终端输入以下命令：</p>
@@ -321,10 +321,10 @@
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo pip install gfwlist2privoxy<br>sudo gfwlist2privoxy -i ~<span class="hljs-regexp">/gfwlist.txt -f /</span>etc<span class="hljs-regexp">/privoxy/g</span>fwlist.action -p <span class="hljs-string">&quot;127.0.0.1:1080&quot;</span> -t socks5<br></code></pre></td></tr></table></figure>
 <p>接下来修改Privoxy的配置文件：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo vi <span class="hljs-regexp">/etc/</span>privoxy/config<br></code></pre></td></tr></table></figure>
-<p>首先指定监听地址：<br><img src="set-privoxy-listen-address.png" srcset="/img/loading.gif" lazyload alt="Set Privoxy listen address"><br>然后增加action文件：<br><img src="add-privoxy-action-file.png" srcset="/img/loading.gif" lazyload alt="Add Privoxy action file"><br>最后重启Privoxy服务，只要没有报错就大功告成！</p>
+<p>首先指定监听地址：<br><img src="/set-privoxy-listen-address.png" srcset="/img/loading.gif" lazyload alt="Set Privoxy listen address"><br>然后增加action文件：<br><img src="/add-privoxy-action-file.png" srcset="/img/loading.gif" lazyload alt="Add Privoxy action file"><br>最后重启Privoxy服务，只要没有报错就大功告成！</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo service privoxy restart</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br><img src="set-proxy-for-firefox.png" srcset="/img/loading.gif" lazyload alt="Set proxy for Firefox"><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><img src="set-system-proxy.png" srcset="/img/loading.gif" lazyload alt="Set system proxy"><br>另一种方法是在.bashrc文件末尾加上</p>
+<h1 id="给浏览器配置代理"><a href="#给浏览器配置代理" class="headerlink" title="给浏览器配置代理"></a>给浏览器配置代理</h1><p>火狐浏览器的设置里就可以配置，直接修改即可：<br><img src="/set-proxy-for-firefox.png" srcset="/img/loading.gif" lazyload alt="Set proxy for Firefox"><br>至于Chromium浏览器，是直接使用系统设置的，这里可以直接在Ubuntu的网络设置里修改，进入<code>System Settings</code> - <code>Network</code> - <code>Network proxy</code>，设置完成后点击<code>Apply to system wide</code>即可。<br><img src="/set-system-proxy.png" srcset="/img/loading.gif" lazyload alt="Set system proxy"><br>另一种方法是在.bashrc文件末尾加上</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">http_proxy</span>=http://localhost:8123<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">https_proxy</span>=http://localhost:8123<br></code></pre></td></tr></table></figure>
 <p>之后输入</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">. </span>~/.bashrc<br></code></pre></td></tr></table></figure>

@@ -24,7 +24,7 @@
 <meta property="og:description" content="2017年的今天，全站HTTPS几乎已经成为一个网站的基本要求之一，最新版本的Chrome和Firefox都已经开始对HTTP站点显示“不安全”提示。由于HTTP使用明文传输，不仅会被嗅探报文，甚至会遭遇中间人攻击，不需要很多经验的攻击者就可以截取你的权限信息并肆意更改你的账户。更重要的是，随着HTTPS被大力推广，越来越多免费证书可供选择，HTTPS带来的性能负担也逐渐被削弱以及从考虑重心中排除">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-02-15T19:14:17.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.615Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.196Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="https">
 <meta property="article:tag" content="debian">
@@ -309,17 +309,17 @@
 </blockquote>
 <p>因此，我们需要修改myapp.perqin.com的Nginx配置，使得：</p>
 <ul>
-<li> 对于<code>http://myapp.perqin.com/.well-knwon/*</code>的请求，一律放行到静态目录，如<code>/usr/share/nginx/html</code></li>
-<li> 对于其他的HTTP请求，一律返回302跳转，跳转到对应的HTTPS网址</li>
-<li> 对于HTTPS请求，转发到Node.js应用</li>
+<li>对于<code>http://myapp.perqin.com/.well-knwon/*</code>的请求，一律放行到静态目录，如<code>/usr/share/nginx/html</code></li>
+<li>对于其他的HTTP请求，一律返回302跳转，跳转到对应的HTTPS网址</li>
+<li>对于HTTPS请求，转发到Node.js应用</li>
 </ul>
 <p>于是，我们得到一下配置：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># HTTP - only for obtaining cert</span><br><span class="hljs-section">server</span> &#123;<br>	<span class="hljs-attribute">listen</span>		<span class="hljs-number">80</span>;<br>	<span class="hljs-attribute">server_name</span>	myapp.perqin.com;<br><br>	<span class="hljs-section">location</span> /.well-known &#123;<br>		<span class="hljs-attribute">root</span>	/usr/share/nginx/html;<br>		<span class="hljs-attribute">allow</span>	all;<br>	&#125;<br><br>	<span class="hljs-section">location</span> / &#123;<br>		<span class="hljs-attribute">return</span>	<span class="hljs-number">301</span> https://<span class="hljs-variable">$host</span><span class="hljs-variable">$request_uri</span>;<br>	&#125;<br>&#125;<br><br><span class="hljs-comment"># HTTPS - serve nodejs app</span><br><span class="hljs-section">server</span> &#123;<br>	<span class="hljs-attribute">listen</span>		<span class="hljs-number">443</span> ssl;<br>	<span class="hljs-attribute">server_name</span>	myapp.perqin.com;<br><br>	<span class="hljs-comment">#ssl_certificate		/etc/letsencrypt/live/myapp.perqin.com/fullchain.pem;</span><br>	<span class="hljs-comment">#ssl_certificate_key	/etc/letsencrypt/live/myapp.perqin.com/privkey.pem;</span><br><br>	<span class="hljs-section">location</span> / &#123;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>		<span class="hljs-attribute">proxy_set_header</span>	X-NginX-Proxy <span class="hljs-literal">true</span>;<br>		<span class="hljs-attribute">proxy_pass</span>		http://localhost:3000/;<br>		<span class="hljs-attribute">proxy_ssl_session_reuse</span>	<span class="hljs-literal">off</span>;<br>		<span class="hljs-attribute">proxy_set_header</span>	Host <span class="hljs-variable">$http_host</span>;<br>		<span class="hljs-attribute">proxy_cache_bypass</span>	<span class="hljs-variable">$http_upgrade</span>;<br>		<span class="hljs-attribute">proxy_redirect</span>		<span class="hljs-literal">off</span>;<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
 <p>注意：</p>
 <ul>
-<li> 修改相关域名、端口号为你的域名、Node.js监听端口号</li>
-<li> L21-L22需要暂时注释掉，因为此时你的证书还没有生成，不注释将无法使用</li>
+<li>修改相关域名、端口号为你的域名、Node.js监听端口号</li>
+<li>L21-L22需要暂时注释掉，因为此时你的证书还没有生成，不注释将无法使用</li>
 </ul>
 <p>接下来重启Nginx：</p>
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-variable">$ </span>sudo systemctl restart nginx.service<br></code></pre></td></tr></table></figure>

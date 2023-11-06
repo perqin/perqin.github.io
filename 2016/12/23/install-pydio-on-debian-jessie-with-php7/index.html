@@ -16,16 +16,16 @@
   <meta name="author" content="Perqin">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Edit history 2017&#x2F;01&#x2F;12  更正一些错误 完善教程 增加MySQL的配置   之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。 安装Nginx为了防止遇到不支持的参数，我决定直接从官方源安装。参照官方文档，添加key： 12$">
+    <meta name="description" content="Edit history 2017&#x2F;01&#x2F;12  更正一些错误 完善教程 增加MySQL的配置   之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。 安装Nginx为了防止遇到不支持的参数，我决定直接从官方源安装。参照官方文档，添">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian Jessie基于PHP7安装Pydio">
 <meta property="og:url" content="https://perqin.github.io/2016/12/23/install-pydio-on-debian-jessie-with-php7/index.html">
 <meta property="og:site_name" content="Perqin&#39;s Blog">
-<meta property="og:description" content="Edit history 2017&#x2F;01&#x2F;12  更正一些错误 完善教程 增加MySQL的配置   之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。 安装Nginx为了防止遇到不支持的参数，我决定直接从官方源安装。参照官方文档，添加key： 12$">
+<meta property="og:description" content="Edit history 2017&#x2F;01&#x2F;12  更正一些错误 完善教程 增加MySQL的配置   之前我在树莓派上安装的是ownCloud，然而由于在校园网，外网无法访问，而ownCloud的安装实在有些麻烦，于是我在DigitalOcean新开了一个droplet，打算在上面安装Pydio。 安装Nginx为了防止遇到不支持的参数，我决定直接从官方源安装。参照官方文档，添">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://perqin.github.io/img/covers/install-pydio-on-debian-jessie-with-php7.png">
 <meta property="article:published_time" content="2016-12-23T17:18:09.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.647Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.232Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="Pydio">
 <meta property="article:tag" content="PHP">
@@ -250,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          58 分钟
+          59 分钟
         
       </span>
     
@@ -295,7 +295,7 @@
                 
                 <blockquote>
 <p><strong>Edit history</strong></p>
-<p><em>2017/01/12</em></p>
+<p><em>2017&#x2F;01&#x2F;12</em></p>
 <ul>
 <li>更正一些错误</li>
 <li>完善教程</li>
@@ -332,7 +332,7 @@
 <p>最后别忘了重启php-fpm：</p>
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">$ sudo<span class="hljs-keyword"> system</span>ctl restart php7.0-fpm.service<br></code></pre></td></tr></table></figure>
 
-<h2 id="下载Pydio"><a href="#下载Pydio" class="headerlink" title="下载Pydio"></a>下载Pydio</h2><p>这一部分就比较简单了，直接从官方的下载链接wget下来并解压到/<code>var/www</code>即可。另外，官方源的Nginx默认的html目录并不在<code>/var/www</code>，需要手动创建目录。</p>
+<h2 id="下载Pydio"><a href="#下载Pydio" class="headerlink" title="下载Pydio"></a>下载Pydio</h2><p>这一部分就比较简单了，直接从官方的下载链接wget下来并解压到&#x2F;<code>var/www</code>即可。另外，官方源的Nginx默认的html目录并不在<code>/var/www</code>，需要手动创建目录。</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ sudo mkdir <span class="hljs-regexp">/var/</span>www<br>$ wget https:<span class="hljs-regexp">//</span>download.pydio.com<span class="hljs-regexp">/pub/</span>core<span class="hljs-regexp">/archives/</span>pydio-core-<span class="hljs-number">7.0</span>.<span class="hljs-number">3</span>.tar.gz<br>$ tar -xzf pydio-core-<span class="hljs-number">7.0</span>.<span class="hljs-number">3</span>.tar.gz<br>$ sudo mv pydio-core-<span class="hljs-number">7.0</span>.<span class="hljs-number">3</span> <span class="hljs-regexp">/var/</span>www/pydio<br>$ sudo chown -R www-data:www-data <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/pydio/</span>data<br>$ sudo chown www-data:www-data <span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/pydio/</span>.htaccess<br></code></pre></td></tr></table></figure>
 
 <p>注意我们的fpm和Nginx的worker都是以www-data用户运行的（Nginx的worker默认不是www-data运行，但我后面会更改），因此需要保证Pydio的data目录是www-data可读写的。*<code>.htaccess</code>文件后面也需要可写，所以这里一并修改了。*</p>
@@ -361,9 +361,9 @@
 <p>（其实安装完之后还是403,，因为index的原因，我重新修改了Nginx的配置，已经一并写到前面提供的了- -）</p>
 <h2 id="解决错误"><a href="#解决错误" class="headerlink" title="解决错误"></a>解决错误</h2><p>现在输入域名，你会看到Pydio Disgnostic Tool列举出的所有有问题的地方。我遇到的问题是3个：</p>
 <ul>
-<li> Security Breach，主要是data目录权限配置错误</li>
-<li> SSL Encryption，由于没有启用HTTPS所以是WARNING</li>
-<li> PHP Output Buffer disabled，需要将这个设置为禁用以提高性能</li>
+<li>Security Breach，主要是data目录权限配置错误</li>
+<li>SSL Encryption，由于没有启用HTTPS所以是WARNING</li>
+<li>PHP Output Buffer disabled，需要将这个设置为禁用以提高性能</li>
 </ul>
 <p>这里我遇到了悲剧……之前修改的<code>/etc/php/7.0/cli/php.ini</code>是全局的，但是fpm本身还需要一份php.ini的配置，位于<code>/etc/php/7.0/fpm/php.ini</code>，<strong>我们先参照之前的内容修改fix_pathinfo</strong>，然后找到并修改如下内容：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">; <span class="hljs-doctag">Note:</span> Output buffering can also be controlled via Output Buffering Control</span><br><span class="hljs-comment">;   functions.</span><br><span class="hljs-comment">; Possible Values:</span><br><span class="hljs-comment">;   On = Enabled and buffer is unlimited. (Use with caution)</span><br><span class="hljs-comment">;   Off = Disabled</span><br><span class="hljs-comment">;   Integer = Enables the buffer and sets its maximum size in bytes.</span><br><span class="hljs-comment">; <span class="hljs-doctag">Note:</span> This directive is hardcoded to Off for the CLI SAPI</span><br><span class="hljs-comment">; Default Value: Off</span><br><span class="hljs-comment">; Development Value: 4096</span><br><span class="hljs-comment">; Production Value: 4096</span><br><span class="hljs-comment">; http://php.net/output-buffering</span><br><span class="hljs-attr">output_buffering</span> = <span class="hljs-literal">Off</span><br></code></pre></td></tr></table></figure>

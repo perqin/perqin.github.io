@@ -24,7 +24,7 @@
 <meta property="og:description" content="众所周知（？），在国内想要访问某些网站是很慢的，然而也许是误伤的缘故，很多不在此列表的网站访问速度也很慢，shadowsocks的配置方法我已经在重装Ubuntu系列：Shadowsocks配置里面提到过，这里再对Ubuntu做一些简单的配置，充分利用已有的资源。 使用npm镜像之前从学校回家之后，网络莫名抽风，npm install死活卡着不动，万般无奈之下去谷歌了一下npm的镜像，发现过内有两">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2016-08-08T17:03:50.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.651Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.236Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="Shadowsocks">
@@ -300,7 +300,8 @@
 <h1 id="使用国内云服务器和HA-Proxy做Shadowsocks中继"><a href="#使用国内云服务器和HA-Proxy做Shadowsocks中继" class="headerlink" title="使用国内云服务器和HA-Proxy做Shadowsocks中继"></a>使用国内云服务器和HA-Proxy做Shadowsocks中继</h1><p>校园网的环境真是尿崩啊……ping我US的Shadowsocks服务器居然丢包达到了25%，谷歌一番之后，发现了神器HA-Proxy，它可以作为TCP和HTTP的中继，于是我尝试在我的国内云服务器ping我的Shadowsocks服务器，发现延迟在200ms左右，不丢包。从我本地ping国内云服务器，延迟10ms以内，不丢包。可以，很强势！于是，方案浮出水面：在国内云服务器上安装HA-Proxy，将A端口转发到Shadowsocks服务器的B端口，然后将本地的Shadowsocks服务器IP改为国内云服务器IP，端口改为A。</p>
 <ul>
 <li><p>在国内云服务器安装HA-Proxy</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install haproxy<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-built_in">get</span> install haproxy<br></code></pre></td></tr></table></figure>
+</li>
 <li><p>修改国内云服务器上的<code>/etc/haproxy/haproxy.cfg</code>，将<code>defaults</code>内的<code>mode</code>改为<code>tcp</code>，并在后面添加前后端配置</p>
 <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">frontend <span class="hljs-built_in">ss</span>-<span class="hljs-keyword">in</span><br>	bind *:A<br>	default_backend <span class="hljs-built_in">ss</span>-<span class="hljs-keyword">out</span><br><br>backend <span class="hljs-built_in">ss</span>-<span class="hljs-keyword">out</span><br>	server server1 <span class="hljs-number">1.2</span><span class="hljs-number">.3</span><span class="hljs-number">.4</span>:B maxconn <span class="hljs-number">20480</span><br></code></pre></td></tr></table></figure>
 

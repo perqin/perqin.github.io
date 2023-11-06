@@ -16,15 +16,15 @@
   <meta name="author" content="Perqin">
   <meta name="keywords" content="">
   
-    <meta name="description" content="谷歌爸爸在今年的I&#x2F;O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。 我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到ClipboardManager，而在停止的时候则会移除该监听器。奇怪的事情是，添加是可以的，">
+    <meta name="description" content="谷歌爸爸在今年的I&#x2F;O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。 我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到ClipboardManager，而在停止的时候则会移除该监听器。奇怪的事情是，添加">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin将只读lambda表达式作为监听器使用的坑">
 <meta property="og:url" content="https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/index.html">
 <meta property="og:site_name" content="Perqin&#39;s Blog">
-<meta property="og:description" content="谷歌爸爸在今年的I&#x2F;O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。 我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到ClipboardManager，而在停止的时候则会移除该监听器。奇怪的事情是，添加是可以的，">
+<meta property="og:description" content="谷歌爸爸在今年的I&#x2F;O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。 我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到ClipboardManager，而在停止的时候则会移除该监听器。奇怪的事情是，添加">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-06-27T08:04:03.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.647Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.232Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="android">
 <meta property="article:tag" content="kotlin">
@@ -290,7 +290,7 @@
             
               <div class="markdown-body">
                 
-                <p>谷歌爸爸在今年的I/O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。</p>
+                <p>谷歌爸爸在今年的I&#x2F;O大会上公布Kotlin成为官方支持的Android开发语言，于是我也学习了一个，并试着用Kotlin写了一个监听剪切板的应用。谁知上架商店之后没几天就发现出现了玄学的bug。</p>
 <p>我的应用有一个开关，可以开启或关闭一个Service，这个Service在开启的时候会把剪切板的监听器添加到<code>ClipboardManager</code>，而在停止的时候则会移除该监听器。奇怪的事情是，添加是可以的，移除却失败了。</p>
 <p>百思不得其解之下，我开始查看<code>ClipboardManager</code>的源码，其中添加和移除监听器的源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addPrimaryClipChangedListener</span><span class="hljs-params">(OnPrimaryClipChangedListener what)</span> &#123;<br>    <span class="hljs-keyword">synchronized</span> (mPrimaryClipChangedListeners) &#123;<br>        <span class="hljs-keyword">if</span> (mPrimaryClipChangedListeners.size() == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                getService().addPrimaryClipChangedListener(<br>                        mPrimaryClipChangedServiceListener, mContext.getOpPackageName());<br>            &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;<br>                <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>            &#125;<br>        &#125;<br>        mPrimaryClipChangedListeners.add(what);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">removePrimaryClipChangedListener</span><span class="hljs-params">(OnPrimaryClipChangedListener what)</span> &#123;<br>    <span class="hljs-keyword">synchronized</span> (mPrimaryClipChangedListeners) &#123;<br>        mPrimaryClipChangedListeners.remove(what);<br>        <span class="hljs-keyword">if</span> (mPrimaryClipChangedListeners.size() == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                getService().removePrimaryClipChangedListener(<br>                        mPrimaryClipChangedServiceListener);<br>            &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;<br>                <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>

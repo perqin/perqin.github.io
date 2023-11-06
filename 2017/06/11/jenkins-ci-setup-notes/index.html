@@ -24,7 +24,7 @@
 <meta property="og:description" content="最近需要搭建持续集成环境，因此有了这篇笔记，记录遇到的一些坑。 Why CI持续集成环境的好处非常多，以至于现在我几乎会给每个后台项目准备一个CI环境。 搭建好持续集成环境之后，我们的代码一旦push到master分支，CI服务器就会自动拉取最新代码，然后根据实现编写的流水线脚本完成构建、测试、部署，然后测试服务器就会立刻上线最新版本的代码。 这意味着开发过程中的部署是几乎完全自动化的，只要配置好">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-06-11T09:20:39.000Z">
-<meta property="article:modified_time" content="2022-08-24T07:30:03.647Z">
+<meta property="article:modified_time" content="2023-11-06T03:41:59.232Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="jenkins">
 <meta property="article:tag" content="continuous-integration">
@@ -316,16 +316,16 @@
 <h3 id="正确启用Jenkins的GitHub-Webhook"><a href="#正确启用Jenkins的GitHub-Webhook" class="headerlink" title="正确启用Jenkins的GitHub Webhook"></a>正确启用Jenkins的GitHub Webhook</h3><p>GitHub Webhook的意义在于将你的Jenkins的预设URL提供给GitHub，一旦你的某个仓库有人push代码，GitHub服务器就会把这次push的详细信息通过一个HTTP请求发送到你的这个URL上，Jenkins会收到并进行解析。如果这个仓库就是你的某个流水线项目（Jenkins的一种CI类型），则Jenkins会自动拉取新的代码并进入后续的CI操作。</p>
 <p>但是，这里面需要注意两点：</p>
 <ul>
-<li> 配置项目的时候，在<em>Build Triggers</em>配置里不仅要勾上<em>GitHub hook trigger for GITScm polling</em>，还要勾上<em>Poll SCM</em>，也就是说仍然要启用轮询，只是不需要设置轮询间隔。</li>
-<li> 首次配置的流水线项目需要手动构建一次，即项目左边的<em>Build Now</em>，这样才能触发后续的Webhook。</li>
+<li>配置项目的时候，在<em>Build Triggers</em>配置里不仅要勾上<em>GitHub hook trigger for GITScm polling</em>，还要勾上<em>Poll SCM</em>，也就是说仍然要启用轮询，只是不需要设置轮询间隔。</li>
+<li>首次配置的流水线项目需要手动构建一次，即项目左边的<em>Build Now</em>，这样才能触发后续的Webhook。</li>
 </ul>
 <h3 id="项目名字不要乱来"><a href="#项目名字不要乱来" class="headerlink" title="项目名字不要乱来"></a>项目名字不要乱来</h3><p>Jenkins默认会在<code>/var/lib/jenkins/workspaces/&lt;your_project_name&gt;</code>目录中拉取你的项目代码，所以一定要注意项目的命名，如果你的命名包含空格，那么可能导致一些会获取PWD的构建流程接受到错误的参数。</p>
 <h3 id="www-data为你带来无尽烦恼"><a href="#www-data为你带来无尽烦恼" class="headerlink" title="www-data为你带来无尽烦恼"></a><code>www-data</code>为你带来无尽烦恼</h3><p>这个用户前面说到了，HOME目录在<code>/var/www</code>，而按照前面的配置，这个目录默认是不会给<code>www-data</code>写入权限的，于是，在部署的时候就会遇到很多问题，比如pip安装的时候会无法启用cache，因为<code>/var/www/.pip</code>目录不可写入；进程管理工具PM2更是无法正常工作，因为<code>/var/www/.pm2</code>无法写入。目前除了手动创建这些目录并赋予用户组写入权限以外，还没有更加优雅的解决方案。</p>
 <h3 id="CI无法解决部署失败的问题"><a href="#CI无法解决部署失败的问题" class="headerlink" title="CI无法解决部署失败的问题"></a>CI无法解决部署失败的问题</h3><p>CI最大的问题在于，CI的成功不能表示部署成功。这是因为，每一次CI都不能阻塞，而服务器天生就需要作为守护进程运行，这就意味着CI中的部署流程只能通过PM2这样的进程管理器完成。但是，进程管理器执行后，服务器是否正常部署、运行，却无法反馈给CI，因此会出现CI完全正常，但服务器不可访问的问题。</p>
 <p>目前，我没有找到很完美的解决方案，只有两个可选的方案：</p>
 <ul>
-<li> 在CI的Test流程中加入对运行时环境的检查，尽可能多地将部署的失败在CI中就体现出来</li>
-<li> 对PM2等进程管理工具下文章，比如部署出错就发送邮件等，但是目前来看这些进程管理工具似乎都暂不支持直接配置部署失败的邮件通知。</li>
+<li>在CI的Test流程中加入对运行时环境的检查，尽可能多地将部署的失败在CI中就体现出来</li>
+<li>对PM2等进程管理工具下文章，比如部署出错就发送邮件等，但是目前来看这些进程管理工具似乎都暂不支持直接配置部署失败的邮件通知。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>CI是一种一次配置，永远可用的服务，如果可能的话，任何项目都应该尽早部署，这会给项目的后续开发、部署和维护带来巨大收益，节省大量时间。现在，我已经养成了后台应用部署必用Jenkins的习惯，就像HTTPS一样，既然花不了多少时间，有什么理由不顺便做了呢？</p>
 
