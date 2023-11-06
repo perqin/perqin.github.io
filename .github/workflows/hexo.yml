@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to deploy blog.
     env:
-      node_version: '14.x'
+      node_version: '16.x'
     steps:
     # Checks out a copy of your repository on the ubuntu-latest machine
     - name: Checkout code
