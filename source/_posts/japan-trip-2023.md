@@ -199,7 +199,7 @@ typora-root-url: ./japan-trip-2023/
 
 两点不到，千恋万花的巡礼就结束了，于是我们临时打算去看看玉子市场里的商店街。玉子市场商店街的原型是出町桝形商店街。在去商店街的路上会经过鸭川，这里的乌龟石头正是饼哥向玉子表白的地方：
 
-![image-20231221204315713](C:\Users\Perqin\AppData\Roaming\Typora\typora-user-images\image-20231221204315713.png)
+![](image-20231221204315713.png)
 
 ![](20230929_142707.JPG)
 
@@ -453,17 +453,17 @@ typora-root-url: ./japan-trip-2023/
 
 除了书，这里还有一些汽车模型店，就是价格感人。
 
-![](C:\Users\Perqin\Downloads\jp-blog\day8\20231003_124420.JPG)
+![](20231003_124420.JPG)
 
 下午和潜水艇来到了御茶之水，乐器人的天堂！
 
-![](C:\Users\Perqin\Downloads\jp-blog\day8\20231003_134801.JPG)
+![](20231003_134801.JPG)
 
-![](C:\Users\Perqin\Downloads\jp-blog\day8\20231003_135207.JPG)
+![](20231003_135207.JPG)
 
 在其中一家店里看到了番茄炒蛋！虽然是中古，但是这个标价非常眼熟呢（
 
-![](C:\Users\Perqin\Downloads\jp-blog\day8\20231003_135544.JPG)
+![](20231003_135544.JPG)
 
 其中一家店有贝斯专门馆，进来后可以看到好几面墙的贝斯！口水要流下来了。
 
