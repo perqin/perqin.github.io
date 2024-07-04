@@ -40,6 +40,10 @@ jobs:
     - name: Install Dependencies
       run: pnpm install
 
+    - name: Debug
+      run: |
+        id
+        pnpm store path
     # Deploy hexo blog website.
     - name: Deploy
       id: deploy
