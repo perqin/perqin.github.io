@@ -65,6 +65,11 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
+# hexo-renderer-marked
+marked:
+  # Ensure the assets in post asset directory have correct path
+  postAsset: true
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
