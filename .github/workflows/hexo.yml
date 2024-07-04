@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ env.node_version }}
     - name: Install pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v4
       id: pnpm-install
     # Caching dependencies to speed up workflows.
     - name: Get pnpm store directory
