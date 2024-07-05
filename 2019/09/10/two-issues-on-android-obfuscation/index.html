@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="代码混淆是Android开发的必经之路，尤其是SDK开发，启用混淆一定程度上加大了制品被逆向工程的难度，同时也能减小制品体积。 然而代码混淆之路并非一帆风顺，而且往往在运行到目标代码之前，无法确定混淆是否出了问题。本文记载两则代码混淆中遇到的问题和处理方案。 本文提及的代码可以在https:&#x2F;&#x2F;github.com&#x2F;perqin&#x2F;ProGuardBugTest找到。 ProGuard处理可选依赖错">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/fields-with-the-same-name.png">
+<meta property="og:image" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/fields-with-the-same-name.png">
 <meta property="article:published_time" content="2019-09-10T13:33:28.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.664Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:55.308Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="ProGuard">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/fields-with-the-same-name.png">
+<meta name="twitter:image" content="https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/fields-with-the-same-name.png">
   
   
   
@@ -355,7 +355,7 @@
 
 <p>可以看到，对<code>fields</code>和<code>localFields</code>进行比较的时候，当两个成员变量中至少有一个是基本类型，并且他们的变量名相同但类型不同的时候，就会抛出异常。</p>
 <p>此时，我们再次拔出大宝剑，会看到<code>SerializableMeta</code>的两个成员变量名字是相同的：</p>
-<p><img src="/fields-with-the-same-name.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2019/09/10/two-issues-on-android-obfuscation/fields-with-the-same-name.png" srcset="/img/loading.gif" lazyload></p>
 <p>查阅这个类在Android 6.0的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/6.0.1_r10&#x2F;xref&#x2F;libcore&#x2F;luni&#x2F;src&#x2F;main&#x2F;java&#x2F;java&#x2F;io&#x2F;ObjectStreamClass.java</a>）后发现，这个类在旧版本中甚至没有<code>matchFields</code>方法，应该是进行了较大的重构或更新；而查阅Android 7.1的代码（<a target="_blank" rel="noopener" href="http://androidxref.com/7.1.1_r6/xref/libcore/ojluni/src/main/java/java/io/ObjectStreamClass.java">http://androidxref.com/7.1.1_r6&#x2F;xref&#x2F;libcore&#x2F;ojluni&#x2F;src&#x2F;main&#x2F;java&#x2F;java&#x2F;io&#x2F;ObjectStreamClass.java</a>），会发现谷歌爸爸很快就修复了这个问题：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// ...</span><br><span class="hljs-comment">// Android-changed: We can have fields with a same name and a different type.</span><br><span class="hljs-keyword">if</span> (f.getName().equals(lf.getName()) &amp;&amp;<br>  f.getSignature().equals(lf.getSignature())) &#123;<br>  <span class="hljs-keyword">if</span> (lf.getField() != <span class="hljs-literal">null</span>) &#123;<br><span class="hljs-comment">// ...</span><br></code></pre></td></tr></table></figure>
 

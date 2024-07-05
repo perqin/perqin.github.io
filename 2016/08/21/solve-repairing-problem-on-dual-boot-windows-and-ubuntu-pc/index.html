@@ -23,15 +23,15 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="废话几句post模板在8&#x2F;21创建，现在终于（逼自己）回来填坑了Orz 之前买了个蓝牙鼠标，但是我装了Windows 10+Ubuntu 16.04的双系统，每一次切换系统都需要重新配对，麻烦至极，于是谷歌了一番，找到了一点解决方案。 首先给出我的不负责任猜想：蓝牙鼠标有一个MAC地址MB，计算机有一个MAC地址MP（蓝牙适配器的），每一次配对的时候，鼠标或者计算机随机（也许也是其他算法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/regedit.png">
+<meta property="og:image" content="https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/regedit.png">
 <meta property="article:published_time" content="2016-08-21T15:43:05.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.664Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:55.308Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="Bluetooth">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/regedit.png">
+<meta name="twitter:image" content="https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/regedit.png">
   
   
   
@@ -304,7 +304,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">PsExec.exe -s -i regedit<br></code></pre></td></tr></table></figure>
 
 <p>此时会打开一个注册表窗口，导航到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys</code>，然后你就会看到你的PC的蓝牙适配器MAC：</p>
-<p><img src="/regedit.png" srcset="/img/loading.gif" lazyload alt="regedit"></p>
+<p><img src="/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/regedit.png" srcset="/img/loading.gif" lazyload alt="regedit"></p>
 <p>如上图，<code>00********bc</code>就是我的蓝牙适配器MAC，而我的蓝牙鼠标的MAC则是<code>c03*******60</code>，后面的就是密钥！复制出来备用。</p>
 <h2 id="修改Ubuntu中的密钥"><a href="#修改Ubuntu中的密钥" class="headerlink" title="修改Ubuntu中的密钥"></a>修改Ubuntu中的密钥</h2><p>接下来，我们回到Ubuntu，通过以下命令更改密钥：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">进入root用户模式</span><br>sudo su<br>cd /var/lib/bluetooth<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进入对应的PC蓝牙适配器MAC目录</span><br>cd 00:**:**:**:**:BC<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进入对应的蓝牙鼠标MAC目录</span><br>cd C0:3*:**:**:**:60<br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改info文件</span><br>vi info<br></code></pre></td></tr></table></figure>

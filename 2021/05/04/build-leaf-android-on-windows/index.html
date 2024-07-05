@@ -23,18 +23,18 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="Leaf是一款使用Rust编写的跨平台代理框架，作者同时也提供了Android上运行的demo工程。最近半个月，经过不懈努力，我总算也把Leaf在我的手机上跑起来了，这里记录下中间遇到的各种坑（当然，会省略大量瞎搜索、瞎看代码的过程）。 在Windows上交叉编译Leafbindgen编译时libclang缺失：其一Leaf作者推荐在Linux机器上编译Leaf，而我平时用Windows笔记本多一">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/image-20210504223012028.png">
-<meta property="og:image" content="https://perqin.github.io/image-20210504223158768.png">
-<meta property="og:image" content="https://perqin.github.io/image-20210504224300456.png">
-<meta property="og:image" content="https://perqin.github.io/rust-build.png">
-<meta property="og:image" content="https://perqin.github.io/index.png">
-<meta property="og:image" content="https://perqin.github.io/image-20210505004002025.png">
-<meta property="og:image" content="https://perqin.github.io/image-20210505004251692.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/image-20210504223012028.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/image-20210504223158768.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/image-20210504224300456.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/rust-build.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/index.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/image-20210505004002025.png">
+<meta property="og:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/image-20210505004251692.png">
 <meta property="article:published_time" content="2021-05-04T13:50:02.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.188Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:54.832Z">
 <meta property="article:author" content="Perqin">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/image-20210504223012028.png">
+<meta name="twitter:image" content="https://perqin.github.io/2021/05/04/build-leaf-android-on-windows/image-20210504223012028.png">
   
   
   
@@ -312,9 +312,9 @@
 <p>不出意外的话此时编译会失败，报找不到libclang的错误。</p>
 <p>这是因为Leaf使用了<a target="_blank" rel="noopener" href="https://github.com/rust-lang/rust-bindgen">bindgen</a>来生成bindings，而bindgen依赖clang提供的libclang动态链接库来解析c&#x2F;cpp文件里的内容。</p>
 <p>在Linux中打开NDK的LLVM工具链，会发现libclang是存在的：</p>
-<p><img src="/image-20210504223012028.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/image-20210504223012028.png" srcset="/img/loading.gif" lazyload></p>
 <p>而Windows版本的NDK里居然没有：</p>
-<p><img src="/image-20210504223158768.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/image-20210504223158768.png" srcset="/img/loading.gif" lazyload></p>
 <p>我在NDK的仓库里提了<a target="_blank" rel="noopener" href="https://github.com/android/ndk/issues/1491">issue</a>，得到的答复是：Linux上的libclang是送你的，我们本来就不准备提供这些玩意儿。</p>
 <p><strong>如果你只是需要顺利编译的话，不需要跟着我踩下面的坑，你可以直接跳过下面的配置部分，阅读《bindgen编译时libclang缺失：其二》章节。</strong></p>
 <p>好在Clang本身就是支持交叉编译的，因此我们只需要自己安装一套就行了。我一开始安装的是Visual Studio里的版本，安装后将其lib路径指定到<code>LIBCLANG_PATH</code>中即可：</p>
@@ -325,7 +325,7 @@
 </blockquote>
 <p>但是谷歌在NDK里带的Clang还有一定程度的魔改，其实主要是增加了Android相关target的支持，也就是默认指定了一些include路径，而VS中提供的Clang当然没有这些配置，因此我们需要将这些配置也加上。</p>
 <p>我们可以先运行NDK中的clang，随便编译一个文件，带上<code>-v</code>参数看看它带了什么路径：</p>
-<p><img src="/image-20210504224300456.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/image-20210504224300456.png" srcset="/img/loading.gif" lazyload></p>
 <p>然后我们就可以通过<code>BINDGEN_EXTRA_CLANG_ARGS</code>这个环境变量将需要额外指定给Clang的参数带进去。在编译Leaf的时候实际上只用到了<code>&lt;android/log.h&gt;</code>，所以不需要那么多路径，我这里是这样指定的（其中<code>ndkLlvmRoot</code>变量的值是NDK中LLVM工具链的路径）：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$Env:BINDGEN_EXTRA_CLANG_ARGS</span> = <span class="hljs-string">&quot;--target=aarch64-linux-android23 -isystem &#x27;<span class="hljs-variable">$ndkLlvmRoot</span>\sysroot\usr\include&#x27; -isystem &#x27;<span class="hljs-variable">$ndkLlvmRoot</span>\lib64\clang\11.0.5\include&#x27;&quot;</span><br></code></pre></td></tr></table></figure>
 
@@ -336,7 +336,7 @@
 <p>于是，我装上WSL2，在WSL2中配置好构建环境，又编译了一次，发现WSL中编译的so也是可以运行的。</p>
 <p>在构建target产出目录中摸索的时候，我终于发现了其中的不同：在我的<code>target\aarch64-linux-android\release\build\leaf-f624836c6ef73483\out</code>目录中，只有一个<code>mobile_bindings.rs</code>文件，但根据Leaf的<a target="_blank" rel="noopener" href="https://github.com/eycorsican/leaf/blob/10e600d27db13d0aada6917c3df9ad4afec5cf40/leaf/build.rs"><code>build.rs</code></a>文件，这个目录中还需要产出liblwip.a等lwip库的编译产出物才对。</p>
 <p>在这个过程中，我也稍微了解了一下Rust的构建流程（虽然我完全不会Rust来着）：</p>
-<p><img src="/rust-build.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/rust-build.png" srcset="/img/loading.gif" lazyload></p>
 <p>如图所示，某些Rust库会有一个build.rs文件，这个文件是用于构建这个库的，里面的代码会以开发者的<strong>本地机器</strong>为目标平台编译，并运行编译后的可执行文件来提前构建一些外部依赖。例如Leaf需要在编译它自身的Rust源码之前先编译好lwip等其他语言写的库，就需要在build.rs中进行编译。</p>
 <p>而我遇到的文件就在于此，在旧的build.rs中使用了cfg选项来条件编译，作者应该是希望仅Android目标编译lwip：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-meta">#[cfg(all(</span><br><span class="hljs-meta">    feature = <span class="hljs-string">&quot;inbound-tun&quot;</span>,</span><br><span class="hljs-meta">    any(</span><br><span class="hljs-meta">        target_os = <span class="hljs-string">&quot;ios&quot;</span>,</span><br><span class="hljs-meta">        target_os = <span class="hljs-string">&quot;android&quot;</span>,</span><br><span class="hljs-meta">        target_os = <span class="hljs-string">&quot;macos&quot;</span>,</span><br><span class="hljs-meta">        target_os = <span class="hljs-string">&quot;linux&quot;</span></span><br><span class="hljs-meta">    )</span><br><span class="hljs-meta">))]</span><br>&#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">os</span> = env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;CARGO_CFG_TARGET_OS&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>();<br>    <span class="hljs-keyword">if</span> os == <span class="hljs-string">&quot;ios&quot;</span> || os == <span class="hljs-string">&quot;android&quot;</span> || os == <span class="hljs-string">&quot;linux&quot;</span> || os == <span class="hljs-string">&quot;macos&quot;</span> &#123;<br>        <span class="hljs-title function_ invoke__">compile_lwip</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> env::<span class="hljs-title function_ invoke__">var</span>(<span class="hljs-string">&quot;BINDINGS_GEN&quot;</span>).<span class="hljs-title function_ invoke__">is_ok</span>()<br>        &amp;&amp; (os == <span class="hljs-string">&quot;ios&quot;</span> || os == <span class="hljs-string">&quot;android&quot;</span> || os == <span class="hljs-string">&quot;linux&quot;</span> || os == <span class="hljs-string">&quot;macos&quot;</span>)<br>    &#123;<br>        <span class="hljs-title function_ invoke__">generate_lwip_bindings</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -404,7 +404,7 @@
 
 <p>于是可以推测，在<code>select_all</code>完成之后，除了shutdown这个Future完成了，其他Future（包括正在持有fd的Future，在runners中）以及关联的变量就都离开了作用域，Rust判断他们可以被Drop了，于是就drop了。这也是为什么我打日志后发现在<code>rt.block_on(futures::future::select_all(tasks));</code>这行发生了crash。</p>
 <p>这个文件描述符在Java层是通过<code>VpnService.Builder.establish</code>方法返回的ParcelFileDescriptor对象中获得的。我们会看到他的注释中明确说明需要app主动关闭这个文件描述符：</p>
-<p><img src="/index.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/index.png" srcset="/img/loading.gif" lazyload></p>
 <p>而要让native来负责关闭的话，就需要调用<code>detachFd</code>，在Java层主动释放对文件描述符的拥有权。调用这个方法之后，stopLeaf果然不会奔溃了。</p>
 <p>稍微深究一下ParcelFileDescriptor的实现就会发现，在构造对象的时候我们就声明了拥有权（<code>IoUtils.setFdOwner(mFd, this)</code>）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">ParcelFileDescriptor</span><span class="hljs-params">(FileDescriptor fd, FileDescriptor commChannel)</span> &#123;<br>    <span class="hljs-keyword">if</span> (fd == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NullPointerException</span>(<span class="hljs-string">&quot;FileDescriptor must not be null&quot;</span>);<br>    &#125;<br>    mWrapped = <span class="hljs-literal">null</span>;<br>    mFd = fd;<br>    IoUtils.setFdOwner(mFd, <span class="hljs-built_in">this</span>);<br><br>    mCommFd = commChannel;<br>    <span class="hljs-keyword">if</span> (mCommFd != <span class="hljs-literal">null</span>) &#123;<br>        IoUtils.setFdOwner(mCommFd, <span class="hljs-built_in">this</span>);<br>    &#125;<br><br>    mGuard.open(<span class="hljs-string">&quot;close&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -417,11 +417,11 @@
 
 <p>可见我们仅仅是把这个ParcelFileDescriptor关闭了，但并没有真正关闭fd。</p>
 <p>我们再去cs.android.com搜索<code>IoUtils.setFdOwner</code>的实现：</p>
-<p><img src="/image-20210505004002025.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/image-20210505004002025.png" srcset="/img/loading.gif" lazyload></p>
 <p>在注释里我们看到了……哟，这不是fdsan吗？<del>几天不见，这么拉了</del></p>
 <p>可见fdsan这个玩意儿就是负责维护文件描述符的拥有权管理，如果一个文件描述符被一个Java对象指定了拥有，随后又在native层被关闭，fdsan就能马上检测到这里可能存在误关闭。</p>
 <p>谷歌搜索一下fdsan：</p>
-<p><img src="/image-20210505004251692.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2021/05/04/build-leaf-android-on-windows/image-20210505004251692.png" srcset="/img/loading.gif" lazyload></p>
 <p>可知fdsan是Android 10才被引入的，而Android 11上发生了行为变更，在10的时候检测到误关闭时只会打印警告，但是11上会直接崩溃。</p>
 <p>而我手上的索尼Xperia 5 ii<del>（非异形屏带3.5mm耳机孔你值得拥有）</del>正好前阵子升级到了Android 11，因此遇到了这个问题，而作者的设备大概还不是Android 11，所以没有复现。</p>
 <h2 id="FIN"><a href="#FIN" class="headerlink" title="FIN"></a>FIN</h2><p>作为995的社畜，难得五一连休尽情地折腾了一把side project，真是太爽了，感觉没什么用的知识又增加了不少www</p>

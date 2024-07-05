@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="Edit History  2017&#x2F;04&#x2F;05  更正了mFirstTouchTarget为null的条件   以前一直认为身为Android开发者，一定要去读Android的源码，然而由于各种各样的原因迟迟没有开始，最近终于下定决心提高一下，买了《Android开发艺术探索》，并开始尝试从源码看懂触摸事件的分发。这个系列文章会记录我通过阅读源代码的方式一步步搞懂Andr">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/playground.png">
+<meta property="og:image" content="https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/playground.png">
 <meta property="article:published_time" content="2017-03-21T16:37:51.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.204Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:54.852Z">
 <meta property="article:author" content="Perqin">
-<meta property="article:tag" content="android">
 <meta property="article:tag" content="explore-event-dispatching-from-source">
+<meta property="article:tag" content="android">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/playground.png">
+<meta name="twitter:image" content="https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/playground.png">
   
   
   
@@ -316,7 +316,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">com.perqin.playground.eventdispatching.EdFrameLayout</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:android</span>=<span class="hljs-string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:tools</span>=<span class="hljs-string">&quot;http://schemas.android.com/tools&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">&quot;match_parent&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">&quot;match_parent&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">tools:context</span>=<span class="hljs-string">&quot;com.perqin.playground.activities.MainActivity&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">com.perqin.playground.eventdispatching.EdView</span></span><br><span class="hljs-tag">        <span class="hljs-attr">android:id</span>=<span class="hljs-string">&quot;@+id/ed_view&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">&quot;240dp&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">&quot;240dp&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">android:background</span>=<span class="hljs-string">&quot;@color/colorAccent&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">android:layout_gravity</span>=<span class="hljs-string">&quot;center&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">com.perqin.playground.eventdispatching.EdFrameLayout</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>运行起来之后是这样的：</p>
-<p><img src="/playground.png" srcset="/img/loading.gif" lazyload alt="Playground"></p>
+<p><img src="/2017/03/21/explore-event-dispatching-from-source-1/playground.png" srcset="/img/loading.gif" lazyload alt="Playground"></p>
 <p>我们轻触中间的强调色的方块，看到日志里有这样的输出：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">com<span class="hljs-selector-class">.perqin</span><span class="hljs-selector-class">.playground</span> I/EdFrameLayout: dispatchTouchEvent: ACTION_DOWN<br>com<span class="hljs-selector-class">.perqin</span><span class="hljs-selector-class">.playground</span> I/EdFrameLayout: onInterceptTouchEvent<br>com<span class="hljs-selector-class">.perqin</span><span class="hljs-selector-class">.playground</span> I/EdView: dispatchTouchEvent: ACTION_DOWN<br>com<span class="hljs-selector-class">.perqin</span><span class="hljs-selector-class">.playground</span> I/EdView: onTouchEvent<br>com<span class="hljs-selector-class">.perqin</span><span class="hljs-selector-class">.playground</span> I/EdFrameLayout: onTouchEvent<br></code></pre></td></tr></table></figure>
 
@@ -425,9 +425,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/android/">#android</a>
-      
         <a href="/tags/explore-event-dispatching-from-source/">#explore-event-dispatching-from-source</a>
+      
+        <a href="/tags/android/">#android</a>
       
     </div>
   

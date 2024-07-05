@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="今天晚上为了一个奇怪的问题，折腾了一个晚上，从 SDK 到多线程，最后也是十分偶然才找到了原因，这么坑爹的事情一定要记录下来。 事情的来龙去脉是这样的：最近我接了个私活，需要接入一个 OCR 模块，此时我的代码逻辑大概如下：在 Activity 上显示一个相机的预览界面，并为Camera设置预览回调，于是每一帧都会调用onPreviewFrame，相信用过 Android 的相机 API 的读者都">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/intent-size-overflow.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/10/the-activity-is-moved-and-refuses-to-finish/intent-size-overflow.png">
 <meta property="article:published_time" content="2017-04-10T16:28:15.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.664Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:55.308Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="android">
 <meta property="article:tag" content="activity">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/intent-size-overflow.png">
+<meta name="twitter:image" content="https://perqin.github.io/2017/04/10/the-activity-is-moved-and-refuses-to-finish/intent-size-overflow.png">
   
   
   
@@ -299,7 +299,7 @@
 <p>跑起来，端起手机，识别了半天，手都江硬了，还是没有关闭。此时，我试着按了返回按键，发现居然也无法返回。难道是 Handler 使用不当的锅？我怀疑是不是因为在工作线程调用了<code>finish</code>，于是，我天真地把所有用到主线程 Handler 的地方都从<code>mUiHandler.someMethod</code>改为了<code>new Handler(Looper.getMainLooper()).someMethod</code>，心里想着，这下保证所有 Handler 都是主线程了吧？</p>
 <p>跑起来，端起手机，识别了半天，手都江硬了，这次连 Message 都收不到了。在凌乱了几分钟之后，我恍然大悟：一个 Looper 线程是可以绑定多个 Handler 对象的，这就意味着上面的改动会导致发消息和收消息的不是同一个 Handler 对象，当然就跪了。于是，我索性直接改成 UI 线程里调用 SDK，反正一秒一次，卡不了多少吧，于是，各种注释代码，直接在主线程里调用 SDK，识别，关闭 Activity。</p>
 <p>跑起来，端起手机，识别了半天，手都江硬了，Activity十分感动，然后再一次拒绝了我<code>finish</code>的请求。这不科学啊！我气得疯狂地戳手机上的返回键。抬头扫了一眼 Logcat，等一下！我突然发现，我每戳一次返回键，Logcat 就刷出一条奇怪的红色错误：</p>
-<p><img src="/intent-size-overflow.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/10/the-activity-is-moved-and-refuses-to-finish/intent-size-overflow.png" srcset="/img/loading.gif" lazyload></p>
 <p>如上图，我立刻谷歌了一下，发现屏幕上冒出了各种 Camera 和 Bitmap，看来和我一样悲剧的不少。</p>
 <p>随便点开一条，恍然大悟：</p>
 <blockquote>

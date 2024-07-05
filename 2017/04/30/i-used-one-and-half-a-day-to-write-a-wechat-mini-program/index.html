@@ -23,27 +23,27 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="读者司机们，五一好哇！ 这两天突然意识到放假了，作业可以先缓一缓，又想起之前的一个想法，于是打开了微信小程序的官方文档，打算随手撸一个小程序玩一玩。想看成果的，请向下拖动看图。 想法有一次，我需要组织一次实训迭代会议，于是我需要临时确认所有人下周什么时候有空，当时我突然发现，这就是为小程序量身定做的场景啊，于是，趁这两天道路车辆少，我，上了小程序的黑车。 启动与构思小程序的名字随便取了个：《几时得">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/domain.jpg">
-<meta property="og:image" content="https://perqin.github.io/wireframe.jpg">
-<meta property="og:image" content="https://perqin.github.io/devtool.png">
-<meta property="og:image" content="https://perqin.github.io/leancloud-period.png">
-<meta property="og:image" content="https://perqin.github.io/request-domains.png">
-<meta property="og:image" content="https://perqin.github.io/request-domains-refresh.png">
-<meta property="og:image" content="https://perqin.github.io/launched.png">
-<meta property="og:image" content="https://perqin.github.io/new-activity.png">
-<meta property="og:image" content="https://perqin.github.io/activity.png">
-<meta property="og:image" content="https://perqin.github.io/activity-with-periods.png">
-<meta property="og:image" content="https://perqin.github.io/launched-with-new.png">
-<meta property="og:image" content="https://perqin.github.io/share.png">
-<meta property="og:image" content="https://perqin.github.io/hell.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/domain.jpg">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/wireframe.jpg">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/devtool.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/leancloud-period.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains-refresh.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/new-activity.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity-with-periods.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched-with-new.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/share.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/hell.png">
 <meta property="article:published_time" content="2017-04-30T18:07:49.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.208Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:54.852Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="wechat">
 <meta property="article:tag" content="mini-programs">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/domain.jpg">
+<meta name="twitter:image" content="https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/domain.jpg">
   
   
   
@@ -310,11 +310,11 @@
 <h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>有一次，我需要组织一次实训迭代会议，于是我需要临时确认所有人下周什么时候有空，当时我突然发现，这就是为小程序量身定做的场景啊，于是，趁这两天道路车辆少，我，上了小程序的黑车。</p>
 <h2 id="启动与构思"><a href="#启动与构思" class="headerlink" title="启动与构思"></a>启动与构思</h2><p>小程序的名字随便取了个：《几时得闲》，识得唔识得啊？</p>
 <p>这学期受到pml的熏陶，写小玩具也开始正经了- -首先简单随笔画了一个领域模型和UI、交互之类的草图：</p>
-<p><img src="/domain.jpg" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/wireframe.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/domain.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/wireframe.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>港真，画完之后思路的确清晰了很多，接下来就可以开始写代码了。</p>
 <h2 id="开发平台"><a href="#开发平台" class="headerlink" title="开发平台"></a>开发平台</h2><p>工欲善其事，必先利其器。于是，我去官网下载了微信小程序开发平台，比较坑爹的是这货暂不支持Linux，于是我只能重启滚到装在了机械硬盘的Windows 10，下载并安装，安装好之后它是长这样的：</p>
-<p><img src="/devtool.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/devtool.png" srcset="/img/loading.gif" lazyload></p>
 <p>看起来很强，很佩服微信这么快从框架到开发工具一整套都准备好了，文档也是挺齐全的，点个赞。</p>
 <p>小程序实际上就是跑在被魔改过的、功能很有限的浏览器里，所以前端那一套在小程序里都是类似的：wxml等价于html，wxss等价于css，js是承载页面逻辑的脚本，json文件则是配置文件。左边是预览，中间是文件列表，右边是编辑器，每次文件被更新，都会自动重新编译运行。不过写了一会之后，我发现这编辑器太难用了，虽然有自动补全，于是我果断弃坑，啊不是，果断打开了Sublime Text。</p>
 <p>接下来，这个开发工具的主要任务就是调试。切换到调试界面之后，右半边会变成Chrome Devtool，嘿嘿……</p>
@@ -324,13 +324,13 @@
 <h2 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h2><p>一开始写的时候，还挺顺利的，但是后来发现，没有后台服务器的配置的话，很多地方不好写。</p>
 <p>可是问题来了，就两天玩一玩，我就要花一大部分时间写个服务器？？</p>
 <p>当然不可以了，于是，机智的我选择了LeanCloud，LeanCloud应该给我广告费。在LeanCloud的数据存储服务里，我可以直接定义类，指定类的各项属性，然后通过REST API来操作数据。是的，不用写一点代码，点点鼠标就配置好了。按照前面的领域模型，最终我新建了3个类：<code>WeChatUser</code>，<code>FreePeriod</code>和<code>Activity</code>，分别表示一个小程序用户（存储OpenID）、一个用户在一个活动里的一个空闲的小时和一个活动。其中<code>FreePeriod</code>的表如下：</p>
-<p><img src="/leancloud-period.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/leancloud-period.png" srcset="/img/loading.gif" lazyload></p>
 <p>看起来非常顺利，嗯，毕竟老司机了，这一带我闭着眼睛都能开。</p>
 <p>接下来，需要配置一下小程序，只有在合法域名列表里的域名才允许从小程序里请求，随便吐个槽，一开始我以为微信自己的域名可以不用添加（我用到了一个微信的接口获取OpenID），结果一跑，挂了，然后再去添加，还瞎了写错了域名，所以前后一共改了3次，但是小程序规定一个月只能更改五次……</p>
 <p>在小程序的后台更改：</p>
-<p><img src="/request-domains.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains.png" srcset="/img/loading.gif" lazyload></p>
 <p>然后还需要在小程序开发工具的项目页面刷新：</p>
-<p><img src="/request-domains-refresh.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/request-domains-refresh.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="LeanCloud-REST-API"><a href="#LeanCloud-REST-API" class="headerlink" title="LeanCloud REST API"></a>LeanCloud REST API</h2><p>接下来，我就可以愉快的在小程序里发请求了。一开始，我觉得LeanCloud的API挺强大的，比如我想要获取指定OpenID的用户：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getUserByOpenId</span>(<span class="hljs-params">openId, cb</span>) &#123;<br>  <span class="hljs-title function_">r</span>(<br>    <span class="hljs-string">&#x27;/classes/WeChatUser&#x27;</span>,<br>    <span class="hljs-string">&#x27;GET&#x27;</span>,<br>    <span class="hljs-string">&#x27;where=&#123;&quot;OpenId&quot;:&quot;&#x27;</span> + openId + <span class="hljs-string">&#x27;&quot;&#125;&#x27;</span>,<br>    <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>      <span class="hljs-title function_">cb</span>(<span class="hljs-literal">null</span>, res.<span class="hljs-property">data</span>.<span class="hljs-property">results</span>.<span class="hljs-property">length</span> === <span class="hljs-number">0</span> ? <span class="hljs-literal">null</span> : res.<span class="hljs-property">data</span>.<span class="hljs-property">results</span>[<span class="hljs-number">0</span>]);<br>    &#125;,<br>    <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-keyword">typeof</span> cb == <span class="hljs-string">&#x27;function&#x27;</span> &amp;&amp; <span class="hljs-title function_">cb</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;Fail to get user by OpenID: Network error&#x27;</span>));<br>    &#125;<br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -349,7 +349,7 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-comment">/*app.wxss*/</span><br>page &#123;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><br><span class="hljs-comment">/*launched.wxss*/</span><br><span class="hljs-selector-class">.launched-container</span> &#123;<br>	<span class="hljs-attribute">display</span>: flex;<br>	<span class="hljs-attribute">flex-direction</span>: column;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;<br>&#125;<br><br><span class="hljs-selector-class">.activities-list</span> &#123;<br>	<span class="hljs-attribute">flex-grow</span>: <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-selector-class">.launch-new-button</span> &#123;<br>	<span class="hljs-attribute">flex-shrink</span>: <span class="hljs-number">1</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>很好，这波很稳。最后的效果如下：</p>
-<p><img src="/launched.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched.png" srcset="/img/loading.gif" lazyload></p>
 <p>因为列表是空的，所以上面只有一个按钮。那个，图标什么的，不存在的。</p>
 <h2 id="新活动创建页面"><a href="#新活动创建页面" class="headerlink" title="新活动创建页面"></a>新活动创建页面</h2><p>接下来，开始编写新活动创建界面。查了一下小程序文档，发现了可以通过<code>picker</code>组件实现时间和日期选择器，excited！很棒，这是界面代码：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;new-activity-container&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">bindsubmit</span>=<span class="hljs-string">&quot;fmSubmit&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;title&#125;&#125;&quot;</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">&quot;fmTitleInput&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Title&quot;</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">&quot;next&quot;</span> <span class="hljs-attr">confirm-hold</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;description&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;description&#125;&#125;&quot;</span> <span class="hljs-attr">bindinput</span>=<span class="hljs-string">&quot;fmDescriptionInput&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Description&quot;</span> <span class="hljs-attr">confirm-type</span>=<span class="hljs-string">&quot;done&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startDate&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;startDate&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmStartDateChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;date&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>Start date: &#123;&#123;startDate&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endDate&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;endDate&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmEndDateChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;date&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>End date: &#123;&#123;endDate&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;startTime&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;startTime&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmStartTimeChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>Start time: &#123;&#123;startTime&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">picker</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;endTime&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#123;&#123;endTime&#125;&#125;&quot;</span> <span class="hljs-attr">bindchange</span>=<span class="hljs-string">&quot;fmEndTimeChange&quot;</span> <span class="hljs-attr">mode</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">view</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;picker&quot;</span>&gt;</span>End time: &#123;&#123;endTime&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">picker</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">formType</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Done<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">view</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -410,11 +410,11 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-attr">onShareAppMessage</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;几时得闲：&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activity</span>.<span class="hljs-property">Title</span>,<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/pages/activity/activity?objectId=&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span>.<span class="hljs-property">activity</span>.<span class="hljs-property">objectId</span>,<br>    <span class="hljs-attr">success</span>: <span class="hljs-function">() =&gt;</span> &#123;<br>      wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Share succeed!&#x27;</span>&#125;);<br>    &#125;,<br>    <span class="hljs-attr">fail</span>: <span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>      wx.<span class="hljs-title function_">showToast</span>(&#123;<span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;Share fail!&#x27;</span>&#125;);<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(res);<br>    &#125;<br>  &#125;<br>&#125;,<br></code></pre></td></tr></table></figure>
 
 <h2 id="完工"><a href="#完工" class="headerlink" title="完工"></a>完工</h2><p>到这里，终于完成了绝大部分逻辑，剩下的就是修bug和修bug和修bug和修bug和修bug和修bug和修bug和美化UI和美化UI和美化UI和美化UI和美化UI和美化UI。下面是一些小程序的截图：</p>
-<p><img src="/new-activity.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/activity.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/activity-with-periods.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/launched-with-new.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/share.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/new-activity.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/activity-with-periods.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/launched-with-new.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/share.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="吐sai槽ting"><a href="#吐sai槽ting" class="headerlink" title="吐sai槽ting"></a>吐sai槽ting</h2><p>最后是吐槽时间。</p>
 <ol>
 <li><p>严厉谴责我的室友，居然没有一个愿意借我手机测试一下小程序，I am angry!</p>
@@ -424,7 +424,7 @@
 <li><p>开发过程中很多操作都需要扫二维码授权，建议小程序开发者购买手机支架，把摄像头对准电脑显示器，极大开发效率。当然，你如果有女朋友的话让她帮你扫码也是可以的。啊不对，有女朋友居然还能安静地写代码？……不对，我女朋友们就在帮我写代码啊：）</p>
 </li>
 <li><p>写小程序的感想如图所示：</p>
-<p><img src="/hell.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/hell.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ol>
 <p>最后关于这个小程序，由于官方提示不要发布demo或测试版本，所以我只能说，无可奉告！等我再有两天闲着，再来完善和优化，然后发布吧，近期找个机会把代码丢到GitHub上。</p>

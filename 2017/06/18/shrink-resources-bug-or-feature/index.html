@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="前两天在酷安上架了一个很简单的应用（复制分享(com.perqin.copyshare)_0.0.2_Android应用_酷安网），感觉酷安对个人开发者还是非常友好的，活跃用户多、评论区一片祥和。后来有评论说安装包体积太大了，于是就打算处理一下这个问题了。 根据官方文档Shrink Your Code and Resources | Android Studio，我启用了ProGuard代码混淆：">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/apk-analyze.png">
+<meta property="og:image" content="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/apk-analyze.png">
 <meta property="article:published_time" content="2017-06-18T03:52:23.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.664Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:55.304Z">
 <meta property="article:author" content="Perqin">
 <meta property="article:tag" content="android">
 <meta property="article:tag" content="proguard">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/apk-analyze.png">
+<meta name="twitter:image" content="https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/apk-analyze.png">
   
   
   
@@ -326,7 +326,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">include</span></span><br><span class="hljs-tag">    <span class="hljs-attr">layout</span>=<span class="hljs-string">&quot;@layout/abc_screen_content_include&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">&quot;match_parent&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">&quot;wrap_content&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:layout_weight</span>=<span class="hljs-string">&quot;1&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>好的，这个时候我们将构建的会崩溃的apk拖进Android Studio查看其内容，我们找到<code>res/layout/abc_screen_content_include.xml</code>：</p>
-<p><img src="/apk-analyze.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/06/18/shrink-resources-bug-or-feature/apk-analyze.png" srcset="/img/loading.gif" lazyload></p>
 <p>至此，真相大白！可以看到，<code>shrinkResources</code>这个特性似乎还是有一点bug（总不能是feature吧？？！），没有正确识别<code>include</code>标签的引用，导致这个资源被认为是无用的，内容也被</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">x</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 

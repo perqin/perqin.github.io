@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="Perqin&#39;s Blog">
 <meta property="og:description" content="在上一篇里，我们简单地分析了 ViewGroup 的dispatchTouchEvent方法，但这个方法里涉及到的几个其他关键方法还没有搞清楚它们做了什么。另外，View 的事件分发也没有分析，这一篇将会涵盖以上内容。 dispatchTransformedTouchEvent在 ViewGroup 的dispatchTouchEvent方法里，一共有三个地方调用到了dispatchTransfo">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://perqin.github.io/offset-calculation.png">
+<meta property="og:image" content="https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/offset-calculation.png">
 <meta property="article:published_time" content="2017-04-03T16:38:41.000Z">
-<meta property="article:modified_time" content="2023-12-21T15:07:34.204Z">
+<meta property="article:modified_time" content="2024-07-05T03:32:54.852Z">
 <meta property="article:author" content="Perqin">
-<meta property="article:tag" content="android">
 <meta property="article:tag" content="explore-event-dispatching-from-source">
+<meta property="article:tag" content="android">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://perqin.github.io/offset-calculation.png">
+<meta name="twitter:image" content="https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/offset-calculation.png">
   
   
   
@@ -315,7 +315,7 @@
 
 <p>可以猜到，<code>child.hasIdentityMatrix</code>这个方法就可以决定子 View 是否会发生“fancy irreversible transformations”（我把它翻译为“骚气的不可逆转换”），如果会的话我们就需要构造一个新的 MotionEvent 对象给子 View 以避免我们原来的对象被改变。但是这里我们会发现<code>hasIdentityMatrix</code>这个方法最终调用了一个 native 函数，而且和图形渲染有关，因此这里暂时没有办法解释为什么这样的判断是可以的，如果有读者明白，欢迎在评论区交流。</p>
 <p>在可以直接分发当前 MotionEvent 对象的前提下：在<code>child</code>为<code>null</code>的时候，我们仍然分发给本身。否则，我们计算被转换的坐标，改动<code>event</code>里的坐标之后分发给子 View，分发完成后还会将坐标偏移回来。具体的偏移计算方法在上面的代码中，我就不详细解析了，给出一张图给读者理解：</p>
-<p><img src="/offset-calculation.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2017/04/03/explore-event-dispatching-from-source-2/offset-calculation.png" srcset="/img/loading.gif" lazyload></p>
 <p>上图中<code>parentEvent</code>就是当前 ViewGroup 得到的事件对象，<code>childEvent</code>就是需要分发给子 View 的事件对象。</p>
 <p>在需要构造新的 MotionEvent 的时候，后面的语句和前面的几乎一致，只是事件对象变成了新构造的<code>transformedEvent</code>，并且最后对它进行了回收释放。</p>
 <p>至此，我们就搞清楚了<code>dispatchTransformedTouchEvent</code>如何把事件分发给自己或子 View 的了。</p>
@@ -412,9 +412,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/android/">#android</a>
-      
         <a href="/tags/explore-event-dispatching-from-source/">#explore-event-dispatching-from-source</a>
+      
+        <a href="/tags/android/">#android</a>
       
     </div>
   
