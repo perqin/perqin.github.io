@@ -49,10 +49,15 @@ jobs:
         path: .deploy_git
     - name: Setup deploy auth
       run: |
+        mkdir -p ~/.ssh/
+        echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         cd .deploy_git
-        pwd
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      env:
+        DEPLOY_KEY: "${{ secrets.DEPLOY_KEY }}"
     - name: Deploy
       run: hexo g -d
     # End: Deploy hexo blog website.
