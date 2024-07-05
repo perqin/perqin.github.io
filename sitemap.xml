@@ -2,6 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/about/index.html</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
     <loc>https://perqin.github.io/2016/08/21/solve-repairing-problem-on-dual-boot-windows-and-ubuntu-pc/</loc>
     
     <lastmod>2024-07-05</lastmod>
@@ -62,36 +102,6 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/about/index.html</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
     <loc>https://perqin.github.io/2017/06/27/kotlin-issue-on-adding-lambda-as-listener/</loc>
     
     <lastmod>2024-07-05</lastmod>
@@ -102,17 +112,7 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2017/02/27/migrate-java-web-application-to-gradle-build-system/</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/</loc>
+    <loc>https://perqin.github.io/2017/06/11/jenkins-ci-setup-notes/</loc>
     
     <lastmod>2024-07-05</lastmod>
     
@@ -153,36 +153,6 @@
   
   <url>
     <loc>https://perqin.github.io/2023/12/21/japan-trip-2023/</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/</loc>
     
     <lastmod>2024-07-05</lastmod>
     
@@ -233,6 +203,36 @@
   
   <url>
     <loc>https://perqin.github.io/2016/12/22/configure-tomcat-jsp-project-with-idea/</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/03/21/explore-event-dispatching-from-source-1/</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/04/03/explore-event-dispatching-from-source-2/</loc>
     
     <lastmod>2024-07-05</lastmod>
     
@@ -415,6 +415,13 @@
   </url>
   
   <url>
+    <loc>https://perqin.github.io/tags/kotlin/</loc>
+    <lastmod>2024-07-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://perqin.github.io/tags/jenkins/</loc>
     <lastmod>2024-07-05</lastmod>
     <changefreq>daily</changefreq>
@@ -423,13 +430,6 @@
   
   <url>
     <loc>https://perqin.github.io/tags/continuous-integration/</loc>
-    <lastmod>2024-07-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/kotlin/</loc>
     <lastmod>2024-07-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
