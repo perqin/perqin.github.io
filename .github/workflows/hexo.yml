@@ -47,6 +47,12 @@ jobs:
       with:
         ref: refs/heads/master
         path: .deploy_git
+    - name: Setup deploy auth
+      run: |
+        cd .deploy_git
+        pwd
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
     - name: Deploy
       run: hexo g -d
     # End: Deploy hexo blog website.
