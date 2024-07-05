@@ -39,17 +39,17 @@ jobs:
 
     - name: Install Dependencies
       run: pnpm install
-
-    - name: Debug
-      run: |
-        id
-        pnpm store path
-    # Deploy hexo blog website.
-    - name: Deploy
-      id: deploy
-      uses: zhugleo/deploy-hexo-action@v1.0.5
+    # Begin: Deploy hexo blog website.
+    - name: Install hexo-cli
+      run: pnpm install hexo-cli -g
+    - name: Sync master branch
+      uses: actions/checkout@v2
       with:
-        deploy_key: ${{ secrets.DEPLOY_KEY }}
+        ref: refs/heads/master
+        path: .deploy_git
+    - name: Deploy
+      run: hexo g -d
+    # End: Deploy hexo blog website.
     # Use the output from the `deploy` step(use for test action)
     - name: Get the output
       run: |
