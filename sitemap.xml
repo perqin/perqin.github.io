@@ -2,16 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
-    
-    <lastmod>2025-07-27</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
     <loc>https://perqin.github.io/about/index.html</loc>
     
     <lastmod>2025-07-27</lastmod>
@@ -22,7 +12,27 @@
   
   
   <url>
-    <loc>https://perqin.github.io/cent-budget/privacy-policy.html</loc>
+    <loc>https://perqin.github.io/2016/04/13/unlock-bootloader-and-flash-aosp-for-meizu-m2-mini/</loc>
+    
+    <lastmod>2025-07-27</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/</loc>
+    
+    <lastmod>2025-07-27</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
+    <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/</loc>
     
     <lastmod>2025-07-27</lastmod>
     
@@ -52,17 +62,7 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2017/01/07/tumoji-develop-blogpost-1/</loc>
-    
-    <lastmod>2025-07-27</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2019/09/10/two-issues-on-android-obfuscation/</loc>
+    <loc>https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/</loc>
     
     <lastmod>2025-07-27</lastmod>
     
@@ -122,16 +122,6 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2017/06/18/shrink-resources-bug-or-feature/</loc>
-    
-    <lastmod>2025-07-27</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
     <loc>https://perqin.github.io/2017/03/23/install-oracle-database-11g-r2-on-centos-6-8/</loc>
     
     <lastmod>2025-07-27</lastmod>
@@ -172,6 +162,16 @@
   
   
   <url>
+    <loc>https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/</loc>
+    
+    <lastmod>2025-07-27</lastmod>
+    
+  </url>
+
+  <!-- AMP page -->
+  
+  
+  <url>
     <loc>https://perqin.github.io/2017/02/15/https-quick-deployment-guide/</loc>
     
     <lastmod>2025-07-27</lastmod>
@@ -182,7 +182,7 @@
   
   
   <url>
-    <loc>https://perqin.github.io/2017/04/30/i-used-one-and-half-a-day-to-write-a-wechat-mini-program/</loc>
+    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
     
     <lastmod>2025-07-27</lastmod>
     
@@ -223,16 +223,6 @@
   
   <url>
     <loc>https://perqin.github.io/2021/03/21/from-flutter-build-failure-to-pr/</loc>
-    
-    <lastmod>2025-07-27</lastmod>
-    
-  </url>
-
-  <!-- AMP page -->
-  
-  
-  <url>
-    <loc>https://perqin.github.io/2016/11/05/confusion-in-single-instance-launch-mode/</loc>
     
     <lastmod>2025-07-27</lastmod>
     
@@ -362,27 +352,6 @@
   </url>
   
   <url>
-    <loc>https://perqin.github.io/tags/wechat/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/mini-programs/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/javascript/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://perqin.github.io/tags/oracle-database/</loc>
     <lastmod>2025-07-27</lastmod>
     <changefreq>daily</changefreq>
@@ -412,6 +381,27 @@
   
   <url>
     <loc>https://perqin.github.io/tags/debian/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/tags/wechat/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/tags/mini-programs/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/tags/javascript/</loc>
     <lastmod>2025-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -537,6 +527,34 @@
   </url>
   
   <url>
+    <loc>https://perqin.github.io/tags/privoxy/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/tags/gfw/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/tags/gfwlist/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://perqin.github.io/tags/%E7%BF%BB%E5%A2%99/</loc>
+    <lastmod>2025-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://perqin.github.io/tags/bootloader/</loc>
     <lastmod>2025-07-27</lastmod>
     <changefreq>daily</changefreq>
@@ -566,34 +584,6 @@
   
   <url>
     <loc>https://perqin.github.io/tags/%E9%AD%85%E8%93%9D2/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/privoxy/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/gfw/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/gfwlist/</loc>
-    <lastmod>2025-07-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://perqin.github.io/tags/%E7%BF%BB%E5%A2%99/</loc>
     <lastmod>2025-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
