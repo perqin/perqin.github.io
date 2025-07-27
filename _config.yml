@@ -29,6 +29,7 @@ skip_render:
   - README.md
   - let-me-go/**/*
   - muzei-drives/**/*
+  - cent-budget/**/*
   - js/**/*
 
 # Writing
